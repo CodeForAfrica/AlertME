@@ -3,6 +3,24 @@ GreenAlert
 
 Get to know more about your environment.
 
+### Requirements
+
+- [Bower.io](http://bower.io/)
+
+
+### License
+
+We care about sharing improvements.
+
+The GPL ([V2](http://choosealicense.com/licenses/gpl-2.0/) or [V3](http://choosealicense.com/licenses/gpl-3.0/)) is a copyleft license that requires anyone who distributes your code or a derivative work to make the source available under the same terms. V3 is similar to V2, but further restricts use in hardware that forbids software alterations.
+
+**Linux**, **Git**, and **WordPress** use the GPL.
+
+Find out more by checking out the [license file](./LICENSE).
+
+
+
+---
 
 ## Laravel PHP Framework
 
