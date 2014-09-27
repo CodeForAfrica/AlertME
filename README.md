@@ -16,7 +16,7 @@ The GPL ([V2](http://choosealicense.com/licenses/gpl-2.0/) or [V3](http://choose
 
 **Linux**, **Git**, and **WordPress** use the GPL.
 
-Find out more by checking out the [license file](./LICENSE).
+Find out more by checking out the `LICENSE` file [here](./LICENSE).
 
 
 
