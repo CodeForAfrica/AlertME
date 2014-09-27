@@ -22,6 +22,7 @@ Find out more by checking out the `LICENSE` file [here](./LICENSE).
 
 ---
 
+
 ## Laravel PHP Framework
 
 [![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
