@@ -15,4 +15,7 @@ return array(
 
 	'debug' => true,
 
+	'timezone' => 'Africa/Nairobi',
+	
+
 );
