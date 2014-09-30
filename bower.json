@@ -14,9 +14,5 @@
     "bower_components",
     "test",
     "tests"
-  ],
-  "dependencies": {
-    "flat-ui": "~2.2.0",
-    "bootstrap": "~3.2.0"
-  }
+  ]
 }

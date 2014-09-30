@@ -5,8 +5,6 @@ Get to know more about your environment.
 
 ### Requirements
 
-- [Composer](https://getcomposer.org/)
-- [NodeJS](http://nodejs.org/)
 - [Bower.io](http://bower.io/)
 
 
