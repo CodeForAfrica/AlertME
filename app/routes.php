@@ -18,10 +18,23 @@ Route::get('login', 'AuthController@showLogin');
 Route::post('login', 'AuthController@postLogin');
 Route::get('logout', 'AuthController@getLogout');
 
-// Secure-Routes
+// Secure Routes
 Route::group(array('before' => 'auth'), function()
 {
     Route::get('dashboard', 'DashboardController@showHome');
     Route::get('dashboard/settings', 'DashboardController@showSettings');
-    Route::get('dashboard/data-sources', 'DashboardController@showDataSources');
+    Route::get('dashboard/datasources', 'DashboardController@showDataSources');
+});
+
+
+Route::get('/authtest', array('before' => 'auth.basic', function()
+{
+    return View::make('hello');
+}));
+
+// API v1
+Route::group(array('prefix' => 'api/v1', 'before' => 'auth.basic'), function()
+{
+    Route::resource('datasources', 'ApiDataSourcesController');
+    Route::delete('datasources/destroy/{id}', "ApiDataSourcesController@destroy");
 });

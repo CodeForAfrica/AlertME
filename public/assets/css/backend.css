@@ -9,9 +9,28 @@
     margin-right: 5px !important;
   }
 
-.data-sources h5 a {
+.dashboard .alert {
+  padding: 5px 15px;
+}
+
+/* Data Sources */
+
+.data-sources h5 button {
   margin: 0 5px;
 }
-  .data-sources h5 a:first-child {
+  .data-sources h5 button:first-child {
     margin-left: 30px;
   }
+.data-sources .data-sources-list p {
+  margin-bottom: 0;
+}
+.data-sources .modal .form-group {
+  margin-bottom: 5px;
+}
+  .data-sources .modal .form-group label {
+    line-height: 100%;
+  }
+
+.data-sources #deleteModal .well p {
+  margin-bottom: 0;
+}

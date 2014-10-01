@@ -50,15 +50,26 @@ Dashboard
         <a href="/dashboard" class="btn btn-primary
           {{Request::path() == 'dashboard' ? 'active' : '';}}">
           <span class="fui-home"></span> Home</a>
-        <a href="/dashboard/data-sources" class="btn btn-primary
-          {{Request::path() == 'dashboard/data-sources' ? 'active' : '';}}">
+        <a href="/dashboard/datasources" class="btn btn-primary
+          {{Request::path() == 'dashboard/datasources' ? 'active' : '';}}">
           <span class="fui-upload"></span> Data Sources</a>
         <a href="/dashboard/settings" class="btn btn-primary
           {{Request::path() == 'dashboard/settings' ? 'active' : '';}}">
           <span class="fui-gear"></span> Settings</a>
       </div>
     </div>
+
     <div class="col-md-10">
+      <!-- Success-Messages -->
+      @if ($message = Session::get('success'))
+        <div class="alert alert-success alert-block">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <p><small>
+            <b>Success:</b>
+            {{{ $message }}}
+          </small></p>
+        </div>
+      @endif
 @stop
 
 @section('scripts')

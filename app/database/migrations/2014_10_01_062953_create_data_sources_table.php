@@ -16,7 +16,7 @@ class CreateDataSourcesTable extends Migration {
 		{
 			$table->increments('id');
 			$table->string('title');
-			$table->mediumText('description');
+			$table->mediumText('description')->nullable();
 			$table->string('url');
 			$table->timestamps();
 		});

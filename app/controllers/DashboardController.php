@@ -14,7 +14,13 @@ class DashboardController extends BaseController {
 
   public function showDataSources()
   {
-    return View::make('dashboard.datasources');
+    $datasources = DataSource::all();
+
+    $data = array(
+      'datasources' => $datasources
+    );
+
+    return View::make('dashboard.datasources', $data);
   }
 
 }
