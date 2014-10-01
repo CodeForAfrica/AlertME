@@ -23,4 +23,5 @@ Route::group(array('before' => 'auth'), function()
 {
     Route::get('dashboard', 'DashboardController@showHome');
     Route::get('dashboard/settings', 'DashboardController@showSettings');
+    Route::get('dashboard/data-sources', 'DashboardController@showDataSources');
 });

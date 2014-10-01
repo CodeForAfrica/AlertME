@@ -12,4 +12,9 @@ class DashboardController extends BaseController {
     return View::make('dashboard.settings');
   }
 
+  public function showDataSources()
+  {
+    return View::make('dashboard.datasources');
+  }
+
 }
