@@ -11,4 +11,15 @@
 |
 */
 
-Route::get('/', 'HomeController@showHome');
+Route::get('', 'HomeController@showHome');
+
+// Authentication
+Route::get('login', 'AuthController@showLogin');
+Route::post('login', 'AuthController@postLogin');
+Route::get('logout', 'AuthController@getLogout');
+
+// Secure-Routes
+Route::group(array('before' => 'auth'), function()
+{
+    Route::get('dashboard', 'DashboardController@showHome');
+});

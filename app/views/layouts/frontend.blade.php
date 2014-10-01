@@ -5,7 +5,7 @@
 @stop
 
 @section('navigation')
-  <nav class="navbar navbar-default navbar-embossed navbar-fixed-top navbar-lg" role="navigation">
+  <nav class="navbar navbar-inverse navbar-embossed navbar-fixed-top navbar-lg" role="navigation">
     <!-- Navbar content -->
     <div class="container">
 
@@ -17,7 +17,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">#GreenAlert</a>
+        <a class="navbar-brand" href="/">#GreenAlert</a>
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
