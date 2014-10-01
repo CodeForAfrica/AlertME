@@ -8,3 +8,10 @@
   .navigation-side a span {
     margin-right: 5px !important;
   }
+
+.data-sources h5 a {
+  margin: 0 5px;
+}
+  .data-sources h5 a:first-child {
+    margin-left: 30px;
+  }

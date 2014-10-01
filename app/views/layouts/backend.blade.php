@@ -4,6 +4,8 @@
 Dashboard
 @stop
 
+@section('body-class') dashboard @stop
+
 @section('stylesheets')
   <link rel="stylesheet" href="/assets/css/backend.css">
 @stop
@@ -39,8 +41,9 @@ Dashboard
 @stop
 
 @section('navigation-side')
-<!-- Nav tabs -->
-<div class="container-fluid">
+
+<div class="container-fluid dashboard">
+
   <div class="row">
     <div class="col-md-2">
       <div class="btn-group-vertical btn-block navigation-side">
