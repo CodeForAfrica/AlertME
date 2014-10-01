@@ -22,4 +22,5 @@ Route::get('logout', 'AuthController@getLogout');
 Route::group(array('before' => 'auth'), function()
 {
     Route::get('dashboard', 'DashboardController@showHome');
+    Route::get('dashboard/settings', 'DashboardController@showSettings');
 });

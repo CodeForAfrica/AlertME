@@ -7,4 +7,9 @@ class DashboardController extends BaseController {
     return View::make('dashboard.home');
   }
 
+  public function showSettings()
+  {
+    return View::make('dashboard.settings');
+  }
+
 }

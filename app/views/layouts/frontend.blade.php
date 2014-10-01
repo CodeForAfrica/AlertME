@@ -24,9 +24,20 @@
       <div class="collapse navbar-collapse" id="ga-navbar-collapse-1">
 
         <ul class="nav navbar-nav">
-          <li class="active"><a href="#">Home</a></li>
-          <li><a href="#">About</a></li>
+          <li class="{{Request::path() == '/' ? 'active' : '';}}">
+            <a href="/">Home</a></li>
+          <li class="{{Request::path() == 'about' ? 'active' : '';}}">
+            <a href="/about">About</a></li>
+          @if ( Auth::guest() )
+            <li class="{{Request::path() == 'login' ? 'active' : '';}}">
+              <a href="/login">Login</a></li>
+          @else
+            <li class="{{Request::path() == 'dashboard' ? 'active' : '';}}">
+              <a href="/dashboard">Dashboard</a></li>
+          @endif
         </ul>
+
+
 
         <form class="navbar-form navbar-right" action="#" role="search">
           <div class="form-group">

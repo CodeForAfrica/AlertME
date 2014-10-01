@@ -1,3 +1,10 @@
 /*
  *
  */
+
+.navigation-side a {
+  text-align: left;
+}
+  .navigation-side a span {
+    margin-right: 5px !important;
+  }
