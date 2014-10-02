@@ -19,7 +19,7 @@
 
     @yield('stylesheets')
 
-    <script src="/assets/js/vendor/modernizr-2.6.2.min"></script>
+    <script src="/assets/js/vendor/modernizr-2.6.2.min.js"></script>
 
   </head>
   <body class="@yield('body-class')">
