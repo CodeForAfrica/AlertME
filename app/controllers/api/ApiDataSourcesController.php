@@ -42,6 +42,7 @@ class ApiDataSourcesController extends \BaseController {
 		$datasource->title = Input::get('title');
 		$datasource->description = Input::get('desc');
 		$datasource->url = Input::get('url');
+
 		$datasource->save();
 		return Response::json(array(
         'error' => false,
@@ -94,6 +95,7 @@ class ApiDataSourcesController extends \BaseController {
 		$datasource->title = Input::get('title');
 		$datasource->description = Input::get('desc');
 		$datasource->url = Input::get('url');
+
 		$datasource->save();
 		return Response::json(array(
 				'error' => false,
