@@ -18,6 +18,8 @@ class CreateDataSourcesTable extends Migration {
 			$table->string('title');
 			$table->mediumText('description')->nullable();
 			$table->string('url');
+			$table->integer('config_status')->default(0)->nullable();
+			$table->mediumText('config')->nullable();
 			$table->timestamps();
 		});
 	}
