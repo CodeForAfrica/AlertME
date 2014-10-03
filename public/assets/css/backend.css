@@ -45,3 +45,7 @@
   display: inline-block;
   margin-left: 20px;
 }
+
+#configModal #config-edit-error {
+  margin-bottom: 10px;
+}

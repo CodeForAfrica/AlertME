@@ -227,96 +227,148 @@ $( document ).ready(function() {
     });
   }
 
-  function displayConfigEdit(){
+  function displayConfigEdit() {
+    $('#config-edit-error').hide();
     $('#edit-config-btn').html(
       '<button type="button" class="btn btn-primary btn-embossed btn-wide" id="save-config">Save</button>'
     );
 
-    var opts_cols_html = '<option value="none">Select column</option>';
+    config_sel_cols_html = '<option value="-1">Select column</option>';
     $.each(data_source_columns, function( index, value ) {
-      opts_cols_html = opts_cols_html + '<option value="' + index + '">' + value + '</option>';
+      config_sel_cols_html = config_sel_cols_html + '<option value="' + index + '">' + value + '</option>';
     });
-
-
-    var geo_lat_lng_html = '<div class="row">'+
-      '<div class="col-xs-3">Lat:</div>'+
-      '<div class="col-xs-9">'+
-        '<select id="sel_config_desc" class="form-control select select-primary mbl">'+
-          opts_cols_html+
-        '</select>'+
-    '</div></div><div class="row">'+
-      '<div class="col-xs-3">Long:</div>'+
-      '<div class="col-xs-9">'+
-        '<select id="sel_config_desc" class="form-control select select-primary mbl">'+
-          opts_cols_html+
-        '</select>'+
-    '</div></div>';
-
-    var geo_address_html = '<div class="row">'+
-      '<div class="col-xs-3">Address:</div>'+
-      '<div class="col-xs-9">'+
-        '<select id="sel_config_desc" class="form-control select select-primary mbl">'+
-          opts_cols_html+
-        '</select>'+
-    '</div></div>';
-
 
     var edit_html = '<div class="alert alert-success">'+
       '<p>Columns configuration for each project \\ row of data.</p>'+
       '<p><b>ID</b> <small><em>(Important! Unique identifier)</em></small><br/>'+
       '<select id="sel_config_id" class="form-control select select-primary select-block mbl">'+
-        opts_cols_html+
+        config_sel_cols_html+
       '</select></p>'+
       '<p><b>Title</b><br/>'+
       '<select id="sel_config_title" class="form-control select select-primary select-block mbl">'+
-        opts_cols_html+
+        config_sel_cols_html+
       '</select></p>'+
       '<p><b>Description</b><br/>'+
       '<select id="sel_config_desc" class="form-control select select-primary select-block mbl">'+
-        opts_cols_html+
+        config_sel_cols_html+
       '</select></p>'+
       '<p><b>Geolocation</b><br/>'+
       'Type: '+
       '<label class="radio radio-geo-type">'+
-        '<input type="radio" name="sel_config_geo_type" id="sel_config_geo_type_lat" value="lat_lng" data-toggle="radio" checked="">'+
-          'Long + Lat'+
+        '<input type="radio" name="sel_config_geo_type" id="sel_config_geo_type_lat_lng" value="lat_lng" data-toggle="radio" checked="">'+
+          'Lat + Lng'+
       '</label>'+
       '<label class="radio radio-geo-type">'+
         '<input type="radio" name="sel_config_geo_type" id="sel_config_geo_type_add" value="address" data-toggle="radio">'+
           'Address'+
       '</label><br/>'+
       '<div id="geo_type">'+
-        geo_lat_lng_html +
+        '<div class="row div_config_geo_lat">'+
+          '<div class="col-xs-3">Lat:</div>'+
+          '<div class="col-xs-9">'+
+            '<select id="sel_config_geo_lat" class="form-control select select-primary mbl">'+
+              config_sel_cols_html+
+            '</select>'+
+        '</div></div><div class="row div_config_geo_lng">'+
+          '<div class="col-xs-3">Long:</div>'+
+          '<div class="col-xs-9">'+
+            '<select id="sel_config_geo_lng" class="form-control select select-primary mbl">'+
+              config_sel_cols_html+
+            '</select>'+
+        '</div></div>'+
+        '<div class="row div_config_geo_add" style="display:none;">'+
+          '<div class="col-xs-3">Address:</div>'+
+          '<div class="col-xs-9">'+
+            '<select id="sel_config_geo_add" class="form-control select select-primary mbl">'+
+              config_sel_cols_html+
+            '</select>'+
+        '</div></div>'+
       '</div></p>'+
       '<p><b>Status</b><br/>'+
       '<select id="sel_config_status" class="form-control select select-primary select-block mbl">'+
-        opts_cols_html+
+        config_sel_cols_html+
       '</select></p>'+
+      '<p id="config-edit-error" class="text-danger alert alert-danger" style="display:none;"></p>'+
     '</div>';
 
     $('#config-screen').html(edit_html);
 
+    configOnSelect();
+
     $("select").select2({dropdownCssClass: 'dropdown-inverse'});
     $(':radio').radiocheck();
-
-    $('.radio-geo-type :radio').on('change.radiocheck', function() {
-      // Do something
-      if ($(this).val() == 'lat_lng') {
-        $('#geo_type').html(geo_lat_lng_html);
-      }
-      if ($(this).val() == 'address') {
-        $('#geo_type').html(geo_address_html);
-      }
-      $("select").select2({dropdownCssClass: 'dropdown-inverse'});
-      $(':radio').radiocheck();
-    });
 
     $('#save-config').click(function() {
       saveConfig();
     });
   }
 
+  function configOnSelect () {
+
+    // ID
+    $( "#sel_config_id" ).change(function() {
+      config_id = $("#sel_config_id option:selected").val();
+    });
+
+    // Title
+    $( "#sel_config_title" ).change(function() {
+      config_title = $("#sel_config_id option:selected").val();
+    });
+
+    // Description
+    $( "#sel_config_desc" ).change(function() {
+      config_desc = $("#sel_config_id option:selected").val();
+    });
+
+    // Geolocation
+    $('.radio-geo-type :radio').on('change.radiocheck', function() {
+      // Do something
+      if ($(this).val() == 'lat_lng') {
+        $('.div_config_geo_add').hide();
+        $('.div_config_geo_lat').show();
+        $('.div_config_geo_lng').show();
+        config_geo_type = 'lat_lng';
+      }
+      if ($(this).val() == 'address') {
+        $('.div_config_geo_lat').hide();
+        $('.div_config_geo_lng').hide();
+        $('.div_config_geo_add').show();
+        config_geo_type = 'address';
+      }
+    });
+    $( "#sel_config_geo_lat, #sel_config_geo_lng, #sel_config_geo_add" ).change(function() {
+      if(config_geo_type == 'lat_lng') {
+        config_geo = [
+          $("#sel_config_geo_lat option:selected").val(),
+          $("#sel_config_geo_lng option:selected").val()
+        ];
+      }
+      if(config_geo_type == 'address') {
+        config_geo = $("#sel_config_geo_add option:selected").val();
+      }
+    });
+
+    // Status
+    $( "#sel_config_status" ).change(function() {
+      config_status = $("#sel_config_status option:selected").val();
+    });
+
+  }
+
   function saveConfig() {
+
+    // var config_id = 0;
+    // var config_title = 0;
+    // var config_desc = 0;
+    // var config_geo_type = 'lat_lng';
+    // var config_geo = 0;
+    // var config_status = 0;
+
+    if(config_id == -1 || config_title == -1 || config_desc == -1 || config_geo == -1 || config_status == -1){
+      $('#config-edit-error').html('<small><b>Error:</b> Please define all columns.</small>');
+      $('#config-edit-error').show();
+      return;
+    }
 
     $('#edit-config-btn').html(
       '<button type="button" class="btn btn-info btn-embossed btn-wide" id="edit-config">Edit</button>'

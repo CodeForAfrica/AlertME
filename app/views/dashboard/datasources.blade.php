@@ -180,11 +180,13 @@ var edit_id = 0;
 var config_data = new Object();
 var data_source_columns = [];
 
-var config_id = 0;
-var config_title = 0;
-var config_desc = 0;
-var config_geo_type = '';
-var config_geo = 0;
-var config_status = 0;
+var config_id = -1;
+var config_title = -1;
+var config_desc = -1;
+var config_geo_type = 'lat_lng';
+var config_geo = -1;
+var config_status = -1;
+
+var config_sel_cols_html = '';
 
 @stop
