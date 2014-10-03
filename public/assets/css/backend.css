@@ -34,3 +34,7 @@
 .data-sources #deleteModal .well p {
   margin-bottom: 0;
 }
+
+#configModal .well .col-sm-3 p {
+  text-align: right;
+}

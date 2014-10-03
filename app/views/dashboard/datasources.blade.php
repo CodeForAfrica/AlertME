@@ -130,6 +130,41 @@
     </div>
   </div>
 
+  <!-- Configure Modal -->
+  <div class="modal fade" id="configModal" tabindex="-1" role="dialog" aria-labelledby="configModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+          </button>
+          <h4 class="modal-title" id="configModalLabel">Configure Data Source</h4>
+        </div>
+
+        <div class="modal-body">
+          <p><em>This is where you tell the system how your data source is structured.</em></p>
+          <div class="well">
+            <div class="row">
+              <div class="col-sm-3">
+                <p><b>Data Source</b></p>
+              </div>
+              <div class="col-sm-9">
+                <p id="title"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-info" id="config-data-source">Edit Configuration</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
 
 </div> <!-- /.data-sources -->
 

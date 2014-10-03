@@ -16,6 +16,7 @@ class CreateDataSourcesConfigTable extends Migration {
 		{
 			$table->increments('id');
 			$table->integer('datasource_id');
+			$table->mediumText('datasource_columns');
 			$table->integer('config_status');
 			$table->mediumText('config')->nullable();
 			$table->timestamps();

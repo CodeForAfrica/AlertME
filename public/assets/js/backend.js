@@ -54,6 +54,7 @@ $( document ).ready(function() {
   });
 
   // Data Source Edit
+
   $('[id^=edit-data-source-]').click(function() {
     $("#editModalLabel").html('Edit Data Source');
     edit_id = $(this).attr('alt');
@@ -80,7 +81,7 @@ $( document ).ready(function() {
   // Data Source Delete
 
   $('[id^=del-data-source-]').click(function() {
-    var ds_sel = '#' + 'data-source-' + $(this).attr('alt');
+    var ds_sel = '#data-source-' + $(this).attr('alt');
     var title_sel =  ds_sel + ' #title';
     var desc_sel = ds_sel + ' #desc';
     var url_sel = ds_sel + ' #url';
@@ -108,6 +109,60 @@ $( document ).ready(function() {
 
   });
 
+
+  // Data source configure
+
+  $('[id^=config-data-source-]').click(function() {
+    edit_id = $(this).attr('alt');
+
+    var ds_sel = '#data-source-' + edit_id;
+    var title_sel =  ds_sel + ' #title';
+    var desc_sel = ds_sel + ' #desc';
+    var url_sel = ds_sel + ' #url';
+
+    var title_val = $(title_sel).html();
+    var desc_val = $(desc_sel).html();
+    var url_val = $(url_sel).html();
+
+    if (desc_val == '[No Description]') {
+      desc_val = '';
+    }
+
+    var title_html = '<a href="'+url_val+'" target="_blank">'+title_val+'</span></a>'
+
+
+    var well_html = "";
+    var well_details = {
+      'datasource': {
+        'left': 'Data Source',
+        'right': title_html
+      },
+      'columns': {
+        'left': 'Columns',
+        'right': title_html
+      }
+    };
+
+    for (var key in well_details) {
+      var obj = well_details[key];
+      well_html = well_html + jst_configModal_well(obj.left, obj.right);
+    }
+
+    $("#configModal .well").html(well_html);
+
+  });
+
+  function jst_configModal_well(left, right){
+    var html = '<div class="row">'+
+      '<div class="col-sm-3">'+
+        '<p><b>'+left+'</b></p>'+
+      '</div>'+
+      '<div class="col-sm-9">'+
+        '<p>'+right+'</p>'+
+      '</div>'+
+    '</div>';
+    return html;
+  }
 
 
 });

@@ -44,6 +44,7 @@ class ApiDataSourcesController extends \BaseController {
 		$datasource->url = Input::get('url');
 
 		$datasource->save();
+		
 		return Response::json(array(
         'error' => false,
         'datasources' => $datasource->toArray()),
