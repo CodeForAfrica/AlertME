@@ -13,7 +13,7 @@ class ApiDataSourceConfigController extends \BaseController {
 		$configs =  DataSourceConfig::all();
 		return Response::json(array(
 				'error' => false,
-				'datasources' => $configs->toArray()),
+				'configs' => $configs->toArray()),
 				200
 		);
 	}
@@ -53,7 +53,7 @@ class ApiDataSourceConfigController extends \BaseController {
 		$config =  DataSource::find($id)->datasourceconfig;
 		return Response::json(array(
 				'error' => false,
-				'datasources' => $config->toArray()),
+				'config' => $config->toArray()),
 				200
 		);
 	}

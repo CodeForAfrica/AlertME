@@ -130,15 +130,10 @@ $( document ).ready(function() {
 
     var title_html = '<a href="'+url_val+'" target="_blank">'+title_val+'</span></a>';
 
-
     var well_html = "";
     var well_details = {
       'datasource': {
         'left': 'Data Source',
-        'right': title_html
-      },
-      'columns': {
-        'left': 'Columns',
         'right': title_html
       }
     };
@@ -148,7 +143,32 @@ $( document ).ready(function() {
       well_html = well_html + jst_configModal_well(obj.left, obj.right);
     }
 
-    $("#configModal .well").html(well_html);
+    loading_html = '<p class="text-center" id="loading-config">'+
+    '<i class="fa fa-circle-o-notch fa-spin"></i><br/>Loading configuration...</p>';
+
+    $("#configModal .well").html(well_html+loading_html);
+
+    $.ajax({
+      type: "GET",
+      url: base_url+"/api/v1/datasourceconfig/"+edit_id
+    }).done(function( response ) {
+      var config = response.config;
+
+      well_details = {
+        'columns': {
+          'left': 'Columns',
+          'right': '<small>'+config.data_source_columns+'</small>'
+        }
+      };
+
+      for (var key in well_details) {
+        var obj = well_details[key];
+        well_html = well_html + jst_configModal_well(obj.left, obj.right);
+      }
+
+      $("#configModal #loading-config").hide();
+      $("#configModal .well").html(well_html);
+    });
 
   });
 

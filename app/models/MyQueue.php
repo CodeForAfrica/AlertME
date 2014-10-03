@@ -13,7 +13,7 @@ class MyQueue {
 
     $csv = array_map('str_getcsv', file($datasource->url));
 
-    $config->data_source_columns = serialize($csv[0]);
+    $config->data_source_columns = json_encode($csv[0]);
     $config->config_status = 2;
     $config->save();
 
