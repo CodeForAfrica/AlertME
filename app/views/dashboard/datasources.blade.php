@@ -6,9 +6,9 @@
 
   <h5>
     Data Sources
-    <button type="button" class="btn btn-info btn-sm" >
+    <button type="button" class="btn btn-info btn-embossed btn-wide btn-sm" >
       <span class="fui-radio-unchecked"></span> Sync</button>
-    <button type="button" class="btn btn-primary btn-sm"
+    <button type="button" class="btn btn-primary btn-embossed btn-wide btn-sm"
       id="add-data-source" data-toggle="modal" data-target="#editModal">
       <span class="fui-plus"></span> Add</button>
   </h5>
@@ -67,7 +67,7 @@
       <div class="modal-content">
 
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" id="close_x-editModal">
+          <button type="button" class="close close-modal" data-dismiss="modal" id="close_x-editModal">
             <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
           </button>
           <h4 class="modal-title" id="editModalLabel">Edit Data Source</h4>
@@ -92,8 +92,8 @@
         </div>
 
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal" id="close-editModal">Close</button>
-          <button type="button" class="btn btn-primary" id="save-data-source">Save changes</button>
+          <button type="button" class="btn btn-default btn-embossed btn-wide close-modal" data-dismiss="modal" id="close-editModal">Close</button>
+          <button type="button" class="btn btn-primary btn-embossed btn-wide" id="save-data-source">Save changes</button>
         </div>
 
       </div>
@@ -106,7 +106,7 @@
       <div class="modal-content">
 
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">
+          <button type="button" class="close close-modal" data-dismiss="modal">
             <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
           </button>
           <h4 class="modal-title" id="deleteModalLabel">Delete Data Source</h4>
@@ -122,8 +122,8 @@
         </div>
 
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-danger" id="delete-data-source">Delete Data Source</button>
+          <button type="button" class="btn btn-default btn-embossed btn-wide close-modal" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-danger btn-embossed btn-wide" id="delete-data-source">Delete Data Source</button>
         </div>
 
       </div>
@@ -136,7 +136,7 @@
       <div class="modal-content">
 
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">
+          <button type="button" class="close close-modal" data-dismiss="modal">
             <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
           </button>
           <h4 class="modal-title" id="configModalLabel">Configure Data Source</h4>
@@ -157,8 +157,10 @@
         </div>
 
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-info" id="edit-config">Edit Configuration</button>
+          <button type="button" class="btn btn-default btn-embossed btn-wide close-modal" data-dismiss="modal">Close</button>
+          <span id="edit-config-btn">
+            <button type="button" class="btn btn-info btn-embossed btn-wide" id="edit-config">Edit</button>
+          </span>
         </div>
 
       </div>
@@ -173,6 +175,16 @@
 @stop
 
 @section('scripts-data')
+
 var edit_id = 0;
-var config_data = '';
+var config_data = new Object();
+var data_source_columns = [];
+
+var config_id = 0;
+var config_title = 0;
+var config_desc = 0;
+var config_geo_type = '';
+var config_geo = 0;
+var config_status = 0;
+
 @stop

@@ -1,5 +1,12 @@
 $( document ).ready(function() {
 
+  $('.close-modal').click(function() {
+    $('.data-sources #editModal #error').hide();
+    $('#edit-config-btn').html(
+      '<button type="button" class="btn btn-info btn-embossed btn-wide" id="edit-config">Edit</button>'
+    );
+  });
+
   // Data Sources
 
   $( "#add-data-source, #add-data-source-first" ).click(function() {
@@ -47,10 +54,6 @@ $( document ).ready(function() {
       window.location.replace("/dashboard/datasources");
     });
 
-  });
-
-  $('#close-editModal, #close_x-editModal').click(function() {
-    $('.data-sources #editModal #error').hide();
   });
 
   // Data Source Edit
@@ -157,13 +160,14 @@ $( document ).ready(function() {
       url: base_url+"/api/v1/datasourceconfig/"+edit_id
     }).done(function( response ) {
       config_data = response.config;
+      data_source_columns = JSON.parse(config_data.data_source_columns)
 
       var config_status_3_html = '<div class="alert alert-info" role="alert">'+
         '<span class="fui-alert-circle"></span> We are still fetching this data source\'s details...<br/>'+
         '<button class="btn btn-sm btn-link" id="refresh-config">'+
         '<i class="fa fa-refresh"></i> Refresh to check for update</button>'+
       '</div>';
-      var config_status_2_html = '<div class="config-screen">'+
+      var config_status_2_html = '<div id="config-screen">'+
         '<div class="alert alert-success" role="alert">'+
           '<span class="fui-alert-circle"></span> This data source is ready for configuriation.<br/>'+
           '<button class="btn btn-sm btn-link" id="new-config">'+
@@ -200,13 +204,13 @@ $( document ).ready(function() {
       $("#configModal #loading-config").hide();
       $("#configModal .well").html(well_html);
 
-      $(".well .row .col-sm-9 p").readmore({
-        speed: 75,
-        maxHeight: 100,
-        moreLink: '<a href="#"><small>More</small></a>',
-        lessLink: '<a href="#"><small>Less</small></a>',
-        sectionCSS: 'margin-bottom:0;'
-      });
+      // $(".well .row .col-sm-9 p").readmore({
+      //   speed: 75,
+      //   maxHeight: 100,
+      //   moreLink: '<a href="#"><small>More</small></a>',
+      //   lessLink: '<a href="#"><small>Less</small></a>',
+      //   sectionCSS: 'margin-bottom:0;'
+      // });
 
       $('#refresh-config').click(function() {
         displayConfig();
@@ -218,7 +222,101 @@ $( document ).ready(function() {
   }
 
   function displayConfigEdit(){
+    $('#edit-config-btn').html(
+      '<button type="button" class="btn btn-primary btn-embossed btn-wide" id="save-config">Save</button>'
+    );
 
+    var opts_cols_html = '<option value="none">Select column</option>';
+    $.each(data_source_columns, function( index, value ) {
+      opts_cols_html = opts_cols_html + '<option value="' + index + '">' + value + '</option>';
+    });
+
+
+    var geo_lat_lng_html = '<div class="row">'+
+      '<div class="col-xs-3">Lat:</div>'+
+      '<div class="col-xs-9">'+
+        '<select id="sel_config_desc" class="form-control select select-primary mbl">'+
+          opts_cols_html+
+        '</select>'+
+    '</div></div><div class="row">'+
+      '<div class="col-xs-3">Long:</div>'+
+      '<div class="col-xs-9">'+
+        '<select id="sel_config_desc" class="form-control select select-primary mbl">'+
+          opts_cols_html+
+        '</select>'+
+    '</div></div>';
+
+    var geo_address_html = '<div class="row">'+
+      '<div class="col-xs-3">Address:</div>'+
+      '<div class="col-xs-9">'+
+        '<select id="sel_config_desc" class="form-control select select-primary mbl">'+
+          opts_cols_html+
+        '</select>'+
+    '</div></div>';
+
+
+    var edit_html = '<div class="alert alert-success">'+
+      '<p>Columns configuration for each project \\ row of data.</p>'+
+      '<p><b>ID</b> <small><em>(Important! Unique identifier)</em></small><br/>'+
+      '<select id="sel_config_id" class="form-control select select-primary select-block mbl">'+
+        opts_cols_html+
+      '</select></p>'+
+      '<p><b>Title</b><br/>'+
+      '<select id="sel_config_title" class="form-control select select-primary select-block mbl">'+
+        opts_cols_html+
+      '</select></p>'+
+      '<p><b>Description</b><br/>'+
+      '<select id="sel_config_desc" class="form-control select select-primary select-block mbl">'+
+        opts_cols_html+
+      '</select></p>'+
+      '<p><b>Geolocation</b><br/>'+
+      'Type: '+
+      '<label class="radio radio-geo-type">'+
+        '<input type="radio" name="sel_config_geo_type" id="sel_config_geo_type_lat" value="lat_lng" data-toggle="radio" checked="">'+
+          'Long + Lat'+
+      '</label>'+
+      '<label class="radio radio-geo-type">'+
+        '<input type="radio" name="sel_config_geo_type" id="sel_config_geo_type_add" value="address" data-toggle="radio">'+
+          'Address'+
+      '</label><br/>'+
+      '<div id="geo_type">'+
+        geo_lat_lng_html +
+      '</div></p>'+
+      '<p><b>Status</b><br/>'+
+      '<select id="sel_config_status" class="form-control select select-primary select-block mbl">'+
+        opts_cols_html+
+      '</select></p>'+
+    '</div>';
+
+    $('#config-screen').html(edit_html);
+
+    $("select").select2({dropdownCssClass: 'dropdown-inverse'});
+    $(':radio').radiocheck();
+
+    $('.radio-geo-type :radio').on('change.radiocheck', function() {
+      // Do something
+      if ($(this).val() == 'lat_lng') {
+        $('#geo_type').html(geo_lat_lng_html);
+      }
+      if ($(this).val() == 'address') {
+        $('#geo_type').html(geo_address_html);
+      }
+      $("select").select2({dropdownCssClass: 'dropdown-inverse'});
+      $(':radio').radiocheck();
+    });
+
+    $('#save-config').click(function() {
+      saveConfig();
+    });
+  }
+
+  function saveConfig() {
+
+    $('#edit-config-btn').html(
+      '<button type="button" class="btn btn-info btn-embossed btn-wide" id="edit-config">Edit</button>'
+    );
+
+    displayConfig();
   }
 
   function jst_configModal_well(left, right){

@@ -1,6 +1,8 @@
-/*
+/**
  *
  */
+
+@import'base.css';
 
 .navigation-side a {
   text-align: left;
@@ -37,4 +39,9 @@
 
 #configModal .well .col-sm-3 p {
   text-align: right;
+}
+
+#configModal .well .col-sm-9 #config-screen .radio {
+  display: inline-block;
+  margin-left: 20px;
 }

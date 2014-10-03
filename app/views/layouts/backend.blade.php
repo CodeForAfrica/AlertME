@@ -30,9 +30,8 @@ Dashboard
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="ga-navbar-collapse-1">
 
-        <a class="btn btn-default btn-sm navbar-btn navbar-right" type="button"
+        <a class="btn btn-default btn-sm btn-embossed navbar-btn navbar-right" type="button"
           href="/logout">Logout</a>
-
 
       </div><!-- /.navbar-collapse -->
 

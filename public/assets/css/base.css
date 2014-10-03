@@ -1,0 +1,7 @@
+/**
+ *
+ */
+
+.dropdown-menu, .select2-drop {
+  z-index: 9999;
+}
