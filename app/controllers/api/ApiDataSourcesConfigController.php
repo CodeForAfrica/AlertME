@@ -80,6 +80,17 @@ class ApiDataSourceConfigController extends \BaseController {
 	public function update($id)
 	{
 		//
+		$config = DataSourceConfig::find($id);
+		$config->data_source_columns = Input::get('data_source_columns');
+		$config->config_status = Input::get('config_status');
+		$config->config = json_encode(Input::get('config'));
+
+		$config->save();
+		return Response::json(array(
+				'error' => false,
+				'config' => $config->toArray()),
+				200
+		);
 	}
 
 

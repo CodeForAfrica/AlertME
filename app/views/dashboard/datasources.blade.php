@@ -184,7 +184,9 @@ var config_id = -1;
 var config_title = -1;
 var config_desc = -1;
 var config_geo_type = 'lat_lng';
-var config_geo = -1;
+var config_geo_lat = -1;
+var config_geo_lng = -1;
+var config_geo_add = -1;
 var config_status = -1;
 
 var config_sel_cols_html = '';

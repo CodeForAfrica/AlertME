@@ -179,6 +179,15 @@ $( document ).ready(function() {
           '<button class="btn btn-sm btn-link" id="new-config">'+
           '<span class="fui-cmd"></i> Configure now</button>'+
         '</div></div>';
+      var config_status_0_html = '<div id="config-screen">'+
+        '<div class="alert alert-danger" role="alert">'+
+          '<span class="fui-alert-circle"></span> This data source has an error. '+
+          'Please check that the data is well structured, delete it and add it again.<br/>'+
+          '<button class="btn btn-sm btn-link" id="config-del">'+
+          '<span class="fui-cmd"></i> Delete data source now</button>'+
+          '<button class="btn btn-sm btn-link" id="config-help">'+
+          '<span class="fui-question-circle"></i> Check out the help</button>'+
+        '</div></div>';
 
       // Columns being fetched
       if (config_data.config_status == 3){
@@ -200,6 +209,27 @@ $( document ).ready(function() {
           'right': config_status_2_html
         };
       }
+
+      // Data error
+      if (config_data.config_status == 0){
+        pre_html['config'] = {
+          'left': '<p><b>Configuration</b></p>',
+          'right': config_status_0_html
+        };
+      }
+
+      // Configured
+      if (config_data.config_status == 1){
+        var config_data_html = '';
+
+
+
+        pre_html['config'] = {
+          'left': '<p><b>Configuration</b></p>',
+          'right': '<div id="config-screen">'+config_data_html+'</div>'
+        };
+      }
+
 
       var well_html = '';
       for (var key in pre_html) {
@@ -338,13 +368,11 @@ $( document ).ready(function() {
     });
     $( "#sel_config_geo_lat, #sel_config_geo_lng, #sel_config_geo_add" ).change(function() {
       if(config_geo_type == 'lat_lng') {
-        config_geo = [
-          $("#sel_config_geo_lat option:selected").val(),
-          $("#sel_config_geo_lng option:selected").val()
-        ];
+        config_geo_lat = $("#sel_config_geo_lat option:selected").val();
+        config_geo_lng = $("#sel_config_geo_lng option:selected").val();
       }
       if(config_geo_type == 'address') {
-        config_geo = $("#sel_config_geo_add option:selected").val();
+        config_geo_add = $("#sel_config_geo_add option:selected").val();
       }
     });
 
@@ -357,18 +385,52 @@ $( document ).ready(function() {
 
   function saveConfig() {
 
-    // var config_id = 0;
-    // var config_title = 0;
-    // var config_desc = 0;
-    // var config_geo_type = 'lat_lng';
-    // var config_geo = 0;
-    // var config_status = 0;
-
-    if(config_id == -1 || config_title == -1 || config_desc == -1 || config_geo == -1 || config_status == -1){
+    if(config_id == -1 || config_title == -1 || config_desc == -1 || config_status == -1){
       $('#config-edit-error').html('<small><b>Error:</b> Please define all columns.</small>');
       $('#config-edit-error').show();
       return;
     }
+    if(config_geo_type == 'lat_lng') {
+      if(config_geo_lat == -1 || config_geo_lng == -1){
+        $('#config-edit-error').html('<small><b>Error:</b> Please define all columns.</small>');
+        $('#config-edit-error').show();
+        return;
+      }
+    }
+    if(config_geo_type == 'address') {
+      if(config_geo_add == -1){
+        $('#config-edit-error').html('<small><b>Error:</b> Please define all columns.</small>');
+        $('#config-edit-error').show();
+        return;
+      }
+    }
+
+    var config_final = {
+      config_id: config_id,
+      config_title: config_title,
+      config_desc: config_desc,
+      config_geo_type: config_geo_type,
+      config_geo_lat: config_geo_lat,
+      config_geo_lng: config_geo_lng,
+      config_geo_add: config_geo_add,
+      config_status: config_status
+    };
+
+    var data = {
+      id: config_data.id,
+      data_source_columns: config_data.data_source_columns,
+      config_status: 1,
+      config: config_final
+    };
+
+    $.ajax({
+      type: "PUT",
+      async: false,
+      url: base_url+"/api/v1/datasourceconfig/"+data.id,
+      data: data
+    }).done(function( response ) {
+
+    });
 
     $('#edit-config-btn').html(
       '<button type="button" class="btn btn-info btn-embossed btn-wide" id="edit-config">Edit</button>'
