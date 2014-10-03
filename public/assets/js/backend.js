@@ -160,7 +160,13 @@ $( document ).ready(function() {
       url: base_url+"/api/v1/datasourceconfig/"+edit_id
     }).done(function( response ) {
       config_data = response.config;
-      data_source_columns = JSON.parse(config_data.data_source_columns)
+      data_source_columns = JSON.parse(config_data.data_source_columns);
+
+      var data_source_columns_html = "";
+      $.each(data_source_columns, function( index, value ) {
+        data_source_columns_html = data_source_columns_html +
+          '<span class="label label-primary">'+value+'</span> ';
+      });
 
       var config_status_3_html = '<div class="alert alert-info" role="alert">'+
         '<span class="fui-alert-circle"></span> We are still fetching this data source\'s details...<br/>'+
@@ -183,7 +189,7 @@ $( document ).ready(function() {
       } else {
         pre_html['columns'] = {
           'left': '<p><b>Columns</b></p>',
-          'right': '<p><small>'+config_data.data_source_columns+'</small></p>'
+          'right': '<p>'+data_source_columns_html+'</p>'
         };
       }
 
