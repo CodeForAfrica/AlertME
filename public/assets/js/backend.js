@@ -168,6 +168,14 @@ $( document ).ready(function() {
 
       $("#configModal #loading-config").hide();
       $("#configModal .well").html(well_html);
+
+      $(".well .row .col-sm-9 p").readmore({
+        speed: 75,
+        maxHeight: 100,
+        moreLink: '<a href="#"><small>More</small></a>',
+        lessLink: '<a href="#"><small>Less</small></a>',
+        sectionCSS: 'margin-bottom:0;'
+      });
     });
 
   });
