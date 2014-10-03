@@ -1,6 +1,6 @@
 <?php
 
-class ApiDataSourceController extends \BaseController {
+class ApiDataSourceConfigController extends \BaseController {
 
 	/**
 	 * Display a listing of the resource.
@@ -10,10 +10,10 @@ class ApiDataSourceController extends \BaseController {
 	public function index()
 	{
 		//
-		$datasources =  DataSource::all();
+		$configs =  DataSourceConfig::all();
 		return Response::json(array(
 				'error' => false,
-				'datasources' => $datasources->toArray()),
+				'datasources' => $configs->toArray()),
 				200
 		);
 	}
@@ -38,18 +38,6 @@ class ApiDataSourceController extends \BaseController {
 	public function store()
 	{
 		//
-		$datasource = new DataSource;
-		$datasource->title = Input::get('title');
-		$datasource->description = Input::get('desc');
-		$datasource->url = Input::get('url');
-
-		$datasource->save();
-
-		return Response::json(array(
-        'error' => false,
-        'datasources' => $datasource->toArray()),
-        200
-    );
 	}
 
 
@@ -62,10 +50,10 @@ class ApiDataSourceController extends \BaseController {
 	public function show($id)
 	{
 		//
-		$datasource =  DataSource::find($id);
+		$config =  DataSourceConfig::find($id);
 		return Response::json(array(
 				'error' => false,
-				'datasources' => $datasource->toArray()),
+				'datasources' => $config->toArray()),
 				200
 		);
 	}
@@ -92,17 +80,6 @@ class ApiDataSourceController extends \BaseController {
 	public function update($id)
 	{
 		//
-		$datasource = DataSource::find($id);
-		$datasource->title = Input::get('title');
-		$datasource->description = Input::get('desc');
-		$datasource->url = Input::get('url');
-
-		$datasource->save();
-		return Response::json(array(
-				'error' => false,
-				'datasources' => $datasource->toArray()),
-				200
-		);
 	}
 
 
@@ -115,12 +92,6 @@ class ApiDataSourceController extends \BaseController {
 	public function destroy($id)
 	{
 		//
-		DataSource::find($id)->delete();
-		return Response::json(array(
-				'error' => false,
-				'message' => 'Data source deleted.'),
-				200
-		);
 	}
 
 

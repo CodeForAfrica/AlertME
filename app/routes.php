@@ -35,6 +35,6 @@ Route::get('/authtest', array('before' => 'auth.basic', function()
 // API v1
 Route::group(array('prefix' => 'api/v1', 'before' => 'auth.basic'), function()
 {
-    Route::resource('datasources', 'ApiDataSourcesController');
-    Route::delete('datasources/destroy/{id}', "ApiDataSourcesController@destroy");
+    Route::resource('datasources', 'ApiDataSourceController');
+    Route::resource('datasourceconfig', 'ApiDataSourceConfigController');
 });
