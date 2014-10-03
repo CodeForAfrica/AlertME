@@ -128,7 +128,7 @@ $( document ).ready(function() {
       desc_val = '';
     }
 
-    var title_html = '<a href="'+url_val+'" target="_blank">'+title_val+'</span></a>'
+    var title_html = '<a href="'+url_val+'" target="_blank">'+title_val+'</span></a>';
 
 
     var well_html = "";

@@ -12,15 +12,15 @@ class DataSource extends Eloquent {
       DataSource::created(function($datasource)
       {
         $config = new DataSourceConfig;
-        $config->datasource_id = $datasource->id;
-        $config->datasource_columns = '';
+        $config->data_source_id = $datasource->id;
+        $config->data_source_columns = '';
         $config->config_status = 2;
         $config->save();
       });
 
       DataSource::deleted(function($datasource)
       {
-        DataSourceConfig::where('datasource_id', '=', $datasource->id)->delete();
+        DataSourceConfig::where('data_source_id', '=', $datasource->id)->delete();
       });
     }
 

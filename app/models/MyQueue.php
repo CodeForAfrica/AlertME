@@ -9,11 +9,11 @@ class MyQueue {
   function fetchDataSourceColumns($job, $data)
   {
     $config = DataSourceConfig::find($data['config_id']);
-    $datasource = DataSource::find($config->datasource_id);
+    $datasource = DataSource::find($config->data_source_id);
 
     $csv = array_map('str_getcsv', file($datasource->url));
 
-    $config->datasource_columns = serialize($csv[0]);
+    $config->data_source_columns = serialize($csv[0]);
     $config->config_status = 2;
     $config->save();
 

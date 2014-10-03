@@ -50,7 +50,7 @@ class ApiDataSourceConfigController extends \BaseController {
 	public function show($id)
 	{
 		//
-		$config =  DataSourceConfig::find($id);
+		$config =  DataSource::find($id)->datasourceconfig;
 		return Response::json(array(
 				'error' => false,
 				'datasources' => $config->toArray()),

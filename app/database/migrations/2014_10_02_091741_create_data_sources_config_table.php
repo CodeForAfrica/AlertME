@@ -15,8 +15,8 @@ class CreateDataSourcesConfigTable extends Migration {
 		Schema::create('data_sources_config', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->integer('datasource_id');
-			$table->mediumText('datasource_columns');
+			$table->integer('data_source_id');
+			$table->mediumText('data_source_columns');
 			$table->integer('config_status');
 			$table->mediumText('config')->nullable();
 			$table->timestamps();
