@@ -24,7 +24,7 @@ class DataSource extends Eloquent {
       });
     }
 
-    function dataSourceConfig()
+    function datasourceconfig()
     {
       return $this->hasOne('DataSourceConfig');
     }
