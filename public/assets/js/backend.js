@@ -114,6 +114,11 @@ $( document ).ready(function() {
 
   $('[id^=config-data-source-]').click(function() {
     edit_id = $(this).attr('alt');
+    displayConfig();
+  });
+
+
+  function displayConfig(){
 
     var ds_sel = '#data-source-' + edit_id;
     var title_sel =  ds_sel + ' #title';
@@ -128,41 +133,67 @@ $( document ).ready(function() {
       desc_val = '';
     }
 
-    var title_html = '<a href="'+url_val+'" target="_blank">'+title_val+'</span></a>';
+    var title_html = '<p><a href="'+url_val+'" target="_blank">'+title_val+'</span></a></p>';
 
-    var well_html = "";
-    var well_details = {
+    var pre_html = {
       'datasource': {
-        'left': 'Data Source',
+        'left': '<p><b>Data Source</b></p>',
         'right': title_html
       }
     };
 
-    for (var key in well_details) {
-      var obj = well_details[key];
-      well_html = well_html + jst_configModal_well(obj.left, obj.right);
-    }
+    var datasource_html = jst_configModal_well(
+      pre_html['datasource'].left,
+      pre_html['datasource'].right
+    );
 
     loading_html = '<p class="text-center" id="loading-config">'+
     '<i class="fa fa-circle-o-notch fa-spin"></i><br/>Loading configuration...</p>';
 
-    $("#configModal .well").html(well_html+loading_html);
+    $("#configModal .well").html( datasource_html + loading_html );
 
     $.ajax({
       type: "GET",
       url: base_url+"/api/v1/datasourceconfig/"+edit_id
     }).done(function( response ) {
-      var config = response.config;
+      config_data = response.config;
 
-      well_details = {
-        'columns': {
-          'left': 'Columns',
-          'right': '<small>'+config.data_source_columns+'</small>'
-        }
-      };
+      var config_status_3_html = '<div class="alert alert-info" role="alert">'+
+        '<span class="fui-alert-circle"></span> We are still fetching this data source\'s details...<br/>'+
+        '<button class="btn btn-sm btn-link" id="refresh-config">'+
+        '<i class="fa fa-refresh"></i> Refresh to check for update</button>'+
+      '</div>';
+      var config_status_2_html = '<div class="config-screen">'+
+        '<div class="alert alert-success" role="alert">'+
+          '<span class="fui-alert-circle"></span> This data source is ready for configuriation.<br/>'+
+          '<button class="btn btn-sm btn-link" id="new-config">'+
+          '<span class="fui-cmd"></i> Configure now</button>'+
+        '</div></div>';
 
-      for (var key in well_details) {
-        var obj = well_details[key];
+      // Columns being fetched
+      if (config_data.config_status == 3){
+        pre_html['columns'] = {
+          'left': '<p><b>Columns</b></p>',
+          'right': config_status_3_html
+        };
+      } else {
+        pre_html['columns'] = {
+          'left': '<p><b>Columns</b></p>',
+          'right': '<p><small>'+config_data.data_source_columns+'</small></p>'
+        };
+      }
+
+      // Ready to configure
+      if (config_data.config_status == 2){
+        pre_html['config'] = {
+          'left': '<p><b>Configuration</b></p>',
+          'right': config_status_2_html
+        };
+      }
+
+      var well_html = '';
+      for (var key in pre_html) {
+        var obj = pre_html[key];
         well_html = well_html + jst_configModal_well(obj.left, obj.right);
       }
 
@@ -176,18 +207,24 @@ $( document ).ready(function() {
         lessLink: '<a href="#"><small>Less</small></a>',
         sectionCSS: 'margin-bottom:0;'
       });
-    });
 
-  });
+      $('#refresh-config').click(function() {
+        displayConfig();
+      });
+      $('#new-config, #edit-config').click(function() {
+        displayConfigEdit();
+      });
+    });
+  }
+
+  function displayConfigEdit(){
+
+  }
 
   function jst_configModal_well(left, right){
     var html = '<div class="row">'+
-      '<div class="col-sm-3">'+
-        '<p><b>'+left+'</b></p>'+
-      '</div>'+
-      '<div class="col-sm-9">'+
-        '<p>'+right+'</p>'+
-      '</div>'+
+      '<div class="col-sm-3 text-right">'+left+'</div>'+
+      '<div class="col-sm-9">'+right+'</div>'+
     '</div>';
     return html;
   }

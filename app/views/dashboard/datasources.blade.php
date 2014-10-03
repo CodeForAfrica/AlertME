@@ -158,7 +158,7 @@
 
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-info" id="config-data-source">Edit Configuration</button>
+          <button type="button" class="btn btn-info" id="edit-config">Edit Configuration</button>
         </div>
 
       </div>
@@ -174,4 +174,5 @@
 
 @section('scripts-data')
 var edit_id = 0;
+var config_data = '';
 @stop
