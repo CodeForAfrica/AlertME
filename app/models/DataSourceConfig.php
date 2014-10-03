@@ -4,11 +4,17 @@ class DataSourceConfig extends Eloquent {
 
     protected $table = 'data_sources_config';
 
-    DataSourceConfig::created(function($config)
+    public static function boot()
     {
-      //Fetch columns
-      
-    });
+      parent::boot();
+
+      // Setup event bindings...
+      DataSourceConfig::created(function($config)
+      {
+        //Fetch columns
+
+      });
+    }
 
     function dataSource()
     {

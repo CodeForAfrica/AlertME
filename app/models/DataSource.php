@@ -17,6 +17,11 @@ class DataSource extends Eloquent {
         $config->config_status = 2;
         $config->save();
       });
+
+      DataSource::deleted(function($datasource)
+      {
+        DataSourceConfig::where('datasource_id', '=', $datasource->id)->delete();
+      });
     }
 
     function dataSourceConfig()
