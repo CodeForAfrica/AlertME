@@ -7,7 +7,16 @@ $( document ).ready(function() {
     );
   });
 
-  // Data Sources
+  /**
+   * ---------------------------------------------------------------------------
+   * DATA SOURCE
+   * ---------------------------------------------------------------------------
+   */
+
+  /**
+   * Data Source DISPLAY
+   * -------------------
+   */
 
   $( "#add-data-source, #add-data-source-first" ).click(function() {
     $("#editModalLabel").html('New Data Source');
@@ -56,7 +65,10 @@ $( document ).ready(function() {
 
   });
 
-  // Data Source Edit
+  /**
+   * Data Source EDIT
+   * ----------------
+   */
 
   $('[id^=edit-data-source-]').click(function() {
     $("#editModalLabel").html('Edit Data Source');
@@ -81,7 +93,10 @@ $( document ).ready(function() {
 
   });
 
-  // Data Source Delete
+  /**
+   * Data Source DELETE
+   * ------------------
+   */
 
   $('[id^=del-data-source-]').click(function() {
     var ds_sel = '#data-source-' + $(this).attr('alt');
@@ -113,7 +128,10 @@ $( document ).ready(function() {
   });
 
 
-  // Data source configure
+  /**
+   * Data Source Configure
+   * ---------------------
+   */
 
   $('[id^=config-data-source-]').click(function() {
     edit_id = $(this).attr('alt');
