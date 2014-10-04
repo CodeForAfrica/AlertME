@@ -6,11 +6,14 @@
 
   <h5>
     Data Sources
-    <button type="button" class="btn btn-info btn-embossed btn-wide btn-sm" >
-      <span class="fui-radio-unchecked"></span> Sync</button>
+    <button type="button" class="btn btn-info btn-embossed btn-wide btn-sm"
+      id="data-source-sync" data-toggle="modal" data-target="#syncModal">
+      <span class="fui-radio-unchecked"></span> Sync
+    </button>
     <button type="button" class="btn btn-primary btn-embossed btn-wide btn-sm"
-      id="add-data-source" data-toggle="modal" data-target="#editModal">
-      <span class="fui-plus"></span> Add</button>
+      id="data-source-add" data-toggle="modal" data-target="#editModal">
+      <span class="fui-plus"></span> Add
+    </button>
   </h5>
 
   <hr/>
@@ -20,7 +23,7 @@
     @if (count($datasources) === 0)
       <p class="lead" id="no-data-sources">It seems you don't have any data sources yet.
         <button type="button" class="btn btn-primary btn-sm"
-          id="add-data-source-first" data-toggle="modal" data-target="#editModal">
+          id="data-source-add-first" data-toggle="modal" data-target="#editModal">
           <span class="fui-plus"></span> Add</button>
         some now to get started.
       </p>
@@ -167,6 +170,40 @@
     </div>
   </div>
 
+  <!-- Sync Modal -->
+  <div class="modal fade" id="syncModal" tabindex="-1" role="dialog" aria-labelledby="syncModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <button type="button" class="close close-modal" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+          </button>
+          <h4 class="modal-title" id="syncModalLabel">Sync Data Sources</h4>
+        </div>
+
+        <div class="modal-body">
+          <p>We will sync the following data sources:</p>
+          <div class="well">
+            <p><b><span id="del_title"></span></b></p>
+            <p><span id="del_desc"></span></p>
+            <p><small><span id="del_url"></span></small></p>
+          </div>
+          <p class="text-muted"><em>
+            If you don't see the data source you want to sync above, make sure it is
+            <span class="text-success"><span class="fui-cmd"></span> configured</span>.
+          </em></p>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default btn-embossed btn-wide close-modal" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-info btn-embossed btn-wide" id="sync-data-sources">Sync Data Sources</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
 
 </div> <!-- /.data-sources -->
 
@@ -175,6 +212,8 @@
 @stop
 
 @section('scripts-data')
+
+var data_sources = {{ $datasources }};
 
 var edit_id = 0;
 var config_data = new Object();

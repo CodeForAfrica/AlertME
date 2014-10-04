@@ -9,6 +9,10 @@ class MyQueue {
   function fetchDataSourceColumns($job, $data)
   {
     $config = DataSourceConfig::find($data['config_id']);
+    if (!$config){
+      $job->delete();
+      return;
+    }
     $datasource = DataSource::find($config->data_source_id);
 
     $csv = array_map('str_getcsv', file($datasource->url));

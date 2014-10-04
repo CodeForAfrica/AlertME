@@ -13,12 +13,24 @@ $( document ).ready(function() {
    * ---------------------------------------------------------------------------
    */
 
+
+  /**
+   * Data Source SYNC
+   * ----------------
+   */
+
+  //  $( "#data-source-sync" ).click(function() {
+  //    window.location.replace("/dashboard/datasources");
+  //  });
+
+
+
   /**
    * Data Source DISPLAY
    * -------------------
    */
 
-  $( "#add-data-source, #add-data-source-first" ).click(function() {
+  $( "#data-source-add, #data-source-add-first" ).click(function() {
     $("#editModalLabel").html('New Data Source');
     edit_id = 0;
   });
