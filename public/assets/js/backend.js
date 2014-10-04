@@ -179,6 +179,7 @@ $( document ).ready(function() {
     }).done(function( response ) {
       config_data = response.config;
       data_source_columns = JSON.parse(config_data.data_source_columns);
+      ds_config = JSON.parse(config_data.config);
 
       var data_source_columns_html = "";
       $.each(data_source_columns, function( index, value ) {
@@ -238,9 +239,39 @@ $( document ).ready(function() {
 
       // Configured
       if (config_data.config_status == 1){
-        var config_data_html = '';
 
+        var ds_cols = data_source_columns;
+        config_id = ds_config.config_id;
+        config_title = ds_config.config_title;
+        config_desc = ds_config.config_desc;
+        config_geo_type = ds_config.config_geo_type;
+        config_geo_lat = ds_config.config_geo_lat;
+        config_geo_lng = ds_config.config_geo_lng;
+        config_geo_add = ds_config.config_geo_add;
+        config_status = ds_config.config_status;
 
+        var config_data_geo_html = '';
+        if (config_geo_type == 'address'){
+          config_data_geo_html = '<tr><td>Geo Type</td><td>Address</td></tr>'+
+          '<tr><td>Geo Address</td><td>'+ds_cols[config_geo_add]+'</td></tr>';
+        }
+        if (config_geo_type == 'lat_lng'){
+          config_data_geo_html = '<tr><td>Geo Type</td><td>Lat + Lng</td></tr>'+
+          '<tr><td>Geo Lat</td><td>'+ds_cols[config_geo_lat]+'</td></tr>'+
+          '<tr><td>Geo Lat</td><td>'+ds_cols[config_geo_lng]+'</td></tr>';
+        }
+
+        var config_data_html = '<p>Platform required columns and related data source columns:</p>'+
+        '<table class="table">'+
+          '<thead><tr><th>Platform</th><th>Data Source</th></tr></thead>'+
+          '<tbody>'+
+            '<tr><td>ID</td><td>'+ds_cols[config_id]+'</td></tr>'+
+            '<tr><td>Title</td><td>'+ds_cols[config_title]+'</td></tr>'+
+            '<tr><td>Description</td><td>'+ds_cols[config_desc]+'</td></tr>'+
+            config_data_geo_html +
+            '<tr><td>Status</td><td>'+ds_cols[config_status]+'</td></tr>'+
+          '</tbody>'+
+        '</table>';
 
         pre_html['config'] = {
           'left': '<p><b>Configuration</b></p>',
@@ -341,6 +372,8 @@ $( document ).ready(function() {
 
     $('#config-screen').html(edit_html);
 
+    configSetSelect();
+
     configOnSelect();
 
     $("select").select2({dropdownCssClass: 'dropdown-inverse'});
@@ -349,6 +382,30 @@ $( document ).ready(function() {
     $('#save-config').click(function() {
       saveConfig();
     });
+  }
+
+  function configSetSelect () {
+    $("#sel_config_id").val(config_id);
+    $("#sel_config_title").val(config_title);
+    $("#sel_config_desc").val(config_desc);
+    $(".radio-geo-type").val(config_geo_type);
+    if (config_geo_type== 'lat_lng') {
+      $('.div_config_geo_add').hide();
+      $('.div_config_geo_lat').show();
+      $('.div_config_geo_lng').show();
+      $('#sel_config_geo_type_lat_lng').prop('checked',true);
+    }
+    if (config_geo_type == 'address') {
+      $('.div_config_geo_lat').hide();
+      $('.div_config_geo_lng').hide();
+      $('.div_config_geo_add').show();
+      $('#sel_config_geo_type_add').prop('checked',true);
+    }
+
+    $("#sel_config_geo_lat").val(config_geo_lat);
+    $("#sel_config_geo_lng").val(config_geo_lng);
+    $("#sel_config_geo_add").val(config_geo_add);
+    $("#sel_config_status").val(config_status);
   }
 
   function configOnSelect () {
@@ -360,12 +417,12 @@ $( document ).ready(function() {
 
     // Title
     $( "#sel_config_title" ).change(function() {
-      config_title = $("#sel_config_id option:selected").val();
+      config_title = $("#sel_config_title option:selected").val();
     });
 
     // Description
     $( "#sel_config_desc" ).change(function() {
-      config_desc = $("#sel_config_id option:selected").val();
+      config_desc = $("#sel_config_desc option:selected").val();
     });
 
     // Geolocation

@@ -179,6 +179,7 @@
 var edit_id = 0;
 var config_data = new Object();
 var data_source_columns = [];
+var ds_config = new Object();
 
 var config_id = -1;
 var config_title = -1;
