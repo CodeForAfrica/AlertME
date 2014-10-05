@@ -33,4 +33,9 @@ class DataSource extends Eloquent {
       return $this->hasMany('DataSourceSync');
     }
 
+    function datasourcedata()
+    {
+      return $this->hasOne('DataSourceData');
+    }
+
 }
