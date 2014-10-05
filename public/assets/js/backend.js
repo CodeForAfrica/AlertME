@@ -256,7 +256,7 @@ $( document ).ready(function() {
       '</div>';
 
       var data_source_columns_html = "";
-      if (config_data.config_status != 0) {
+      if (config_data.config_status != 0 && config_data.config_status != 3 ) {
         data_source_columns = JSON.parse(config_data.data_source_columns);
 
         $.each(data_source_columns, function( index, value ) {

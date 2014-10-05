@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDataSourcesConfigTable extends Migration {
+class CreateDataSourceConfigsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,11 +12,11 @@ class CreateDataSourcesConfigTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('data_sources_config', function(Blueprint $table)
+		Schema::create('data_source_configs', function(Blueprint $table)
 		{
 			$table->increments('id');
 			$table->integer('data_source_id');
-			$table->mediumText('data_source_columns');
+			$table->mediumText('data_source_columns')->nullable();
 			$table->integer('config_status');
 			$table->mediumText('config')->nullable();
 			$table->timestamps();
@@ -30,7 +30,7 @@ class CreateDataSourcesConfigTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('data_sources_config');
+		Schema::drop('data_source_configs');
 	}
 
 }

@@ -13,7 +13,6 @@ class DataSource extends Eloquent {
       {
         $config = new DataSourceConfig;
         $config->data_source_id = $datasource->id;
-        $config->data_source_columns = '';
         $config->config_status = 2;
         $config->save();
       });

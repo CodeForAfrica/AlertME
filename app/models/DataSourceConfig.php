@@ -2,7 +2,7 @@
 
 class DataSourceConfig extends Eloquent {
 
-    protected $table = 'data_sources_config';
+    protected $table = 'data_source_configs';
 
     /**
      * CONFIG STATUS
