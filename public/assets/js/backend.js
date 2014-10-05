@@ -62,7 +62,7 @@ $( document ).ready(function() {
     });
 
 
-    $("#data-sources-sync").html('<ul>'+ds_sync_html+'</ul>');
+    $("#data-sources-sync").html('<ol>'+ds_sync_html+'</ol>');
   });
 
 
