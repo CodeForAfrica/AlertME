@@ -19,9 +19,51 @@ $( document ).ready(function() {
    * ----------------
    */
 
-  //  $( "#data-source-sync" ).click(function() {
-  //    window.location.replace("/dashboard/datasources");
-  //  });
+  $( "#data-source-sync" ).click(function() {
+
+    $.ajax({
+      type: "GET",
+      async: false,
+      url: base_url+"/api/v1/datasources"
+    }).done(function( response ) {
+      data_sources = response.datasources;
+    });
+
+    var ds_sync_html = '';
+
+    if (Object.keys(data_sources).length == 0) {
+      ds_sync_html = '<p>It seems you don\'t have any data sources yet.'+
+        '<button type="button" class="btn btn-primary btn-sm">'+
+          '<span class="fui-plus"></span> Add</button>'+
+        'some now to get started.'+
+      '</p>';
+      $("#data-sources-sync").html(ds_sync_html);
+      return;
+    }
+
+    var ds_configs = new Object();
+    $.ajax({
+      type: "GET",
+      async: false,
+      url: base_url+"/api/v1/datasourceconfig"
+    }).done(function( response ) {
+      ds_configs = response.configs;
+    });
+
+
+    var ds_sync = new Object();
+    $.each(data_sources, function( ds_i, ds ) {
+      $.each(ds_configs, function( cfg_i, cfg ) {
+        if (cfg.data_source_id == ds.id && cfg.config_status == 1) {
+          ds_sync_html = ds_sync_html +
+            '<li><b><a href="'+ds.url+'" target="_blank">'+ds.title+'</a></b></li>';
+        }
+      });
+    });
+
+
+    $("#data-sources-sync").html('<ul>'+ds_sync_html+'</ul>');
+  });
 
 
 
@@ -190,14 +232,8 @@ $( document ).ready(function() {
       url: base_url+"/api/v1/datasourceconfig/"+edit_id
     }).done(function( response ) {
       config_data = response.config;
-      data_source_columns = JSON.parse(config_data.data_source_columns);
-      ds_config = JSON.parse(config_data.config);
 
-      var data_source_columns_html = "";
-      $.each(data_source_columns, function( index, value ) {
-        data_source_columns_html = data_source_columns_html +
-          '<span class="label label-primary">'+value+'</span> ';
-      });
+      ds_config = JSON.parse(config_data.config);
 
       var config_status_3_html = '<div class="alert alert-info" role="alert">'+
         '<span class="fui-alert-circle"></span> We are still fetching this data source\'s details...<br/>'+
@@ -211,17 +247,24 @@ $( document ).ready(function() {
           '<span class="fui-cmd"></i> Configure now</button>'+
         '</div></div>';
       var config_status_0_html = '<div id="config-screen">'+
-        '<div class="alert alert-danger" role="alert">'+
+        '<div class="alert alert-danger" role="alert"><p>'+
           '<span class="fui-alert-circle"></span> This data source has an error. '+
           'Please check that the data is well structured, delete it and add it again.<br/>'+
-          '<button class="btn btn-sm btn-link" id="config-del">'+
-          '<span class="fui-cmd"></i> Delete data source now</button>'+
-          '<button class="btn btn-sm btn-link" id="config-help">'+
-          '<span class="fui-question-circle"></i> Check out the help</button>'+
-        '</div></div>';
+        '</p></div>'+
+      '</div>';
+
+      var data_source_columns_html = "";
+      if (config_data.config_status != 0) {
+        data_source_columns = JSON.parse(config_data.data_source_columns);
+
+        $.each(data_source_columns, function( index, value ) {
+          data_source_columns_html = data_source_columns_html +
+            '<span class="label label-primary">'+value+'</span> ';
+        });
+      }
 
       // Columns being fetched
-      if (config_data.config_status == 3){
+      if (config_data.config_status == 3) {
         pre_html['columns'] = {
           'left': '<p><b>Columns</b></p>',
           'right': config_status_3_html
@@ -234,7 +277,7 @@ $( document ).ready(function() {
       }
 
       // Ready to configure
-      if (config_data.config_status == 2){
+      if (config_data.config_status == 2) {
         pre_html['config'] = {
           'left': '<p><b>Configuration</b></p>',
           'right': config_status_2_html
@@ -242,15 +285,16 @@ $( document ).ready(function() {
       }
 
       // Data error
-      if (config_data.config_status == 0){
+      if (config_data.config_status == 0) {
         pre_html['config'] = {
           'left': '<p><b>Configuration</b></p>',
           'right': config_status_0_html
         };
+        $('#edit-config').hide();
       }
 
       // Configured
-      if (config_data.config_status == 1){
+      if (config_data.config_status == 1) {
 
         var ds_cols = data_source_columns;
         config_id = ds_config.config_id;

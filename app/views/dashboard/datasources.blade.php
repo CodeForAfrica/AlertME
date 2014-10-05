@@ -10,7 +10,7 @@
       id="data-source-sync" data-toggle="modal" data-target="#syncModal">
       <span class="fui-radio-unchecked"></span> Sync
     </button>
-    <button type="button" class="btn btn-primary btn-embossed btn-wide btn-sm"
+    <button type="button" class="btn btn-primary btn-embossed btn-wide btn-sm data-source-add"
       id="data-source-add" data-toggle="modal" data-target="#editModal">
       <span class="fui-plus"></span> Add
     </button>
@@ -22,7 +22,7 @@
 
     @if (count($datasources) === 0)
       <p class="lead" id="no-data-sources">It seems you don't have any data sources yet.
-        <button type="button" class="btn btn-primary btn-sm"
+        <button type="button" class="btn btn-primary btn-sm data-source-add"
           id="data-source-add-first" data-toggle="modal" data-target="#editModal">
           <span class="fui-plus"></span> Add</button>
         some now to get started.
@@ -184,14 +184,12 @@
 
         <div class="modal-body">
           <p>We will sync the following data sources:</p>
-          <div class="well">
-            <p><b><span id="del_title"></span></b></p>
-            <p><span id="del_desc"></span></p>
-            <p><small><span id="del_url"></span></small></p>
+          <div class="well" id="data-sources-sync">
           </div>
           <p class="text-muted"><em>
-            If you don't see the data source you want to sync above, make sure it is
-            <span class="text-success"><span class="fui-cmd"></span> configured</span>.
+            If you don't see the data source you want to sync in the list above,
+            make sure it is configured. To do so, click the <span class="text-success">
+            <span class="fui-cmd"></span>Configure</span> link next to it.
           </em></p>
         </div>
 
