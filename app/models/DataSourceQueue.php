@@ -16,23 +16,40 @@ class DataSourceQueue {
 
     $datasource = DataSource::find($config->data_source_id);
 
-    $file_headers = @get_headers($datasource->url);
-
-    if($file_headers[0] == 'HTTP/1.0 404 Not Found'){
-      // echo "The file $filename does not exist";
-      $config->config_status = 0;
-      $config->save();
-      $job->delete();
-      return;
-    } else if ($file_headers[0] == 'HTTP/1.0 302 Found' && $file_headers[7] == 'HTTP/1.0 404 Not Found'){
-      // echo "The file $filename does not exist, and I got redirected to a custom 404 page..";
-      $config->config_status = 0;
-      $config->save();
-      $job->delete();
-      return;
-    } else {
-      // echo "The file $filename exists";
+    if(!filter_var($datasource->url, FILTER_VALIDATE_URL))
+    {
+      // Not a URL
+      
+      if (! file_exists ( $datasource->url)){
+        $config->config_status = 0;
+        $config->save();
+        $job->delete();
+        return;
+      }
     }
+    else
+    {
+      // Is a URL
+
+      $file_headers = @get_headers($datasource->url);
+
+      if($file_headers[0] == 'HTTP/1.0 404 Not Found'){
+        // echo "The file $filename does not exist";
+        $config->config_status = 0;
+        $config->save();
+        $job->delete();
+        return;
+      } else if ($file_headers[0] == 'HTTP/1.0 302 Found' && $file_headers[7] == 'HTTP/1.0 404 Not Found'){
+        // echo "The file $filename does not exist, and I got redirected to a custom 404 page..";
+        $config->config_status = 0;
+        $config->save();
+        $job->delete();
+        return;
+      }
+    }
+
+
+
 
     $csv = array_map('str_getcsv', file($datasource->url));
 
