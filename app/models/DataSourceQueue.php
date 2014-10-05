@@ -65,10 +65,4 @@ class DataSourceQueue {
 
   }
 
-  function syncDataSource ( $job, $data )
-  {
-
-    $job->delete();
-  }
-
 }

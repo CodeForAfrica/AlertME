@@ -26,9 +26,7 @@ class Sync extends Eloquent {
 
       Sync::created(function($sync)
       {
-        $datasources = DataSourceConfig::where('config_status', 1);
-
-        // Queue::push('DataSourceQueue@syncDataSource', array('sync_id' => $sync->id));
+        Queue::push('SyncQueue', array('sync_id' => $sync->id));
       });
     }
 
