@@ -188,7 +188,7 @@
           </div>
           <p class="text-muted"><em>
             If you don't see the data source you want to sync in the list above,
-            make sure it is configured. To do so, click the <span class="text-success">
+            make sure it is configured. To do so, click the <span class="text-primary">
             <span class="fui-cmd"></span>Configure</span> link next to it.
           </em></p>
         </div>

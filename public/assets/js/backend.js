@@ -5,6 +5,7 @@ $( document ).ready(function() {
     $('#edit-config-btn').html(
       '<button type="button" class="btn btn-info btn-embossed btn-wide" id="edit-config">Edit</button>'
     );
+    $("#sync-data-sources").show();
   });
 
   /**
@@ -32,11 +33,14 @@ $( document ).ready(function() {
     var ds_sync_html = '';
 
     if (Object.keys(data_sources).length == 0) {
-      ds_sync_html = '<p>It seems you don\'t have any data sources yet.'+
-        '<button type="button" class="btn btn-primary btn-sm">'+
-          '<span class="fui-plus"></span> Add</button>'+
-        'some now to get started.'+
-      '</p>';
+      ds_sync_html = '<div class="alert alert-warning">'+
+        '<p><span class="fui-alert-circle"></span> It seems you don\'t have any data sources yet. '+
+          '<button type="button" class="btn btn-primary btn-sm">'+
+            '<span class="fui-plus"></span> Add</button> '+
+          'some now to get started.'+
+        '</p>'+
+      '</div>';
+      $("#sync-data-sources").hide();
       $("#data-sources-sync").html(ds_sync_html);
       return;
     }
@@ -60,7 +64,19 @@ $( document ).ready(function() {
       });
     });
 
-    $("#data-sources-sync").html('<ol>'+ds_sync_html+'</ol>');
+    if (ds_sync_html == ''){
+      ds_sync_html = '<div class="alert alert-warning">'+
+        '<p><span class="fui-alert-circle"></span> <b>Oops</b>: There doesn\'t seem to be any data sources to sync '+
+        'at this moment. Please <span class="text-primary"><span class="fui-cmd"></span> '+
+        'Configure</span> some to be able to sync data.</p>'+
+      '</div>';
+
+      $("#sync-data-sources").hide();
+    } else {
+      ds_sync_html = '<ol>'+ds_sync_html+'</ol>';
+    }
+
+    $("#data-sources-sync").html(ds_sync_html);
   });
 
   $( "#sync-data-sources" ).click(function() {
