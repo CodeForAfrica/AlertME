@@ -21,13 +21,18 @@ class Sync extends Eloquent {
       // Setup event bindings...
       Sync::created(function($sync)
       {
-        
+
       });
     }
 
     function datasourcesyncs()
     {
       return $this->hasMany('DataSourceSync');
+    }
+
+    function user()
+    {
+      return $this->belongsTo('User');
     }
 
 }
