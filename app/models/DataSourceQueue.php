@@ -48,14 +48,18 @@ class DataSourceQueue {
       }
     }
 
-
-
-
     $csv = array_map('str_getcsv', file($datasource->url));
 
     $config->data_source_columns = json_encode($csv[0]);
     $config->config_status = 2;
     $config->save();
+
+    // Save data to database
+    $data = new DataSourceData;
+    $data->data_source_id = $config->data_source_id;
+    $data->headers = json_encode($csv[0]);
+    $data->raw = json_encode($csv);
+    $data->save();
 
     $job->delete();
 

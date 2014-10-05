@@ -16,8 +16,8 @@ class CreateDataSourceDatasTable extends Migration {
 		{
 			$table->increments('id');
 			$table->integer('data_source_id');
-			$table->longText('headers');
-			$table->longText('raw');
+			$table->longText('headers')->nullable();
+			$table->longText('raw')->nullable();
 			$table->timestamps();
 		});
 	}
