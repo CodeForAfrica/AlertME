@@ -25,7 +25,7 @@ class DataSourceConfig extends Eloquent {
         $config->config_status = 3;
         $config->save();
 
-        Queue::push('MyQueue@fetchDataSourceColumns', array('config_id' => $config->id));
+        Queue::push('DataSourceQueue@fetchDataSourceColumns', array('config_id' => $config->id));
       });
 
       DataSourceConfig::saving(function($config)

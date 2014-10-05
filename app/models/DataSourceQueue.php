@@ -1,6 +1,6 @@
 <?php
 
-class MyQueue {
+class DataSourceQueue {
 
   public function fire($job, $data){
 
@@ -31,6 +31,12 @@ class MyQueue {
 
     $job->delete();
 
+  }
+
+  function syncDataSources ( $job, $data )
+  {
+
+    $job->delete();
   }
 
 }
