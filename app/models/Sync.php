@@ -19,9 +19,16 @@ class Sync extends Eloquent {
       parent::boot();
 
       // Setup event bindings...
+      Sync::creating(function($sync)
+      {
+        if ( ! $sync->user_id ) return false;
+      });
+
       Sync::created(function($sync)
       {
+        $datasources = DataSourceConfig::where('config_status', 1);
 
+        // Queue::push('DataSourceQueue@syncDataSource', array('sync_id' => $sync->id));
       });
     }
 

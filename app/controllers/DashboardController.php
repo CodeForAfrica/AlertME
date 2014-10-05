@@ -25,7 +25,11 @@ class DashboardController extends BaseController {
 
   public function syncDataSources()
   {
-    Queue::push('DataSourceQueue@syncDataSources');
+    $sync = new Sync;
+    $sync->sync_status = 2;
+    $sync->user_id = Auth::id();
+    $sync->save();
+
     return Redirect::to('dashboard/datasources')->with('success', 'Data source sync started successfully.');
   }
 

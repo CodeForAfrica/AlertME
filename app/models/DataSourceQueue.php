@@ -19,7 +19,7 @@ class DataSourceQueue {
     if(!filter_var($datasource->url, FILTER_VALIDATE_URL))
     {
       // Not a URL
-      
+
       if (! file_exists ( $datasource->url)){
         $config->config_status = 0;
         $config->save();
@@ -61,7 +61,7 @@ class DataSourceQueue {
 
   }
 
-  function syncDataSources ( $job, $data )
+  function syncDataSource ( $job, $data )
   {
 
     $job->delete();
