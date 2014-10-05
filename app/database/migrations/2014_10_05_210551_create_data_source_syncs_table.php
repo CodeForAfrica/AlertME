@@ -15,6 +15,7 @@ class CreateDataSourceSyncsTable extends Migration {
 		Schema::create('data_source_syncs', function(Blueprint $table)
 		{
 			$table->increments('id');
+			$table->integer('sync_id');
 			$table->integer('data_source_id');
 			$table->integer('sync_status');
 			$table->timestamp('completed_on')->default('0000-00-00 00:00:00')->nullable();

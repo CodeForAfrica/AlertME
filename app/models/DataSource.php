@@ -28,4 +28,9 @@ class DataSource extends Eloquent {
       return $this->hasOne('DataSourceConfig');
     }
 
+    function datasourcesync()
+    {
+      return $this->hasMany('DataSourceSync');
+    }
+
 }
