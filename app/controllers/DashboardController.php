@@ -23,4 +23,9 @@ class DashboardController extends BaseController {
     return View::make('dashboard.datasources', $data);
   }
 
+  public function syncDataSources()
+  {
+    return Redirect::to('dashboard/datasources')->with('success', 'Data source sync started successfully.');
+  }
+
 }

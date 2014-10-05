@@ -50,7 +50,6 @@ $( document ).ready(function() {
       ds_configs = response.configs;
     });
 
-
     var ds_sync = new Object();
     $.each(data_sources, function( ds_i, ds ) {
       $.each(ds_configs, function( cfg_i, cfg ) {
@@ -61,8 +60,11 @@ $( document ).ready(function() {
       });
     });
 
-
     $("#data-sources-sync").html('<ol>'+ds_sync_html+'</ol>');
+  });
+
+  $( "#sync-data-sources" ).click(function() {
+    window.location.replace("/dashboard/datasources/sync");
   });
 
 
