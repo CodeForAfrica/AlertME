@@ -4,6 +4,11 @@ class SyncQueue {
 
   public function fire($job, $data)
   {
+    if ($job->attempts() > 3)
+    {
+        $job->delete();
+    }
+
     $sync = Sync::find($data['sync_id']);
     $ds_configs = DataSourceConfig::where('config_status', 1)->get();
 
@@ -17,7 +22,10 @@ class SyncQueue {
     $sync->sync_status = 1;
     $sync->save();
 
+    Log::info('Sync completed.');
+
     $job->delete();
+
   }
 
   function dataSourceSync( $sync, $ds_config )
@@ -29,52 +37,44 @@ class SyncQueue {
     $ds_sync->save();
 
     // Fetch Data
-    $csv = self::fetchData($ds_sync);
+    $ds_data = DataSource::find($ds_sync->data_source_id)->datasourcedata;
+    $csv = $ds_data->fetchData();
+
     if(!$csv) {
-      $ds_sync->sync_status = 0;
+      $ds_sync->sync_status = 3;
       $ds_sync->save();
       return;
     }
 
     // Check column change
-    if($csv[0] != json_decode($ds_config->data_source_columns)){
-      $ds_sync->sync_status = 0;
+    if(array_keys($csv[0]) != json_decode($ds_config->data_source_columns)){
+      $ds_sync->sync_status = 4;
       $ds_sync->save();
       return;
     }
+
+    // Set data fetched
+    self::setProjects($csv, $ds_config);
+
+    $ds_data->raw = json_encode($csv);
+    $ds_data->save();
 
 
     $ds_sync->sync_status = 1;
     $ds_sync->save();
   }
 
-  function fetchData( $ds_sync )
+
+  function setProjects ( $csv, $ds_config )
   {
-    $datasource = DataSource::find( $ds_sync->data_source_id );
+    $ds_cols = json_decode($ds_config->data_source_columns);
+    $config = json_decode($ds_config->config);
 
-    if(!filter_var($datasource->url, FILTER_VALIDATE_URL))
-    {
-      // Not a URL
-      if (! file_exists ( $datasource->url)) return false;
+    foreach ( $csv as $row ) {
+      $project = Project::firstOrCreate( array(
+        'project_id' => $row[ $ds_cols[ $config->config_id ] ]
+      ));
     }
-    else
-    {
-      // Is a URL
-
-      $file_headers = @get_headers($datasource->url);
-
-      if($file_headers[0] == 'HTTP/1.0 404 Not Found'){
-        // echo "The file $filename does not exist";
-        return false;
-      } else if ($file_headers[0] == 'HTTP/1.0 302 Found' && $file_headers[7] == 'HTTP/1.0 404 Not Found'){
-        // echo "The file $filename does not exist, and I got redirected to a custom 404 page..";
-        return false;
-      }
-    }
-
-    $csv = array_map('str_getcsv', file($datasource->url));
-
-    return $csv;
   }
 
 }

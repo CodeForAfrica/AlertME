@@ -23,22 +23,22 @@ class DataSource extends Eloquent {
       });
     }
 
-    function datasourceconfig()
+    public function datasourceconfig()
     {
       return $this->hasOne('DataSourceConfig');
     }
 
-    function datasourcesync()
+    public function datasourcesync()
     {
       return $this->hasMany('DataSourceSync');
     }
 
-    function datasourcedata()
+    public function datasourcedata()
     {
       return $this->hasOne('DataSourceData');
     }
 
-    function projects()
+    public function projects()
     {
       return $this->hasMany('Project');
     }

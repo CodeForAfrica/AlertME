@@ -7,9 +7,11 @@ class DataSourceSync extends Eloquent {
     /**
      * SYNC STATUS
      * -------------
-     * 0: Failed
+     * 0: Failed (Other)
      * 1: Successful
      * 2: Started
+     * 3: Failed on CSV Fetch
+     * 4: Columns Do Not Match (Reconfigure)
      */
 
     public static function boot()

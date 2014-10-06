@@ -3,6 +3,7 @@
 class Project extends Eloquent {
 
     protected $table = 'projects';
+    protected $fillable = array('project_id');
 
     public static function boot()
     {
