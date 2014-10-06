@@ -17,7 +17,12 @@ class HomeController extends BaseController {
 
 	public function showHome()
 	{
-		return View::make('home');
+		$projects = DB::table('projects')->take(10)->get();
+
+		$data = array(
+			'projects' => $projects
+		);
+		return View::make('home', $data);
 	}
 
 }
