@@ -25,6 +25,7 @@ Route::group(array('before' => 'auth'), function()
     Route::get('dashboard/settings', 'DashboardController@showSettings');
     Route::get('dashboard/datasources', 'DashboardController@showDataSources');
     Route::get('dashboard/datasources/sync', 'DashboardController@syncDataSources');
+    Route::get('dashboard/categories', 'DashboardController@showCategories');
 });
 
 

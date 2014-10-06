@@ -33,4 +33,15 @@ class DashboardController extends BaseController {
     return Redirect::to('dashboard/datasources')->with('success', 'Data source sync started successfully.');
   }
 
+  public function showCategories()
+  {
+    $datasources = DataSource::all();
+
+    $data = array(
+      'datasources' => $datasources
+    );
+
+    return View::make('dashboard.categories', $data);
+  }
+
 }

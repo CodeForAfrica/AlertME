@@ -52,6 +52,9 @@ Dashboard
         <a href="/dashboard/datasources" class="btn btn-embossed btn-primary
           {{Request::path() == 'dashboard/datasources' ? 'active' : '';}}">
           <span class="fui-upload"></span> Data Sources</a>
+        <a href="/dashboard/categories" class="btn btn-embossed btn-primary
+          {{Request::path() == 'dashboard/categories' ? 'active' : '';}}">
+          <span class="fui-tag"></span> Categories</a>
         <a href="/dashboard/settings" class="btn btn-embossed btn-primary
           {{Request::path() == 'dashboard/settings' ? 'active' : '';}}">
           <span class="fui-gear"></span> Settings</a>
