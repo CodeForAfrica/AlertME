@@ -37,4 +37,9 @@ class Project extends Eloquent {
       return $this->belongsTo('DataSourceData');
     }
 
+    function categories()
+    {
+      return $this->belongsToMany('Category');
+    }
+
 }
