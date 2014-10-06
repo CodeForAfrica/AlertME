@@ -9,14 +9,14 @@ class Category extends Eloquent {
       parent::boot();
 
       // Setup event bindings...
-      Sync::creating(function($sync)
+      Category::creating(function($category)
       {
-        if ( ! $sync->user_id ) return false;
+
       });
 
-      Sync::created(function($sync)
+      Category::created(function($category)
       {
-        Queue::push('SyncQueue', array('sync_id' => $sync->id));
+        // Queue::push('CategoryQueue', array('category' => $category));
       });
     }
 
