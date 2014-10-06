@@ -41,5 +41,10 @@ class DataSourceConfig extends Eloquent {
     {
       return $this->belongsTo('DataSource');
     }
+    
+    function projects()
+    {
+      return $this->hasMany('Project');
+    }
 
 }

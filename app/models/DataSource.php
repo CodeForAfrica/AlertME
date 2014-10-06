@@ -38,4 +38,9 @@ class DataSource extends Eloquent {
       return $this->hasOne('DataSourceData');
     }
 
+    function projects()
+    {
+      return $this->hasMany('Project');
+    }
+
 }

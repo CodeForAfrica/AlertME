@@ -19,7 +19,7 @@ class DataSourceSync extends Eloquent {
       // Setup event bindings...
       DataSourceSync::created(function($ds_sync)
       {
-        
+
       });
     }
 
@@ -31,6 +31,11 @@ class DataSourceSync extends Eloquent {
     function datasource()
     {
       return $this->belongsTo('DataSource');
+    }
+
+    function projects()
+    {
+      return $this->hasMany('Project');
     }
 
 }

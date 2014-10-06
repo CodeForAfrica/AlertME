@@ -16,6 +16,7 @@ class CreateProjectsTable extends Migration {
 		{
 			$table->increments('id');
 			$table->integer('data_source_id');
+			$table->integer('data_source_config_id');
 			$table->integer('data_source_sync_id');
 			$table->mediumText('project_id');
 			$table->mediumText('title');
