@@ -46,6 +46,9 @@
               </div>
 
               <div class="col-md-2 text-left">
+                <p><a href="#" class="btn btn-link btn-sm"
+                  id="category-view-{{ $category->id }}" target="_blank" >
+                  <span class="fui-export"></span> View</a></p>
                 <p><button type="button" class="btn btn-link btn-sm" alt="{{ $category->id }}"
                   id="edit-category-{{ $category->id }}" data-toggle="modal" data-target="#editModal">
                   <span class="fui-new"></span> Edit</button></p>
