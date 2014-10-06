@@ -230,3 +230,7 @@ var config_status = -1;
 var config_sel_cols_html = '';
 
 @stop
+
+@section('scripts')
+  <script src="/assets/js/backend/datasources.js"></script>
+@stop

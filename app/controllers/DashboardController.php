@@ -35,10 +35,10 @@ class DashboardController extends BaseController {
 
   public function showCategories()
   {
-    $datasources = DataSource::all();
+    $categories = Category::all();
 
     $data = array(
-      'datasources' => $datasources
+      'categories' => $categories
     );
 
     return View::make('dashboard.categories', $data);

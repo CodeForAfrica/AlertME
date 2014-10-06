@@ -73,7 +73,3 @@ Dashboard
         </div>
       @endif
 @stop
-
-@section('scripts')
-  <script src="/assets/js/backend.js"></script>
-@stop

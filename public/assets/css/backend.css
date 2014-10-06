@@ -23,7 +23,7 @@
   .data-sources h5 button:first-child {
     margin-left: 30px;
   }
-.data-sources .data-sources-list p {
+.data-sources .data-sources-list p, .categories .categories-list p {
   margin-bottom: 0;
 }
 .data-sources .modal .form-group {
@@ -48,4 +48,13 @@
 
 #configModal #config-edit-error {
   margin-bottom: 10px;
+}
+
+/* Categories */
+
+.categories .media-object {
+  max-width: 80px;
+}
+.categories #deleteModal p {
+  margin-bottom: 0;
 }
