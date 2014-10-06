@@ -54,7 +54,7 @@ class SyncQueue {
     }
 
     // Set data fetched
-    self::setProjects($csv, $ds_config);
+    self::setProjects($csv, $ds_config, $ds_sync);
 
     $ds_data->raw = json_encode($csv);
     $ds_data->save();
@@ -65,15 +65,31 @@ class SyncQueue {
   }
 
 
-  function setProjects ( $csv, $ds_config )
+  function setProjects ( $csv, $ds_config, $ds_sync )
   {
     $ds_cols = json_decode($ds_config->data_source_columns);
     $config = json_decode($ds_config->config);
+
 
     foreach ( $csv as $row ) {
       $project = Project::firstOrCreate( array(
         'project_id' => $row[ $ds_cols[ $config->config_id ] ]
       ));
+      $project->data_source_id = $ds_config->data_source_id;
+      $project->data_source_sync_id = $ds_sync->id;
+      $project->title = $row[ $ds_cols[ $config->config_title ] ];
+      $project->description = $row[ $ds_cols[ $config->config_desc ] ];
+      if ( $config->config_geo_type == 'address' ) {
+        $project->geo_type = 'address';
+        $project->geo_address = $row[ $ds_cols[ $config->config_geo_add ] ];
+      }
+      if ( $config->config_geo_type == 'lat_lng' ) {
+        $project->geo_type = 'lat_lng';
+        $project->geo_lat = $row[ $ds_cols[ $config->config_geo_lat ] ];
+        $project->geo_lng = $row[ $ds_cols[ $config->config_geo_lng ] ];
+      }
+      $project->status = $row[ $ds_cols[ $config->config_status ] ];
+      $project->save();
     }
   }
 
