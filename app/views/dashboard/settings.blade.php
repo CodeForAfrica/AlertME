@@ -6,12 +6,21 @@
 
   <hr/>
 
-  <div class="row">
-    <div class="col-md-3 text-center">
+  {{ Form::open(array('url' => 'dashboard/settings')) }}
+
+    <h6>Geocode</h6>
+
+    <p>Google Geocode API</p>
+    <div class="form-group">
+      {{ Form::label('key', 'API Key') }}
+      <input type="text" class="form-control" id="key" placeholder="Enter API Key"
+        value="{{ $geoapi->key }}" name="key">
+      <p class="help-block">Example block-level help text here.</p>
     </div>
-    <div class="col-md-9">
-    </div>
-  </div>
+
+    <button type="submit" class="btn btn-primary btn-lg btn-embossed btn-wide">Save Changes</button>
+
+  {{ Form::close() }}
 
 </div>
 

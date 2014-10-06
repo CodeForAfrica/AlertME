@@ -22,10 +22,14 @@ Route::get('logout', 'AuthController@getLogout');
 Route::group(array('before' => 'auth'), function()
 {
     Route::get('dashboard', 'DashboardController@showHome');
-    Route::get('dashboard/settings', 'DashboardController@showSettings');
+
     Route::get('dashboard/datasources', 'DashboardController@showDataSources');
     Route::get('dashboard/datasources/sync', 'DashboardController@syncDataSources');
+
     Route::get('dashboard/categories', 'DashboardController@showCategories');
+
+    Route::get('dashboard/settings', 'DashboardController@showSettings');
+    Route::post('dashboard/settings', 'DashboardController@setSettings');
 });
 
 
