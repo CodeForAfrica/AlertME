@@ -30,7 +30,7 @@ Dashboard
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="ga-navbar-collapse-1">
 
-        <a class="btn btn-default btn-sm btn-embossed navbar-btn navbar-right" type="button"
+        <a class="btn btn-default btn-sm navbar-btn navbar-right" type="button"
           href="/logout">Logout</a>
 
       </div><!-- /.navbar-collapse -->
@@ -46,13 +46,13 @@ Dashboard
   <div class="row">
     <div class="col-md-2">
       <div class="btn-group-vertical btn-block navigation-side">
-        <a href="/dashboard" class="btn btn-primary
+        <a href="/dashboard" class="btn btn-embossed btn-primary
           {{Request::path() == 'dashboard' ? 'active' : '';}}">
           <span class="fui-home"></span> Home</a>
-        <a href="/dashboard/datasources" class="btn btn-primary
+        <a href="/dashboard/datasources" class="btn btn-embossed btn-primary
           {{Request::path() == 'dashboard/datasources' ? 'active' : '';}}">
           <span class="fui-upload"></span> Data Sources</a>
-        <a href="/dashboard/settings" class="btn btn-primary
+        <a href="/dashboard/settings" class="btn btn-embossed btn-primary
           {{Request::path() == 'dashboard/settings' ? 'active' : '';}}">
           <span class="fui-gear"></span> Settings</a>
       </div>

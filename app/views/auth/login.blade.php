@@ -33,11 +33,17 @@ Login
             <input type="password" name="password" class="form-control login-field"
               value="" placeholder="Password" id="login-pass">
             <label class="login-field-icon fui-lock" for="login-pass"></label>
-            
+
             <p class="small text-danger text-right">{{ $errors->first('password') }}</small>
           </div>
 
-          <button class="btn btn-primary btn-lg btn-block" type="submit">Log in</button>
+          <div class="form-group checkbox" style="height:20px;">
+            <label for="remember-me" style="line-height: 100%; padding-left: 0;">
+              <input type="checkbox" name="remember-me" id="remember-me" data-toggle="checkbox"> Remember me
+            </label>
+          </div>
+
+          <button class="btn btn-primary btn-embossed btn-lg btn-block" type="submit">Log in</button>
 
         {{ Form::close() }}
 
@@ -63,4 +69,10 @@ Login
     box-shadow: none;
   }
 </style>
+@stop
+
+@section('scripts')
+<script>
+  $(':checkbox').radiocheck();
+</script>
 @stop

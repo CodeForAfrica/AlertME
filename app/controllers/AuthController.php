@@ -24,6 +24,9 @@ class AuthController extends BaseController {
       'password' => Input::get('password')
     );
 
+    $remember_me = false;
+    if (Input::get('remember-me') == 'on') $remember_me = true;
+
     // Declare the rules for the form validation.
     $rules = array(
       'username'  => 'Required',
@@ -37,7 +40,7 @@ class AuthController extends BaseController {
     if ($validator->passes())
     {
       // Try to log the user in.
-      if (Auth::attempt($userdata))
+      if (Auth::attempt($userdata, $remember_me))
       {
         // Redirect to homepage
         return Redirect::to('dashboard')->with('success', 'You have logged in successfully');
