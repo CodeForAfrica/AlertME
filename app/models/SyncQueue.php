@@ -4,27 +4,34 @@ class SyncQueue {
 
   public function fire($job, $data)
   {
+    Log::info('['.$job->getJobId().':'.$job->attempts().'] Queue started.');
+
     if ($job->attempts() > 3)
     {
         $job->delete();
+
+    } else {
+
+      $sync = Sync::find($data['sync_id']);
+      $ds_configs = DataSourceConfig::where('config_status', 1)->get();
+
+      foreach ($ds_configs as $ds_config) {
+        self::dataSourceSync($sync, $ds_config);
+      }
+
+      // Check if all data sources synced successfully
+
+
+      $sync->sync_status = 1;
+      $sync->save();
+
+      Log::info('['.$job->getJobId().':'.$job->attempts().'] Sync completed.');
+
+      Log::info('['.$job->getJobId().':'.$job->attempts().'] Queue finished.');
+
+      $job->delete();
+
     }
-
-    $sync = Sync::find($data['sync_id']);
-    $ds_configs = DataSourceConfig::where('config_status', 1)->get();
-
-    foreach ($ds_configs as $ds_config) {
-      self::dataSourceSync($sync, $ds_config);
-    }
-
-    // Check if all data sources synced successfully
-
-
-    $sync->sync_status = 1;
-    $sync->save();
-
-    Log::info('Sync completed.');
-
-    $job->delete();
 
   }
 
@@ -57,6 +64,14 @@ class SyncQueue {
 
     // Set data fetched
     self::setProjects($csv, $ds_config, $ds_sync);
+    Log::info('Projects update completed.');
+
+    // Geocode
+    $config = json_decode($ds_config->config);
+    if ($config->config_geo_type == 'address') {
+      Geocode::geocodeProjects( $ds_config->data_source_id );
+      Log::info('Geocode complete.');
+    }
 
     $ds_data->raw = json_encode($csv);
     $ds_data->save();
@@ -84,8 +99,6 @@ class SyncQueue {
       if ( $config->config_geo_type == 'address' ) {
         $project->geo_type = 'address';
         $project->geo_address = $row[ $ds_cols[ $config->config_geo_add ] ];
-
-        Queue::push('GeocodeQueue', array('project_id' => $project->id));
       }
       if ( $config->config_geo_type == 'lat_lng' ) {
         $project->geo_type = 'lat_lng';

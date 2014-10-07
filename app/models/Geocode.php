@@ -24,6 +24,27 @@ class Geocode extends Eloquent {
       return $this->belongsTo('GeoApi');
     }
 
+    public static function geocodeProjects ( $ds_id )
+    {
+      $addresses = DB::table('projects')->where('data_source_id', '=', $ds_id)->groupby('geo_address')->get(array('geo_address'));
+
+      foreach ( $addresses as $address ){
+
+        if ( trim($address->geo_address) != '' )
+        {
+          $geocode = Geocode::firstOrCreate( array(
+            'address' => $address->geo_address
+          ));
+
+          if( $geocode->status == 0 ) {
+            $geocode = Geocode::fetchGeo( $geocode );
+            $geocode->save();
+          }
+        }
+      }
+
+    }
+
     public static function fetchGeo ( $geocode )
     {
       $geoapi = GeoApi::find(1);
