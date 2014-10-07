@@ -6,10 +6,18 @@ $( document ).ready(function() {
 
   map.scrollWheelZoom.disable();
 
-  map.featureLayer.on('click', function(e) {
-    map.panTo(e.layer.getLatLng());
+
+  var featureLayer = L.mapbox.featureLayer()
+    .loadURL('/api/v1/projectsgeojson')
+    .addTo(map);
+
+  featureLayer.on('ready', function() {
+    map.fitBounds(featureLayer.getBounds());
   });
 
+  featureLayer.on('click', function(e) {
+    map.panTo(e.layer.getLatLng());
+  });
 
 
 });

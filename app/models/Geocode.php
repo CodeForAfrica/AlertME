@@ -51,6 +51,7 @@ class Geocode extends Eloquent {
       $geocode->geo_api_id = 1;
       $url = 'https://maps.googleapis.com/maps/api/geocode/json?'.
         'address='.str_replace(" ", "+", $geocode->address).
+        '&region=za'.
         '&key='.$geoapi->key;
       $api_response = json_decode( file_get_contents($url), true );
 
