@@ -15,4 +15,9 @@ class GeoApi extends Eloquent {
       });
 
     }
+
+    public function geocodes()
+    {
+      return $this->hasMany('Geocode');
+    }
 }

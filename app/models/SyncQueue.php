@@ -40,6 +40,8 @@ class SyncQueue {
     $ds_data = DataSource::find($ds_sync->data_source_id)->datasourcedata;
     $csv = $ds_data->fetchData();
 
+    Log::info('Download completed.');
+
     if(!$csv) {
       $ds_sync->sync_status = 3;
       $ds_sync->save();
@@ -82,6 +84,8 @@ class SyncQueue {
       if ( $config->config_geo_type == 'address' ) {
         $project->geo_type = 'address';
         $project->geo_address = $row[ $ds_cols[ $config->config_geo_add ] ];
+
+        Queue::push('GeocodeQueue', array('project_id' => $project->id));
       }
       if ( $config->config_geo_type == 'lat_lng' ) {
         $project->geo_type = 'lat_lng';
