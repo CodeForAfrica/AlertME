@@ -2,16 +2,22 @@
 
 @section('content')
 
-  <div class="projects-list">
+  <div class="home">
 
     @if (count($projects) === 0)
-      <p class="lead" id="no-data-sources">It seems you don't have any data sources yet.
-        <button type="button" class="btn btn-primary btn-sm data-source-add"
-          id="data-source-add-first" data-toggle="modal" data-target="#editModal">
-          <span class="fui-plus"></span> Add</button>
-        some now to get started.
-      </p>
+      <div class="container text-center">
+        <br/>
+        <p class="lead" id="no-projects">It seems there are no projects here yet.
+          If you are the admin, please visit the <a href="dashboard">Dashboard</a>
+          and a Data Source to get started.
+        </p>
+      </div>
     @else
+
+      <div class="home-map">
+        <div id="map" style="height:500px;">
+        </div>
+      </div>
 
       @foreach ( $projects as $project )
         <div class="row" id="project-{{ $project->id }}">

@@ -1,5 +1,7 @@
 @extends('layouts.base')
 
+@section('body-class') frontend @stop
+
 @section('stylesheets')
   <link rel="stylesheet" href="/assets/css/frontend.css">
 @stop
@@ -57,5 +59,8 @@
 @stop
 
 @section('scripts')
+  <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.2/mapbox.js'></script>
+  <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.2/mapbox.css' rel='stylesheet' />
+
   <script src="/assets/js/frontend.js"></script>
 @stop
