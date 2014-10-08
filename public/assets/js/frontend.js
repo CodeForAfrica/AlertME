@@ -5,6 +5,18 @@ $( document ).ready(function() {
       zoomAnimationThreshold: 10
     }).setView([-28.4792625, 24.6727135], 5);
 
+  // Spiderfy
+  var oms = new OverlappingMarkerSpiderfier(map);
+  var popup = new L.Popup();
+  oms.addListener('click', function(marker) {
+    popup.setContent(marker.desc);
+    popup.setLatLng(marker.getLatLng());
+    map.openPopup(popup);
+  });
+  oms.addListener('spiderfy', function(markers) {
+    map.closePopup();
+  });
+
   var featureLayer = L.mapbox.featureLayer();
 
   map.scrollWheelZoom.disable();
@@ -79,19 +91,40 @@ $( document ).ready(function() {
     map.removeLayer(featureLayer);
 
     if ( map.getZoom() > 9 ) {
-      featureLayer = L.mapbox.featureLayer()
-        .loadURL('/api/v1/projectsgeojson?bounds='+bound)
-        .addTo(map);
-
-      featureLayer.on('ready', function() {
-        // map.fitBounds(featureLayer.getBounds());
+      $.ajax({
+        type: "GET",
+        url: '/api/v1/projectsgeojson?bounds='+bound,
+        async: false
+      }).done(function(response) {
+        for (var i = 0; i < response.features.length; i ++) {
+          var datum = response.features[i];
+          var loc = new L.LatLng(
+            response.features[i].geometry.coordinates[1],
+            response.features[i].geometry.coordinates[0]
+          );
+          var marker = new L.Marker(loc);
+          marker.desc = response.features[i].properties.description;
+          map.addLayer(marker);
+          oms.addMarker(marker);  // <-- here
+        }
         $('#loading-geo').fadeOut('fast');
         $('.home-search').fadeOut('slow');
       });
 
-      featureLayer.on('click', function(e) {
-        map.panTo(e.layer.getLatLng());
-      });
+      // featureLayer = L.mapbox.featureLayer()
+      //   .loadURL('/api/v1/projectsgeojson?bounds='+bound)
+      //   .addTo(map);
+      //
+      // featureLayer.on('ready', function() {
+      //   // map.fitBounds(featureLayer.getBounds());
+      //
+      //   $('#loading-geo').fadeOut('fast');
+      //   $('.home-search').fadeOut('slow');
+      // });
+      //
+      // featureLayer.on('click', function(e) {
+      //   map.panTo(e.layer.getLatLng());
+      // });
     }
 
   }
