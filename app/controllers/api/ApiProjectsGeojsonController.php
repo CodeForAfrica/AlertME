@@ -11,21 +11,34 @@ class ApiProjectsGeojsonController extends \BaseController {
 	{
 		//
 		$page = Input::get('page', 0);
-		$per_page = 10; //Input::get('per_page', 0);
+		$per_page = 100; //Input::get('per_page', 0);
 		$cat_id = Input::get('cat_id', -1);
+
+		$GLOBALS['bounds'] = explode(",", Input::get('bounds', '-33.515064400105665,-32.940691418651056,20.8685302734375,22.846069335937496'));
 
 		$projects = DB::table('projects')
 	    ->join('geocodes', 'projects.geo_address', '=', 'geocodes.address')
 			->where(function($query) {
-				$query->where('projects.geo_type','=','lat_lng');
+				$bounds = $GLOBALS['bounds'];
+				$query->where('projects.geo_type','=','lat_lng')
+					->where('projects.geo_lat', '>', $bounds[0])
+					->where('projects.geo_lat', '<', $bounds[1])
+					->where('projects.geo_lng', '>', $bounds[2])
+					->where('projects.geo_lng', '<', $bounds[3]);
 			})
 			->orWhere(function($query)
 				{
+					$bounds = $GLOBALS['bounds'];
 					$query->where('projects.geo_type', '=', 'address')
-						->where('projects.geo_address', '<>', '');
+						->where('projects.geo_address', '<>', '')
+						->where('geocodes.lat', '>', $bounds[0])
+						->where('geocodes.lat', '<', $bounds[1])
+						->where('geocodes.lng', '>', $bounds[2])
+						->where('geocodes.lng', '<', $bounds[3]);
 				})
 			->select('projects.*', 'geocodes.lat', 'geocodes.lng')
 	    ->take($per_page)->get();
+
 
 		$features = array();
 		for( $i = 0; $i < count($projects) ; $i++ )

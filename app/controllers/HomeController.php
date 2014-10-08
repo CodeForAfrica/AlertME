@@ -19,6 +19,8 @@ class HomeController extends BaseController {
 	{
 		$projects = DB::table('projects')->take(10)->get();
 
+		$categories = $projects;
+
 		$data = array(
 			'projects' => $projects
 		);

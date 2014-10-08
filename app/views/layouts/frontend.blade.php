@@ -59,8 +59,12 @@
 @stop
 
 @section('scripts')
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
+
   <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.2/mapbox.js'></script>
   <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.2/mapbox.css' rel='stylesheet' />
+
+  <script src='http://jawj.github.io/OverlappingMarkerSpiderfier-Leaflet/bin/oms.min.js'></script>
 
   <script src="/assets/js/frontend.js"></script>
 @stop
