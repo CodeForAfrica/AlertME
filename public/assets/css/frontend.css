@@ -7,15 +7,19 @@
 body { padding-top: 76px; }
 
 .home-search {
-  height: 500px;
+  height: 700px;
   position: absolute;
   z-index: 1029;
   background: rgba(44, 62, 80, 0.59);
   width: 100%;
   color: #ECF0F1;
-  padding-top: 75px;
+  padding-top: 100px;
 }
 
 .pac-container {
   z-index: 1029;
+}
+
+footer {
+  padding: 40px 0 30px;
 }

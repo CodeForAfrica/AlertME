@@ -58,6 +58,21 @@
   </nav>
 @stop
 
+@section('footer')
+<footer class="bg-primary">
+  <div class="container text-center">
+    <div class="row">
+      <div class="col-md-6 text-left">
+      </div>
+      <div class="col-md-6 text-right">
+        <p>An Oxpeckers' Project</p>
+        <p>Built by Code for Africa</p>
+      </div>
+    </div>
+  </div>
+</footer>
+@stop
+
 @section('scripts')
   <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
 

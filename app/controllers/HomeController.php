@@ -27,4 +27,9 @@ class HomeController extends BaseController {
 		return View::make('home', $data);
 	}
 
+	public function showAbout()
+	{
+		return View::make('about');
+	}
+
 }

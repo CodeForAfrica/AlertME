@@ -37,6 +37,8 @@
 
     @yield('sidebar')
 
+    @yield('footer')
+
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-2.1.1.min.js"><\/script>')</script>

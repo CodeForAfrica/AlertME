@@ -21,6 +21,12 @@ $( document ).ready(function() {
 
   map.scrollWheelZoom.disable();
 
+  // Initialize the geocoder control and add it to the map.
+  var geocoderControl = L.mapbox.geocoderControl('mapbox.places-v1',{
+    autocomplete: true
+  });
+  geocoderControl.addTo(map);
+
   var input = document.getElementById('search-geo');
   var options = {
     componentRestrictions: {country: 'za'}
@@ -68,17 +74,57 @@ $( document ).ready(function() {
     } );
   }
 
+  var load = false;
+
 
   // Listen for the event fired when the user selects an item from the
   // pick list. Retrieve the matching places for that item.
   google.maps.event.addListener(searchBox, 'place_changed', function() {
+    load = true;
+    map.remove();
+
+    map = L.mapbox.map('map', 'codeforafrica.ji193j10',{
+      zoomAnimationThreshold: 10
+    }).setView([-28.4792625, 24.6727135], 5);
+
+    map.on('zoomend', function(){
+      loadMarkers();
+    });
+
+    map.scrollWheelZoom.disable();
+
+    oms = new OverlappingMarkerSpiderfier(map);
+
+    geocoderControl = L.mapbox.geocoderControl('mapbox.places-v1',{
+      autocomplete: true
+    });
+    geocoderControl.addTo(map);
+
+    $('.leaflet-control-mapbox-geocoder-toggle').click(function(){
+      $('.home-search').fadeIn('fast');
+      $('.leaflet-control-mapbox-geocoder-wrap').hide();
+      $('.leaflet-control-mapbox-geocoder-results').hide();
+      $('#loading-geo').hide();
+    });
+
+    popup = new L.Popup();
+    oms.addListener('click', function(marker) {
+      popup.setContent(marker.desc);
+      popup.setLatLng(marker.getLatLng());
+      map.openPopup(popup);
+    });
+    oms.addListener('spiderfy', function(markers) {
+      map.closePopup();
+    });
+
+
     var place = searchBox.getPlace();
     map.setView([place.geometry.location.k, place.geometry.location.B], 10);
 
-    map.on('zoomend', function(){
-      $('#loading-geo').fadeIn('slow');
-      loadMarkers();
-    });
+
+
+    $('#loading-geo').fadeIn('slow');
+
 
   });
 
@@ -88,14 +134,15 @@ $( document ).ready(function() {
     var bound = bounds._southWest.lat + "," + bounds._northEast.lat + "," +
       bounds._southWest.lat + "," + bounds._northEast.lng;
 
-    map.removeLayer(featureLayer);
 
-    if ( map.getZoom() > 9 ) {
+    if ( map.getZoom() > 9 && load) {
+
       $.ajax({
         type: "GET",
         url: '/api/v1/projectsgeojson?bounds='+bound,
         async: false
       }).done(function(response) {
+
         for (var i = 0; i < response.features.length; i ++) {
           var datum = response.features[i];
           var loc = new L.LatLng(
@@ -107,8 +154,11 @@ $( document ).ready(function() {
           map.addLayer(marker);
           oms.addMarker(marker);  // <-- here
         }
+
+        load = false;
         $('#loading-geo').fadeOut('fast');
         $('.home-search').fadeOut('slow');
+
       });
 
       // featureLayer = L.mapbox.featureLayer()
@@ -130,11 +180,7 @@ $( document ).ready(function() {
   }
 
 
-  // Initialize the geocoder control and add it to the map.
-  var geocoderControl = L.mapbox.geocoderControl('mapbox.places-v1',{
-    autocomplete: true
-  });
-  geocoderControl.addTo(map);
+
 
   // Listen for the `found` result and display the first result
   // in the output container. For all available events, see
@@ -143,11 +189,7 @@ $( document ).ready(function() {
   //   output.innerHTML = JSON.stringify(res.results.features[0]);
   // });
 
-  $('.leaflet-control-mapbox-geocoder-toggle').click(function(){
-    $('.home-search').fadeIn('fast');
-    $('.leaflet-control-mapbox-geocoder-wrap').hide();
-    $('.leaflet-control-mapbox-geocoder-results').hide();
-  });
+
 
 
 
