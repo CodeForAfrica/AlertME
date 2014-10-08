@@ -63,10 +63,12 @@
   <div class="container text-center">
     <div class="row">
       <div class="col-md-6 text-left">
+        <p><img src="/assets/img/logos/oxpeckers.png" style="height:100px;"></p>
+        <p>An Oxpeckers' Project</p>
       </div>
       <div class="col-md-6 text-right">
-        <p>An Oxpeckers' Project</p>
-        <p>Built by Code for Africa</p>
+        <p><img src="/assets/img/logos/c4a.png" style="height:80px;"></p>
+
       </div>
     </div>
   </div>

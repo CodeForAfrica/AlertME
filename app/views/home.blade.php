@@ -15,7 +15,7 @@
     @else
 
       <div class="home-map">
-        <div class="home-search text-center">
+        <div class="home-search text-center container-fluid">
           <div class="row">
             <div class="col-md-4 col-md-offset-4">
               <h1 class="text-default">#GreenAlert</h1>
