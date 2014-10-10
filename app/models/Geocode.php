@@ -26,6 +26,10 @@ class Geocode extends Eloquent {
 
     public static function geocodeProjects ( $ds_id )
     {
+      if (!$ds_id){
+        return;
+      }
+      
       $addresses = DB::table('projects')->where('data_source_id', '=', $ds_id)->groupby('geo_address')->get(array('geo_address'));
 
       foreach ( $addresses as $address ){

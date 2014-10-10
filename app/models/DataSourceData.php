@@ -3,6 +3,7 @@
 class DataSourceData extends Eloquent {
 
     protected $table = 'data_source_datas';
+    protected $fillable = array('data_source_id');
 
 
     public static function boot()
@@ -12,7 +13,13 @@ class DataSourceData extends Eloquent {
       // Setup event bindings...
       DataSourceData::creating(function($ds_data)
       {
-        // $ds_data->raw = DataSourceData::fetchData($ds_data);
+        $data = $ds_data->fetchData();
+        if(!$data) {
+          return false;
+        }
+
+        $ds_data->headers = json_encode(array_keys($data[0]));
+        $ds_data->raw = json_encode($data);
 
       });
 
@@ -85,6 +92,7 @@ class DataSourceData extends Eloquent {
     	{
     		while (($row = fgetcsv($handle, 0, $delimiter)) !== FALSE)
     		{
+          $row = array_map('trim', $row);
     			if(!$header)
     				$header = $row;
     			else

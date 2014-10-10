@@ -20,6 +20,9 @@ class DataSource extends Eloquent {
       DataSource::deleted(function($datasource)
       {
         DataSourceConfig::where('data_source_id', '=', $datasource->id)->delete();
+        DataSourceSync::where('data_source_id', '=', $datasource->id)->delete();
+        DataSourceData::where('data_source_id', '=', $datasource->id)->delete();
+        Project::where('data_source_id', '=', $datasource->id)->delete();
       });
     }
 

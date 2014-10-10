@@ -8,58 +8,31 @@ class DataSourceQueue {
 
   function fetchDataSourceColumns($job, $data)
   {
+    Log::info('['.$job->getJobId().':'.$job->attempts().'] Fetch data columns started.');
+
     $config = DataSourceConfig::find($data['config_id']);
     if (!$config){
       $job->delete();
       return;
     }
 
-    $datasource = DataSource::find($config->data_source_id);
+    // Get data
+    $data = DataSourceData::firstOrCreate( array(
+      'data_source_id' => $config->data_source_id
+    ));
 
-    if(!filter_var($datasource->url, FILTER_VALIDATE_URL))
-    {
-      // Not a URL
+    if ( !$data ) {
 
-      if (! file_exists ( $datasource->url)){
-        $config->config_status = 0;
-        $config->save();
-        $job->delete();
-        return;
-      }
-    }
-    else
-    {
-      // Is a URL
+      $config->config_status = 0;
+      $config->save();
 
-      $file_headers = @get_headers($datasource->url);
-
-      if($file_headers[0] == 'HTTP/1.0 404 Not Found'){
-        // echo "The file $filename does not exist";
-        $config->config_status = 0;
-        $config->save();
-        $job->delete();
-        return;
-      } else if ($file_headers[0] == 'HTTP/1.0 302 Found' && $file_headers[7] == 'HTTP/1.0 404 Not Found'){
-        // echo "The file $filename does not exist, and I got redirected to a custom 404 page..";
-        $config->config_status = 0;
-        $config->save();
-        $job->delete();
-        return;
-      }
+    } else {
+      $config->data_source_columns = $data->headers;
+      $config->config_status = 2;
+      $config->save();
     }
 
-    $csv = array_map('str_getcsv', file($datasource->url));
-
-    $config->data_source_columns = json_encode($csv[0]);
-    $config->config_status = 2;
-    $config->save();
-
-    // Save data to database
-    $data = new DataSourceData;
-    $data->data_source_id = $config->data_source_id;
-    $data->headers = json_encode($csv[0]);
-    $data->raw = json_encode($csv);
-    $data->save();
+    Log::info('['.$job->getJobId().':'.$job->attempts().'] Fetch data columns finished.');
 
     $job->delete();
 

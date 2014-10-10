@@ -4,11 +4,12 @@ class SyncQueue {
 
   public function fire($job, $data)
   {
-    Log::info('['.$job->getJobId().':'.$job->attempts().'] Queue started.');
+    Log::info('['.$job->getJobId().':'.$job->attempts().'] Sync started.');
 
     if ($job->attempts() > 3)
     {
-        $job->delete();
+      Log::info('['.$job->getJobId().':'.$job->attempts().'] Sync failed.');
+      $job->delete();
 
     } else {
 
@@ -26,8 +27,6 @@ class SyncQueue {
       $sync->save();
 
       Log::info('['.$job->getJobId().':'.$job->attempts().'] Sync completed.');
-
-      Log::info('['.$job->getJobId().':'.$job->attempts().'] Queue finished.');
 
       $job->delete();
 
@@ -57,8 +56,17 @@ class SyncQueue {
 
     // Check column change
     if(array_keys($csv[0]) != json_decode($ds_config->data_source_columns)){
+      Log::info('Columns are differnt from configuration.');
+
       $ds_sync->sync_status = 4;
       $ds_sync->save();
+
+      $ds_config->data_source_columns = array_keys($csv[0]);
+      $ds_config->config_status = 2;
+      $ds_config->save();
+
+      // Email column change needs configuration before sync
+
       return;
     }
 
@@ -84,9 +92,8 @@ class SyncQueue {
 
   function setProjects ( $csv, $ds_config, $ds_sync )
   {
-    $ds_cols = json_decode($ds_config->data_source_columns);
-    $config = json_decode($ds_config->config);
-
+    $ds_cols = json_decode($ds_config->data_source_columns); // String Keys
+    $config = json_decode($ds_config->config); // Integer position
 
     foreach ( $csv as $row ) {
       $project = Project::firstOrCreate( array(
@@ -94,11 +101,22 @@ class SyncQueue {
       ));
       $project->data_source_id = $ds_config->data_source_id;
       $project->data_source_sync_id = $ds_sync->id;
-      $project->title = $row[ $ds_cols[ $config->config_title ] ];
+
+      if (strlen($row[ $ds_cols[ $config->config_title ] ]) > 254){
+        $project->title = substr($row[ $ds_cols[ $config->config_title ] ], 0, 250);
+        $project->title = $project->title . '...';
+      } else {
+        $project->title = $row[ $ds_cols[ $config->config_title ] ];
+      }
       $project->description = $row[ $ds_cols[ $config->config_desc ] ];
+
       if ( $config->config_geo_type == 'address' ) {
         $project->geo_type = 'address';
-        $project->geo_address = $row[ $ds_cols[ $config->config_geo_add ] ];
+        if (strlen($row[ $ds_cols[ $config->config_geo_add ] ]) > 254){
+          $project->geo_address = substr($row[ $ds_cols[ $config->config_title ] ], 0, 250);
+        } else {
+          $project->geo_address = $row[ $ds_cols[ $config->config_geo_add ] ];
+        }
       }
       if ( $config->config_geo_type == 'lat_lng' ) {
         $project->geo_type = 'lat_lng';
