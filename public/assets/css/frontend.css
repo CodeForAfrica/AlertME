@@ -6,6 +6,11 @@
 
 body { padding-top: 76px; }
 
+/**
+ * HOME
+ * -----------------------------------------------------------------------------
+ */
+
 .home-search {
   height: 700px;
   position: absolute;
@@ -22,4 +27,14 @@ body { padding-top: 76px; }
 
 footer {
   padding: 40px 0 30px;
+}
+
+
+/**
+ * About
+ * -----------------------------------------------------------------------------
+ */
+
+.about {
+  padding-bottom: 60px;
 }

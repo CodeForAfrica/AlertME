@@ -24,12 +24,12 @@ class HomeController extends BaseController {
 		$data = array(
 			'projects' => $projects
 		);
-		return View::make('home', $data);
+		return View::make('home.index', $data);
 	}
 
 	public function showAbout()
 	{
-		return View::make('about');
+		return View::make('home.about');
 	}
 
 }
