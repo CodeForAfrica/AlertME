@@ -19,8 +19,8 @@ class CreateProjectsTable extends Migration {
 			$table->integer('data_source_config_id')->default(0);
 			$table->integer('data_source_sync_id')->default(0);
 			$table->string('project_id')->default('0');
-			$table->mediumText('title')->nullable();
-			$table->mediumText('description')->nullable();
+			$table->string('title')->default('[No Title]');
+			$table->longText('description')->nullable();
 			$table->string('geo_type')->default('lat_lng');
 			$table->string('geo_address')->default('0');
 			$table->float('geo_lat')->default('0');

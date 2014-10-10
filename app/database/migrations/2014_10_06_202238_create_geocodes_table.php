@@ -15,7 +15,7 @@ class CreateGeocodesTable extends Migration {
 		Schema::create('geocodes', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->mediumText('address');
+			$table->string('address');
 			$table->string('geo_api_id')->nullable();
 			$table->longText('api_response')->nullable();
 			$table->float('lat')->default('0')->nullable();
