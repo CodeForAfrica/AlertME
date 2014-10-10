@@ -40,7 +40,6 @@
         </ul>
 
 
-
         <form class="navbar-form navbar-right" action="#" role="search">
           <div class="form-group">
             <div class="input-group">
@@ -81,7 +80,9 @@
   <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.2/mapbox.js'></script>
   <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.2/mapbox.css' rel='stylesheet' />
 
-  <script src='http://jawj.github.io/OverlappingMarkerSpiderfier-Leaflet/bin/oms.min.js'></script>
+  <link href="assets/css/MarkerCluster.css" rel="stylesheet" />
+  <link href="assets/css/MarkerCluster.Default.css" rel="stylesheet" />
+  <script src="/assets/js/vendor/leaflet.markercluster.js"></script>
 
   <script src="/assets/js/frontend.js"></script>
 @stop

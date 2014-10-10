@@ -5,16 +5,9 @@ $( document ).ready(function() {
       zoomAnimationThreshold: 10
     }).setView([-28.4792625, 24.6727135], 5);
 
-  // Spiderfy
-  var oms = new OverlappingMarkerSpiderfier(map);
-  var popup = new L.Popup();
-  oms.addListener('click', function(marker) {
-    popup.setContent(marker.desc);
-    popup.setLatLng(marker.getLatLng());
-    map.openPopup(popup);
-  });
-  oms.addListener('spiderfy', function(markers) {
-    map.closePopup();
+  // Overlapping markers
+  var markers = new L.MarkerClusterGroup({
+    showCoverageOnHover: false
   });
 
   var featureLayer = L.mapbox.featureLayer();
@@ -76,29 +69,17 @@ $( document ).ready(function() {
 
   var load = false;
 
+  initializeMap ();
 
   // Listen for the event fired when the user selects an item from the
   // pick list. Retrieve the matching places for that item.
   google.maps.event.addListener(searchBox, 'place_changed', function() {
+
+    $('#loading-geo').fadeIn('slow');
+
     load = true;
-    map.remove();
 
-    map = L.mapbox.map('map', 'codeforafrica.ji193j10',{
-      zoomAnimationThreshold: 10
-    }).setView([-28.4792625, 24.6727135], 5);
-
-    map.on('zoomend', function(){
-      loadMarkers();
-    });
-
-    map.scrollWheelZoom.disable();
-
-    oms = new OverlappingMarkerSpiderfier(map);
-
-    geocoderControl = L.mapbox.geocoderControl('mapbox.places-v1',{
-      autocomplete: true
-    });
-    geocoderControl.addTo(map);
+    initializeMap ();
 
     $('.leaflet-control-mapbox-geocoder-toggle').click(function(){
       $('.home-search').fadeIn('fast');
@@ -107,35 +88,41 @@ $( document ).ready(function() {
       $('#loading-geo').hide();
     });
 
-    popup = new L.Popup();
-    oms.addListener('click', function(marker) {
-      popup.setContent(marker.desc);
-      popup.setLatLng(marker.getLatLng());
-      map.openPopup(popup);
-    });
-    oms.addListener('spiderfy', function(markers) {
-      map.closePopup();
-    });
-
-
     var place = searchBox.getPlace();
     map.setView([place.geometry.location.k, place.geometry.location.B], 10);
 
-
-
-    $('#loading-geo').fadeIn('slow');
-
+    loadMarkers();
 
   });
 
-  function loadMarkers () {
-    var bounds = map.getBounds();
-    console.log(bounds);
-    var bound = bounds._southWest.lat + "," + bounds._northEast.lat + "," +
-      bounds._southWest.lat + "," + bounds._northEast.lng;
+  function initializeMap () {
+    map.remove();
+    markers = new L.MarkerClusterGroup({
+      showCoverageOnHover: false
+    });
 
+    map = L.mapbox.map('map', 'codeforafrica.ji193j10',{
+      zoomAnimationThreshold: 10,
+      maxZoom: 15
+    }).setView([-28.4792625, 24.6727135], 5);
+
+    map.scrollWheelZoom.disable();
+
+    geocoderControl = L.mapbox.geocoderControl('mapbox.places-v1',{
+      autocomplete: true
+    });
+    geocoderControl.addTo(map);
+  }
+
+  function loadMarkers () {
 
     if ( map.getZoom() > 9 && load) {
+
+      load = false;
+
+      var bounds = map.getBounds();
+      var bound = bounds._southWest.lat + "," + bounds._northEast.lat + "," +
+        bounds._southWest.lat + "," + bounds._northEast.lng;
 
       $.ajax({
         type: "GET",
@@ -146,16 +133,17 @@ $( document ).ready(function() {
         for (var i = 0; i < response.features.length; i ++) {
           var datum = response.features[i];
           var loc = new L.LatLng(
-            response.features[i].geometry.coordinates[1],
-            response.features[i].geometry.coordinates[0]
+            datum.geometry.coordinates[1],
+            datum.geometry.coordinates[0]
           );
           var marker = new L.Marker(loc);
-          marker.desc = response.features[i].properties.description;
-          map.addLayer(marker);
-          oms.addMarker(marker);  // <-- here
+          marker.title = datum.properties.title;
+          marker.bindPopup(marker.title);
+          markers.addLayer(marker);
         }
 
-        load = false;
+        map.addLayer(markers);
+
         $('#loading-geo').fadeOut('fast');
         $('.home-search').fadeOut('slow');
 
@@ -178,22 +166,6 @@ $( document ).ready(function() {
     }
 
   }
-
-
-
-
-  // Listen for the `found` result and display the first result
-  // in the output container. For all available events, see
-  // https://www.mapbox.com/mapbox.js/api/v2.1.2/l-mapbox-geocodercontrol/#section-geocodercontrol-on
-  // geocoderControl.on('found', function(res) {
-  //   output.innerHTML = JSON.stringify(res.results.features[0]);
-  // });
-
-
-
-
-
-
 
 
 });
