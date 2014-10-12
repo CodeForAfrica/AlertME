@@ -15,6 +15,22 @@
     @else
 
       <div class="home-map">
+
+        <div id="map" style="height:700px;">
+        </div>
+
+        <div class="map-controls">
+          <div class="pull-left">
+            <div class="btn-group-vertical">
+              <button id="map-ctrl-zoom-in" class="btn btn-sm btn-embossed btn-primary">+</button>
+              <button id="map-ctrl-zoom-out" class="btn btn-sm btn-embossed btn-primary">-</button>
+            </div>
+            <br/><br/>
+            <button id="map-ctrl-search" class="btn btn-sm btn-embossed btn-primary">
+              <small><span class="fui-search"></span></small></button>
+          </div>
+        </div>
+
         <div class="home-search text-center container-fluid">
           <div class="row">
             <div class="col-md-4 col-md-offset-4">
@@ -31,8 +47,7 @@
             </div>
           </div>
         </div>
-        <div id="map" style="height:700px;">
-        </div>
+
       </div>
 
 

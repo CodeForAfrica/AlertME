@@ -2,7 +2,8 @@ $( document ).ready(function() {
 
   L.mapbox.accessToken = 'pk.eyJ1IjoiY29kZWZvcmFmcmljYSIsImEiOiJVLXZVVUtnIn0.JjVvqHKBGQTNpuDMJtZ8Qg';
   var map = L.mapbox.map('map', 'codeforafrica.ji193j10',{
-      zoomAnimationThreshold: 10
+      zoomAnimationThreshold: 10,
+      zoomControl: false
     }).setView([-28.4792625, 24.6727135], 5);
 
   // Overlapping markers
@@ -14,11 +15,18 @@ $( document ).ready(function() {
 
   map.scrollWheelZoom.disable();
 
-  // Initialize the geocoder control and add it to the map.
-  var geocoderControl = L.mapbox.geocoderControl('mapbox.places-v1',{
-    autocomplete: true
+  $('#map-ctrl-zoom-in').click(function () {
+    map.zoomIn();
   });
-  geocoderControl.addTo(map);
+  $('#map-ctrl-zoom-out').click(function () {
+    map.zoomOut();
+  });
+
+  // // Initialize the geocoder control and add it to the map.
+  // var geocoderControl = L.mapbox.geocoderControl('mapbox.places-v1',{
+  //   autocomplete: true
+  // });
+  // geocoderControl.addTo(map);
 
   var input = document.getElementById('search-geo');
   var options = {
@@ -81,7 +89,7 @@ $( document ).ready(function() {
 
     initializeMap ();
 
-    $('.leaflet-control-mapbox-geocoder-toggle').click(function(){
+    $('#map-ctrl-search').click(function(){
       $('.home-search').fadeIn('fast');
       $('.leaflet-control-mapbox-geocoder-wrap').hide();
       $('.leaflet-control-mapbox-geocoder-results').hide();
@@ -98,20 +106,28 @@ $( document ).ready(function() {
   function initializeMap () {
     map.remove();
     markers = new L.MarkerClusterGroup({
-      showCoverageOnHover: false
+      showCoverageOnHover: false,
     });
 
     map = L.mapbox.map('map', 'codeforafrica.ji193j10',{
       zoomAnimationThreshold: 10,
-      maxZoom: 15
+      maxZoom: 15,
+      zoomControl: false
     }).setView([-28.4792625, 24.6727135], 5);
 
     map.scrollWheelZoom.disable();
 
-    geocoderControl = L.mapbox.geocoderControl('mapbox.places-v1',{
-      autocomplete: true
+    $('#map-ctrl-zoom-in').click(function () {
+      map.zoomIn();
     });
-    geocoderControl.addTo(map);
+    $('#map-ctrl-zoom-out').click(function () {
+      map.zoomOut();
+    });
+
+    // geocoderControl = L.mapbox.geocoderControl('mapbox.places-v1',{
+    //   autocomplete: true
+    // });
+    // geocoderControl.addTo(map);
   }
 
   function loadMarkers () {
@@ -126,8 +142,7 @@ $( document ).ready(function() {
 
       $.ajax({
         type: "GET",
-        url: '/api/v1/projectsgeojson?bounds='+bound,
-        async: false
+        url: '/api/v1/projectsgeojson?bounds='+bound
       }).done(function(response) {
 
         for (var i = 0; i < response.features.length; i ++) {
