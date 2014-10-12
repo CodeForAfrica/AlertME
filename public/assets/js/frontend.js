@@ -132,6 +132,10 @@ $( document ).ready(function() {
       }
     });
 
+    $('#map-ctrl-alert').click(function () {
+      
+    });
+
     // geocoderControl = L.mapbox.geocoderControl('mapbox.places-v1',{
     //   autocomplete: true
     // });
