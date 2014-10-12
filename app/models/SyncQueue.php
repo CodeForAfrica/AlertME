@@ -104,6 +104,18 @@ class SyncQueue {
       $project->data_source_id = $ds_config->data_source_id;
       $project->data_source_sync_id = $ds_sync->id;
 
+      $row[ $ds_cols[ $config->config_title ] ] = strtolower($row[ $ds_cols[ $config->config_title ] ]);
+      $row[ $ds_cols[ $config->config_desc ] ] = strtolower($row[ $ds_cols[ $config->config_desc ] ]);
+      $row[ $ds_cols[ $config->config_title ] ] = ucwords($row[ $ds_cols[ $config->config_title ] ]);
+      $row[ $ds_cols[ $config->config_desc ] ] = ucfirst($row[ $ds_cols[ $config->config_desc ] ]);
+
+      if (strlen($row[ $ds_cols[ $config->config_title ] ]) == 0){
+        $row[ $ds_cols[ $config->config_title ] ] = '[No Title]';
+      }
+      if (strlen($row[ $ds_cols[ $config->config_desc ] ]) == 0){
+        $row[ $ds_cols[ $config->config_desc ] ] = '[No Description]';
+      }
+
       if (strlen($row[ $ds_cols[ $config->config_title ] ]) > 254){
         $project->title = substr($row[ $ds_cols[ $config->config_title ] ], 0, 250);
         $project->title = $project->title . '...';
