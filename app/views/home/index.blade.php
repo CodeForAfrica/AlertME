@@ -29,6 +29,10 @@
             <button id="map-ctrl-search" class="btn btn-sm btn-embossed btn-primary">
               <small><span class="fui-search"></span></small></button>
           </div>
+          <div class="pull-right">
+            <button id="map-ctrl-alert" class="btn btn-sm btn-embossed btn-primary">
+              #</button>
+          </div>
         </div>
 
         <div class="home-search text-center container-fluid">

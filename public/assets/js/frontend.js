@@ -124,6 +124,14 @@ $( document ).ready(function() {
       map.zoomOut();
     });
 
+    map.on('zoomend', function(e) {
+      if(map.getZoom() > 9) {
+        $('#map-ctrl-alert').attr('class', 'btn btn-sm btn-embossed btn-primary');
+      } else {
+        $('#map-ctrl-alert').attr('class', 'btn btn-sm btn-embossed btn-primary disabled');
+      }
+    });
+
     // geocoderControl = L.mapbox.geocoderControl('mapbox.places-v1',{
     //   autocomplete: true
     // });

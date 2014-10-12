@@ -12,6 +12,7 @@ body { padding-top: 76px; }
  */
 
 .map-controls {
+  width: 100%;
   position: absolute;
   top: 76px;
   padding: 15px;
