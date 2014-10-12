@@ -84,6 +84,8 @@ class SyncQueue {
     $ds_data->raw = json_encode($csv);
     $ds_data->save();
 
+    $ds_data->setData();
+    Log::info('Data set complete.');
 
     $ds_sync->sync_status = 1;
     $ds_sync->save();
