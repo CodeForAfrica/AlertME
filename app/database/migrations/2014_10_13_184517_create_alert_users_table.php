@@ -16,7 +16,7 @@ class CreateAlertUsersTable extends Migration {
 		{
 			$table->increments('id');
 			$table->string('email');
-			$table->integer('alerts');
+			$table->integer('alerts')->default(0);
 			$table->timestamps();
 		});
 

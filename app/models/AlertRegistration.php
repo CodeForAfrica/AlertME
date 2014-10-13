@@ -16,7 +16,7 @@ class AlertRegistration extends Eloquent {
 
     }
 
-    public function alertregistrations()
+    public function users()
     {
       return $this->belongsTo('AlertUser');
     }

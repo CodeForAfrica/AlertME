@@ -3,6 +3,7 @@
 class AlertUser extends Eloquent {
 
     protected $table = 'alert_users';
+    protected $fillable = array('email');
 
     public static function boot()
     {
@@ -18,6 +19,6 @@ class AlertUser extends Eloquent {
 
     public function alerts()
     {
-      return $this->hasMany('AlertRegistrations');
+      return $this->hasMany('AlertRegistration');
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-class ApiDataSourceConfigController extends \BaseController {
+class ApiAlertRegistrationController extends \BaseController {
 
 	/**
 	 * Display a listing of the resource.
@@ -10,12 +10,6 @@ class ApiDataSourceConfigController extends \BaseController {
 	public function index()
 	{
 		//
-		$configs =  DataSourceConfig::all();
-		return Response::json(array(
-			'error' => false,
-			'configs' => $configs->toArray()),
-			200
-		);
 	}
 
 
@@ -27,6 +21,7 @@ class ApiDataSourceConfigController extends \BaseController {
 	public function create()
 	{
 		//
+
 	}
 
 
@@ -38,6 +33,40 @@ class ApiDataSourceConfigController extends \BaseController {
 	public function store()
 	{
 		//
+		AlertUser::firstOrCreate(array('email' => Input::get('email')));
+		$alert_user = AlertUser::where('email', Input::get('email'))->first();
+		if ( $alert_user->alerts > 4 ) {
+			return Response::json(array(
+				'error' => true,
+				'status' => 'OVER_LIMIT'),
+				200
+			);
+		}
+
+		$bounds = explode(",", Input::get('bounds'));
+		if ( count($bounds) != 4 ){
+			return Response::json(array(
+				'error' => true,
+				'status' => 'BOUNDS_ERROR'),
+				200
+			);
+		}
+
+		$alert = new AlertRegistration;
+		$alert->alert_user_id = $alert_user->id;
+		$alert->sw_lat = $bounds[0];
+		$alert->sw_lng = $bounds[1];
+		$alert->ne_lat = $bounds[2];
+		$alert->ne_lng = $bounds[3];
+		$alert->save();
+		$alert_user->increment('alerts');
+
+		return Response::json(array(
+			'error' => false,
+			'alert' => $alert->toArray(),
+			'status' => 'OK'),
+			200
+		);
 	}
 
 
@@ -50,12 +79,6 @@ class ApiDataSourceConfigController extends \BaseController {
 	public function show($id)
 	{
 		//
-		$config =  DataSource::find($id)->datasourceconfig;
-		return Response::json(array(
-			'error' => false,
-			'config' => $config->toArray()),
-			200
-		);
 	}
 
 
@@ -80,17 +103,6 @@ class ApiDataSourceConfigController extends \BaseController {
 	public function update($id)
 	{
 		//
-		$config = DataSourceConfig::find($id);
-		$config->data_source_columns = Input::get('data_source_columns');
-		$config->config_status = Input::get('config_status');
-		$config->config = json_encode(Input::get('config'));
-
-		$config->save();
-		return Response::json(array(
-			'error' => false,
-			'config' => $config->toArray()),
-			200
-		);
 	}
 
 

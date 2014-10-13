@@ -46,6 +46,10 @@ Route::group(array('prefix' => 'api/v1', 'before' => 'auth.basic'), function()
     Route::resource('datasourceconfig', 'ApiDataSourceConfigController');
     Route::resource('categories', 'ApiCategoryController');
 });
+Route::group(array('prefix' => 'api/v1', 'before' => 'csrf'), function()
+{
+    Route::resource('alertregistration', 'ApiAlertRegistrationController', array('only' => array('index', 'store')));
+});
 Route::group(array('prefix' => 'api/v1'), function()
 {
     Route::resource('projectsgeojson', 'ApiProjectsGeojsonController', array('only' => array('index', 'show')));

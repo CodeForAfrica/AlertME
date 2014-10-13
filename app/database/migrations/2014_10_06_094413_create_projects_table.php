@@ -23,8 +23,8 @@ class CreateProjectsTable extends Migration {
 			$table->longText('description')->nullable();
 			$table->string('geo_type')->default('lat_lng');
 			$table->string('geo_address')->default('0');
-			$table->float('geo_lat')->default('0');
-			$table->float('geo_lng')->default('0');
+			$table->decimal('geo_lat', 65, 10)->default(0);
+			$table->decimal('geo_lng', 65, 10)->default(0);
 			$table->string('status')->nullable();
 			$table->timestamps();
 		});

@@ -16,10 +16,10 @@ class CreateAlertRegistrationsTable extends Migration {
 		{
 			$table->increments('id');
 			$table->integer('alert_user_id');
-			$table->float('sw_lat');
-			$table->float('sw_lng');
-			$table->float('ne_lat');
-			$table->float('ne_lng');
+			$table->decimal('sw_lat', 65, 10);
+			$table->decimal('sw_lng', 65, 10);
+			$table->decimal('ne_lat', 65, 10);
+			$table->decimal('ne_lng', 65, 10);
 			$table->timestamps();
 		});
 

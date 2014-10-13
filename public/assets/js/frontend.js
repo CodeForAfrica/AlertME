@@ -163,6 +163,10 @@ $( document ).ready(function() {
       $('.map-alert-email').removeClass('has-error');
       $('#alertModal .alert-danger').fadeOut();
       $('#alertModal .alert-danger .msg-error.email').fadeOut();
+      $('#alertModal .alert-info').fadeOut();
+      $('.create-alert-btn').removeClass('disabled');
+      $('#alertModal .alert-success').fadeOut();
+      $('#map-alert-email').attr('disabled', false);
     });
     $('.create-alert-btn').click(function () {
       if( $('#map-alert-email').val().trim() == '' ) {
@@ -177,6 +181,32 @@ $( document ).ready(function() {
         $('#alertModal .alert-danger .msg-error.email').fadeIn();
         return;
       }
+      $('#alertModal .alert-info').fadeIn();
+      $('.create-alert-btn').addClass('disabled');
+      $('#map-alert-email').attr('disabled', true);
+      var bounds = map.getBounds();
+      var bound = bounds._southWest.lat + "," + bounds._southWest.lng + "," +
+        bounds._northEast.lat + "," + bounds._northEast.lng;
+      var data = {
+        email: $('#map-alert-email').val().trim(),
+        bounds: bound,
+        _token: csrf_token
+      };
+      $.ajax({
+        type: "POST",
+        url: "/api/v1/alertregistration",
+        data: data
+      }).done(function(response) {
+        // var result = jQuery.parseJSON(response);
+        if(response.status == 'OK') {
+          $('#alertModal .alert-success').fadeIn();
+        }
+        if(response.status == 'OVER_LIMIT') {
+          $('#alertModal .alert-danger').fadeIn();
+          $('#alertModal .alert-danger .msg-error.limit').fadeIn();
+        }
+        $('#alertModal .alert-info').fadeOut();
+      });
     });
 
 
