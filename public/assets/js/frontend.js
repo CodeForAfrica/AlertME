@@ -141,7 +141,7 @@ $( document ).ready(function() {
       map.zoomOut();
     });
 
-    map.on('zoomend', function(e) {
+    map.on('zoomend, moveend', function(e) {
       if(map.getZoom() > 9) {
         $('#map-ctrl-alert').attr('class', 'btn btn-sm btn-embossed btn-primary');
       } else {
