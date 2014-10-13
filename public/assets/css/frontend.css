@@ -12,11 +12,13 @@ body { padding-top: 76px; }
  */
 
 .map-controls {
-  width: 100%;
   position: absolute;
   top: 76px;
   padding: 15px;
 }
+  .map-controls.pull-right {
+    right: 0;
+  }
 
 .home-search {
   height: 700px;
@@ -31,6 +33,17 @@ body { padding-top: 76px; }
 footer {
   padding: 40px 0 30px;
 }
+
+#alertModal .alert {
+  padding: 5px 35px 5px 10px;
+}
+  #alertModal .alert-dismissable .close, #alertModal .alert-dismissible .close {
+    top: 3px;
+  }
+  #alertModal .msg-error {
+    font-family: monospace;
+    padding-left: 25px;
+  }
 
 
 /**

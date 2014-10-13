@@ -19,21 +19,19 @@
         <div id="map" style="height:700px;">
         </div>
 
-        <div class="map-controls">
-          <div class="pull-left">
-            <div class="btn-group-vertical">
-              <button id="map-ctrl-zoom-in" class="btn btn-sm btn-embossed btn-primary">+</button>
-              <button id="map-ctrl-zoom-out" class="btn btn-sm btn-embossed btn-primary">-</button>
-            </div>
-            <br/><br/>
-            <button id="map-ctrl-search" class="btn btn-sm btn-embossed btn-primary">
-              <small><span class="fui-search"></span></small></button>
+        <div class="map-controls pull-left">
+          <div class="btn-group-vertical">
+            <button id="map-ctrl-zoom-in" class="btn btn-sm btn-embossed btn-primary">+</button>
+            <button id="map-ctrl-zoom-out" class="btn btn-sm btn-embossed btn-primary">-</button>
           </div>
-          <div class="pull-right">
-            <button id="map-ctrl-alert" class="btn btn-sm btn-embossed btn-primary"
-              data-toggle="modal" data-target="#alertModal">
-              #</button>
-          </div>
+          <br/><br/>
+          <button class="map-ctrl-search btn btn-sm btn-embossed btn-primary">
+            <small><span class="fui-search"></span></small></button>
+        </div>
+        <div class="map-controls pull-right">
+          <button class="map-ctrl-alert btn btn-sm btn-embossed btn-primary"
+            data-toggle="modal" data-target="#alertModal">
+            #</button>
         </div>
 
         <div class="home-search text-center container-fluid">
@@ -59,23 +57,66 @@
       <!-- MODALS -->
 
       <!-- Create Alert Modal -->
-      <div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="alertModalLabel" aria-hidden="true">
+      <div class="modal" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="alertModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
 
             <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal">
+              <button type="button" class="close close-modal" data-dismiss="modal">
                 <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
               </button>
               <h4 class="modal-title" id="alertModalLabel">Create Alert</h4>
-            </div>
+            </div><!-- /.modal-header -->
+
             <div class="modal-body">
-              <p>One fine body&hellip;</p>
+
+              <div id="map-alert" style="height:200px; cursor:default;"></div>
+              <hr/>
+              <p>Enter your e-mail address below to receive alerts in this area.</p>
+              <div class="form-horizontal" role="form">
+                <div class="form-group map-alert-email">
+                  <label for="map-alert-email" class="col-sm-2 control-label">Email</label>
+                  <div class="col-sm-8">
+                    <input type="email" class="form-control" id="map-alert-email" placeholder="Email">
+                  </div>
+                </div>
+                <div class="form-group hidden">
+                  <label for="map-alert-bounds" class="col-sm-2 control-label">Area</label>
+                  <div class="col-sm-8">
+                    <input type="email" class="form-control" id="map-alert-bounds" placeholder="Email">
+                  </div>
+                </div>
               </div>
-              <div class="modal-footer">
-              <button type="button" class="btn btn-embossed btn-default" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-embossed btn-primary">Save changes</button>
-            </div>
+
+              <!-- Alerts -->
+              <div class="alert alert-info text-center" role="alert" style="display:none;"><small>
+                <i class="fa fa-circle-o-notch fa-spin"></i>
+                Creating alert. You'll soon be receiving updates from this area.
+              </small></div>
+              <div class="alert alert-success alert-dismissible" role="alert" style="display:none;">
+                <button type="button" class="close" data-dismiss="alert">
+                  <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                </button>
+                <small><span class="fui-check-circle"></span> Successfuly added alert.</small>
+              </div>
+              <div class="alert alert-danger alert-dismissible" role="alert" style="display:none;">
+                <button type="button" class="close" data-dismiss="alert">
+                  <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                </button>
+                <small>
+                  <span class="fui-alert-circle"></span>
+                  <b>Oops!</b> Looks like something went wrong.
+                  <span class="msg-error email" style="display:none;"><br/>Please check the e-mail.</span>
+                  <span class="msg-error limit" style="display:none;"><br/>You've reached the max number of alerts.</span>
+                </small>
+              </div>
+
+            </div><!-- /.modal-body -->
+
+            <div class="modal-footer">
+              <button type="button" class="close-modal btn btn-embossed btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="create-alert-btn btn btn-embossed btn-primary"># Create Alert</button>
+            </div><!-- /.modal-footer -->
 
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

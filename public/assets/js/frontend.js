@@ -6,6 +6,7 @@ $( document ).ready(function() {
       zoomControl: false
     }).setView([-28.4792625, 24.6727135], 5);
 
+
   // Overlapping markers
   var markers = new L.MarkerClusterGroup({
     showCoverageOnHover: false
@@ -14,6 +15,36 @@ $( document ).ready(function() {
   // var featureLayer = L.mapbox.featureLayer();
 
   map.scrollWheelZoom.disable();
+
+
+  // Create Alert Map
+
+  var map_alert = L.mapbox.map('map-alert', 'codeforafrica.ji193j10',{
+    zoomAnimationThreshold: 10,
+    maxZoom: 20,
+    zoomControl: false,
+    attributionControl: false
+  }).setView([-28.4792625, 24.6727135], 5);
+
+  // Disable drag and zoom handlers.
+  map_alert.dragging.disable();
+  map_alert.touchZoom.disable();
+  map_alert.doubleClickZoom.disable();
+  map_alert.scrollWheelZoom.disable();
+
+  // Disable tap handler, if present.
+  if (map_alert.tap) map_alert.tap.disable();
+
+
+  // On search click
+  $('.map-ctrl-search').click(function(){
+    $('.home-search').fadeIn('fast');
+    $('.leaflet-control-mapbox-geocoder-wrap').hide();
+    $('.leaflet-control-mapbox-geocoder-results').hide();
+    $('#loading-geo').hide();
+  });
+
+
 
   // // Initialize the geocoder control and add it to the map.
   // var geocoderControl = L.mapbox.geocoderControl('mapbox.places-v1',{
@@ -82,13 +113,6 @@ $( document ).ready(function() {
 
     initializeMap ();
 
-    $('#map-ctrl-search').click(function(){
-      $('.home-search').fadeIn('fast');
-      $('.leaflet-control-mapbox-geocoder-wrap').hide();
-      $('.leaflet-control-mapbox-geocoder-results').hide();
-      $('#loading-geo').hide();
-    });
-
     var place = searchBox.getPlace();
     map.setView([place.geometry.location.k, place.geometry.location.B], 10);
 
@@ -130,9 +154,31 @@ $( document ).ready(function() {
       "&zoom="+map.getZoom();
     });
 
-    $('#map-ctrl-alert').click(function () {
-
+    /* Alerts
+     * ------- */
+    $('#alertModal').on('shown.bs.modal', function () {
+      map_alert.invalidateSize();
+      map_alert.fitBounds(map.getBounds());
+      // Reset
+      $('.map-alert-email').removeClass('has-error');
+      $('#alertModal .alert-danger').fadeOut();
+      $('#alertModal .alert-danger .msg-error.email').fadeOut();
     });
+    $('.create-alert-btn').click(function () {
+      if( $('#map-alert-email').val().trim() == '' ) {
+        $('.map-alert-email').addClass('has-error');
+        $('#alertModal .alert-danger').fadeIn();
+        $('#alertModal .alert-danger .msg-error.email').fadeIn();
+        return;
+      }
+      if(!isEmail($('#map-alert-email').val())) {
+        $('.map-alert-email').addClass('has-error');
+        $('#alertModal .alert-danger').fadeIn();
+        $('#alertModal .alert-danger .msg-error.email').fadeIn();
+        return;
+      }
+    });
+
 
     if(getUrlParameters("map", "", true) != false){
       var ctr_lat = getUrlParameters("ctr_lat", "", true);
