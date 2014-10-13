@@ -123,6 +123,11 @@ $( document ).ready(function() {
       } else {
         $('#map-ctrl-alert').attr('class', 'btn btn-sm btn-embossed btn-primary disabled');
       }
+      // Assign route
+      var loc_center = map.getCenter();
+      window.location.hash = "#!/map=home"+
+      "&ctr_lat="+loc_center.lat+"&ctr_lng="+loc_center.lng+
+      "&zoom="+map.getZoom();
     });
 
     $('#map-ctrl-alert').click(function () {
@@ -176,12 +181,6 @@ $( document ).ready(function() {
 
         $('#loading-geo').fadeOut('fast');
         $('.home-search').fadeOut('slow');
-
-        // Assign route
-        var loc_center = map.getCenter();
-        window.location.hash = "#!/map=home"+
-        "&ctr_lat="+loc_center.lat+"&ctr_lng="+loc_center.lng+
-        "&zoom="+map.getZoom();
 
       });
 
