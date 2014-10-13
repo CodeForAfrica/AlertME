@@ -85,4 +85,5 @@
   <script src="/assets/js/vendor/leaflet.markercluster.js"></script>
 
   <script src="/assets/js/frontend.js"></script>
+  <script src="/assets/js/frontend/routes.js"></script>
 @stop

@@ -11,16 +11,9 @@ $( document ).ready(function() {
     showCoverageOnHover: false
   });
 
-  var featureLayer = L.mapbox.featureLayer();
+  // var featureLayer = L.mapbox.featureLayer();
 
   map.scrollWheelZoom.disable();
-
-  $('#map-ctrl-zoom-in').click(function () {
-    map.zoomIn();
-  });
-  $('#map-ctrl-zoom-out').click(function () {
-    map.zoomOut();
-  });
 
   // // Initialize the geocoder control and add it to the map.
   // var geocoderControl = L.mapbox.geocoderControl('mapbox.places-v1',{
@@ -133,8 +126,18 @@ $( document ).ready(function() {
     });
 
     $('#map-ctrl-alert').click(function () {
-      
+
     });
+
+    if(getUrlParameters("map", "", true) != false){
+      var ctr_lat = getUrlParameters("ctr_lat", "", true);
+      var ctr_lng = getUrlParameters("ctr_lng", "", true);
+      var map_zoom = getUrlParameters("zoom", "", true);
+
+      map.setView([ctr_lat, ctr_lng], map_zoom);
+      load = true;
+      loadMarkers();
+    }
 
     // geocoderControl = L.mapbox.geocoderControl('mapbox.places-v1',{
     //   autocomplete: true
@@ -173,6 +176,12 @@ $( document ).ready(function() {
 
         $('#loading-geo').fadeOut('fast');
         $('.home-search').fadeOut('slow');
+
+        // Assign route
+        var loc_center = map.getCenter();
+        window.location.hash = "#!/map=home"+
+        "&ctr_lat="+loc_center.lat+"&ctr_lng="+loc_center.lng+
+        "&zoom="+map.getZoom();
 
       });
 
