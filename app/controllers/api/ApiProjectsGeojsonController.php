@@ -37,7 +37,7 @@ class ApiProjectsGeojsonController extends \BaseController {
 						->where('geocodes.lng', '<', $bounds[3]);
 				})
 			->select('projects.*', 'geocodes.lat', 'geocodes.lng')
-	    ->take($per_page)->get();
+	    /*->take($per_page)*/->get();
 
 
 		$features = array();
