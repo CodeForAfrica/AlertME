@@ -101,6 +101,7 @@ class SyncQueue {
       $project = Project::firstOrCreate( array(
         'project_id' => $row[ $ds_cols[ $config->config_id ] ]
       ));
+      $project = Project::where('project_id', $row[ $ds_cols[ $config->config_id ]])->first();
       $project->data_source_id = $ds_config->data_source_id;
       $project->data_source_sync_id = $ds_sync->id;
 
@@ -137,7 +138,14 @@ class SyncQueue {
         $project->geo_lat = $row[ $ds_cols[ $config->config_geo_lat ] ];
         $project->geo_lng = $row[ $ds_cols[ $config->config_geo_lng ] ];
       }
+
+      if ($project->status != $row[ $ds_cols[ $config->config_status ] ] && $project->status != null) {
+        // Send Alert
+        Alert::create(array('project_id' => $project->id));
+      }
+
       $project->status = $row[ $ds_cols[ $config->config_status ] ];
+
       $project->save();
     }
   }
