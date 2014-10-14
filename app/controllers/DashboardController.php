@@ -41,6 +41,17 @@ class DashboardController extends BaseController {
     return View::make('dashboard.categories', $data);
   }
 
+  public function showPages()
+  {
+    $categories = Category::all();
+
+    $data = array(
+      'categories' => $categories
+    );
+
+    return View::make('dashboard.pages', $data);
+  }
+
 
   public function showSettings()
   {
