@@ -35,13 +35,13 @@ class ApiAlertRegistrationController extends \BaseController {
 		//
 		AlertUser::firstOrCreate(array('email' => Input::get('email')));
 		$alert_user = AlertUser::where('email', Input::get('email'))->first();
-		if ( $alert_user->alerts > 4 ) {
-			return Response::json(array(
-				'error' => true,
-				'status' => 'OVER_LIMIT'),
-				200
-			);
-		}
+		// if ( $alert_user->alerts > 4 ) {
+		// 	return Response::json(array(
+		// 		'error' => true,
+		// 		'status' => 'OVER_LIMIT'),
+		// 		200
+		// 	);
+		// }
 
 		$bounds = explode(",", Input::get('bounds'));
 		if ( count($bounds) != 4 ){
