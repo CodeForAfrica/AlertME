@@ -76,3 +76,11 @@ Dashboard
         </div>
       @endif
 @stop
+
+@section('footer')
+<br/>
+<div class="container-fluid">
+  <hr/>
+  <p class="text-muted text-right"><small>Built by Code for Africa</small></p>
+</div>
+@stop

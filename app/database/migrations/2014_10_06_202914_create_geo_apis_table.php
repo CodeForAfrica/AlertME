@@ -21,7 +21,7 @@ class CreateGeoApisTable extends Migration {
 			$table->timestamps();
 		});
 
-		// Add user using Eloquent
+		// Add geoapi using Eloquent
 		$geo_api = new GeoApi;
 		$geo_api->name = 'Google Geocoding API';
 		$geo_api->url = 'https://developers.google.com/maps/documentation/geocoding/';

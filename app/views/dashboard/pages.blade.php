@@ -19,10 +19,9 @@
     </div>
     <div class="col-md-8 col-md-offset-1">
       <input id="about_title" name="about_title" type="text" placeholder="Title"
-        class="form-control input-hg flat" />
-      <br/>
+        class="form-control input-hg flat" value="{{ $about->title }}" />
       <textarea id="about_desc" name="about_desc" class="form-control flat"
-        rows="4" placeholder="Description"></textarea>
+        rows="4" placeholder="Description">{{ $about->description }}</textarea>
     </div>
   </div>
 
