@@ -1,5 +1,7 @@
 $( document ).ready(function() {
 
+  var load = false;
+
   L.mapbox.accessToken = 'pk.eyJ1IjoiY29kZWZvcmFmcmljYSIsImEiOiJVLXZVVUtnIn0.JjVvqHKBGQTNpuDMJtZ8Qg';
   var map = L.mapbox.map('map', 'codeforafrica.ji193j10',{
     zoomAnimationThreshold: 10,
@@ -38,6 +40,8 @@ $( document ).ready(function() {
     window.location.hash = "#!/map=home"+
     "&ctr_lat="+loc_center.lat+"&ctr_lng="+loc_center.lng+
     "&zoom="+map.getZoom();
+
+    loadMarkers();
   });
 
 
@@ -129,7 +133,7 @@ $( document ).ready(function() {
     } );
   }
 
-  var load = false;
+
 
   // Listen for the event fired when the user selects an item from the
   // pick list. Retrieve the matching places for that item.
@@ -141,8 +145,6 @@ $( document ).ready(function() {
 
     var place = searchBox.getPlace();
     map.setView([place.geometry.location.k, place.geometry.location.B], 10);
-
-    loadMarkers();
 
   });
 
