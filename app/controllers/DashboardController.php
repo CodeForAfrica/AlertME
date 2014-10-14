@@ -56,7 +56,7 @@ class DashboardController extends BaseController {
   {
     $page = Page::find(1);
     $page->title = Input::get('about_title');
-    $page->description = Input::get('about_description');
+    $page->description = Input::get('about_desc');
     $page->save();
     return Redirect::to('dashboard/pages')->with('success', 'Successfully saved pages.');
   }

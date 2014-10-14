@@ -8,10 +8,10 @@
 
     <div class="container ">
       <div class="page-header">
-        <h1>About</h1>
+        <h1>{{ $about->title == '' ? 'About' : $about->title; }}</h1>
       </div>
 
-      @if (true)
+      @if ( $about->description == '' )
 
         <p>South African law says planned development projects, including mines,
           dams, power stations, roads and landfill sites, need to have their
@@ -29,12 +29,9 @@
 
       @else
 
+        {{ Markdown::render($about->description) }}
 
       @endif
-
-      <br/>
-      <p class="text-muted">#GreenAlert is a project by
-        <a href="http://oxpeckers.org" target="_blank">Oxpeckers</a></p>
 
     </div> <!-- /.container -->
 

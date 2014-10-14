@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="pages">
-  {{ Form::open(array('url' => 'dashboard/settings')) }}
+  {{ Form::open(array('url' => 'dashboard/pages')) }}
 
   <h5>Pages
     <button type="submit" class="btn btn-primary btn-embossed btn-wide"

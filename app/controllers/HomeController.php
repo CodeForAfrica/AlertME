@@ -29,7 +29,11 @@ class HomeController extends BaseController {
 
 	public function showAbout()
 	{
-		return View::make('home.about');
+		$about = Page::find(1);
+		$data = array(
+			'about' => $about
+		);
+		return View::make('home.about', $data);
 	}
 
 }
