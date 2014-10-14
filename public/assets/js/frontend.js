@@ -2,19 +2,49 @@ $( document ).ready(function() {
 
   L.mapbox.accessToken = 'pk.eyJ1IjoiY29kZWZvcmFmcmljYSIsImEiOiJVLXZVVUtnIn0.JjVvqHKBGQTNpuDMJtZ8Qg';
   var map = L.mapbox.map('map', 'codeforafrica.ji193j10',{
-      zoomAnimationThreshold: 10,
-      zoomControl: false
-    }).setView([-28.4792625, 24.6727135], 5);
+    zoomAnimationThreshold: 10,
+    maxZoom: 15,
+    zoomControl: false
+  }).setView([-28.4792625, 24.6727135], 5);
+  map.scrollWheelZoom.disable();
+
+  // Map controls
+
+  $('#map-ctrl-zoom-in').click(function () {
+    map.zoomIn();
+  });
+  $('#map-ctrl-zoom-out').click(function () {
+    map.zoomOut();
+  });
+
+  if(getUrlParameters("map", "", true) != false){
+    var ctr_lat = getUrlParameters("ctr_lat", "", true);
+    var ctr_lng = getUrlParameters("ctr_lng", "", true);
+    var map_zoom = getUrlParameters("zoom", "", true);
+
+    map.setView([ctr_lat, ctr_lng], map_zoom);
+    load = true;
+    loadMarkers();
+  }
+
+  map.on('zoomend, moveend', function(e) {
+    if(map.getZoom() > 9) {
+      $('#map-ctrl-alert').attr('class', 'btn btn-sm btn-embossed btn-primary');
+    } else {
+      $('#map-ctrl-alert').attr('class', 'btn btn-sm btn-embossed btn-primary disabled');
+    }
+    // Assign route
+    var loc_center = map.getCenter();
+    window.location.hash = "#!/map=home"+
+    "&ctr_lat="+loc_center.lat+"&ctr_lng="+loc_center.lng+
+    "&zoom="+map.getZoom();
+  });
 
 
   // Overlapping markers
   var markers = new L.MarkerClusterGroup({
     showCoverageOnHover: false
   });
-
-  // var featureLayer = L.mapbox.featureLayer();
-
-  map.scrollWheelZoom.disable();
 
 
   // Create Alert Map
@@ -101,8 +131,6 @@ $( document ).ready(function() {
 
   var load = false;
 
-  initializeMap ();
-
   // Listen for the event fired when the user selects an item from the
   // pick list. Retrieve the matching places for that item.
   google.maps.event.addListener(searchBox, 'place_changed', function() {
@@ -111,8 +139,6 @@ $( document ).ready(function() {
 
     load = true;
 
-    initializeMap ();
-
     var place = searchBox.getPlace();
     map.setView([place.geometry.location.k, place.geometry.location.B], 10);
 
@@ -120,117 +146,68 @@ $( document ).ready(function() {
 
   });
 
-  function initializeMap () {
-    map.remove();
-    markers = new L.MarkerClusterGroup({
-      showCoverageOnHover: false,
-    });
 
-    map = L.mapbox.map('map', 'codeforafrica.ji193j10',{
-      zoomAnimationThreshold: 10,
-      maxZoom: 15,
-      zoomControl: false
-    }).setView([-28.4792625, 24.6727135], 5);
-
-    map.scrollWheelZoom.disable();
-
-    $('#map-ctrl-zoom-in').click(function () {
-      map.zoomIn();
-    });
-    $('#map-ctrl-zoom-out').click(function () {
-      map.zoomOut();
-    });
-
-    map.on('zoomend, moveend', function(e) {
-      if(map.getZoom() > 9) {
-        $('#map-ctrl-alert').attr('class', 'btn btn-sm btn-embossed btn-primary');
-      } else {
-        $('#map-ctrl-alert').attr('class', 'btn btn-sm btn-embossed btn-primary disabled');
-      }
-      // Assign route
-      var loc_center = map.getCenter();
-      window.location.hash = "#!/map=home"+
-      "&ctr_lat="+loc_center.lat+"&ctr_lng="+loc_center.lng+
-      "&zoom="+map.getZoom();
-    });
-
-    /* Alerts
-     * ------- */
-    $('#alertModal').on('shown.bs.modal', function () {
-      map_alert.invalidateSize();
-      map_alert.fitBounds(map.getBounds());
-      // Reset
-      $('.map-alert-email').removeClass('has-error');
-      $('#alertModal .alert-danger').fadeOut();
-      $('#alertModal .alert-danger .msg-error.email').fadeOut();
-      $('#alertModal .alert-info').fadeOut();
-      $('.create-alert-btn').removeClass('disabled');
-      $('#alertModal .alert-success').fadeOut();
-      $('#map-alert-email').attr('disabled', false);
-    });
-    $('.create-alert-btn').click(function () {
-      if( $('#map-alert-email').val().trim() == '' ) {
-        $('.map-alert-email').addClass('has-error');
-        $('#alertModal .alert-danger').fadeIn();
-        $('#alertModal .alert-danger .msg-error.email').fadeIn();
-        return;
-      }
-      if(!isEmail($('#map-alert-email').val())) {
-        $('.map-alert-email').addClass('has-error');
-        $('#alertModal .alert-danger').fadeIn();
-        $('#alertModal .alert-danger .msg-error.email').fadeIn();
-        return;
-      }
-      $('#alertModal .alert-info').fadeIn();
-      $('.create-alert-btn').addClass('disabled');
-      $('#map-alert-email').attr('disabled', true);
-      var bounds = map.getBounds();
-      var bound = bounds._southWest.lat + "," + bounds._southWest.lng + "," +
-        bounds._northEast.lat + "," + bounds._northEast.lng;
-      var data = {
-        email: $('#map-alert-email').val().trim(),
-        bounds: bound,
-        _token: csrf_token
-      };
-      $.ajax({
-        type: "POST",
-        url: "/api/v1/alertregistration",
-        data: data
-      }).done(function(response) {
-        // var result = jQuery.parseJSON(response);
-        if(response.status == 'OK') {
-          $('#alertModal .alert-success').fadeIn();
-        }
-        if(response.status == 'OVER_LIMIT') {
-          $('#alertModal .alert-danger').fadeIn();
-          $('#alertModal .alert-danger .msg-error.limit').fadeIn();
-        }
-
-      }).fail(function() {
-        // report error
-        $('#alertModal .alert-danger').fadeIn();
-        $('#alertModal .alert-danger .msg-error.reload').fadeIn();
-      }).always(function() {
-        $('#alertModal .alert-info').fadeOut();
-      });
-    });
-
-
-    if(getUrlParameters("map", "", true) != false){
-      var ctr_lat = getUrlParameters("ctr_lat", "", true);
-      var ctr_lng = getUrlParameters("ctr_lng", "", true);
-      var map_zoom = getUrlParameters("zoom", "", true);
-
-      map.setView([ctr_lat, ctr_lng], map_zoom);
-      load = true;
-      loadMarkers();
+  /* Alerts
+   * ------- */
+  $('#alertModal').on('shown.bs.modal', function () {
+    map_alert.invalidateSize();
+    map_alert.fitBounds(map.getBounds());
+    // Reset
+    $('.map-alert-email').removeClass('has-error');
+    $('#alertModal .alert-danger').fadeOut();
+    $('#alertModal .alert-danger .msg-error.email').fadeOut();
+    $('#alertModal .alert-info').fadeOut();
+    $('.create-alert-btn').removeClass('disabled');
+    $('#alertModal .alert-success').fadeOut();
+    $('#map-alert-email').attr('disabled', false);
+  });
+  $('.create-alert-btn').click(function () {
+    if( $('#map-alert-email').val().trim() == '' ) {
+      $('.map-alert-email').addClass('has-error');
+      $('#alertModal .alert-danger').fadeIn();
+      $('#alertModal .alert-danger .msg-error.email').fadeIn();
+      return;
     }
+    if(!isEmail($('#map-alert-email').val())) {
+      $('.map-alert-email').addClass('has-error');
+      $('#alertModal .alert-danger').fadeIn();
+      $('#alertModal .alert-danger .msg-error.email').fadeIn();
+      return;
+    }
+    $('#alertModal .alert-info').fadeIn();
+    $('.create-alert-btn').addClass('disabled');
+    $('#map-alert-email').attr('disabled', true);
+    var bounds = map.getBounds();
+    var bound = bounds._southWest.lat + "," + bounds._southWest.lng + "," +
+      bounds._northEast.lat + "," + bounds._northEast.lng;
+    var data = {
+      email: $('#map-alert-email').val().trim(),
+      bounds: bound,
+      _token: csrf_token
+    };
+    $.ajax({
+      type: "POST",
+      url: "/api/v1/alertregistration",
+      data: data
+    }).done(function(response) {
 
-    // geocoderControl = L.mapbox.geocoderControl('mapbox.places-v1',{
-    //   autocomplete: true
-    // });
-    // geocoderControl.addTo(map);
-  }
+      if(response.status == 'OK') {
+        $('#alertModal .alert-success').fadeIn();
+      }
+      if(response.status == 'OVER_LIMIT') {
+        $('#alertModal .alert-danger').fadeIn();
+        $('#alertModal .alert-danger .msg-error.limit').fadeIn();
+      }
+
+    }).fail(function() {
+      // report error
+      $('#alertModal .alert-danger').fadeIn();
+      $('#alertModal .alert-danger .msg-error.reload').fadeIn();
+    }).always(function() {
+      $('#alertModal .alert-info').fadeOut();
+    });
+  });
+
 
   function loadMarkers () {
 
@@ -247,7 +224,13 @@ $( document ).ready(function() {
         url: '/api/v1/projectsgeojson?bounds='+bound
       }).done(function(response) {
 
-        for (var i = 0; i < response.features.length; i ++) {
+        map.removeLayer(markers);
+
+        markers = new L.MarkerClusterGroup({
+          showCoverageOnHover: false
+        });
+
+        for (var i = 0; i < response.features.length; i++) {
           var datum = response.features[i];
           var loc = new L.LatLng(
             datum.geometry.coordinates[1],

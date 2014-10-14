@@ -11,7 +11,7 @@ class ApiProjectsGeojsonController extends \BaseController {
 	{
 		//
 		$page = Input::get('page', 0);
-		$per_page = 100; //Input::get('per_page', 0);
+		$per_page = 200; //Input::get('per_page', 0);
 		$cat_id = Input::get('cat_id', -1);
 
 		$GLOBALS['bounds'] = explode(",", Input::get('bounds', '-33.515064400105665,-32.940691418651056,20.8685302734375,22.846069335937496'));
