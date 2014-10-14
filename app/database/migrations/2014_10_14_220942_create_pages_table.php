@@ -25,9 +25,9 @@ class CreatePagesTable extends Migration {
 		$page = new Page;
 		$page->slug = 'about';
 		$page->title = 'About';
-		$page->description = 'South African law says planned development projects, including mines, dams, power stations, roads and landfill sites, need to have their environmental impacts assessed bofore they can go ahead.
+		$page->description = 'South African law says planned development projects, including mines, dams, power stations, roads and landfill sites, need to have their environmental impacts assessed before they can go ahead.
 
-#GreenAlert helps you to find out what Environmental Impact Assessments (EIAs) are happening in your area.
+\#GreenAlert helps you to find out what Environmental Impact Assessments (EIAs) are happening in your area.
 
 Find your location to see the details of an EIA: its official ID, the project description, status of the development, and the government body responsible for authorising and monitoring the development.
 
@@ -36,7 +36,7 @@ You can keep up to date with the changing status of EIAs that interest you by re
 And you can help keep the developers accountable by joining and participating in our community network.
 
 
-#GreenAlert is a project by [Oxpeckers](http://oxpeckers.org)';
+\#GreenAlert is a project by [Oxpeckers](http://oxpeckers.org)';
 		$page->save();
 	}
 
