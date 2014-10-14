@@ -36,6 +36,8 @@ class AlertQueue {
       ->where('sw_lng', '<', $project_lng)
       ->where('ne_lat', '>', $project_lat)
       ->where('ne_lng', '>', $project_lng)
+      ->select('alert_user_id')
+      ->distinct()
       ->get();
       foreach($subscriptions as $subscription){
         $GLOBALS['alert_user'] = AlertUser::find($subscription->alert_user_id);
