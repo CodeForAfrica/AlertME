@@ -108,6 +108,7 @@
                   <b>Oops!</b> Looks like something went wrong.
                   <span class="msg-error email" style="display:none;"><br/>Please check the e-mail.</span>
                   <span class="msg-error limit" style="display:none;"><br/>You've reached the max number of alerts registration.</span>
+                  <span class="msg-error reload" style="display:none;"><br/>Please <a href="javascript:location.reload();">reload</a> the page and try again.</span>
                 </small>
               </div>
 

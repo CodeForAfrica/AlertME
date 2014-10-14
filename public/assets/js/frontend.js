@@ -205,6 +205,12 @@ $( document ).ready(function() {
           $('#alertModal .alert-danger').fadeIn();
           $('#alertModal .alert-danger .msg-error.limit').fadeIn();
         }
+
+      }).fail(function() {
+        // report error
+        $('#alertModal .alert-danger').fadeIn();
+        $('#alertModal .alert-danger .msg-error.reload').fadeIn();
+      }).always(function() {
         $('#alertModal .alert-info').fadeOut();
       });
     });
