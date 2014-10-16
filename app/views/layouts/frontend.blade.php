@@ -62,12 +62,24 @@
   <div class="container text-center">
     <div class="row">
       <div class="col-md-6 text-left">
-        <p><img src="/assets/img/logos/oxpeckers.png" style="height:100px;"></p>
-        <p>An Oxpeckers' Project</p>
+        <p>
+          <a href="/">Home</a> .
+          <a href="/about">About</a> .
+          <a href="/dashboard">Dashoard</a> .
+          <a href="#" target="_blank">Github</a> .
+          <a href="http://oxpeckers.org" target="_blank">Oxpeckers</a>
+        </p>
+        <hr/>
+        <p class="text-muted"><em>
+          All code on this website is <a href="http://github.com/CodeForAfrica/">Open Source</a>.</br>
+          Content on this site, made by Oxpeckers, is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.</br>
+          Refer to our <a href="#">attributions</a> page for attributions of other work on the site.
+        </em></p>
       </div>
       <div class="col-md-6 text-right">
-        <p><img src="/assets/img/logos/c4a.png" style="height:80px;"></p>
-
+        <h3 class="text-muted">#GreenAlert</h3>
+        <p>An <a href="http://oxpeckers.org" target="_blank">Oxpeckers'</a> Project</p>
+        <p>Built by <a href="http://codeforafrica.org" target="_blank">Code for Africa</a></p>
       </div>
     </div>
   </div>
