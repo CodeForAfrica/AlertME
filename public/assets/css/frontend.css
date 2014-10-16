@@ -11,14 +11,7 @@ body { padding-top: 76px; }
  * -----------------------------------------------------------------------------
  */
 
-.map-controls {
-  position: absolute;
-  top: 76px;
-  padding: 15px;
-}
-  .map-controls.pull-right {
-    right: 0;
-  }
+
 
 .home-search {
   height: 500px;
@@ -48,6 +41,41 @@ footer {
 .pac-container {
   font-family: inherit;
 }
+
+/**
+ * Map
+ * -----------------------------------------------------------------------------
+ */
+.home-map, .map-loading, .home-map .map-wrapper {
+  min-height: 500px;
+  height: 100%;
+}
+
+.map-controls, .map-list {
+  position: absolute;
+  top: 76px;
+  padding: 15px;
+}
+  .map-controls.pull-right {
+    right: 0;
+  }
+
+.map-loading {
+  position: absolute;
+  top: 76px;
+  left: 0;
+  background: rgba(44, 62, 80, 0.59);
+  width: 100%;
+  color: #ECF0F1;
+}
+ .map-loading p {
+   position: relative;
+   top: 50%;
+ }
+
+ .home-map #map {
+   height:100%;
+ }
 
 
 

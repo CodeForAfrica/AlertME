@@ -19,6 +19,8 @@
 
     @yield('stylesheets')
 
+    @yield('styles')
+
     <script src="/assets/js/vendor/modernizr-2.6.2.min.js"></script>
 
   </head>
@@ -57,6 +59,8 @@
         var csrf_token = "{{ csrf_token() }}";
       @show
     </script>
+
+    <script src="/assets/js/main.js"></script>
 
     @yield('scripts')
 

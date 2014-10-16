@@ -13,6 +13,7 @@
 
 Route::get('', 'HomeController@showHome');
 Route::get('about', 'HomeController@showAbout');
+Route::get('map', 'HomeController@showMap');
 
 // Authentication
 Route::get('login', 'AuthController@showLogin');

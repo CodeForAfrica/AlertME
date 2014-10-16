@@ -28,6 +28,8 @@
         <ul class="nav navbar-nav">
           <li class="{{Request::path() == '/' ? 'active' : '';}}">
             <a href="/">Home</a></li>
+          <li class="{{Request::path() == 'map' ? 'active' : '';}}">
+            <a href="/map">Map</a></li>
           <li class="{{Request::path() == 'about' ? 'active' : '';}}">
             <a href="/about">About</a></li>
           @if ( Auth::guest() )
@@ -84,18 +86,4 @@
     </div>
   </div>
 </footer>
-@stop
-
-@section('scripts')
-  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
-
-  <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.2/mapbox.js'></script>
-  <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.2/mapbox.css' rel='stylesheet' />
-
-  <link href="/assets/css/MarkerCluster.css" rel="stylesheet" />
-  <link href="/assets/css/MarkerCluster.Default.css" rel="stylesheet" />
-  <script src="/assets/js/vendor/leaflet.markercluster.js"></script>
-
-  <script src="/assets/js/frontend.js"></script>
-  <script src="/assets/js/frontend/routes.js"></script>
 @stop

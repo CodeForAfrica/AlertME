@@ -1,8 +1,17 @@
 @extends('layouts.frontend')
 
+@section('styles')
+<style>
+  html, body {
+    margin: 0;
+    height: 100%;
+  }
+</style>
+@stop
+
 @section('content')
 
-  <div class="home">
+  <div class="home-map">
 
     @if (count($projects) === 0)
       <div class="container text-center">
@@ -14,44 +23,50 @@
       </div>
     @else
 
-      <div class="home-map">
-
-        <div id="map" style="height:500px;">
+      <div class="map-wrapper">
+        <div id="map">
         </div>
-
-        <div class="map-controls pull-left">
-          <div class="btn-group-vertical">
-            <button id="map-ctrl-zoom-in" class="btn btn-sm btn-embossed btn-primary">+</button>
-            <button id="map-ctrl-zoom-out" class="btn btn-sm btn-embossed btn-primary">-</button>
-          </div>
-          <br/><br/>
-          <button class="map-ctrl-search btn btn-sm btn-embossed btn-primary">
-            <small><span class="fui-search"></span></small></button>
-        </div>
-        <div class="map-controls pull-right">
-          <button class="map-ctrl-alert btn btn-sm btn-embossed btn-primary"
-            data-toggle="modal" data-target="#alertModal">
-            #</button>
-        </div>
-
-        <div class="home-search text-center container-fluid">
-          <div class="row">
-            <div class="col-md-4 col-md-offset-4">
-              <h1 class="text-default">#GreenAlert</h1>
-              <p class="lead">Search for EIAs Near You</p>
-              <div class="form-group">
-                <input type="text" class="form-control input-hg" id="search-geo" placeholder="Enter a location">
-                <span class="glyphicon glyphicon-globe form-control-feedback"></span>
-              </div>
-              <p class="text-primary" id="loading-geo" style="display:none;">
-                <i class="fa fa-circle-o-notch fa-spin"></i>
-                Finding Projects Near You...
-              </p>
-            </div>
-          </div>
-        </div>
-
       </div>
+
+      <div class="map-list pull-left">
+
+      </div> <!-- /.map-list -->
+
+      <div class="map-controls pull-right">
+        <div class="btn-group-vertical">
+          <button id="map-ctrl-zoom-in" class="btn btn-sm btn-embossed btn-primary">+</button>
+          <button id="map-ctrl-zoom-out" class="btn btn-sm btn-embossed btn-primary">-</button>
+        </div>
+        <br/><br/>
+        <button class="map-ctrl-search btn btn-sm btn-embossed btn-primary">
+          <small><span class="fa fa-search"></span></small></button>
+        <br/><br/>
+        <button class="map-ctrl-alert btn btn-sm btn-embossed btn-primary"
+          data-toggle="modal" data-target="#alertModal">
+          #</button>
+      </div> <!-- /.map-controls -->
+
+      <div class="map-loading text-center">
+        <p class="lead"><i class="fa fa-globe fa-spin"></i> Loading map...</p>
+      </div>
+
+      <!-- <div class="home-search text-center container-fluid">
+        <div class="row">
+          <div class="col-md-4 col-md-offset-4">
+            <h1 class="text-default">#GreenAlert</h1>
+            <p class="lead">Search for EIAs Near You</p>
+            <div class="form-group">
+              <input type="text" class="form-control input-hg" id="search-geo" placeholder="Enter a location">
+              <span class="glyphicon glyphicon-globe form-control-feedback"></span>
+            </div>
+            <p class="text-primary" id="loading-geo" style="display:none;">
+              <i class="fa fa-circle-o-notch fa-spin"></i>
+              Finding Projects Near You...
+            </p>
+          </div>
+        </div>
+      </div> -->
+
 
 
       <!-- MODALS -->
@@ -126,6 +141,20 @@
 
     @endif
 
-  </div> <!-- /.data-sources-list -->
+  </div> <!-- /.home-map -->
+
+@stop
+
+@section('scripts')
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
+
+  <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.2/mapbox.js'></script>
+  <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.2/mapbox.css' rel='stylesheet' />
+
+  <link href="/assets/css/MarkerCluster.css" rel="stylesheet" />
+  <link href="/assets/css/MarkerCluster.Default.css" rel="stylesheet" />
+  <script src="/assets/js/vendor/leaflet.markercluster.js"></script>
+
+  <script src="/assets/js/frontend/map.js"></script>
 
 @stop
