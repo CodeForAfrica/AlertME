@@ -45,6 +45,11 @@ footer {
     padding-left: 25px;
   }
 
+.pac-container {
+  font-family: inherit;
+}
+
+
 
 /**
  * About

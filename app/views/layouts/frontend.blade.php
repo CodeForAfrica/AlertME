@@ -92,8 +92,8 @@
   <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.2/mapbox.js'></script>
   <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.2/mapbox.css' rel='stylesheet' />
 
-  <link href="assets/css/MarkerCluster.css" rel="stylesheet" />
-  <link href="assets/css/MarkerCluster.Default.css" rel="stylesheet" />
+  <link href="/assets/css/MarkerCluster.css" rel="stylesheet" />
+  <link href="/assets/css/MarkerCluster.Default.css" rel="stylesheet" />
   <script src="/assets/js/vendor/leaflet.markercluster.js"></script>
 
   <script src="/assets/js/frontend.js"></script>
