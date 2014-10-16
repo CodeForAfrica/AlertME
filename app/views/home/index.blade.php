@@ -16,7 +16,7 @@
 
       <div class="home-map">
 
-        <div id="map" style="height:700px;">
+        <div id="map" style="height:500px;">
         </div>
 
         <div class="map-controls pull-left">

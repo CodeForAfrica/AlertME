@@ -21,7 +21,7 @@ body { padding-top: 76px; }
   }
 
 .home-search {
-  height: 700px;
+  height: 500px;
   position: absolute;
   top: 76px;
   background: rgba(44, 62, 80, 0.59);
