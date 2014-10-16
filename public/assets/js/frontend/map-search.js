@@ -5,22 +5,22 @@ $( document ).ready(function() {
   };
   searchBox = new google.maps.places.Autocomplete(input, options);
 
-  // Listen for the event fired when the user selects an item from the
-  // pick list. Retrieve the matching places for that item.
+  /**
+   * Google Geocoder Search Box
+   * ---------------------------------------------------------------------------
+   */
   google.maps.event.addListener(searchBox, 'place_changed', function() {
 
     $('#loading-geo').fadeIn('slow');
-
-    load = true;
-
     var place = searchBox.getPlace();
-    map.setView([place.geometry.location.k, place.geometry.location.B], 10);
+    window.location.href = "/map/#!/center="+place.geometry.location.k+","+
+    place.geometry.location.B+"&zoom=10";
 
   });
 
 
   /**
-   * Use My Location
+   * User's Location
    * ---------------------------------------------------------------------------
    */
 
