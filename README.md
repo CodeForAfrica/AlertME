@@ -70,6 +70,22 @@ The Laravel Framework [requires MCrypt PHP extension](http://laravel.com/docs/4.
 
     sudo apt-get install php5-mcrypt
 
+##### 6. Install Beanstalkd
+
+For queue services, #GreenAlert uses Beanstalkd. This allows us to defer the processing of a time consuming task, such as sending an e-mail, until a later time, thus drastically speeding up the web requests to the application.
+
+On Debian, this can be installed by running the following command:
+    
+    sudo apt-get install beanstalkd
+
+##### 6. Install Supervisor
+
+To keep background tasks running e.g listening for queues to process jobs, we will need supervisor. Installation on Debian would be by running the following command:
+
+    sudo apt-get install supervisor
+
+You can learn more about installing and managing supervisor [here](https://www.digitalocean.com/community/tutorials/how-to-install-and-manage-supervisor-on-ubuntu-and-debian-vps).
+
 
 #### Application Set Up
 
@@ -90,7 +106,7 @@ Cloning from github is as simple as running the following command:
 
 Run the `composer install` command in the root of the cloned project's directory. This command will download and install the dependencies.
 
-##### 3. Database configuration
+##### 3. Database Configuration
 
 In this step, we'll use the simple MySQL but feel free to explore with any other Database you like. Currently Laravel supports four database systems: MySQL, Postgres, SQLite, and SQL Server; out of the box.
 
@@ -110,10 +126,34 @@ With the database set up, we can do the database migration. To do this, run the 
 
 Optional: You can define the environment by adding `--env=[<environment>]` argument. For example `php artisan migrate --env=local`.
 
+##### 5. Queue Configuration
 
-##### 5. Configure Nginx
+Queue configuration to run tasks in the background requires mainly configuration of supervisor to initiate the listener. Create and edit the `/etc/supervisor/conf.d/greenalert.conf` file. In the file, add the following:
 
-To see the page on *example.com* you would need to configure Nginx. To do this, add the following to the file `/etc/nginx/sites-available/default`:
+    [program:beanstalkd]
+    command=beanstalkd
+
+    [program:greenalert_queue]
+    command=php artisan queue:listen --timeout=0 --memory=256 --tries=5 --queue=greenalert,default
+    directory=/path/to/GreenAlert
+    stdout_logfile=/path/to/GreenAlert/app/storage/logs/supervisor_queue.log
+
+Once saved, reload supervisor as such:
+    
+    sudo supervisorctl
+    supervisor> reload
+    supervisor> exit
+
+Running `sudo supervisorctl` again, should show you the programs running.
+
+
+
+
+
+
+##### 6. Configure Nginx
+
+Finally, to see the page on *example.com* you would need to configure Nginx. To do this, add the following to the file `/etc/nginx/sites-available/default`:
 
     server {
       listen   80;
