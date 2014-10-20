@@ -1,11 +1,151 @@
-GreenAlert
+\#GreenAlert
 ==========
 
 Get to know more about your environment.
 
 ### Requirements
 
-- [Bower.io](http://bower.io/)
+- PHP v5.4.7+
+- Git
+- Composer
+- Beanstalkd
+- MySQL
+
+
+
+### Installation
+
+\#GreenAlert is built using ***the PHP framework for web artisans***, [Laravel](http://laravel.com). For more information on getting started with Laravel, check out there extensive documentation [here](http://laravel.com/docs/4.2/quick).
+
+
+#### Server Configuration
+
+We recommend setting up with [Debian Wheezy](https://www.debian.org/releases/wheezy/). #GreenAlert will though be able to run on any system setup that meets the [requirements](#requirements).
+
+##### 1. Install LEMP Stack
+
+After spinning up your instance, you should install Linux, Nginx, MySQL, PHP (LEMP). [Here is a great step by step guide for Debian 7](https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-on-debian-7).
+
+##### 2. Install PHP Command Line Interface
+
+    sudo apt-get install php5-cli
+
+##### 3. Install Git
+
+Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency.
+
+- On Debian you can install it by running `sudo apt-get install git`.
+- For other systems, you can find installation instructions [here](http://git-scm.com/downloads).
+
+##### 4. Install Composer
+
+[Composer](https://getcomposer.org/) is *the* dependency manager for PHP.
+
+- Install on *nix - https://getcomposer.org/doc/00-intro.md#installation-nix
+
+Recommended: [Install composer globally](https://getcomposer.org/doc/00-intro.md#globally).
+
+##### 5. Install PHP v5.5 on Debian 7 "Wheezy"
+
+Currently, Debian Wheezy [ships with PHP v5.4.4-14+deb7u14](https://packages.debian.org/wheezy/php5). To install PHP v5.5, add the following lines to `/etc/apt/sources.list`:
+
+    deb http://packages.dotdeb.org wheezy-php55 all
+    deb-src http://packages.dotdeb.org wheezy-php55 all
+
+Fetch and install the GnuPG key
+
+    wget http://www.dotdeb.org/dotdeb.gpg
+    sudo apt-key add dotdeb.gpg
+
+To read more on the above, check out http://www.dotdeb.org/instructions/.
+
+Update and upgrade PHP by running the following commands:
+
+    sudo apt-get update
+    sudo apt-get dist-upgrade php*
+
+##### 5. Install MCrypt PHP Extension
+
+The Laravel Framework [requires MCrypt PHP extension](http://laravel.com/docs/4.2/installation#server-requirements). To install it on debian, run the following command:
+
+    sudo apt-get install php5-mcrypt
+
+
+#### Application Set Up
+
+Now that we have our server set up, we can set up the application. Here, we clone the main repository and install the needed packages. At the end, we should be able to see a welcome page displayed on the browser.
+
+##### 1. Clone From Github
+
+Cloning from github is as simple as running the following command:
+
+    git clone https://github.com/CodeForAfricaLabs/GreenAlert.git
+
+(Optional) You can checkout the branch (recommended: `master` (default), `develop`) you want by running the following commands:
+
+    cd GreenAlert
+    git checkout [<branch>]
+
+##### 2. Install Dependencies
+
+Run the `composer install` command in the root of the cloned project's directory. This command will download and install the dependencies.
+
+##### 3. Database configuration
+
+In this step, we'll use the simple MySQL but feel free to explore with any other Database you like. Currently Laravel supports four database systems: MySQL, Postgres, SQLite, and SQL Server; out of the box.
+
+First, we create the `greenalert` user and `cfa_greenalert` database. Connect to the server as MySQL `root` user using the command `mysql -u root -p` and then run the following:
+
+    mysql> GRANT ALL PRIVILEGES ON *.* TO 'greenalert'@'localhost'
+        -> IDENTIFIED BY 'some_pass' WITH GRANT OPTION;
+    mysql> SHOW GRANTS FOR 'greenalert' @ 'localhost';
+    mysql> CREATE DATABASE cfa_greenalert;
+    mysql> GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP
+        -> ON cfa_greenalert.*
+        -> TO 'greenalert'@'localhost';
+
+##### 4. Migration
+
+With the database set up, we can do the database migration. To do this, run the `php artisan migrate` command in the root of the cloned project's directory.
+
+Optional: You can define the environment by adding `--env=[<environment>]` argument. For example `php artisan migrate --env=local`.
+
+
+##### 5. Configure Nginx
+
+To see the page on *example.com* you would need to configure Nginx. To do this, add the following to the file `/etc/nginx/sites-available/default`:
+
+    server {
+      listen   80;
+
+      root /path/to/GreenAlert/public;
+      index index.php index.html index.htm;
+
+      server_name greenalert example.com;
+
+      location / {
+        try_files $uri $uri/ /index.php?$query_string;
+      }
+
+      location ~ \.php$ {
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+
+        fastcgi_pass unix:/var/run/php5-fpm.sock;
+        fastcgi_index index.php;
+        include fastcgi_params;
+      }
+
+    }
+
+Save the file and run `sudo service nginx restart` to restart the web server. Now if you visit *example.com*, you will be able to see the basic #GreenAlert website loaded.
+
+
+### Loading Data
+
+##### [ Coming Soon ]
+
+Hint: It's all about the Dashboard.
+
 
 
 ### License
@@ -17,6 +157,12 @@ The GPL ([V2](http://choosealicense.com/licenses/gpl-2.0/) or [V3](http://choose
 **Linux**, **Git**, and **WordPress** use the GPL.
 
 Find out more by checking out the `LICENSE` file [here](./LICENSE).
+
+
+
+### Contact
+
+Have any questions? Feel free to reach us at [kazini@codeforafrica.org](mailto:kazini@codeforafrica.org).
 
 
 
