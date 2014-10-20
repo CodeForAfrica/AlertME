@@ -24,13 +24,41 @@
     @else
 
       <div class="map-wrapper">
-        <div id="map">
-        </div>
-      </div>
 
-      <div class="map-list pull-left">
+        <div id="map"></div> <!-- /#map -->
 
-      </div> <!-- /.map-list -->
+        <div class="map-list bg-primary text-center">
+          <button class="map-ctrl-alert btn btn-wide btn-embossed btn-primary"
+            data-toggle="modal" data-target="#alertModal">
+            <span class="fa fa-globe"></span> Subscribe for alerts in this area
+          </button>
+          <hr/>
+          <div class="map-filter container-fluid text-left">
+            <p><b>Categories</b></p>
+            <div class="btn-group btn-group-justified" data-toggle="buttons">
+              <label class="btn btn-inverse">
+                <input type="radio" name="options" id="option2"> <i class="fa fa-tree fa-2x"></i><br/> Forestry
+              </label>
+              <label class="btn btn-inverse">
+                <input type="radio" name="options" id="option2"> <i class="fa fa-tree fa-2x"></i><br/> Forestry
+              </label>
+              <label class="btn btn-inverse">
+                <input type="radio" name="options" id="option4"> <i class="fa fa-tree fa-2x"></i><br/> Forestry
+              </label>
+              <div class="btn-group" data-toggle="buttons">
+                <label class="btn btn-inverse dropdown-toggle" id="cat-btn-other" data-toggle="dropdown">
+                  <input type="radio" name="options" id="option3"> <i class="fa fa-ellipsis-h fa-2x"></i><br/>Other
+                </label>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="#">Dropdown link</a></li>
+                  <li><a href="#">Dropdown link</a></li>
+                </ul>
+              </div>
+            </div>
+          </div> <!-- /.map-filter.container-fluid.text-left -->
+        </div> <!-- /.map-list -->
+
+      </div> <!-- /.map-wrapper -->
 
       <div class="map-controls pull-right">
         <div class="btn-group-vertical">
@@ -48,7 +76,7 @@
 
       <div class="map-loading text-center">
         <p class="lead"><i class="fa fa-globe fa-spin"></i> Loading map...</p>
-      </div>
+      </div> <!-- /.map-loading -->
 
       <!-- <div class="home-search text-center container-fluid">
         <div class="row">

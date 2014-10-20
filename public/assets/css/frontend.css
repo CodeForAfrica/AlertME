@@ -12,7 +12,6 @@ body { padding-top: 76px; }
  */
 
 
-
 .home-search {
   height: 500px;
   position: absolute;
@@ -22,6 +21,11 @@ body { padding-top: 76px; }
   color: #ECF0F1;
   padding-top: 100px;
 }
+  #search-geo {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    padding-left: 1px;
+  }
 
 footer {
   padding: 40px 0 30px;
@@ -75,6 +79,14 @@ footer {
 
  .home-map #map {
    height:100%;
+ }
+
+ .home-map .map-list {
+   height:100%;
+   position:absolute;
+   width: 397px;
+   top: 76px;
+   background-color: rgba(52, 73, 94, 0.5);
  }
 
 

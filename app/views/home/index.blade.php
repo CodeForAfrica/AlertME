@@ -16,7 +16,7 @@
             <span class="input-group-btn">
               <button type="submit" class="btn"><span class="fa fa-globe fa-lg"></span></button>
             </span>
-            <input type="text" class="form-control" placeholder="Province, town, city or region" name="search-geo" id="search-geo" style="border-top-right-radius: 0; border-bottom-right-radius: 0;">
+            <input type="text" class="form-control" placeholder="Province, town, city or region" name="search-geo" id="search-geo">
             <span class="input-group-btn">
               <button type="submit" class="btn"><span class="fui-arrow-right"></span></button>
             </span>

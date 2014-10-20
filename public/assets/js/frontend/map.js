@@ -1,15 +1,22 @@
+/**
+ * Map Javascript File
+ * -----------------------------------------------------------------------------
+ */
+
 // Resize the page
 var footerHeight = $('footer').height() +
   parseInt($('footer').css('padding-top').replace('px', '')) +
   parseInt($('footer').css('padding-bottom').replace('px', ''));
-if($('body').height() > (500 +  footerHeight)) {
+if($('body').height() > (400 +  footerHeight)) {
   $('.home-map').css('margin-bottom', '-'+footerHeight+'px');
-  $('.home-map').css('min-height', (500 + footerHeight)+'px');
+  $('.home-map').css('min-height', (400 + footerHeight)+'px');
   // Map loading
-  $('.map-loading, .home-map .map-wrapper').height($('.home-map').height() - footerHeight );
+  $('.map-loading, .home-map .map-wrapper, .home-map .map-list').height($('.home-map').height() - footerHeight );
 } else {
   $('.map-loading').height($('.home-map').height());
 }
+
+console.log($('body').height() +":" +(footerHeight + 500));
 
 // On Document Ready
 $( document ).ready(function() {
@@ -36,6 +43,7 @@ $( document ).ready(function() {
   var markers = new L.MarkerClusterGroup({
     showCoverageOnHover: false
   });
+  var markers_arr = [];
 
   // Map events
   map.on('zoomend, moveend', function(e) {
@@ -44,6 +52,8 @@ $( document ).ready(function() {
     window.location.hash = "#!/bounds="+
     loc_bounds._southWest.lat+","+loc_bounds._southWest.lng+","+
     loc_bounds._northEast.lat+","+loc_bounds._northEast.lng;
+
+    listMarkers();
   });
 
 
@@ -68,6 +78,7 @@ $( document ).ready(function() {
       markers = new L.MarkerClusterGroup({
         showCoverageOnHover: false
       });
+      markers_arr = [];
 
       for (var i = 0; i < response.features.length; i++) {
         var datum = response.features[i];
@@ -79,16 +90,41 @@ $( document ).ready(function() {
         marker.title = datum.properties.title;
         marker.bindPopup(marker.title);
         markers.addLayer(marker);
+
+        markers_arr.push(marker);
       }
 
       map.addLayer(markers);
 
       $('.map-loading').fadeOut();
+      listMarkers();
 
     });
 
   }
   loadMarkers();
+
+
+
+  /**
+   * List Markers in view
+   * ---------------------------------------------------------------------------
+   */
+  function listMarkers () {
+    // Construct an empty list to fill with onscreen markers.
+    var inBounds = [],
+    // Get the map bounds - the top-left and bottom-right locations.
+      bounds = map.getBounds();
+
+    $.each(markers_arr, function( index, marker ) {
+      if (bounds.contains(marker.getLatLng())) {
+        inBounds.push(marker.options.title);
+      }
+    });
+
+    $('#marker-no').html(inBounds.length);
+  }
+
 
 
   /**
