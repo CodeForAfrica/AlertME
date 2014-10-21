@@ -86,7 +86,13 @@ class Category extends Eloquent {
       foreach ($projects_categories as $projects_category) {
         array_push( $category_ids, $projects_category->category_id);
       }
+      
+      if (count($category_ids) == 0) {
+        return null;
+      }
+
       $categories = Category::whereIn('id', $category_ids)->get();
+
       return $categories;
     }
 

@@ -188,7 +188,7 @@
 @stop
 
 @section('scripts-data')
-  var categories = {{ $categories }};
+  var categories = {{ $categories != NULL ? $categories : 'false' }};
 @stop
 
 @section('scripts')
