@@ -42,10 +42,11 @@ class HomeController extends BaseController {
 	{
 		$projects = DB::table('projects')->take(10)->get();
 
-		$categories = $projects;
+		$categories = Category::geocoded();
 
 		$data = array(
-			'projects' => $projects
+			'projects' => $projects,
+			'categories' => $categories
 		);
 		return View::make('home.map', $data);
 	}

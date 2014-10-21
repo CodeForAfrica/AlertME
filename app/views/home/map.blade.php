@@ -34,27 +34,41 @@
           </button>
           <hr/>
           <div class="map-filter container-fluid text-left">
-            <p><b>Categories</b></p>
-            <div class="btn-group btn-group-justified" data-toggle="buttons">
-              <label class="btn btn-inverse">
-                <input type="radio" name="options" id="option2"> <i class="fa fa-tree fa-2x"></i><br/> Forestry
-              </label>
-              <label class="btn btn-inverse">
-                <input type="radio" name="options" id="option2"> <i class="fa fa-tree fa-2x"></i><br/> Forestry
-              </label>
-              <label class="btn btn-inverse">
-                <input type="radio" name="options" id="option4"> <i class="fa fa-tree fa-2x"></i><br/> Forestry
-              </label>
-              <div class="btn-group" data-toggle="buttons">
-                <label class="btn btn-inverse dropdown-toggle" id="cat-btn-other" data-toggle="dropdown">
-                  <input type="radio" name="options" id="option3"> <i class="fa fa-ellipsis-h fa-2x"></i><br/>Other
+            @if (count($categories) != 0)
+              <p><b>Categories</b></p>
+
+              <div class="btn-group btn-group-justified filter-cat" data-toggle="buttons">
+                
+                <label class="btn btn-inverse cat-sel cat-all" data-cat-id="all">
+                  <input type="radio" name="options" id="cat-all"> <i class="fa fa-globe fa-2x"></i><br/> All
                 </label>
-                <ul class="dropdown-menu" role="menu">
-                  <li><a href="#">Dropdown link</a></li>
-                  <li><a href="#">Dropdown link</a></li>
-                </ul>
+
+                @if (count($categories) > 3 )
+                  @for ($i = 0; $i < 3; $i++)
+                    <label class="btn btn-inverse cat-sel" data-cat-id="{{$i}}">
+                      <input type="radio" name="options" id="cat-{{$i}}"> <i class="fa fa-tree fa-2x"></i><br/> Forestry
+                    </label>
+                  @endfor
+                  <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-inverse dropdown-toggle cat-other" data-toggle="dropdown">
+                      <input type="radio" name="options" id="cat-other"> <i class="fa fa-ellipsis-h fa-2x"></i><br/>Other
+                    </label>
+                    <ul class="dropdown-menu" role="menu">
+                      @for ($i = 3; $i < count($categories); $i++)
+                        <li><a href="#" class="cat-sel" data-cat-id="{{$i}}">Dropdown link</a></li>
+                      @endfor
+                    </ul>
+                  </div>
+                @else
+                  @for ($i = 0; $i < count($categories); $i++)
+                    <label class="btn btn-inverse cat-sel" data-cat-id="{{$categories[$i]->id}}">
+                      <input type="radio" name="options" id="option2"> <i class="fa fa-dot-circle-o fa-2x"></i><br/>
+                        {{ $categories[$i]->title }}
+                    </label>
+                  @endfor
+                @endif
               </div>
-            </div>
+            @endif
           </div> <!-- /.map-filter.container-fluid.text-left -->
         </div> <!-- /.map-list -->
 
@@ -173,6 +187,10 @@
 
 @stop
 
+@section('scripts-data')
+  var categories = {{ $categories }};
+@stop
+
 @section('scripts')
   <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
 
@@ -183,6 +201,7 @@
   <link href="/assets/css/MarkerCluster.Default.css" rel="stylesheet" />
   <script src="/assets/js/vendor/leaflet.markercluster.js"></script>
 
+  <script src="/assets/js/frontend/routes.js"></script>
   <script src="/assets/js/frontend/map.js"></script>
-
+  <script src="/assets/js/frontend/map-categories.js"></script>
 @stop

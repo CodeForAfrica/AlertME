@@ -14,7 +14,7 @@ class ApiProjectsGeojsonController extends \BaseController {
 		$per_page = 200; //Input::get('per_page', 0);
 		$cat_id = Input::get('cat_id', -1);
 
-		$GLOBALS['bounds'] = explode(",", Input::get('bounds', '-33.515064400105665,-32.940691418651056,20.8685302734375,22.846069335937496'));
+		$GLOBALS['bounds'] = explode(",", Input::get('bounds', '-37.683820326693805,-18.437924653474393,-37.683820326693805,56.2939453125'));
 
 		$projects = DB::table('projects')
 	    ->join('geocodes', 'projects.geo_address', '=', 'geocodes.address')

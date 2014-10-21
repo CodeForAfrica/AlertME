@@ -55,8 +55,9 @@
 
     <script>
       var base_url = "{{ URL::to('/') }}";
+      var csrf_token = "{{ csrf_token() }}";
       @section('scripts-data')
-        var csrf_token = "{{ csrf_token() }}";
+        
       @show
     </script>
 

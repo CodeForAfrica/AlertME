@@ -4,10 +4,7 @@ class CategoryQueue {
 
   public function fire($job, $data)
   {
-    if ($job->attempts() > 3)
-    {
-        $job->delete();
-    }
+    Log::info('['.$job->getJobId().':'.$job->attempts().'] Category assignment started.');
 
     $data_obj = json_decode(json_encode($data), FALSE);
     $cat_id = $data_obj->cat_id;
@@ -17,7 +14,7 @@ class CategoryQueue {
     if ( $data['new'] ) {
       // New Category
       // Assign if is not empty keywords
-      if ( $cat_new->kewords != '' && !$cat_new->kewords ) {
+      if ( $cat_new->keywords != '' && !$cat_new->keywords ) {
         self::keywordAssign( $cat_new );
       }
     } else {
@@ -34,7 +31,7 @@ class CategoryQueue {
       }
     }
 
-    Log::info('Category assignment completed.');
+    Log::info('['.$job->getJobId().':'.$job->attempts().'] Category assignment completed.');
 
     $job->delete();
 
@@ -51,7 +48,6 @@ class CategoryQueue {
       foreach ($projects as $project)
       {
         //
-
         foreach ( $keywords as $keyword ) {
           $in_title  = stripos( $project->title, $keyword );
           $in_desc   = stripos( $project->description, $keyword );

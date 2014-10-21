@@ -71,6 +71,7 @@ footer {
   background: rgba(44, 62, 80, 0.59);
   width: 100%;
   color: #ECF0F1;
+  z-index: 3;
 }
  .map-loading p {
    position: relative;

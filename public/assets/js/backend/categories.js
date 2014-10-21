@@ -43,21 +43,25 @@ $( document ).ready(function() {
     var keywords_sel = ds_sel + ' #keywords';
     var icon_url_sel = ds_sel + ' #icon_url';
 
-    var title_val = $(title_sel).html();
-    var desc_val = $(desc_sel).html();
-    var keywords_val = $(keywords_sel).html();
-    var icon_url_val = $(icon_url_sel).html();
+    var title_val = $(title_sel).html().trim();
+    var desc_val = $(desc_sel).html().trim();
+    var keywords_val = $(keywords_sel).html().trim();
+    var icon_url_val = $(icon_url_sel).html().trim();
 
     if (desc_val == '[No Description]') {
       desc_val = '';
     }
 
-    $("#editModal #title").val(title_val.trim());
-    $("#editModal #desc").val(desc_val.trim());
+    if (keywords_val == '[No Keywords]') {
+      keywords_val = '';
+    }
+
+    $("#editModal #title").val(title_val);
+    $("#editModal #desc").val(desc_val);
     $("#editModal #keywords").val(keywords_val.trim());
     $("#editModal #keywords-span").html(
       '<input id="keywords" class="tagsinput" data-role="tagsinput" value="'+
-      keywords_val.trim()+'"/>'
+      keywords_val+'"/>'
     );
     $(".tagsinput").tagsinput();
     $("#editModal #icon_url").val(icon_url_val.trim());

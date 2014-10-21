@@ -57,4 +57,6 @@ Route::group(array('prefix' => 'api/v1', 'before' => 'csrf'), function()
 Route::group(array('prefix' => 'api/v1'), function()
 {
     Route::resource('projectsgeojson', 'ApiProjectsGeojsonController', array('only' => array('index', 'show')));
+    Route::resource('projects', 'ApiProjectController', array('only' => array('index', 'show')));
+    Route::resource('categories', 'ApiCategoryController', array('only' => array('index', 'show')));
 });
