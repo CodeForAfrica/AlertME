@@ -88,7 +88,7 @@
         <div class="row">
           <div class="col-md-6 text-center">
             <p class="lead">No. of EIAs tracked</p>
-            <h1 style="font-size: 100px;">8,546</h1>
+            <h1 style="font-size: 100px;">{{ number_format($projects_count) }}</h1>
           </div>
           <div class="col-md-3">
             <p>Last Updated</p>
