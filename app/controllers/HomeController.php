@@ -18,11 +18,13 @@ class HomeController extends BaseController {
 	public function showHome()
 	{
 		$projects = DB::table('projects')->take(10)->get();
+		$projects_count = DB::table('projects')->count();
 
 		$categories = $projects;
 
 		$data = array(
-			'projects' => $projects
+			'projects' => $projects,
+			'projects_count' => $projects_count
 		);
 		return View::make('home.index', $data);
 	}
@@ -40,10 +42,11 @@ class HomeController extends BaseController {
 	{
 		$projects = DB::table('projects')->take(10)->get();
 
-		$categories = $projects;
+		$categories = Category::geocoded();
 
 		$data = array(
-			'projects' => $projects
+			'projects' => $projects,
+			'categories' => $categories
 		);
 		return View::make('home.map', $data);
 	}

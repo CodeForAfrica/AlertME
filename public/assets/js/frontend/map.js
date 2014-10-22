@@ -16,20 +16,38 @@ if($('body').height() > (400 +  footerHeight)) {
   $('.map-loading').height($('.home-map').height());
 }
 
-console.log($('body').height() +":" +(footerHeight + 500));
+// console.log($('body').height() +":" +(footerHeight + 500));
+
+// Markers
+var markers;
+var markers_arr = [];
+
+var map;
+
 
 // On Document Ready
 $( document ).ready(function() {
 
   // Create map
   L.mapbox.accessToken = 'pk.eyJ1IjoiY29kZWZvcmFmcmljYSIsImEiOiJVLXZVVUtnIn0.JjVvqHKBGQTNpuDMJtZ8Qg';
-  var map = L.mapbox.map('map', 'codeforafrica.ji193j10',{
+  map = L.mapbox.map('map', 'codeforafrica.ji193j10',{
     zoomAnimationThreshold: 10,
     maxZoom: 15,
     zoomControl: false,
     attributionControl: false
   }).setView([-28.4792625, 24.6727135], 5);
   map.scrollWheelZoom.disable();
+
+  // Move map
+  map_move_x = -0.5 * (
+    $('.map-list').width() +
+    parseInt($('.map-list').css('padding-top').replace('px', '')) +
+    parseInt($('.map-list').css('padding-bottom').replace('px', ''))
+  );
+  map.panBy(
+    L.point(map_move_x, 0, false),
+    {animate: false}
+  );
 
   // Map controls
   $('#map-ctrl-zoom-in').click(function () {
@@ -40,10 +58,9 @@ $( document ).ready(function() {
   });
 
   // Overlapping markers
-  var markers = new L.MarkerClusterGroup({
+  markers = new L.MarkerClusterGroup({
     showCoverageOnHover: false
   });
-  var markers_arr = [];
 
   // Map events
   map.on('zoomend, moveend', function(e) {
@@ -70,8 +87,10 @@ $( document ).ready(function() {
 
     $.ajax({
       type: "GET",
-      url: '/api/v1/projectsgeojson?bounds='+bound
+      url: '/api/v1/projects?map=1'
     }).done(function(response) {
+
+      projects_categories = response.projects_categories;
 
       map.removeLayer(markers);
 
@@ -80,18 +99,56 @@ $( document ).ready(function() {
       });
       markers_arr = [];
 
-      for (var i = 0; i < response.features.length; i++) {
-        var datum = response.features[i];
+      for (var i = 0; i < response.projects.length; i++) {
+        var project = response.projects[i];
+
         var loc = new L.LatLng(
-          datum.geometry.coordinates[1],
-          datum.geometry.coordinates[0]
+          project.geo_lat,
+          project.geo_lng
         );
+        if (project.geo_type == "address" && project.lat && project.lng &&
+          project.geo_address.trim() != "" && project.geo_address != null &&
+          project.geo_status == 1) {
+          loc = new L.LatLng(
+            project.lat,
+            project.lng
+          );
+        } else if (project.geo_type == "lat_lng") {
+          loc = new L.LatLng(
+            project.geo_lat,
+            project.geo_lng
+          );
+        } else {
+          continue;
+        }
+
         var marker = new L.Marker(loc);
-        marker.title = datum.properties.title;
-        marker.bindPopup(marker.title);
+
+        var marker_html = '<h6>'+
+          project.title+'</h6>';
+
+        marker.title = project.title;
+
+        marker.bindPopup(marker_html);
+
+        if (!is_touch_device()) {
+          marker.on('mouseover', function () {
+            this.openPopup();
+          });
+          marker.on('mouseout', function () {
+            this.closePopup();
+          });
+          // marker.on('click', function () {
+          //   this.closePopup();
+          // });
+        };
+
         markers.addLayer(marker);
 
-        markers_arr.push(marker);
+        markers_arr.push({
+          id: project.id,
+          marker: marker
+        });
       }
 
       map.addLayer(markers);
@@ -117,8 +174,8 @@ $( document ).ready(function() {
       bounds = map.getBounds();
 
     $.each(markers_arr, function( index, marker ) {
-      if (bounds.contains(marker.getLatLng())) {
-        inBounds.push(marker.options.title);
+      if (bounds.contains(marker.marker.getLatLng())) {
+        inBounds.push(marker.marker.options.title);
       }
     });
 

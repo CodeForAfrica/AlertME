@@ -11,10 +11,15 @@ class ApiCategoryController extends \BaseController {
 	{
 		//
 		$categories =  Category::all();
+		$projects = DB::table('project_category')
+									->select('id', 'project_id', 'category_id')
+									->get();
 		return Response::json(array(
 				'error' => false,
-				'categories' => $categories->toArray()),
-				200
+				'categories' => $categories->toArray(),
+				'projects' => $projects
+			),
+			200
 		);
 	}
 
@@ -48,8 +53,9 @@ class ApiCategoryController extends \BaseController {
 
 		return Response::json(array(
 				'error' => false,
-				'category' => $category->toArray()),
-				200
+				'category' => $category->toArray()
+			),
+			200
 		);
 	}
 
@@ -64,10 +70,16 @@ class ApiCategoryController extends \BaseController {
 	{
 		//
 		$category =  Category::find($id);
+		$projects = DB::table('project_category')
+									->where('category_id', $id)
+									->select('id', 'project_id', 'category_id')
+									->get();
 		return Response::json(array(
 				'error' => false,
-				'category' => $category->toArray()),
-				200
+				'category' => $category->toArray(),
+				'projects' => $projects
+			),
+			200
 		);
 	}
 
