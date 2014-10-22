@@ -51,10 +51,6 @@ class ApiProjectController extends \BaseController {
         'error' => false,
         'projects' => $projects,
         'projects_categories' => $projects_categories
-      ),
-      200,
-      array(
-        'Cache-Control' => 'public'
       )
     );
   }
