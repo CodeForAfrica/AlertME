@@ -11,12 +11,13 @@ class CategoryQueue {
     $cat_old = $data_obj->cat_old;
     $cat_new = $data_obj->cat_new;
 
-    if ( $data['new'] ) {
+    if ( $data_obj->new == TRUE ) {
       // New Category
       // Assign if is not empty keywords
-      if ( $cat_new->keywords != '' && !$cat_new->keywords ) {
+      if ( $cat_new->keywords != '' ) {
         self::keywordAssign( $cat_new );
       }
+
     } else {
 
       // Category update
