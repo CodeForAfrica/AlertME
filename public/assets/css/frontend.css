@@ -50,7 +50,7 @@ footer {
  * Map
  * -----------------------------------------------------------------------------
  */
-.home-map, .map-loading, .home-map .map-wrapper {
+.home-map, .map-loading, .home-map .map-wrapper, .home-map .map-list {
   min-height: 500px;
   height: 100%;
 }
@@ -83,7 +83,6 @@ footer {
  }
 
  .home-map .map-list {
-   height:100%;
    position:absolute;
    width: 397px;
    top: 76px;

@@ -4,17 +4,22 @@
  */
 
 // Resize the page
-var footerHeight = $('footer').height() +
+function resizeMap () {
+  var footerHeight = $('footer').height() +
   parseInt($('footer').css('padding-top').replace('px', '')) +
   parseInt($('footer').css('padding-bottom').replace('px', ''));
-if($('body').height() > (400 +  footerHeight)) {
-  $('.home-map').css('margin-bottom', '-'+footerHeight+'px');
-  $('.home-map').css('min-height', (400 + footerHeight)+'px');
-  // Map loading
-  $('.map-loading, .home-map .map-wrapper, .home-map .map-list').height($('.home-map').height() - footerHeight );
-} else {
-  $('.map-loading').height($('.home-map').height());
+  if($('body').height() > (500 +  footerHeight)) {
+    // Map loading
+    $('.home-map, .map-loading, .home-map .map-wrapper, .home-map .map-list').height($('body').height() - footerHeight );
+  } else {
+    $('.home-map, .map-loading, .home-map .map-wrapper, .home-map .map-list').height(500);
+  }
 }
+resizeMap();
+$(window).resize(function(){
+  resizeMap();
+});
+
 
 // console.log($('body').height() +":" +(footerHeight + 500));
 
