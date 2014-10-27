@@ -40,7 +40,7 @@ class CreateAlertRegistrationsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('alert_registrations');
+		Schema::dropIfExists('alert_registrations');
 	}
 
 }
