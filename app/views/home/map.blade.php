@@ -89,7 +89,9 @@
       </div> <!-- /.map-controls -->
 
       <div class="map-loading text-center">
-        <p class="lead"><i class="fa fa-globe fa-spin"></i> Loading map...</p>
+        <div id="info">
+          <p class="lead"><i class="fa fa-globe fa-spin"></i> Loading map...</p>
+        </div>
       </div> <!-- /.map-loading -->
 
       <!-- <div class="home-search text-center container-fluid">
@@ -200,7 +202,7 @@
   <link href="/assets/css/MarkerCluster.css" rel="stylesheet" />
   <link href="/assets/css/MarkerCluster.Default.css" rel="stylesheet" />
   <script src="/assets/js/vendor/leaflet.markercluster.js"></script>
-
+  
   <script src="/assets/js/frontend/routes.js"></script>
   <script src="/assets/js/frontend/map.js"></script>
   <script src="/assets/js/frontend/map-categories.js"></script>

@@ -73,7 +73,7 @@ footer {
   color: #ECF0F1;
   z-index: 3;
 }
- .map-loading p {
+ .map-loading #info {
    position: relative;
    top: 50%;
  }

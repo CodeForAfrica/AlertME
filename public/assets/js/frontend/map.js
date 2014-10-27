@@ -20,8 +20,8 @@ $(window).resize(function(){
   resizeMap();
 });
 
-
 // console.log($('body').height() +":" +(footerHeight + 500));
+
 
 // Markers
 var markers;

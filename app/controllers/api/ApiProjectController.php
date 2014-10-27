@@ -47,12 +47,24 @@ class ApiProjectController extends \BaseController {
                                ->get();
     }
 
-    return Response::json(array(
-        'error' => false,
-        'projects' => $projects,
-        'projects_categories' => $projects_categories
+    $data = array(
+      'error' => false,
+      'projects' => $projects,
+      'projects_categories' => $projects_categories
+    );
+
+    $temp_file = tempnam(sys_get_temp_dir(), 'pahali');
+    file_put_contents($temp_file, json_encode($data));
+    $response = Response::download(
+      $temp_file,
+      'pahali-projects.json',
+      array(
+        'Content-Type' => 'application/json'
       )
     );
+
+    return $response;
+    // return Response::json($data);
   }
 
 
