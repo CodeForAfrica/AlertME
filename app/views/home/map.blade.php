@@ -29,7 +29,7 @@
 
         <div class="map-list bg-primary text-center">
           <button class="map-ctrl-alert btn btn-wide btn-embossed btn-primary"
-            data-toggle="modal" data-target="#alertModal">
+            data-toggle="modal" data-target="#subscriptionModal">
             <span class="fa fa-globe"></span> Subscribe for alerts in this area
           </button>
           <hr/>
@@ -115,8 +115,8 @@
 
       <!-- MODALS -->
 
-      <!-- Create Alert Modal -->
-      <div class="modal" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="alertModalLabel" aria-hidden="true">
+      <!-- Subscribe Modal -->
+      <div class="modal" id="subscriptionModal" tabindex="-1" role="dialog" aria-labelledby="subscriptionModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
 
@@ -124,7 +124,7 @@
               <button type="button" class="close close-modal" data-dismiss="modal">
                 <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
               </button>
-              <h4 class="modal-title" id="alertModalLabel">Create Alert</h4>
+              <h4 class="modal-title" id="subscriptionModalLabel">Subscribe for Alerts</h4>
             </div><!-- /.modal-header -->
 
             <div class="modal-body">
@@ -206,4 +206,5 @@
   <script src="/assets/js/frontend/routes.js"></script>
   <script src="/assets/js/frontend/map.js"></script>
   <script src="/assets/js/frontend/map-categories.js"></script>
+  <script src="/assets/js/frontend/map-subscribe.js"></script>
 @stop

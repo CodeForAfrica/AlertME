@@ -8,3 +8,5 @@ composer.lock
 Thumbs.db
 
 app/config/production
+
+app/config/local/mail.php

@@ -1,6 +1,6 @@
 <?php
 
-class ApiAlertRegistrationController extends \BaseController {
+class ApiSubscriptionController extends \BaseController {
 
 	/**
 	 * Display a listing of the resource.
@@ -10,7 +10,13 @@ class ApiAlertRegistrationController extends \BaseController {
 	public function index()
 	{
 		//
-		
+		$subscriptions = Subscription::all();
+		return Response::json(array(
+			'error' => false,
+			'subscriptions' => $subscriptions->toArray(),
+			'status' => 'OK'),
+			200
+		);
 	}
 
 
@@ -22,7 +28,6 @@ class ApiAlertRegistrationController extends \BaseController {
 	public function create()
 	{
 		//
-
 	}
 
 
@@ -34,16 +39,11 @@ class ApiAlertRegistrationController extends \BaseController {
 	public function store()
 	{
 		//
-		AlertUser::firstOrCreate(array('email' => Input::get('email')));
-		$alert_user = AlertUser::where('email', Input::get('email'))->first();
-		// if ( $alert_user->alerts > 4 ) {
-		// 	return Response::json(array(
-		// 		'error' => true,
-		// 		'status' => 'OVER_LIMIT'),
-		// 		200
-		// 	);
-		// }
+		// Create User or First
+		User::firstOrCreate(array('email' => Input::get('email')));
+		$user = User::where('email', Input::get('email'))->first();
 
+		// Get bounds passed
 		$bounds = explode(",", Input::get('bounds'));
 		if ( count($bounds) != 4 ){
 			return Response::json(array(
@@ -53,18 +53,24 @@ class ApiAlertRegistrationController extends \BaseController {
 			);
 		}
 
-		$alert = new AlertRegistration;
-		$alert->alert_user_id = $alert_user->id;
-		$alert->sw_lat = $bounds[0];
-		$alert->sw_lng = $bounds[1];
-		$alert->ne_lat = $bounds[2];
-		$alert->ne_lng = $bounds[3];
-		$alert->save();
-		$alert_user->increment('alerts');
+
+		// Subscription
+		$subscription = new Subscription;
+		$subscription->user_id = $user->id;
+		$subscription->sw_lat = $bounds[0];
+		$subscription->sw_lng = $bounds[1];
+		$subscription->ne_lat = $bounds[2];
+		$subscription->ne_lng = $bounds[3];
+		$subscription->confirm_token = Input::get('csfr',
+			md5(serialize($bounds).Input::get('email'))
+		);
+		$subscription->save();
+
+		$user->increment('subscriptions');
 
 		return Response::json(array(
 			'error' => false,
-			'alert' => $alert->toArray(),
+			'subscription' => $subscription->toArray(),
 			'status' => 'OK'),
 			200
 		);
