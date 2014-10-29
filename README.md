@@ -146,6 +146,9 @@ Edit `.env.local.php` or create `.env.php` in production to contain the followin
       'db_user' => 'YOUR_DB_USER',
       'db_pass' => 'YOUR_DB_PASSWORD',
 
+      'smtp_user' => 'YOUR_SMTP_USERNAME',
+      'smtp_pass' => 'YOUR_SMTP_PASSWORD',
+
     );
 
 You can generate `YOUR_SECRET_KEY` by running `php artisan key:generate` and copying the resulting key into `.env.local.php` or `.env.php`.

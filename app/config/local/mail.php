@@ -15,7 +15,7 @@ return array(
   |
   */
 
-  'driver' => 'mail',
+  'driver' => 'smtp',
 
   /*
   |--------------------------------------------------------------------------
@@ -28,7 +28,7 @@ return array(
   |
   */
 
-  'username' => null,
+  'username' => $_ENV['smtp_user'],
 
   /*
   |--------------------------------------------------------------------------
@@ -41,6 +41,6 @@ return array(
   |
   */
 
-  'password' => null,
+  'password' => $_ENV['smtp_pass'],
 
 );
