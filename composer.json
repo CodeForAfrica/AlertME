@@ -9,7 +9,8 @@
 		"pda/pheanstalk": "~2.0",
 		"nesbot/Carbon": "*",
 		"graham-campbell/markdown": "~2.0",
-		"doctrine/dbal": "2.3.5"
+		"doctrine/dbal": "2.3.5",
+		"emil/inliner": "dev-master"
 	},
 	"autoload": {
 		"classmap": [

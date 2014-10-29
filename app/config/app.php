@@ -26,7 +26,7 @@ return array(
 	|
 	*/
 
-	'url' => 'http://localhost',
+	'url' => 'http://greenalert',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -123,6 +123,8 @@ return array(
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 
 		'GrahamCampbell\Markdown\MarkdownServiceProvider',
+
+		'Emil\Inliner\InlinerServiceProvider',
 
 	),
 

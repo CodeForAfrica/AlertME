@@ -1,15 +1,45 @@
-<!DOCTYPE html>
-<html lang="en-US">
-  <head>
-    <meta charset="utf-8">
-  </head>
-  <body>
-    <h2>Confirm #Alerts Subscription</h2>
+@extends('layouts.email')
 
-    <div>
-      <p>Awesome you just subscribed for alerts on #GreenAlert!</p>
-      <p>-{{$confirm_token}}-</p>
-      <p>To start receivng alerts, visit this link: {{ URL::to('subscription/confirm', array($confirm_token)) }}.</p>
-    </div>
-  </body>
-</html>
+@section('body-class') email-new bg-primary @stop
+
+@section('stylesheets')
+  <link rel="stylesheet" href="{{ secure_asset('/assets/css/frontend.css') }}">
+@stop
+
+@section('styles')
+<style>
+  .table {
+    max-width: 500px;
+  }
+  body {
+    padding-top: 20px;
+  }
+</style>
+@stop
+
+@section('content')
+
+<table class="table" align="center">
+
+  <thead>
+    <tr><td>
+      <h3>#GreenAlert</h3>
+      <p class="text-muted">CONFIRM SUBSCRIPTION</p>
+    </td></tr>
+  </thead>
+
+  <tbody>
+    <tr><td>
+      <p>Awesome! You are one step away from starting to receive alerts from your area.</p>
+      <p><b>Confirm subscription by visiting this <u>{{ $confirm_link }}</u>.</b></p>
+      <small>Link not working? Copy and paste this link into your browser:<br/><u>{{ $confirm_url }}</u></small>
+      <br/><br/>
+      <small><unsubscribe>Didn't subscribe? You can ignore this e-mail.</unsubscribe></small>
+    </td></tr>
+  </tbody>
+
+</table>
+
+
+
+@stop

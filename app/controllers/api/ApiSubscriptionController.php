@@ -28,6 +28,22 @@ class ApiSubscriptionController extends \BaseController {
 	public function create()
 	{
 		//
+		$subscription = Subscription::first();
+		$user = DB::table('users')->where('id', $subscription->user_id)->first();
+		$data = array(
+      'subscription' => $subscription,
+      'user' => $user,
+      'confirm_token' => $subscription->confirm_token,
+      'confirm_link' => link_to('subscription/confirm/'.$subscription->confirm_token, 'link', null, true),
+      'confirm_url' => secure_asset('subscription/confirm/'.$subscription->confirm_token)
+    );
+    $view = View::make('emails.subscription.new', $data);
+
+		if (Input::get('inline', 0) == 1) {
+			Inliner::setOption('preserve_styles', true);
+	    return Inliner::inline($view);
+		}
+		return $view;
 	}
 
 
