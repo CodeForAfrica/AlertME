@@ -74,10 +74,6 @@ $( document ).ready(function() {
         $('#subscriptionModal .alert-danger .msg-error.limit').fadeIn();
       }
 
-      $( 'html' ).mouseleave(function() {
-        location.reload();
-      });
-
     }).fail(function() {
       // report error
       $('#subscriptionModal .alert-danger').fadeIn();
