@@ -78,7 +78,7 @@ return array(
 	|
 	*/
 
-	'key' => 'YourSecretKey!!!',
+	'key' => $_ENV['app_key'],
 
 	'cipher' => MCRYPT_RIJNDAEL_128,
 
