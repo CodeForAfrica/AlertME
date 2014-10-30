@@ -189,6 +189,22 @@ Running `sudo supervisorctl` again, should show you the programs running.
 
 ##### 7. Configure Nginx
 
+First create ssl keys:
+    
+    sudo mkdir /etc/nginx/ssl
+    cd /etc/nginx/ssl
+    sudo openssl genrsa -des3 -out server.key 1024
+    sudo openssl req -new -key server.key -out server.csr
+
+    # Remove passphrase ?
+    sudo cp server.key server.key.org
+    sudo openssl rsa -in server.key.org -out server.key
+
+    # Sign SSL Certificate
+    sudo openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
+
+You can read more on SSL with nginx [here](https://www.digitalocean.com/community/tutorials/how-to-create-a-ssl-certificate-on-nginx-for-ubuntu-12-04).
+
 Finally, to see the page on *example.com* you would need to configure Nginx. To do this, add the following to the file `/etc/nginx/sites-available/default`:
 
     server {
@@ -198,6 +214,32 @@ Finally, to see the page on *example.com* you would need to configure Nginx. To 
       index index.php index.html index.htm;
 
       server_name greenalert example.com;
+
+      location / {
+        try_files $uri $uri/ /index.php?$query_string;
+      }
+
+      location ~ \.php$ {
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+
+        fastcgi_pass unix:/var/run/php5-fpm.sock;
+        fastcgi_index index.php;
+        include fastcgi_params;
+      }
+
+    }
+
+    server {
+      listen   443;
+
+      root /path/to/GreenAlert/public;
+      index index.php index.html index.htm;
+
+      server_name greenalert.codeforafrica.net example.com;
+
+      ssl on;
+      ssl_certificate /etc/nginx/ssl/server.crt;
+      ssl_certificate_key /etc/nginx/ssl/server.key; 
 
       location / {
         try_files $uri $uri/ /index.php?$query_string;
