@@ -208,34 +208,12 @@ You can read more on SSL with nginx [here](https://www.digitalocean.com/communit
 Finally, to see the page on *example.com* you would need to configure Nginx. To do this, add the following to the file `/etc/nginx/sites-available/default`:
 
     server {
-      listen   80;
-
-      root /path/to/GreenAlert/public;
-      index index.php index.html index.htm;
-
-      server_name greenalert example.com;
-
-      location / {
-        try_files $uri $uri/ /index.php?$query_string;
-      }
-
-      location ~ \.php$ {
-        fastcgi_split_path_info ^(.+\.php)(/.+)$;
-
-        fastcgi_pass unix:/var/run/php5-fpm.sock;
-        fastcgi_index index.php;
-        include fastcgi_params;
-      }
-
-    }
-
-    server {
       listen   443;
 
       root /path/to/GreenAlert/public;
       index index.php index.html index.htm;
 
-      server_name greenalert.codeforafrica.net example.com;
+      server_name greenalert example.com;
 
       ssl on;
       ssl_certificate /etc/nginx/ssl/server.crt;
@@ -252,6 +230,15 @@ Finally, to see the page on *example.com* you would need to configure Nginx. To 
         fastcgi_index index.php;
         include fastcgi_params;
       }
+
+    }
+
+    server {
+      listen   80;
+
+      server_name greenalert.codeforafrica.net example.com;
+
+      return 301 https://$server_name$request_uri;
 
     }
 
