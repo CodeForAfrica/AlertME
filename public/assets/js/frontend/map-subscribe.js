@@ -24,19 +24,30 @@ $( document ).ready(function() {
   if (map_alert.tap) map_alert.tap.disable();
 
   // Modal Controls
+  function alertsReset() {
+    $('.map-alert-email').removeClass('has-error');
+    $('#map-alert-email').attr('disabled', false);
+
+    $('#subscriptionModal .alert-info').fadeOut();
+    $('#subscriptionModal .alert-success').fadeOut();
+    $('#subscriptionModal .alert-warning').fadeOut();
+    $('#subscriptionModal .alert-danger').fadeOut();
+    
+    $('.create-alert-btn').removeClass('disabled');
+  }
   $('#subscriptionModal').on('shown.bs.modal', function () {
     map_alert.invalidateSize();
     map_alert.fitBounds(map.getBounds());
+
     // Reset
-    $('.map-alert-email').removeClass('has-error');
-    $('#subscriptionModal .alert-danger').fadeOut();
-    $('#subscriptionModal .alert-danger .msg-error.email').fadeOut();
-    $('#subscriptionModal .alert-info').fadeOut();
-    $('.create-alert-btn').removeClass('disabled');
-    $('#subscriptionModal .alert-success').fadeOut();
-    $('#map-alert-email').attr('disabled', false);
+    alertsReset();
+    
   });
+
+  // Modal View Controls
   $('.create-alert-btn').click(function () {
+    alertsReset();
+    // Check e-mail
     if( $('#map-alert-email').val().trim() == '' ) {
       $('.map-alert-email').addClass('has-error');
       $('#subscriptionModal .alert-danger').fadeIn();
@@ -49,6 +60,7 @@ $( document ).ready(function() {
       $('#subscriptionModal .alert-danger .msg-error.email').fadeIn();
       return;
     }
+    // Subscription start
     $('#subscriptionModal .alert-info').fadeIn();
     $('.create-alert-btn').addClass('disabled');
     $('#map-alert-email').attr('disabled', true);
@@ -68,11 +80,29 @@ $( document ).ready(function() {
 
       if(response.status == 'OK') {
         $('#subscriptionModal .alert-success').fadeIn();
-      }
+      };
       if(response.status == 'OVER_LIMIT') {
         $('#subscriptionModal .alert-danger').fadeIn();
         $('#subscriptionModal .alert-danger .msg-error.limit').fadeIn();
-      }
+      };
+      if(response.error) {
+        var validator = response.validator;
+        if (validator.email) {
+          $('#subscriptionModal .alert-danger').fadeIn();
+          $('#subscriptionModal .alert-danger .msg-error.email').fadeIn();
+          $('#map-alert-email').attr('disabled', false);
+          $('.map-alert-email').addClass('has-error');
+          $('.create-alert-btn').removeClass('disabled');
+        };
+        if (validator.bounds) {
+          $('#subscriptionModal .alert-danger').fadeIn();
+          $('#subscriptionModal .alert-danger .msg-error.reload').fadeIn();
+        };
+        if (validator.confirm_token) {
+          $('#subscriptionModal .alert-warning').fadeIn();
+          $('#subscriptionModal .alert-warning .msg-error.duplicate').fadeIn();
+        };
+      };
 
     }).fail(function() {
       // report error
