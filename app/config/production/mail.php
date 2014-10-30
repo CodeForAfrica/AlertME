@@ -13,6 +13,6 @@ return array(
   |
   */
 
-  'port' => 25,
+  'port' => 2525,
 
 );
