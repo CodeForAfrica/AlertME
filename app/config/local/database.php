@@ -23,23 +23,12 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'cfa_greenalert',
-			'username'  => 'greenalert',
-			'password'  => 'greenalert',
+			'database'  => $_ENV['db_name'],
+			'username'  => $_ENV['db_user'],
+			'password'  => $_ENV['db_pass'],
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
-		),
-
-		'pgsql' => array(
-			'driver'   => 'pgsql',
-			'host'     => 'localhost',
-			'database' => 'homestead',
-			'username' => 'homestead',
-			'password' => 'secret',
-			'charset'  => 'utf8',
-			'prefix'   => '',
-			'schema'   => 'public',
 		),
 
 	),

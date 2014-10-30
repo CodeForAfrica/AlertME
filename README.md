@@ -3,6 +3,8 @@
 
 Get to know more about your environment.
 
+**NOTE: This project is still in initial development.**
+
 ### Requirements
 
 - PHP v5.4.7+
@@ -10,6 +12,7 @@ Get to know more about your environment.
 - Composer
 - Beanstalkd
 - MySQL
+- Ruby (for Mailing)
 
 
 
@@ -64,13 +67,13 @@ Update and upgrade PHP by running the following commands:
     sudo apt-get update
     sudo apt-get dist-upgrade php*
 
-##### 5. Install MCrypt PHP Extension
+##### 6. Install MCrypt PHP Extension
 
 The Laravel Framework [requires MCrypt PHP extension](http://laravel.com/docs/4.2/installation#server-requirements). To install it on debian, run the following command:
 
     sudo apt-get install php5-mcrypt
 
-##### 6. Install Beanstalkd
+##### 7. Install Beanstalkd
 
 For queue services, #GreenAlert uses Beanstalkd. This allows us to defer the processing of a time consuming task, such as sending an e-mail, until a later time, thus drastically speeding up the web requests to the application.
 
@@ -85,6 +88,12 @@ To keep background tasks running e.g listening for queues to process jobs, we wi
     sudo apt-get install supervisor
 
 You can learn more about installing and managing supervisor [here](https://www.digitalocean.com/community/tutorials/how-to-install-and-manage-supervisor-on-ubuntu-and-debian-vps).
+
+
+##### 7. Ruby Requirements
+
+
+
 
 
 #### Application Set Up
@@ -120,13 +129,39 @@ First, we create the `greenalert` user and `cfa_greenalert` database. Connect to
         -> ON cfa_greenalert.*
         -> TO 'greenalert'@'localhost';
 
-##### 4. Migration
+
+##### 4. Sensitive Configuration
+
+Edit `.env.local.php` or create `.env.php` in production to contain the following:
+
+    <?php
+
+    return array(
+
+      'TEST_STRIPE_KEY' => 'super-secret-sauce',
+
+      'app_key' => 'YOUR_SECRET_KEY',
+
+      'db_name' => 'YOUR_DB_NAME',
+      'db_user' => 'YOUR_DB_USER',
+      'db_pass' => 'YOUR_DB_PASSWORD',
+
+      'smtp_user' => 'YOUR_SMTP_USERNAME',
+      'smtp_pass' => 'YOUR_SMTP_PASSWORD',
+
+    );
+
+You can generate `YOUR_SECRET_KEY` by running `php artisan key:generate` and copying the resulting key into `.env.local.php` or `.env.php`.
+
+Read more on sensitive configuration [here](http://laravel.com/docs/4.2/configuration#protecting-sensitive-configuration).
+
+##### 5. Migration
 
 With the database set up, we can do the database migration. To do this, run the `php artisan migrate` command in the root of the cloned project's directory.
 
 Optional: You can define the environment by adding `--env=[<environment>]` argument. For example `php artisan migrate --env=local`.
 
-##### 5. Queue Configuration
+##### 6. Queue Configuration
 
 Queue configuration to run tasks in the background requires mainly configuration of supervisor to initiate the listener. Create and edit the `/etc/supervisor/conf.d/greenalert.conf` file. In the file, add the following:
 
@@ -151,7 +186,7 @@ Running `sudo supervisorctl` again, should show you the programs running.
 
 
 
-##### 6. Configure Nginx
+##### 7. Configure Nginx
 
 Finally, to see the page on *example.com* you would need to configure Nginx. To do this, add the following to the file `/etc/nginx/sites-available/default`:
 

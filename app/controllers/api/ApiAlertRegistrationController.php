@@ -10,6 +10,7 @@ class ApiAlertRegistrationController extends \BaseController {
 	public function index()
 	{
 		//
+		
 	}
 
 

@@ -33,7 +33,7 @@ class CreateAlertUsersTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('alert_users');
+		Schema::dropIfExists('alert_users');
 	}
 
 }

@@ -26,7 +26,7 @@ return array(
 	|
 	*/
 
-	'url' => 'http://localhost',
+	'url' => 'http://greenalert',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -39,7 +39,7 @@ return array(
 	|
 	*/
 
-	'timezone' => 'UTC',
+	'timezone' => 'Africa/Nairobi',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -78,7 +78,7 @@ return array(
 	|
 	*/
 
-	'key' => 'YourSecretKey!!!',
+	'key' => $_ENV['app_key'],
 
 	'cipher' => MCRYPT_RIJNDAEL_128,
 
@@ -123,6 +123,8 @@ return array(
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 
 		'GrahamCampbell\Markdown\MarkdownServiceProvider',
+
+		'Emil\Inliner\InlinerServiceProvider',
 
 	),
 

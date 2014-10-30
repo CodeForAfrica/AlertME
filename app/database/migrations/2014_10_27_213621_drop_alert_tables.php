@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAlertsTable extends Migration {
+class DropAlertTables extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,13 +12,10 @@ class CreateAlertsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('alerts', function(Blueprint $table)
-		{
-			$table->increments('id');
-			$table->integer('project_id');
-			$table->integer('status')->default(0);
-			$table->timestamps();
-		});
+		//
+		Schema::dropIfExists('alert_users');
+		Schema::dropIfExists('alert_registrations');
+		Schema::dropIfExists('alerts');
 	}
 
 	/**
@@ -28,7 +25,7 @@ class CreateAlertsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::dropIfExists('alerts');
+		//
 	}
 
 }

@@ -29,7 +29,7 @@
 
         <div class="map-list bg-primary text-center">
           <button class="map-ctrl-alert btn btn-wide btn-embossed btn-primary"
-            data-toggle="modal" data-target="#alertModal">
+            data-toggle="modal" data-target="#subscriptionModal">
             <span class="fa fa-globe"></span> Subscribe for alerts in this area
           </button>
           <hr/>
@@ -89,7 +89,9 @@
       </div> <!-- /.map-controls -->
 
       <div class="map-loading text-center">
-        <p class="lead"><i class="fa fa-globe fa-spin"></i> Loading map...</p>
+        <div id="info">
+          <p class="lead"><i class="fa fa-globe fa-spin"></i> Loading map...</p>
+        </div>
       </div> <!-- /.map-loading -->
 
       <!-- <div class="home-search text-center container-fluid">
@@ -113,8 +115,8 @@
 
       <!-- MODALS -->
 
-      <!-- Create Alert Modal -->
-      <div class="modal" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="alertModalLabel" aria-hidden="true">
+      <!-- Subscribe Modal -->
+      <div class="modal" id="subscriptionModal" tabindex="-1" role="dialog" aria-labelledby="subscriptionModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
 
@@ -122,7 +124,7 @@
               <button type="button" class="close close-modal" data-dismiss="modal">
                 <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
               </button>
-              <h4 class="modal-title" id="alertModalLabel">Create Alert</h4>
+              <h4 class="modal-title" id="subscriptionModalLabel">Subscribe for Alerts</h4>
             </div><!-- /.modal-header -->
 
             <div class="modal-body">
@@ -145,17 +147,31 @@
                 </div>
               </div>
 
-              <!-- Alerts -->
+              <!-- ALERTS -->
+              <!-- Loading -->
               <div class="alert alert-info text-center" role="alert" style="display:none;"><small>
                 <i class="fa fa-circle-o-notch fa-spin"></i>
-                Creating alert. You'll soon be receiving updates from this area.
+                Subscribing... You'll soon be receiving updates from this area.
               </small></div>
+              <!-- Success -->
               <div class="alert alert-success alert-dismissible" role="alert" style="display:none;">
                 <button type="button" class="close" data-dismiss="alert">
                   <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
                 </button>
-                <small><span class="fui-check-circle"></span> Successfuly added alert.</small>
+                <small><span class="fui-check-circle"></span> Awesome! Check your e-mail to confirm subscription.</small>
               </div>
+              <!-- Warn -->
+              <div class="alert alert-warning alert-dismissible" role="alert" style="display:none;">
+                <button type="button" class="close" data-dismiss="alert">
+                  <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                </button>
+                <small>
+                  <span class="fui-alert-circle"></span>
+                  <b>Hmm...</b>
+                  <span class="msg-error duplicate" style="display:none;"><br/>Seems like you are already subscribed to this area.</span>
+                </small>
+              </div>
+              <!-- Error -->
               <div class="alert alert-danger alert-dismissible" role="alert" style="display:none;">
                 <button type="button" class="close" data-dismiss="alert">
                   <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
@@ -163,7 +179,7 @@
                 <small>
                   <span class="fui-alert-circle"></span>
                   <b>Oops!</b> Looks like something went wrong.
-                  <span class="msg-error email" style="display:none;"><br/>Please check the e-mail.</span>
+                  <span class="msg-error email" style="display:none;"><br/>Please check the e-mail address entered.</span>
                   <span class="msg-error limit" style="display:none;"><br/>You've reached the max number of alerts registration.</span>
                   <span class="msg-error reload" style="display:none;"><br/>Please <a href="javascript:location.reload();">reload</a> the page and try again.</span>
                 </small>
@@ -200,8 +216,9 @@
   <link href="/assets/css/MarkerCluster.css" rel="stylesheet" />
   <link href="/assets/css/MarkerCluster.Default.css" rel="stylesheet" />
   <script src="/assets/js/vendor/leaflet.markercluster.js"></script>
-
+  
   <script src="/assets/js/frontend/routes.js"></script>
   <script src="/assets/js/frontend/map.js"></script>
   <script src="/assets/js/frontend/map-categories.js"></script>
+  <script src="/assets/js/frontend/map-subscribe.js"></script>
 @stop
