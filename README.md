@@ -92,7 +92,14 @@ You can learn more about installing and managing supervisor [here](https://www.d
 
 ##### 7. Ruby Requirements
 
+    sudo apt-get install ruby-dev
 
+    # Uninstall
+    sudo apt-get purge libruby1.9.1 ruby ruby1.9.1 ruby-dev
+
+Install gems
+    
+    sudo gem install premailer getopt hpricot nokogiri
 
 
 
@@ -202,6 +209,10 @@ First create ssl keys:
 
     # Sign SSL Certificate
     sudo openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
+
+    # Confirm Certificate
+    sudo cp /etc/nginx/ssl/* /usr/local/share/ca-certificates/
+    sudo update-ca-certificates -f
 
 You can read more on SSL with nginx [here](https://www.digitalocean.com/community/tutorials/how-to-create-a-ssl-certificate-on-nginx-for-ubuntu-12-04).
 
