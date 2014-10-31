@@ -4,6 +4,12 @@
 	"keywords": ["framework", "laravel"],
 	"license": "MIT",
 	"type": "project",
+	"repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/DavidLemayian/Laravel-HTML-email-inliner"
+    }
+  ],
 	"require": {
 		"laravel/framework": "4.2.*",
 		"pda/pheanstalk": "~2.0",
