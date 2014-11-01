@@ -95,11 +95,12 @@ You can learn more about installing and managing supervisor [here](https://www.d
     sudo apt-get install ruby-dev
 
     # Uninstall
-    sudo apt-get purge libruby1.9.1 ruby ruby1.9.1 ruby-dev
+    sudo apt-get purge libruby1.9.1 ruby-dev ruby1.9.1 ruby1.9.1-dev
 
 Install gems
     
-    sudo gem install premailer getopt hpricot nokogiri
+    sudo gem install premailer getopt nokogiri
+
 
 
 
@@ -216,15 +217,15 @@ First create ssl keys:
 
 You can read more on SSL with nginx [here](https://www.digitalocean.com/community/tutorials/how-to-create-a-ssl-certificate-on-nginx-for-ubuntu-12-04).
 
-Finally, to see the page on *example.com* you would need to configure Nginx. To do this, add the following to the file `/etc/nginx/sites-available/default`:
-
+Finally, to see the page on *example.com* you would need to add the file `/etc/nginx/sites-available/greenalert` with the following:
+    
     server {
       listen   443;
 
       root /path/to/GreenAlert/public;
       index index.php index.html index.htm;
 
-      server_name greenalert example.com;
+      server_name example.com greenalert;
 
       ssl on;
       ssl_certificate /etc/nginx/ssl/server.crt;
@@ -239,6 +240,7 @@ Finally, to see the page on *example.com* you would need to configure Nginx. To 
 
         fastcgi_pass unix:/var/run/php5-fpm.sock;
         fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
         include fastcgi_params;
       }
 
@@ -247,13 +249,18 @@ Finally, to see the page on *example.com* you would need to configure Nginx. To 
     server {
       listen   80;
 
-      server_name greenalert.codeforafrica.net example.com;
+      server_name example.com greenalert;
 
       return 301 https://$server_name$request_uri;
 
     }
 
-Save the file and run `sudo service nginx restart` to restart the web server. Now if you visit *example.com*, you will be able to see the basic #GreenAlert website loaded.
+Enable the site by creating a symlink:
+
+    sudo ln -s /etc/nginx/sites-available/greenalert /etc/nginx/sites-enabled/greenalert
+    sudo service nginx restart
+
+Now if you visit *example.com*, you will be able to see the basic #GreenAlert website loaded.
 
 
 ### Loading Data
