@@ -42,10 +42,11 @@
         </ul>
 
 
-        <form class="navbar-form navbar-right" action="#" role="search">
+        <form class="navbar-form navbar-right" action="/search" role="search">
           <div class="form-group">
             <div class="input-group input-group-rounded">
-              <input class="form-control" id="navbarInput-01" type="search" placeholder="Search">
+              <input class="form-control" id="navbarInput-01" type="search" placeholder="Search"
+                name="q" value="{{Input::get('q')}}">
               <span class="input-group-btn">
                 <button type="submit" class="btn"><span class="fui-search"></span></button>
               </span>

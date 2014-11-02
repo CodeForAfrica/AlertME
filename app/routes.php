@@ -15,6 +15,8 @@ Route::get('', 'HomeController@showHome');
 Route::get('about', 'HomeController@showAbout');
 Route::get('map', 'HomeController@showMap');
 
+Route::get('search', 'HomeController@getSearch');
+
 // Authentication
 Route::get('login', 'AuthController@showLogin');
 Route::post('login', 'AuthController@postLogin');

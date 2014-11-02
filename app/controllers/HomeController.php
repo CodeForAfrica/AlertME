@@ -51,4 +51,22 @@ class HomeController extends BaseController {
 		return View::make('home.map', $data);
 	}
 
+	public function getSearch()
+	{
+		$q = Input::get('q');
+
+		$projects_sql = Project::whereRaw(
+			"MATCH(title, description, geo_address, status) AGAINST (? IN BOOLEAN MODE)", 
+			array($q)
+		);
+		$projects_count = $projects_sql->count();
+		$projects = $projects_sql->take(10)->get();
+
+		$data = array(
+			'projects' => $projects,
+			'projects_count' => $projects_count
+		);
+		return View::make('home.search', $data);
+	}
+
 }
