@@ -11,17 +11,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    <link rel="shortcut icon" href="{{ asset('assets/img/favicon.ico') }}">
+    <link rel="shortcut icon" href="{{ secure_asset('assets/img/favicon.ico') }}">
 
-    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/flat-ui.min.css') }}">
-    <link href="{{ asset('assets/css/font-awesome.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ secure_asset('assets/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ secure_asset('assets/css/flat-ui.min.css') }}">
+    <link href="{{ secure_asset('assets/css/font-awesome.min.css') }}" rel="stylesheet">
 
     @yield('stylesheets')
 
     @yield('styles')
 
-    <script src="{{ asset('assets/js/vendor/modernizr-2.6.2.min.js') }}"></script>
+    <script src="{{ secure_asset('assets/js/vendor/modernizr-2.6.2.min.js') }}"></script>
 
   </head>
   <body class="@yield('body-class')">

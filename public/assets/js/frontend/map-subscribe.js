@@ -67,9 +67,12 @@ $( document ).ready(function() {
     var bounds = map.getBounds();
     var bound = bounds._southWest.lat + "," + bounds._southWest.lng + "," +
       bounds._northEast.lat + "," + bounds._northEast.lng;
+    var center = map_alert.getCenter().lng + "," + map_alert.getCenter().lat;
     var data = {
       email: $('#map-alert-email').val().trim(),
       bounds: bound,
+      center: center,
+      zoom: map_alert.getZoom(),
       _token: csrf_token
     };
     $.ajax({
