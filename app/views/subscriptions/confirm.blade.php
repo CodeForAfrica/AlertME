@@ -11,9 +11,13 @@
         <h3>Subscription</h3>
       </div>
 
-      @if(isset($message))
+      @if(isset($msg_confirm))
         <div class="alert alert-success" style="padding: 10px 15px;">
           <small>Subscription confirmed! <span class="fui-check-circle pull-right"></span></small>
+        </div>
+      @elseif(isset($msg_details))
+        <div class="alert alert-success" style="padding: 10px 15px;">
+          <small>Details updated! <span class="fui-check-circle pull-right"></span></small>
         </div>
       @endif
 
@@ -31,7 +35,7 @@
         <div class="col-md-5">
           <img src="{{ $map_image_link }}" style="width: 100%;" class="img-rounded"/>
           <br/><br/>
-          <form class="form-horizontal" role="form">
+          <form class="form-horizontal" role="form" action="" method="post">
             <div class="form-group">
               <label for="subscriber-email" class="col-sm-2 control-label">Email</label>
               <div class="col-sm-10">
@@ -42,7 +46,7 @@
               <label for="subscriber-name-" class="col-sm-2 control-label">Name</label>
               <div class="col-sm-10">
                 <input type="text" class="form-control" id="subscriber-name"
-                  name="name" placeholder="Full Name" value="{{ $user->fullname }}">
+                  name="fullname" placeholder="Full Name" value="{{ $user->fullname }}">
               </div>
             </div>
             <div class="form-group">

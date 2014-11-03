@@ -178,13 +178,15 @@ class ApiSubscriptionController extends \BaseController {
 		if ($subscription->status == 0) {
 			$subscription->status = 1;
 			$subscription->save();
-			$message = 'Confirmed';
+			$msg_confirm = 'Confirmed';
 		}
 
 		$user = User::find($subscription->user_id);
-		// if (Input) {
-		// 	# code...
-		// }
+		if (Input::has('fullname')) {
+			$user->fullname = Input::get('fullname');
+			$user->save();
+			$msg_details = 'Updated';
+		}
 
 		$map_image_link = 'http://api.tiles.mapbox.com/v4/codeforafrica.ji193j10/'.
 			$subscription->center.','.$subscription->zoom.
@@ -192,7 +194,10 @@ class ApiSubscriptionController extends \BaseController {
 			'access_token=pk.eyJ1IjoiY29kZWZvcmFmcmljYSIsImEiOiJVLXZVVUtnIn0.JjVvqHKBGQTNpuDMJtZ8Qg';
 		
 		
-		$data = compact('subscription', 'user', 'message', 'map_image_link');
+		$data = compact(
+			'msg_confirm', 'msg_details',
+			'subscription', 'user', 'map_image_link'
+		);
 		return View::make('subscriptions.confirm', $data);
 	}
 
