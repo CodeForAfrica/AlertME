@@ -43,18 +43,7 @@ $( document ).ready(function() {
   }).setView([-28.4792625, 24.6727135], 5);
   map.scrollWheelZoom.disable();
 
-  // Move map
-  if ($('.map-list').length) {
-    map_move_x = -0.5 * (
-      $('.map-list').width() +
-      parseInt($('.map-list').css('padding-top').replace('px', '')) +
-      parseInt($('.map-list').css('padding-bottom').replace('px', ''))
-    );
-     map.panBy(
-      L.point(map_move_x, 0, false),
-      {animate: false}
-    );
-  };
+  Pahali.map.center();
 
   // Map controls
   $('#map-ctrl-zoom-in').click(function () {
@@ -79,6 +68,7 @@ $( document ).ready(function() {
 
     listMarkers();
   });
+
 
 
 
