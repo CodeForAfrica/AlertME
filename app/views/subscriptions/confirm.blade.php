@@ -23,7 +23,7 @@
 
       <div class="row">
         <div class="col-md-7">
-          <p><a href="#">Projects in this area <span class="fui-arrow-right"></span></a></p>
+          <p><a href="{{$map_link}}">Projects in this area <span class="fui-arrow-right"></span></a></p>
           <hr/>
 
           <h5>Updates In This Area</h5>

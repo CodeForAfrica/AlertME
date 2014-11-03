@@ -192,11 +192,13 @@ class ApiSubscriptionController extends \BaseController {
 			$subscription->center.','.$subscription->zoom.
 			'/600x400.png?'.
 			'access_token=pk.eyJ1IjoiY29kZWZvcmFmcmljYSIsImEiOiJVLXZVVUtnIn0.JjVvqHKBGQTNpuDMJtZ8Qg';
-		
+
+		$map_link = secure_asset('map/#!/bounds='.$subscription->bounds);
 		
 		$data = compact(
 			'msg_confirm', 'msg_details',
-			'subscription', 'user', 'map_image_link'
+			'subscription', 'user',
+			'map_image_link', 'map_link'
 		);
 		return View::make('subscriptions.confirm', $data);
 	}
