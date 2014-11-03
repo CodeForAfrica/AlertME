@@ -201,7 +201,7 @@ First create ssl keys:
     
     sudo mkdir /etc/nginx/ssl
     cd /etc/nginx/ssl
-    sudo openssl genrsa -des3 -out server.key 1024
+    sudo openssl genrsa -des3 -out server.key 2048
     sudo openssl req -new -key server.key -out server.csr
 
     # Remove passphrase ?
