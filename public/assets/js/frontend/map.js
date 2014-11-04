@@ -43,16 +43,7 @@ $( document ).ready(function() {
   }).setView([-28.4792625, 24.6727135], 5);
   map.scrollWheelZoom.disable();
 
-  // Move map
-  map_move_x = -0.5 * (
-    $('.map-list').width() +
-    parseInt($('.map-list').css('padding-top').replace('px', '')) +
-    parseInt($('.map-list').css('padding-bottom').replace('px', ''))
-  );
-  map.panBy(
-    L.point(map_move_x, 0, false),
-    {animate: false}
-  );
+  Pahali.map.center();
 
   // Map controls
   $('#map-ctrl-zoom-in').click(function () {
@@ -77,6 +68,7 @@ $( document ).ready(function() {
 
     listMarkers();
   });
+
 
 
 
@@ -129,8 +121,9 @@ $( document ).ready(function() {
 
         var marker = new L.Marker(loc);
 
-        var marker_html = '<h6>'+
-          project.title+'</h6>';
+        var marker_html = '<h6>'+project.title+'</h6>'+
+          '<small><a href="/project/'+project.id+'" target="_blank">'+
+          'Learn more <span class="fui-arrow-right"></span></a></small>';
 
         marker.title = project.title;
 
@@ -140,12 +133,6 @@ $( document ).ready(function() {
           marker.on('mouseover', function () {
             this.openPopup();
           });
-          marker.on('mouseout', function () {
-            this.closePopup();
-          });
-          // marker.on('click', function () {
-          //   this.closePopup();
-          // });
         };
 
         markers.addLayer(marker);

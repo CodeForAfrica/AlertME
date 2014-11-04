@@ -18,8 +18,8 @@ class Subscription extends Eloquent {
           'subscription' => $subscription,
           'user' => $user,
           'confirm_token' => $subscription->confirm_token,
-          'confirm_link' => link_to('subscription/confirm/'.$subscription->confirm_token, 'link', null, true),
-          'confirm_url' => secure_asset('subscription/confirm/'.$subscription->confirm_token)
+          'confirm_link' => link_to('subscriptions/'.$subscription->confirm_token, 'link', null, true),
+          'confirm_url' => secure_asset('subscriptions/'.$subscription->confirm_token)
         );
 
         Mail::queue('emails.subscription.new', $data, function($message) use ($user)

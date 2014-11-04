@@ -31,8 +31,8 @@ class ApiSubscriptionController extends \BaseController {
 		$data = array(
       'subscription' => 'subscription',
       'confirm_token' => '1234567890abcdef',
-      'confirm_link' => link_to('subscription/confirm/'.'1234567890abcdef', 'link', null, true),
-      'confirm_url' => secure_asset('subscription/confirm/'.'1234567890abcdef')
+      'confirm_link' => link_to('subscriptions/confirm/'.'1234567890abcdef', 'link', null, true),
+      'confirm_url' => secure_asset('subscriptions/confirm/'.'1234567890abcdef')
     );
     $view = View::make('emails.subscription.new', $data);
 
@@ -100,6 +100,9 @@ class ApiSubscriptionController extends \BaseController {
 		$subscription->ne_lat = $bounds[2];
 		$subscription->ne_lng = $bounds[3];
 		$subscription->confirm_token = $confirm_token;
+		$subscription->bounds = Input::get('bounds');
+		$subscription->center = Input::get('center');
+		$subscription->zoom = Input::get('zoom');
 		$subscription->save();
 
 		$user->increment('subscriptions');
@@ -159,6 +162,45 @@ class ApiSubscriptionController extends \BaseController {
 	public function destroy($id)
 	{
 		//
+	}
+
+
+	/**
+	 * Confirm Subscription
+	 *
+	 * @param  string  $confirm_token
+	 * @return View
+	 */
+	public function confirm($confirm_token)
+	{
+		//
+		$subscription = Subscription::where('confirm_token', $confirm_token)->firstOrFail();
+		if ($subscription->status == 0) {
+			$subscription->status = 1;
+			$subscription->save();
+			$msg_confirm = 'Confirmed';
+		}
+
+		$user = User::find($subscription->user_id);
+		if (Input::has('fullname')) {
+			$user->fullname = Input::get('fullname');
+			$user->save();
+			$msg_details = 'Updated';
+		}
+
+		$map_image_link = 'http://api.tiles.mapbox.com/v4/codeforafrica.ji193j10/'.
+			$subscription->center.','.$subscription->zoom.
+			'/600x400.png?'.
+			'access_token=pk.eyJ1IjoiY29kZWZvcmFmcmljYSIsImEiOiJVLXZVVUtnIn0.JjVvqHKBGQTNpuDMJtZ8Qg';
+
+		$map_link = secure_asset('map/#!/bounds='.$subscription->bounds);
+		
+		$data = compact(
+			'msg_confirm', 'msg_details',
+			'subscription', 'user',
+			'map_image_link', 'map_link'
+		);
+		return View::make('subscriptions.confirm', $data);
 	}
 
 
