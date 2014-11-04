@@ -17,6 +17,15 @@
         <p>{{$project->title}}</p>
       @endforeach
 
+      <br/>
+      <div class="text-center"><div class="pagination">
+        <ul>
+
+          {{ $pagination_html }}
+
+        </ul>
+      </div></div>
+
     </div> <!-- /.container -->
 
   </div> <!-- /.data-sources-list -->
