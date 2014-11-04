@@ -17,6 +17,8 @@ Route::get('map', 'HomeController@showMap');
 
 Route::get('search', 'HomeController@getSearch');
 
+Route::get('project/{id}', 'HomeController@showProject');
+
 Route::get('subscriptions/{confirm_token}', 'ApiSubscriptionController@confirm');
 Route::post('subscriptions/{confirm_token}', 'ApiSubscriptionController@confirm');
 

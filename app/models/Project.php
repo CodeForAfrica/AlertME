@@ -37,6 +37,12 @@ class Project extends Eloquent {
       return $this->belongsTo('DataSourceData');
     }
 
+    function datasourcedata_single()
+    {
+      return json_decode(DB::table('data_source_datas_'.$this->data_source_id)
+        ->where('data_id', $this->project_id)->first()->data);
+    }
+
     function categories()
     {
       return $this->belongsToMany('Category');

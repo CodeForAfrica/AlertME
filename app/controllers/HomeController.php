@@ -69,4 +69,25 @@ class HomeController extends BaseController {
 		return View::make('home.search', $data);
 	}
 
+	public function showProject($id)
+	{
+		$project = Project::findOrFail($id);
+
+		$map_image_link = 'http://api.tiles.mapbox.com/v4/codeforafrica.ji193j10/'.
+			'pin-l-circle-stroked+1abc9c('.$project->geo()->lng.','.$project->geo()->lat.')/'.
+			$project->geo()->lng.','.$project->geo()->lat.'),13'.
+			'/520x293.png256?'.
+			'access_token=pk.eyJ1IjoiY29kZWZvcmFmcmljYSIsImEiOiJVLXZVVUtnIn0.JjVvqHKBGQTNpuDMJtZ8Qg';
+
+		$cols = DataSource::find($project->data_source_id)->datasourceconfig->data_source_columns;
+		$cols = json_decode($cols);
+		$project_data = $project->datasourcedata_single();
+
+		$data = compact(
+			'project', 'map_image_link',
+			'cols', 'project_data'
+		);
+		return View::make('home.project', $data);
+	}
+
 }
