@@ -121,8 +121,9 @@ $( document ).ready(function() {
 
         var marker = new L.Marker(loc);
 
-        var marker_html = '<h6>'+
-          project.title+'</h6>';
+        var marker_html = '<h6>'+project.title+'</h6>'+
+          '<small><a href="/project/'+project.id+'" target="_blank">'+
+          'Learn more <span class="fui-arrow-right"></span></a></small>';
 
         marker.title = project.title;
 
@@ -132,12 +133,6 @@ $( document ).ready(function() {
           marker.on('mouseover', function () {
             this.openPopup();
           });
-          marker.on('mouseout', function () {
-            this.closePopup();
-          });
-          // marker.on('click', function () {
-          //   this.closePopup();
-          // });
         };
 
         markers.addLayer(marker);
