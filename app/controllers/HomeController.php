@@ -70,6 +70,18 @@ class HomeController extends BaseController {
     $projects_count = $projects_sql->count();
     $projects = $projects_sql->skip($offset)->take(10)->get();
 
+
+    // Limit length
+    for ($i=0; $i < count($projects); $i++) { 
+      if (strlen($projects[$i]->title) > 80) {
+        $projects[$i]->title = substr($projects[$i]->title, 0, 80).'...';
+      }
+      if (strlen($projects[$i]->description) > 200) {
+        $projects[$i]->description = substr($projects[$i]->description, 0, 200).'...';
+      }
+    }
+    
+
     // Pagination
     $pagination_html = '';
     $pagination_html_prev = '<li class="previous">'.

@@ -44,7 +44,7 @@
 
         <form class="navbar-form navbar-right" action="/search" role="search">
           <div class="form-group">
-            <div class="input-group input-group-rounded">
+            <div class="input-group">
               <input class="form-control" id="navbarInput-01" type="search" placeholder="Search"
                 name="q" value="{{Input::get('q')}}">
               <span class="input-group-btn">

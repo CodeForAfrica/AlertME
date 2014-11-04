@@ -40,32 +40,33 @@ class CategoryQueue {
 
   function keywordAssign ( $category )
   {
-    $GLOBALS['cat_keywords'] = explode(",", $category->keywords);
-    $GLOBALS['cat_id'] = $category->id;
-    Project::chunk(8000, function($projects)
+    $keywords = explode(",", $category->keywords);
+
+    $projects = Project::all();
+
+    foreach ($projects as $project)
     {
-      $keywords = $GLOBALS['cat_keywords'];
+      //
+      $assign_cat = false;
+      foreach ( $keywords as $keyword ) {
+        $in_title  = stripos( $project->title, $keyword );
+        $in_desc   = stripos( $project->description, $keyword );
+        $in_sector = stripos( $project->status, $keyword );
 
-      foreach ($projects as $project)
-      {
-        //
-        foreach ( $keywords as $keyword ) {
-          $in_title  = stripos( $project->title, $keyword );
-          $in_desc   = stripos( $project->description, $keyword );
-          $in_sector = stripos( $project->status, $keyword );
-
-          // If keyword found
-          if ($in_title !== false || $in_desc !== false || $in_sector !== false) {
-            DB::table('project_category')->insert(
-              array(
-                'project_id' => $project->id,
-                'category_id' => $GLOBALS['cat_id']
-              )
-            );
-          }
+        // If keyword found
+        if ($in_title !== false || $in_desc !== false || $in_sector !== false) {
+          $assign_cat = true;
         }
       }
-    });
+      if ($assign_cat) {
+        DB::table('project_category')->insert(
+          array(
+            'project_id' => $project->id,
+            'category_id' => $category->id
+          )
+        );
+      }
+    }
   }
 
 }

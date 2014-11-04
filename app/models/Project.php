@@ -45,7 +45,7 @@ class Project extends Eloquent {
 
     function categories()
     {
-      return $this->belongsToMany('Category');
+      return $this->belongsToMany('Category', 'project_category');
     }
 
     function geocode()
