@@ -52,6 +52,8 @@ Recommended: [Install composer globally](https://getcomposer.org/doc/00-intro.md
 
 Currently, Debian Wheezy [ships with PHP v5.4.4-14+deb7u14](https://packages.debian.org/wheezy/php5). To install PHP v5.5, add the following lines to `/etc/apt/sources.list`:
 
+    deb http://packages.dotdeb.org wheezy all
+    deb-src http://packages.dotdeb.org wheezy all
     deb http://packages.dotdeb.org wheezy-php55 all
     deb-src http://packages.dotdeb.org wheezy-php55 all
 
@@ -100,6 +102,11 @@ You can learn more about installing and managing supervisor [here](https://www.d
 Install gems
     
     sudo gem install premailer getopt nokogiri
+
+
+##### 8. Update MySQL
+
+    sudo apt-get install mysql-server-5.6
 
 
 
