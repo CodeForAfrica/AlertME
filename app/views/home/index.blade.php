@@ -64,7 +64,7 @@
             <i class="fa fa-circle fa-stack-2x"></i>
             <i class="fa fa-map-marker fa-stack-1x fa-inverse"></i>
           </span>
-          <p class="lead">Find a Environmental Impact Assesments happening near you.</p>
+          <p class="lead">Find Environmental Impact Assesments happening near you.</p>
         </div>
         <div class="col-md-4">
           <span class="fa-stack fa-3x">
