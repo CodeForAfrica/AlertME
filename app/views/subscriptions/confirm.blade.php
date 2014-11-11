@@ -33,7 +33,8 @@
 
         </div>
         <div class="col-md-5">
-          <img src="{{ $map_image_link }}" style="width: 100%;" class="img-rounded"/>
+          <img src="{{ $map_image_link }}" class="img-rounded img-responsive"
+            style="width:602px; height:202px; border:1px solid #ddd;"/>
           <br/><br/>
           <form class="form-horizontal" role="form" action="" method="post">
             <div class="form-group">
