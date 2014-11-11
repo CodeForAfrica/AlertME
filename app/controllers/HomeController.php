@@ -17,14 +17,15 @@ class HomeController extends BaseController {
 
   public function showHome()
   {
+    $home = Page::find(1);
+
     $projects = DB::table('projects')->take(10)->get();
     $projects_count = DB::table('projects')->count();
 
     $categories = $projects;
 
-    $data = array(
-      'projects' => $projects,
-      'projects_count' => $projects_count
+    $data = compact(
+      'home','projects','projects_count'
     );
     return View::make('home.index', $data);
   }
@@ -32,9 +33,9 @@ class HomeController extends BaseController {
 
   public function showAbout()
   {
-    $about = Page::find(1);
-    $data = array(
-      'about' => $about
+    $about = Page::find(2);
+    $data = compact(
+      'about'
     );
     return View::make('home.about', $data);
   }

@@ -6,8 +6,8 @@
 
     <div class="container-fluid bg-primary text-center" style="background:linear-gradient(rgba(52, 73, 94, 0.45), rgba(52, 73, 94, 0.45)), url('/assets/img/bg/rhino-lady.jpg') top; background-size: cover;">
       <br/><br/>
-      <h3>Find Environmental Impact Assesments Near You</h3>
-      <h5>And register for alerts in your area...</h5>
+      <h3>{{ $home->data->banner->title }}</h3>
+      <h5>{{ $home->data->banner->description }}</h5>
       <br/>
 
       <div class="row" style="margin-bottom:5px;">
@@ -57,28 +57,28 @@
     </div>
 
     <div class="container text-center" style="padding: 50px 0;">
-      <h3>How #GreenAlert Works</h3><br/>
+      <h3>{{ $home->data->how->title }}</h3><br/>
       <div class="row">
         <div class="col-md-4">
           <span class="fa-stack fa-3x">
             <i class="fa fa-circle fa-stack-2x"></i>
             <i class="fa fa-map-marker fa-stack-1x fa-inverse"></i>
           </span>
-          <p class="lead">Find Environmental Impact Assesments happening near you.</p>
+          <p class="lead">{{ $home->data->how->blurbs[0]->description }}</p>
         </div>
         <div class="col-md-4">
           <span class="fa-stack fa-3x">
             <i class="fa fa-circle fa-stack-2x"></i>
             <i class="fa fa-bolt fa-stack-1x fa-inverse"></i>
           </span>
-          <p class="lead">Register for alerts in your area to get updates of new or current EIAs.</p>
+          <p class="lead">{{ $home->data->how->blurbs[1]->description }}</p>
         </div>
         <div class="col-md-4">
           <span class="fa-stack fa-3x">
             <i class="fa fa-circle fa-stack-2x"></i>
             <i class="fa fa-pencil-square-o fa-stack-1x fa-inverse"></i>
           </span>
-          <p class="lead">Take action by getting your friends involved in signing a petition.</p>
+          <p class="lead">{{ $home->data->how->blurbs[2]->description }}</p>
         </div>
       </div>
     </div>
