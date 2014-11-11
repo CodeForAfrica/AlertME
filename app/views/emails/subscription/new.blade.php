@@ -30,7 +30,8 @@
 
   <tbody>
     <tr><td>
-      <p>Awesome! You are one step away from starting to receive alerts from your area.</p>
+      <p><img src="{{ $map_image_link }}" class="img-rounded img-responsive"/></p>
+      <p>Awesome! You are one step away from starting to receive alerts from this area.</p>
       <p><b>Confirm subscription by visiting this <u>{{ $confirm_link }}</u>.</b></p>
       <small>Link not working? Copy and paste this link into your browser:<br/><u>{{ $confirm_url }}</u></small>
       <br/><br/>
