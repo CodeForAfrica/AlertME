@@ -27,23 +27,24 @@
           <p class="text-muted"><a href="/" target="_blank"><span class="fui-link"></span> Link</a></p>
         </div>
         <div class="col-md-8 col-md-offset-1">
-          <input id="about_title" name="about_title" type="text" placeholder="Title"
+          <input id="home[banner][title]" name="home[banner][title]" type="text" placeholder="Title"
             class="form-control input-hg flat text-center"
             value="{{ $home->data->banner->title }}" />
-          <input id="about_title" name="about_title" type="text" placeholder="Title"
+          <input id="home[banner][description]" name="home[banner][description]" type="text" placeholder="Title"
             class="form-control flat text-center"
             value="{{ $home->data->banner->description }}" />
 
           <hr/>
 
-          <input id="about_title" name="about_title" type="text" placeholder="Title"
+          <input id="home[how][title]" name="home[how][title]" type="text" placeholder="Title"
             class="form-control input-hg flat text-center"
             value="{{ $home->data->how->title }}" />
           <div class="row">
-            @foreach($home->data->how->blurbs as $blurb)
+            @foreach($home->data->how->blurbs as $key => $blurb)
               <div class="col-sm-4">
-                <textarea id="about_desc" name="about_desc" rows="4" placeholder="Description"
-                class="form-control flat pages-desc text-center">{{ $blurb->description }}</textarea>
+                <textarea id="home[how][blurbs][{{$key}}][description]"
+                  name="home[how][blurbs][{{$key}}][description]" placeholder="Description"
+                  class="form-control flat pages-desc text-center">{{ $blurb->description }}</textarea>
               </div>
             @endforeach
           </div>
@@ -60,9 +61,9 @@
           <p class="text-muted"><a href="/about" target="_blank"><span class="fui-link"></span> Link</a></p>
         </div>
         <div class="col-md-8 col-md-offset-1">
-          <input id="about_title" name="about_title" type="text" placeholder="Title"
+          <input id="about[title]" name="about[title]" type="text" placeholder="Title"
             class="form-control input-hg flat" value="{{ $about->data->title }}" />
-          <textarea id="about_desc" name="about_desc" class="form-control flat pages-desc"
+          <textarea id="about[description]" name="about[description]" class="form-control flat pages-desc"
             rows="4" placeholder="Description">{{ $about->data->description }}</textarea>
         </div>
       </div>
