@@ -3,25 +3,19 @@
  * ---------------------------------------------------------------------------
  */
 
+var map_subcribe_rectangle;
+var map_image_link;
+
 // On Document Ready
 $( document ).ready(function() {
 
   // Create Alert Map
-  var map_alert = L.mapbox.map('map-alert', 'codeforafrica.ji193j10',{
-    zoomAnimationThreshold: 10,
-    maxZoom: 20,
-    zoomControl: false,
-    attributionControl: false
-  }).setView([-28.4792625, 24.6727135], 5);
-
-  // Disable drag and zoom handlers.
-  map_alert.dragging.disable();
-  map_alert.touchZoom.disable();
-  map_alert.doubleClickZoom.disable();
-  map_alert.scrollWheelZoom.disable();
-
-  // Disable tap handler, if present.
-  if (map_alert.tap) map_alert.tap.disable();
+  map_subcribe_rectangle = L.rectangle(map.getBounds(), {color: "#2ECC71", weight: 1});
+  map_image_link = 'https://api.tiles.mapbox.com/v4/codeforafrica.ji193j10/' +
+    'geojson(' + encodeURI(JSON.stringify(map_subcribe_rectangle.toGeoJSON())) + ')/' +
+    'auto/600x200.png?' +
+    'access_token=pk.eyJ1IjoiY29kZWZvcmFmcmljYSIsImEiOiJVLXZVVUtnIn0.JjVvqHKBGQTNpuDMJtZ8Qg';
+  $('#map-alert').attr('src', map_image_link);
 
   // Modal Controls
   function alertsReset() {
@@ -35,13 +29,22 @@ $( document ).ready(function() {
     
     $('.create-alert-btn').removeClass('disabled');
   }
+  $('#subscriptionModal').on('show.bs.modal', function () {
+    if (map.getZoom() < 11) {
+      $('#modal-subscribe-error').modal('show')
+      return false;
+    };
+  });
   $('#subscriptionModal').on('shown.bs.modal', function () {
-    map_alert.invalidateSize();
-    map_alert.fitBounds(map.getBounds());
+    map_subcribe_rectangle = L.rectangle(map.getBounds(), {color: "#2ECC71", weight: 1});
+    var map_image_link = 'https://api.tiles.mapbox.com/v4/codeforafrica.ji193j10/' +
+      'geojson(' + encodeURI(JSON.stringify(map_subcribe_rectangle.toGeoJSON())) + ')/' +
+      'auto/600x200.png?' +
+      'access_token=pk.eyJ1IjoiY29kZWZvcmFmcmljYSIsImEiOiJVLXZVVUtnIn0.JjVvqHKBGQTNpuDMJtZ8Qg';
+    $('#map-alert').attr('src', map_image_link);
 
     // Reset
     alertsReset();
-    
   });
 
   // Modal View Controls
@@ -67,12 +70,13 @@ $( document ).ready(function() {
     var bounds = map.getBounds();
     var bound = bounds._southWest.lat + "," + bounds._southWest.lng + "," +
       bounds._northEast.lat + "," + bounds._northEast.lng;
-    var center = map_alert.getCenter().lng + "," + map_alert.getCenter().lat;
+    var center = map.getCenter().lng + "," + map.getCenter().lat;
     var data = {
       email: $('#map-alert-email').val().trim(),
       bounds: bound,
       center: center,
-      zoom: map_alert.getZoom(),
+      zoom: map.getZoom(),
+      geojson: JSON.stringify(map_subcribe_rectangle.toGeoJSON()),
       _token: csrf_token
     };
     $.ajax({
