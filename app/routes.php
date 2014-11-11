@@ -59,6 +59,7 @@ Route::group(array('prefix' => 'api/v1', 'before' => 'auth.basic'), function()
 });
 Route::group(array('prefix' => 'api/v1'/*, 'before' => 'csrf'*/), function()
 {
+  Route::get('subscriptions/email', 'ApiSubscriptionController@email');
   Route::resource('subscriptions', 'ApiSubscriptionController');
 });
 Route::group(array('prefix' => 'api/v1'), function()
