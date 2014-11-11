@@ -21,7 +21,7 @@ class CreatePagesTable extends Migration {
 			$table->timestamps();
 		});
 
-		// Add geoapi using Eloquent
+		// Add Page using Eloquent
 		$page = new Page;
 		$page->slug = 'about';
 		$page->title = 'About';

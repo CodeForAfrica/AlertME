@@ -43,12 +43,12 @@ class DashboardController extends BaseController {
 
   public function showPages()
   {
-    $about = Page::find(1);
-
-    $data = array(
-      'about' => $about
+    $home = Page::find(1);
+    $about = Page::find(2);
+    
+    $data = compact(
+      'home', 'about'
     );
-
     return View::make('dashboard.pages', $data);
   }
 
