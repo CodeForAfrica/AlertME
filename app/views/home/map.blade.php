@@ -129,8 +129,9 @@
 
             <div class="modal-body">
 
-              <div id="map-alert" style="height:200px; cursor:default;"></div>
+              <img id="map-alert" src="#" class="img-rounded img-responsive" />
               <hr/>
+
               <p>Enter your e-mail address below to receive alerts in this area.</p>
               <div class="form-horizontal" role="form">
                 <div class="form-group map-alert-email">
@@ -195,6 +196,27 @@
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
+
+      <!-- Subscribe error modal -->
+      <div class="modal fade" id="modal-subscribe-error" tabindex="-1" role="dialog"
+        aria-labelledby="modal-subscribe-error-label" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-body text-center">
+              <p class="text-danger">
+                <span class="fa fa-rocket fa-4x"></span><br/>
+                Unfortunately we cannot create subscriptions this far out.<br/>
+                Zoom in closer to get this to work.
+              </p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default btn-embossed" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-danger btn-embossed btn-wide"
+                onclick="javascript:map.setZoom(11);$('#modal-subscribe-error').modal('hide');">Zoom In</button>
+            </div>
+          </div>
+        </div>
+      </div> <!-- /.modal -->
 
 
     @endif
