@@ -180,9 +180,9 @@ class ApiSubscriptionController extends \BaseController {
       $msg_details = 'Updated';
     }
 
-    $map_image_link = 'http://api.tiles.mapbox.com/v4/codeforafrica.ji193j10/'.
-      $subscription->center.','.$subscription->zoom.
-      '/600x400.png?'.
+    $map_image_link = 'https://api.tiles.mapbox.com/v4/codeforafrica.ji193j10'.
+      '/geojson('.urlencode($subscription->geojson).')'.
+      '/auto/600x250.png?'.
       'access_token=pk.eyJ1IjoiY29kZWZvcmFmcmljYSIsImEiOiJVLXZVVUtnIn0.JjVvqHKBGQTNpuDMJtZ8Qg';
 
     $map_link = secure_asset('map/#!/bounds='.$subscription->bounds);
@@ -200,33 +200,45 @@ class ApiSubscriptionController extends \BaseController {
   public function email()
   {
     //
+    $subscription = Subscription::first();
+    $user = User::find($subscription->user_id);
+
+    $project = Project::first();
+    $project_geo = $project->geo();
+    if (strlen($project->title) > 80) {
+      $project->title = substr($project->title, 0, 80).'...';
+    }
+    if (strlen($project->description) > 200) {
+      $project->description = substr($project->description, 0, 200).'...';
+    }
+
     switch (Input::get('type')) {
       case 'alert':
         $view_name = 'emails.subscription.alert';
+        $map_image_link = 'https://api.tiles.mapbox.com/v4/codeforafrica.ji193j10'.
+          '/pin-l-star+27AE60('.$project_geo->lng.','.$project_geo->lat.')'.
+          '/'.$project_geo->lng.','.$project_geo->lat.',11'.
+          '/600x250.png?'.
+          'access_token=pk.eyJ1IjoiY29kZWZvcmFmcmljYSIsImEiOiJVLXZVVUtnIn0.JjVvqHKBGQTNpuDMJtZ8Qg';
         break;
       
       default:
         $view_name = 'emails.subscription.new';
+        $map_image_link = 'https://api.tiles.mapbox.com/v4/codeforafrica.ji193j10'.
+          '/geojson('.urlencode($subscription->geojson).')'.
+          '/auto/600x250.png?'.
+          'access_token=pk.eyJ1IjoiY29kZWZvcmFmcmljYSIsImEiOiJVLXZVVUtnIn0.JjVvqHKBGQTNpuDMJtZ8Qg';
         break;
     }
-
-    // All subscriptions
-    $subscription = Subscription::first();
-    $user = User::find($subscription->user_id);
 
     // New Subscription
     $confirm_link = link_to('subscriptions/'.$subscription->confirm_token, 'link', null, true);
     $confirm_url = secure_asset('subscriptions/'.$subscription->confirm_token);
-    $map_image_link = 'https://api.tiles.mapbox.com/v4/codeforafrica.ji193j10'.
-      '/geojson('.urlencode($subscription->geojson).')'.
-      '/auto/600x250.png?'.
-      'access_token=pk.eyJ1IjoiY29kZWZvcmFmcmljYSIsImEiOiJVLXZVVUtnIn0.JjVvqHKBGQTNpuDMJtZ8Qg';
-
-    // echo $subscription->bounds_geojson(); exit();
 
     $data = compact(
       'subscription', 'user', 'map_image_link',
-      'confirm_link', 'confirm_url'
+      'confirm_link', 'confirm_url',
+      'project'
     );
     $view = View::make($view_name, $data);
     
