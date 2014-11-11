@@ -56,7 +56,7 @@ class Project extends Eloquent {
 
     function geo()
     {
-      $geo = new stdClass(); $geo->lat = 0; $geo->lng = 0;
+      $geo = new stdClass(); $geo->lat = 450; $geo->lng = 450;
       if($this->geo_type == 'lat_lng') {
         $geo->lat = floatval ($this->geo_lat);
         $geo->lng = floatval ($this->geo_lng);
@@ -67,6 +67,22 @@ class Project extends Eloquent {
         $geo->lng = floatval ($geocode->lng);
       }
       return $geo;
+    }
+
+    function  geojson()
+    {
+      $geo = $this->geo();
+      $geojson = array(
+        'type' => 'FeatureCollection',
+        'features' => array(
+          array(
+            'type' => 'Feature',
+            'geometry' => array('type' => 'Point', 'coordinates' => array($geo->lng , $geo->lat)),
+            'properties' => array('prop0' => 'value0')
+          )
+        )
+      );
+      return json_encode($geojson);
     }
 
 }
