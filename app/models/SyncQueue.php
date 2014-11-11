@@ -20,7 +20,7 @@ class SyncQueue {
         self::dataSourceSync($sync, $ds_config);
       }
 
-      // Check if all data sources synced successfully
+      // TODO: Check if all data sources synced successfully
 
 
       $sync->sync_status = 1;
