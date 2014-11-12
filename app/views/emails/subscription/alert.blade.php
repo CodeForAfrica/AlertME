@@ -24,7 +24,7 @@
   <thead>
     <tr><td>
       <h3>#GreenAlert</h3>
-      <p class="text-muted">UPDATE IN YOUR SUBCRIPTION AREA</p>
+      <p class="text-muted">PROJECT UPDATED IN YOUR SUBSCRIPTION AREA</p>
     </td></tr>
   </thead>
 
