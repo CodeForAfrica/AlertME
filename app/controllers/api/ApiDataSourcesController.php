@@ -1,6 +1,6 @@
 <?php
 
-class ApiDatasourceController extends \BaseController {
+class ApiDataSourceController extends \BaseController {
 
 	/**
 	 * Display a listing of the resource.
