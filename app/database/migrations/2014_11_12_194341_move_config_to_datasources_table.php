@@ -19,7 +19,7 @@ class MoveConfigToDatasourcesTable extends Migration {
       //
       $table->mediumText('columns')->after('url')->nullable();
       $table->mediumText('config')->after('columns')->nullable();
-      $table->integer('config_status')->after('config')->default(0);
+      $table->integer('config_status')->after('config')->default(3);
     });
     
     Schema::drop('data_source_configs');
@@ -57,7 +57,7 @@ class MoveConfigToDatasourcesTable extends Migration {
       $table->integer('datasource_id');
       $table->mediumText('data_source_columns')->nullable();
       $table->mediumText('config')->nullable();
-      $table->integer('config_status')->default(0);
+      $table->integer('config_status')->default(3);
       $table->timestamps();
     });
 
