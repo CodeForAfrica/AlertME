@@ -1,6 +1,6 @@
 <?php
 
-class ApiDataSourceController extends \BaseController {
+class ApiDatasourceController extends \BaseController {
 
 	/**
 	 * Display a listing of the resource.
@@ -10,7 +10,7 @@ class ApiDataSourceController extends \BaseController {
 	public function index()
 	{
 		//
-		$datasources =  DataSource::all();
+		$datasources =  Datasource::all();
 		return Response::json(array(
 				'error' => false,
 				'datasources' => $datasources->toArray()),
@@ -38,7 +38,7 @@ class ApiDataSourceController extends \BaseController {
 	public function store()
 	{
 		//
-		$datasource = new DataSource;
+		$datasource = new Datasource;
 		$datasource->title = Input::get('title');
 		$datasource->description = Input::get('desc');
 		$datasource->url = Input::get('url');
@@ -62,7 +62,7 @@ class ApiDataSourceController extends \BaseController {
 	public function show($id)
 	{
 		//
-		$datasource =  DataSource::find($id);
+		$datasource =  Datasource::find($id);
 		return Response::json(array(
 				'error' => false,
 				'datasources' => $datasource->toArray()),
@@ -92,7 +92,7 @@ class ApiDataSourceController extends \BaseController {
 	public function update($id)
 	{
 		//
-		$datasource = DataSource::find($id);
+		$datasource = Datasource::find($id);
 		$datasource->title = Input::get('title');
 		$datasource->description = Input::get('desc');
 		$datasource->url = Input::get('url');
@@ -115,10 +115,10 @@ class ApiDataSourceController extends \BaseController {
 	public function destroy($id)
 	{
 		//
-		DataSource::find($id)->delete();
+		Datasource::find($id)->delete();
 		return Response::json(array(
 				'error' => false,
-				'message' => 'Data source deleted.'),
+				'message' => 'Datasource deleted.'),
 				200
 		);
 	}

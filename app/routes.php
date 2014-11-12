@@ -32,8 +32,8 @@ Route::group(array('before' => 'auth'), function()
 {
   Route::get('dashboard', 'DashboardController@showHome');
 
-  Route::get('dashboard/datasources', 'DashboardController@showDataSources');
-  Route::get('dashboard/datasources/sync', 'DashboardController@syncDataSources');
+  Route::get('dashboard/datasources', 'DashboardController@showDatasources');
+  Route::get('dashboard/datasources/sync', 'DashboardController@syncDatasources');
 
   Route::get('dashboard/categories', 'DashboardController@showCategories');
 
@@ -53,7 +53,7 @@ Route::get('/authtest', array('before' => 'auth.basic', function()
 // API v1
 Route::group(array('prefix' => 'api/v1', 'before' => 'auth.basic'), function()
 {
-  Route::resource('datasources', 'ApiDataSourceController');
+  Route::resource('datasources', 'ApiDatasourceController');
   Route::resource('datasourceconfig', 'ApiDataSourceConfigController');
   Route::resource('categories', 'ApiCategoryController');
 });
