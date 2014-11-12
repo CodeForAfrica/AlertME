@@ -36,10 +36,15 @@ class SyncQueue {
 
   function dataSourceSync( $sync, $ds_config )
   {
+    // Add DataSource Sync
     $ds_sync = new DataSourceSync;
     $ds_sync->sync_id = $sync->id;
     $ds_sync->data_source_id = $ds_config->data_source_id;
-    $ds_sync->sync_status = 2;
+    if (Schema::hasTable('data_source_datas_'.$ds_config->data_source_id)) {
+      $ds_sync->sync_status = 2; // Old Data Source Sync
+    } else {
+      $ds_sync->sync_status = 3; // New Data Source Sync
+    }
     $ds_sync->save();
 
     // Fetch Data
@@ -80,13 +85,13 @@ class SyncQueue {
       Geocode::geocodeProjects( $ds_config->data_source_id );
       Log::info('Geocode complete.');
     }
-
+    
     $ds_data->raw = json_encode($csv);
     $ds_data->save();
 
     $ds_data->setData();
     Log::info('Data set complete.');
-
+    
     $ds_sync->sync_status = 1;
     $ds_sync->save();
   }

@@ -211,23 +211,23 @@
 
 @section('scripts-data')
 
-var data_sources = {{ $datasources }};
+  var data_sources = {{ $datasources }};
 
-var edit_id = 0;
-var config_data = new Object();
-var data_source_columns = [];
-var ds_config = new Object();
+  var edit_id = 0;
+  var config_data = new Object();
+  var data_source_columns = [];
+  var ds_config = new Object();
 
-var config_id = -1;
-var config_title = -1;
-var config_desc = -1;
-var config_geo_type = 'lat_lng';
-var config_geo_lat = -1;
-var config_geo_lng = -1;
-var config_geo_add = -1;
-var config_status = -1;
+  var config_id = -1;
+  var config_title = -1;
+  var config_desc = -1;
+  var config_geo_type = 'lat_lng';
+  var config_geo_lat = -1;
+  var config_geo_lng = -1;
+  var config_geo_add = -1;
+  var config_status = -1;
 
-var config_sel_cols_html = '';
+  var config_sel_cols_html = '';
 
 @stop
 

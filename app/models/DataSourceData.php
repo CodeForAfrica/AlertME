@@ -63,7 +63,7 @@ class DataSourceData extends Eloquent {
       $ds_cols = json_decode($ds_config->data_source_columns);
       $config = json_decode($ds_config->config); // Integer position
       $datas = json_decode($this->raw, true);
-      // Log::info(serialize($datas[0]));
+      
       foreach($datas as $data){
         $ds_data = DB::table('data_source_datas_'.$this->data_source_id)
           ->where('data_id', $data[ $ds_cols[ $config->config_id ] ])->first();
