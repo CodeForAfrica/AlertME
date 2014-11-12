@@ -54,7 +54,6 @@ Route::get('/authtest', array('before' => 'auth.basic', function()
 Route::group(array('prefix' => 'api/v1', 'before' => 'auth.basic'), function()
 {
   Route::resource('datasources', 'ApiDatasourceController');
-  Route::resource('datasourceconfig', 'ApiDataSourceConfigController');
   Route::resource('categories', 'ApiCategoryController');
 });
 Route::group(array('prefix' => 'api/v1'/*, 'before' => 'csrf'*/), function()

@@ -65,7 +65,7 @@ class ApiDatasourceController extends \BaseController {
 		$datasource =  Datasource::find($id);
 		return Response::json(array(
 				'error' => false,
-				'datasources' => $datasource->toArray()),
+				'datasource' => $datasource->toArray()),
 				200
 		);
 	}

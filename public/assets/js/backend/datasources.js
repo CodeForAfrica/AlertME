@@ -10,13 +10,13 @@ $( document ).ready(function() {
 
   /**
    * ---------------------------------------------------------------------------
-   * DATA SOURCE
+   * DATASOURCE
    * ---------------------------------------------------------------------------
    */
 
 
   /**
-   * Data Source SYNC
+   * Datasource SYNC
    * ----------------
    */
 
@@ -86,7 +86,7 @@ $( document ).ready(function() {
 
 
   /**
-   * Data Source DISPLAY
+   * Datasource DISPLAY
    * -------------------
    */
 
@@ -201,7 +201,7 @@ $( document ).ready(function() {
 
 
   /**
-   * Data Source Configure
+   * Datasource CONFIGURE
    * ---------------------
    */
 
@@ -247,9 +247,9 @@ $( document ).ready(function() {
 
     $.ajax({
       type: "GET",
-      url: base_url+"/api/v1/datasourceconfig/"+edit_id
+      url: base_url+"/api/v1/datasources/"+edit_id
     }).done(function( response ) {
-      config_data = response.config;
+      config_data = response.datasource;
 
       ds_config = JSON.parse(config_data.config);
 
@@ -273,7 +273,7 @@ $( document ).ready(function() {
 
       var data_source_columns_html = "";
       if (config_data.config_status != 0 && config_data.config_status != 3 ) {
-        data_source_columns = JSON.parse(config_data.data_source_columns);
+        data_source_columns = config_data.columns;
 
         $.each(data_source_columns, function( index, value ) {
           data_source_columns_html = data_source_columns_html +
