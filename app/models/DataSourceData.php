@@ -62,46 +62,6 @@ class DataSourceData extends Eloquent {
 
   // Other functions
 
-  public function setData()
-  {
-    if (!Schema::hasTable('data_source_datas_'.$this->datasource_id))
-    {
-      //
-      Schema::create('data_source_datas_'.$this->datasource_id, function($table)
-      {
-        $table->increments('id');
-        $table->string('data_id')->default('0');
-        $table->longText('data')->nullable();
-        $table->timestamps();
-      });
-
-      Schema::table('data_source_datas_'.$this->datasource_id, function($table)
-      {
-        $table->index('data_id');
-      });
-    }
-
-    $cols = $this->datasource->columns;
-    $config = $this->datasource->config;
-    $rows = $this->raw;
-
-    foreach($rows as $row){
-      $project_data = DB::table('data_source_datas_'.$this->datasource_id)
-          ->where('data_id', $row->$cols[ $config->id->col ])->first();
-      if(!$project_data) {
-        DB::table('data_source_datas_'.$this->datasource_id)->insert(
-          array('data_id' => $row->$cols[ $config->id->col ])
-        );
-      }
-      DB::table('data_source_datas_'.$this->datasource_id)
-          ->where('data_id', $row->$cols[ $config->id->col])
-          ->update(array(
-            'data' => json_encode($row)
-          ));
-    }
-  }
-
-
   public function fetch()
   {
     // Validate URL + Headers

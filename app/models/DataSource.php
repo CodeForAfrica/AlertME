@@ -127,9 +127,6 @@ class DataSource extends Eloquent {
     
     $this->datasourcedata->raw = $csv;
     $this->datasourcedata->save();
-
-    $this->datasourcedata->setData();
-    Log::info('Data set complete.');
     
     $ds_sync->sync_status = 1;
     $ds_sync->save();
@@ -190,6 +187,8 @@ class DataSource extends Eloquent {
       }
 
       $project->status = $row[ $cols[ $config->status->col ] ];
+
+      $project->data = $row;
 
       $project->save();
     }
