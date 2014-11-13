@@ -94,13 +94,17 @@ class ApiDataSourceController extends \BaseController {
 		//
 		$datasource = Datasource::find($id);
 		$datasource->title = Input::get('title');
-		$datasource->description = Input::get('desc');
+		$datasource->description = Input::get('description');
 		$datasource->url = Input::get('url');
 
+		$datasource->config = Input::get('config');
+		$datasource->config_status = Input::get('config_status');
+
 		$datasource->save();
+
 		return Response::json(array(
 				'error' => false,
-				'datasources' => $datasource->toArray()),
+				'datasource' => $datasource->toArray()),
 				200
 		);
 	}

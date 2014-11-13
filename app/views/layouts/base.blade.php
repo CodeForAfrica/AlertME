@@ -53,7 +53,7 @@
 
     <script src="{{ secure_asset('assets/js/flat-ui.min.js') }}"></script>
 
-    <script src="{{ secure_asset('assets/js/pahali.js') }}"></script>
+    <script src="{{ secure_asset('assets/js/pahali/pahali.js') }}"></script>
 
     <script>
       pahali.base_url = "{{ URL::to('/') }}";

@@ -1,7 +1,14 @@
+/**
+ * Pahali.JS
+ * -----------------------------------------------------------------------------
+ * 
+ * The Pahali.JS extension.
+ *
+ */
+
 var pahali = {
   _name: 'Pahali.JS',
-  _description: 'The Pahali.JS',
-  datasource: {}
+  _description: 'The Pahali.JS extension'
 };
 
 (function ( $ ) {
@@ -27,6 +34,6 @@ var pahali = {
     }
   }
 
-  
-
 }( jQuery ));
+
+document.write('<script src="/assets/js/pahali/pahali-datasource.js"><\/script>');
