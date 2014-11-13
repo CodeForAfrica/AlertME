@@ -165,7 +165,7 @@ class HomeController extends BaseController {
       '/520x293.png256?'.
       'access_token=pk.eyJ1IjoiY29kZWZvcmFmcmljYSIsImEiOiJVLXZVVUtnIn0.JjVvqHKBGQTNpuDMJtZ8Qg';
 
-    $cols = DataSource::find($project->data_source_id)->datasourceconfig->data_source_columns;
+    $cols = DataSource::find($project->datasource_id)->datasourceconfig->data_source_columns;
     $cols = json_decode($cols);
     $project_data = $project->datasourcedata_single();
 

@@ -2,9 +2,6 @@ $( document ).ready(function() {
 
   $('.close-modal').click(function() {
     $('.data-sources #editModal #error').hide();
-    $('#edit-config-btn').html(
-      '<button type="button" class="btn btn-info btn-embossed btn-wide" id="edit-config">Edit</button>'
-    );
     $("#sync-data-sources").show();
   });
 

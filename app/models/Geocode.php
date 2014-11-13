@@ -30,7 +30,7 @@ class Geocode extends Eloquent {
         return;
       }
       
-      $addresses = DB::table('projects')->where('data_source_id', '=', $ds_id)->groupby('geo_address')->get(array('geo_address'));
+      $addresses = DB::table('projects')->where('datasource_id', '=', $ds_id)->groupby('geo_address')->get(array('geo_address'));
 
       foreach ( $addresses as $address ){
 

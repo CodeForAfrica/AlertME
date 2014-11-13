@@ -27,7 +27,7 @@ class DataSourceQueue {
 
     // Get DataSource data
     $datasourcedata = DataSourceData::firstOrCreate( array(
-      'data_source_id' => $datasource->id
+      'datasource_id' => $datasource->id
     ));
 
     $ds_data = $datasourcedata->fetch();
@@ -45,7 +45,7 @@ class DataSourceQueue {
       $datasource->save();
     }
 
-    Log::info('['.$job->getJobId().':'.$job->attempts().'] Fetch data columns finished.');
+    Log::info('['.$job->getJobId().':'.$job->attempts().'] Fetch datasource columns successful.');
 
     $job->delete();
 

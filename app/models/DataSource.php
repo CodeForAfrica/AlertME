@@ -24,12 +24,12 @@ class DataSource extends Eloquent {
 
     DataSource::deleting(function($datasource)
     {
-      DataSourceSync::where('data_source_id', '=', $datasource->id)->delete();
+      DataSourceSync::where('datasource_id', '=', $datasource->id)->delete();
 
-      DataSourceData::where('data_source_id', '=', $datasource->id)->delete();
+      DataSourceData::where('datasource_id', '=', $datasource->id)->delete();
       Schema::dropIfExists('data_source_datas_'.$datasource->id);
 
-      Project::where('data_source_id', '=', $datasource->id)->delete();
+      Project::where('datasource_id', '=', $datasource->id)->delete();
     });
   }
 
@@ -85,7 +85,7 @@ class DataSource extends Eloquent {
     // Add DataSource Sync
     $ds_sync = new DataSourceSync;
     $ds_sync->sync_id = $sync->id;
-    $ds_sync->data_source_id = $this->id;
+    $ds_sync->datasource_id = $this->id;
     if (Schema::hasTable('data_source_datas_'.$this->id)) {
       $ds_sync->sync_status = 2; // Old Data Source Sync
     } else {
@@ -153,7 +153,7 @@ class DataSource extends Eloquent {
         'project_id' => $row[ $ds_cols[ $config->config_id ] ]
       ));
       $project = Project::where('project_id', $row[ $ds_cols[ $config->config_id ]])->first();
-      $project->data_source_id = $ds_config->data_source_id;
+      $project->datasource_id = $ds_config->datasource_id;
       $project->data_source_sync_id = $ds_sync->id;
 
       $row[ $ds_cols[ $config->config_title ] ] = strtolower($row[ $ds_cols[ $config->config_title ] ]);

@@ -17,7 +17,7 @@ class SyncQueue {
       $ds_configs = DataSourceConfig::where('config_status', 1)->get();
 
       foreach ($ds_configs as $ds_config) {
-        $datasource = DataSource::find($ds_config->data_source_id);
+        $datasource = DataSource::find($ds_config->datasource_id);
         $datasource->sync($sync);
       }
 

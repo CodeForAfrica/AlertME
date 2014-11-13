@@ -44,7 +44,7 @@ class Project extends Eloquent {
 
     function datasourcedata_single()
     {
-      return json_decode(DB::table('data_source_datas_'.$this->data_source_id)
+      return json_decode(DB::table('data_source_datas_'.$this->datasource_id)
         ->where('data_id', $this->project_id)->first()->data);
     }
 
