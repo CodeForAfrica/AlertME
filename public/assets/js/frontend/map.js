@@ -43,7 +43,7 @@ $( document ).ready(function() {
   }).setView([-28.4792625, 24.6727135], 5);
   map.scrollWheelZoom.disable();
 
-  Pahali.map.center();
+  pahali.map.center();
 
   // Map controls
   $('#map-ctrl-zoom-in').click(function () {

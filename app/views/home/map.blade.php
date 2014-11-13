@@ -238,8 +238,6 @@
   <link href="{{ secure_asset('assets/css/MarkerCluster.css') }}" rel="stylesheet" />
   <link href="{{ secure_asset('assets/css/MarkerCluster.Default.css') }}" rel="stylesheet" />
   <script src="{{ secure_asset('assets/js/vendor/leaflet.markercluster.js') }}"></script>
-
-  <script src="{{ secure_asset('assets/js/pahali.js') }}"></script>
   
   <script src="{{ secure_asset('assets/js/frontend/routes.js') }}"></script>
   <script src="{{ secure_asset('assets/js/frontend/map.js') }}"></script>
