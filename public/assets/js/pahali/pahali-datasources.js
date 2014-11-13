@@ -3,6 +3,7 @@
  * -----------------------------------------------------------------------------
  */
 
+
 pahali.datasources.update = function (id) {
   $.ajax({
     type: "PUT",
@@ -14,3 +15,15 @@ pahali.datasources.update = function (id) {
   });
   return pahali.datasources[id];
 };
+
+
+pahali.datasources.pull = function () {
+  $.ajax({
+    type: "GET",
+    async: false,
+    url: pahali.base_url + "/api/v1/datasources"
+  }).done(function( response ) {
+    $.extend(pahali.datasources, response.datasources);
+  });
+  return pahali.datasources;
+}

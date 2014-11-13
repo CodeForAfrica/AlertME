@@ -7,7 +7,7 @@
   <h5>
     Data Sources
     <button type="button" class="btn btn-info btn-embossed btn-wide btn-sm"
-      id="data-source-sync" data-toggle="modal" data-target="#syncModal">
+      id="btn-sync-modal" data-toggle="modal" data-target="#syncModal">
       <span class="fui-radio-unchecked"></span> Sync
     </button>
     <button type="button" class="btn btn-primary btn-embossed btn-wide btn-sm data-source-add"
@@ -326,7 +326,8 @@
   </div>
 
   <!-- Sync Modal -->
-  <div class="modal fade" id="syncModal" tabindex="-1" role="dialog" aria-labelledby="syncModalLabel" aria-hidden="true">
+  <div class="modal fade" id="syncModal" tabindex="-1" role="dialog"
+      aria-labelledby="syncModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
 
@@ -339,8 +340,30 @@
 
         <div class="modal-body">
           <p>We will sync the following data sources:</p>
-          <div class="well" id="data-sources-sync">
-          </div>
+          <div class="well sync-screen">
+
+            <ol class="sync-list" style="display:none;"></ol>
+
+            <!-- Alerts -->
+            <div class="alert alert-danger" style="display:none;">
+              <p><span class="fui-alert-circle"></span>
+                It seems you don't have any data sources yet.
+                <button type="button" class="btn btn-primary btn-sm">
+                  <span class="fui-plus"></span> Add
+                </button>
+                some now to get started.
+              </p>
+            </div>
+            <div class="alert alert-warning" style="display:none;">
+              <p>
+                <span class="fui-alert-circle"></span>
+                <b>Oops:</b> There doesn't seem to be any data sources to sync at this moment. Please
+                <span class="text-primary"><span class="fui-cmd"></span>Configure</span>
+                some to be able to sync data.
+              </p>
+            </div>
+
+          </div> <!-- /. -->
           <p class="text-muted"><em>
             If you don't see the data source you want to sync in the list above,
             make sure it is configured. To do so, click the <span class="text-primary">
@@ -349,8 +372,10 @@
         </div>
 
         <div class="modal-footer">
-          <button type="button" class="btn btn-default btn-embossed btn-wide close-modal" data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-info btn-embossed btn-wide" id="sync-data-sources">Sync Data Sources</button>
+          <button type="button" class="btn btn-default btn-embossed btn-wide close-modal"
+            data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-info btn-embossed btn-wide"
+            id="btn-sync">Sync Data Sources</button>
         </div>
 
       </div>
@@ -389,5 +414,6 @@
 
 @section('scripts')
   <script src="{{ secure_asset('assets/js/backend/datasources.js') }}"></script>
-  <script src="{{ secure_asset('assets/js/backend/datasource-configure.js') }}"></script>
+  <script src="{{ secure_asset('assets/js/backend/datasources-configure.js') }}"></script>
+  <script src="{{ secure_asset('assets/js/backend/datasources-sync.js') }}"></script>
 @stop
