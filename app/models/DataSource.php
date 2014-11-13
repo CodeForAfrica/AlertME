@@ -61,17 +61,17 @@ class DataSource extends Eloquent {
 
   public function datasourcedata()
   {
-    return $this->hasOne('DataSourceData');
+    return $this->hasOne('DataSourceData', 'datasource_id');
   }
 
   public function datasourcesync()
   {
-    return $this->hasMany('DataSourceSync');
+    return $this->hasMany('DataSourceSync', 'datasource_id');
   }
 
   public function projects()
   {
-    return $this->hasMany('Project');
+    return $this->hasMany('Project', 'datasource_id');
   }
 
 
@@ -79,9 +79,6 @@ class DataSource extends Eloquent {
 
   function sync( $sync )
   {
-    // Data Source Config
-    $ds_config = $this->datasourceconfig;
-
     // Add DataSource Sync
     $ds_sync = new DataSourceSync;
     $ds_sync->sync_id = $sync->id;
@@ -94,9 +91,8 @@ class DataSource extends Eloquent {
     $ds_sync->save();
 
     // Fetch Data
-    $csv = $this->fetchData();
+    $csv = $this->datasourcedata->fetch();
     Log::info('Download completed.');
-
     if(!$csv) {
       $ds_sync->sync_status = 3;
       $ds_sync->save();
@@ -104,37 +100,35 @@ class DataSource extends Eloquent {
     }
 
     // Check column change
-    if(array_keys($csv[0]) != json_decode($ds_config->data_source_columns)){
+    if(array_keys($csv[0]) != $this->columns){
       Log::info('Columns are differnt from configuration.');
 
       $ds_sync->sync_status = 4;
       $ds_sync->save();
 
-      $ds_config->data_source_columns = array_keys($csv[0]);
-      $ds_config->config_status = 2;
-      $ds_config->save();
+      $this->columns = array_keys($csv[0]);
+      $this->status->col = 2;
+      $this->save();
 
       // TODO: Email column change - needs configuration before sync
 
       return false;
     }
 
-    // Set data fetched
-    $this->setProjects($csv, $ds_config, $ds_sync);
+    // Set Projects from data fetched
+    $this->setProjects($csv, $ds_sync);
     Log::info('Projects update completed.');
 
     // Geocode
-    $config = json_decode($ds_config->config);
-    if ($config->config_geo_type == 'address') {
+    if ($this->config->geo->type == 'address') {
       Geocode::geocodeProjects( $this->id );
       Log::info('Geocode complete.');
     }
     
-    $ds_data = $this->datasourcedata;
-    $ds_data->raw = json_encode($csv);
-    $ds_data->save();
+    $this->datasourcedata->raw = $csv;
+    $this->datasourcedata->save();
 
-    $ds_data->setData();
+    $this->datasourcedata->setData();
     Log::info('Data set complete.');
     
     $ds_sync->sync_status = 1;
@@ -143,59 +137,59 @@ class DataSource extends Eloquent {
     return true;
   }
 
-  function setProjects ( $csv, $ds_config, $ds_sync )
+  function setProjects ( $csv, $ds_sync )
   {
-    $ds_cols = json_decode($ds_config->data_source_columns); // String Keys
-    $config = json_decode($ds_config->config); // Integer position
+    $cols = $this->columns; // String Keys
+    $config = $this->config; // Integer position
 
     foreach ( $csv as $row ) {
       $project = Project::firstOrCreate( array(
-        'project_id' => $row[ $ds_cols[ $config->config_id ] ]
+        'project_id' => $row[ $cols[ $config->id->col ] ]
       ));
-      $project = Project::where('project_id', $row[ $ds_cols[ $config->config_id ]])->first();
-      $project->datasource_id = $ds_config->datasource_id;
+      $project = Project::where('project_id', $row[ $cols[ $config->id->col ]])->first();
+      $project->datasource_id = $this->id;
       $project->data_source_sync_id = $ds_sync->id;
 
-      $row[ $ds_cols[ $config->config_title ] ] = strtolower($row[ $ds_cols[ $config->config_title ] ]);
-      $row[ $ds_cols[ $config->config_desc ] ] = strtolower($row[ $ds_cols[ $config->config_desc ] ]);
-      $row[ $ds_cols[ $config->config_title ] ] = ucwords($row[ $ds_cols[ $config->config_title ] ]);
-      $row[ $ds_cols[ $config->config_desc ] ] = ucfirst($row[ $ds_cols[ $config->config_desc ] ]);
+      $row[ $cols[ $config->title->col ] ] = strtolower($row[ $cols[ $config->title->col ] ]);
+      $row[ $cols[ $config->desc->col ] ] = strtolower($row[ $cols[ $config->desc->col ] ]);
+      $row[ $cols[ $config->title->col ] ] = ucwords($row[ $cols[ $config->title->col ] ]);
+      $row[ $cols[ $config->desc->col ] ] = ucfirst($row[ $cols[ $config->desc->col ] ]);
 
-      if (strlen($row[ $ds_cols[ $config->config_title ] ]) == 0){
-        $row[ $ds_cols[ $config->config_title ] ] = '[No Title]';
+      if (strlen($row[ $cols[ $config->title->col ] ]) == 0){
+        $row[ $cols[ $config->title->col ] ] = '[No Title]';
       }
-      if (strlen($row[ $ds_cols[ $config->config_desc ] ]) == 0){
-        $row[ $ds_cols[ $config->config_desc ] ] = '[No Description]';
+      if (strlen($row[ $cols[ $config->desc->col ] ]) == 0){
+        $row[ $cols[ $config->desc->col ] ] = '[No Description]';
       }
 
-      if (strlen($row[ $ds_cols[ $config->config_title ] ]) > 254){
-        $project->title = substr($row[ $ds_cols[ $config->config_title ] ], 0, 250);
+      if (strlen($row[ $cols[ $config->title->col ] ]) > 254){
+        $project->title = substr($row[ $cols[ $config->title->col ] ], 0, 250);
         $project->title = $project->title . '...';
       } else {
-        $project->title = $row[ $ds_cols[ $config->config_title ] ];
+        $project->title = $row[ $cols[ $config->title->col ] ];
       }
-      $project->description = $row[ $ds_cols[ $config->config_desc ] ];
+      $project->description = $row[ $cols[ $config->desc->col ] ];
 
-      if ( $config->config_geo_type == 'address' ) {
+      if ( $config->geo->type == 'address' ) {
         $project->geo_type = 'address';
-        if (strlen($row[ $ds_cols[ $config->config_geo_add ] ]) > 254){
-          $project->geo_address = substr($row[ $ds_cols[ $config->config_title ] ], 0, 250);
+        if (strlen($row[ $cols[ $config->geo->address->col ] ]) > 254){
+          $project->geo_address = substr($row[ $cols[ $config->title->col ] ], 0, 250);
         } else {
-          $project->geo_address = $row[ $ds_cols[ $config->config_geo_add ] ];
+          $project->geo_address = $row[ $cols[ $config->geo->address->col ] ];
         }
       }
-      if ( $config->config_geo_type == 'lat_lng' ) {
+      if ( $config->geo->type == 'lat_lng' ) {
         $project->geo_type = 'lat_lng';
-        $project->geo_lat = $row[ $ds_cols[ $config->config_geo_lat ] ];
-        $project->geo_lng = $row[ $ds_cols[ $config->config_geo_lng ] ];
+        $project->geo_lat = $row[ $cols[ $config->geo->lat_lng->lat->col ] ];
+        $project->geo_lng = $row[ $cols[ $config->geo->lat_lng->lng->col ] ];
       }
 
-      if ($project->status != $row[ $ds_cols[ $config->config_status ] ] && $project->status != null) {
+      if ($project->status != $row[ $cols[ $config->status->col ] ] && $project->status != null) {
         // Send Alert
-        Alert::create(array('project_id' => $project->id));
+        //Alert::create(array('project_id' => $project->id));
       }
 
-      $project->status = $row[ $ds_cols[ $config->config_status ] ];
+      $project->status = $row[ $cols[ $config->status->col ] ];
 
       $project->save();
     }

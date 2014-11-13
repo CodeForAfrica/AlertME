@@ -81,24 +81,23 @@ class DataSourceData extends Eloquent {
       });
     }
 
-    $ds_config = DataSourceConfig::where('datasource_id', '=', $this->datasource_id)->first();
-    $ds_cols = json_decode($ds_config->data_source_columns);
-    $config = json_decode($ds_config->config); // Integer position
-    $datas = json_decode($this->raw, true);
+    $cols = $this->datasource->columns;
+    $config = $this->datasource->config;
+    $rows = $this->raw;
 
-    foreach($datas as $data){
-      $ds_data = DB::table('data_source_datas_'.$this->datasource_id)
-        ->where('data_id', $data[ $ds_cols[ $config->config_id ] ])->first();
-      if(!$ds_data) {
+    foreach($rows as $row){
+      $project_data = DB::table('data_source_datas_'.$this->datasource_id)
+          ->where('data_id', $row->$cols[ $config->id->col ])->first();
+      if(!$project_data) {
         DB::table('data_source_datas_'.$this->datasource_id)->insert(
-          array('data_id' => $data[ $ds_cols[ $config->config_id ] ])
+          array('data_id' => $row->$cols[ $config->id->col ])
         );
       }
       DB::table('data_source_datas_'.$this->datasource_id)
-        ->where('data_id', $data[ $ds_cols[ $config->config_id ] ])
-        ->update(array(
-          'data' => json_encode($data)
-        ));
+          ->where('data_id', $row->$cols[ $config->id->col])
+          ->update(array(
+            'data' => json_encode($row)
+          ));
     }
   }
 

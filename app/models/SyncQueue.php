@@ -6,6 +6,8 @@ class SyncQueue {
   {
     Log::info('['.$job->getJobId().':'.$job->attempts().'] Sync started.');
 
+    ini_set ( 'memory_limit', '256M' );
+
     if ($job->attempts() > 3)
     {
       Log::info('['.$job->getJobId().':'.$job->attempts().'] Sync failed.');
@@ -14,16 +16,15 @@ class SyncQueue {
     } else {
 
       $sync = Sync::find($data['sync_id']);
-      $ds_configs = DataSourceConfig::where('config_status', 1)->get();
+      $datasources = DataSource::where('config_status', 1)->get();
 
-      foreach ($ds_configs as $ds_config) {
-        $datasource = DataSource::find($ds_config->datasource_id);
+      foreach ($datasources as $datasource) {
         $datasource->sync($sync);
       }
 
       // Set Categories once sync is done
       $categories = Category::all();
-      foreach ($ategories as $category) {
+      foreach ($categories as $category) {
         Queue::push('CategoryQueue', array(
           'cat_id' => $category->id,
           'cat_new' => $category,

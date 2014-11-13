@@ -1,5 +1,5 @@
 \#GreenAlert
-==========
+============
 
 Get to know more about your environment.
 
@@ -13,6 +13,7 @@ Get to know more about your environment.
 - Beanstalkd
 - MySQL
 - Ruby (for Mailing)
+- 256MB RAM
 
 
 
