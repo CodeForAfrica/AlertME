@@ -3,7 +3,7 @@
 class DataSourceData extends Eloquent {
 
   protected $table = 'data_source_datas';
-  protected $fillable = array('datasource_id');
+  protected $fillable = array('data_source_id');
 
 
   public static function boot()
@@ -51,7 +51,7 @@ class DataSourceData extends Eloquent {
 
   public function datasource()
   {
-    return $this->belongsTo('Datasource');
+    return $this->belongsTo('DataSource');
   }
 
   public function projects()

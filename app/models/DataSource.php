@@ -1,6 +1,6 @@
 <?php
 
-class Datasource extends Eloquent {
+class DataSource extends Eloquent {
 
   /**
    * CONFIG STATUS
@@ -17,19 +17,19 @@ class Datasource extends Eloquent {
     parent::boot();
 
     // Setup event bindings...
-    Datasource::created(function($datasource)
+    DataSource::created(function($datasource)
     {
       Queue::push('DataSourceQueue@fetchColumns', array('id' => $datasource->id));
     });
 
-    Datasource::deleting(function($datasource)
+    DataSource::deleting(function($datasource)
     {
-      DataSourceSync::where('datasource_id', '=', $datasource->id)->delete();
+      DataSourceSync::where('data_source_id', '=', $datasource->id)->delete();
 
-      DataSourceData::where('datasource_id', '=', $datasource->id)->delete();
+      DataSourceData::where('data_source_id', '=', $datasource->id)->delete();
       Schema::dropIfExists('data_source_datas_'.$datasource->id);
 
-      Project::where('datasource_id', '=', $datasource->id)->delete();
+      Project::where('data_source_id', '=', $datasource->id)->delete();
     });
   }
 

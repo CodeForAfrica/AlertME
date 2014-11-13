@@ -10,7 +10,7 @@ class DataSourceQueue {
   {
     Log::info('['.$job->getJobId().':'.$job->attempts().'] Fetch datasource columns started.');
 
-    $datasource = Datasource::find($data['id']);
+    $datasource = DataSource::find($data['id']);
 
     if (!$datasource){
       $job->delete();
@@ -27,7 +27,7 @@ class DataSourceQueue {
 
     // Get DataSource data
     $datasourcedata = DataSourceData::firstOrCreate( array(
-      'datasource_id' => $datasource->id
+      'data_source_id' => $datasource->id
     ));
 
     $ds_data = $datasourcedata->fetch();
