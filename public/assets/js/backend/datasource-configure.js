@@ -30,6 +30,8 @@ $( document ).ready(function() {
 
     $('.config-edit').hide();
     $('#btn-config-save').hide();
+    $('.config-screen').hide();
+    $('#config-columns-list').hide();
 
     var ds_sel = '#data-source-' + edit_id;
     var title_sel =  ds_sel + ' #title';
@@ -88,7 +90,11 @@ $( document ).ready(function() {
           columns_list_html = columns_list_html +
               '<span class="label label-primary">'+value+'</span> ';
         });
+        
+        $('.config-screen').fadeIn();
+
         $('#config-columns-list').html(columns_list_html);
+        $('#config-columns-list').show();
         $('#btn-config-edit').show();
       } else {
         $('#config-loading').fadeOut();

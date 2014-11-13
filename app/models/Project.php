@@ -15,6 +15,11 @@ class Project extends Eloquent {
 
       });
 
+      Project::deleted(function($project)
+      {
+        DB::table('project_category')->where('project_id', $project->id)->delete();
+      });
+
     }
 
     function datasource()

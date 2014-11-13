@@ -10,7 +10,7 @@ class DashboardController extends BaseController {
 
   public function showDataSources()
   {
-    $datasources = DataSource::all();
+    $datasources = Datasource::all();
 
     $data = array(
       'datasources' => $datasources

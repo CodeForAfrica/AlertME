@@ -13,18 +13,13 @@ class DataSourceData extends Eloquent {
     // Setup event bindings...
     DataSourceData::creating(function($datasourcedata)
     {
-      $data = $datasourcedata->datasource->fetchData();
-      if(!$data) {
-        return false;
-      }
-      $datasourcedata->headers = array_keys($data[0]);
-      $datasourcedata->raw = $data;
+      
 
     });
 
     DataSourceData::created(function($datasourcedata)
     {
-
+      
     });
   }
 
@@ -65,6 +60,8 @@ class DataSourceData extends Eloquent {
   }
 
 
+  // Other functions
+
   public function setData()
   {
     if (!Schema::hasTable('data_source_datas_'.$this->data_source_id))
@@ -103,6 +100,69 @@ class DataSourceData extends Eloquent {
           'data' => json_encode($data)
         ));
     }
+  }
+
+
+  public function fetch()
+  {
+    // Validate URL + Headers
+    if(!filter_var($this->datasource->url, FILTER_VALIDATE_URL))
+    {
+      // Not a Valid URL
+      return false;
+    } else {
+      // Is a Valid URL
+      $file_headers = @get_headers($this->datasource->url);
+
+      if($file_headers[0] == 'HTTP/1.0 404 Not Found'){
+        // echo "The file $filename does not exist";
+        return false;
+      } else if ($file_headers[0] == 'HTTP/1.0 302 Found' && $file_headers[7] == 'HTTP/1.0 404 Not Found'){
+        // echo "The file $filename does not exist, and I got redirected to a custom 404 page..";
+        return false;
+      }
+    }
+
+    // Validate File Exists
+    if (! file_exists ( $this->datasource->url)) return false;
+
+    // Return array of csv
+    return $this->csv_to_array($this->datasource->url);
+  }
+
+
+  /**
+   * Convert a comma separated file into an associated array.
+   * The first row should contain the array keys.
+   *
+   * Example:
+   *
+   * @param string $filename Path to the CSV file
+   * @param string $delimiter The separator used in the file
+   * @return array
+   * @link http://gist.github.com/385876
+   * @author Jay Williams <http://myd3.com/>
+   * @copyright Copyright (c) 2010, Jay Williams
+   * @license http://www.opensource.org/licenses/mit-license.php MIT License
+   */
+  function csv_to_array($filename='', $delimiter=',')
+  {
+
+    $header = NULL;
+    $data = array();
+    if (($handle = fopen($filename, 'r')) !== FALSE)
+    {
+      while (($row = fgetcsv($handle, 0, $delimiter)) !== FALSE)
+      {
+        $row = array_map('trim', $row);
+        if(!$header)
+          $header = $row;
+        else
+          $data[] = array_combine($header, $row);
+      }
+      fclose($handle);
+    }
+    return $data;
   }
 
 }

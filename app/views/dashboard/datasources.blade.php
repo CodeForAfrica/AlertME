@@ -167,7 +167,7 @@
                 <p><b>Columns</b></p>
               </div>
               <div class="col-sm-9">
-                <p id="config-columns-list"></p>
+                <p id="config-columns-list" style="display:none;"></p>
 
                 <!-- Alerts -->
                 <div class="alert alert-info" role="alert" style="display:none;">
@@ -187,7 +187,7 @@
 
 
             <!-- Config Screen -->
-            <div class="row config-screen">
+            <div class="row config-screen" style="display:none;">
               <div class="col-sm-3">
                 <p><b>Configuration</b></p>
               </div>
