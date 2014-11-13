@@ -103,7 +103,7 @@ $( document ).ready(function() {
 
     $.ajax({
       type: ajaxtype,
-      url: base_url+ajaxurl,
+      url: pahali.base_url+ajaxurl,
       data: data
     }).done(function( response ) {
       window.location.replace("/dashboard/categories");
@@ -146,7 +146,7 @@ $( document ).ready(function() {
 
     $.ajax({
       type: "DELETE",
-      url: base_url+"/api/v1/categories/"+edit_id,
+      url: pahali.base_url+"/api/v1/categories/"+edit_id,
     }).done(function( response ) {
       window.location.replace("/dashboard/categories");
     });
