@@ -36,4 +36,5 @@ var pahali = {
 
 }( jQuery ));
 
-document.write('<script src="/assets/js/pahali/pahali-datasource.js"><\/script>');
+document.write('<script src="/assets/js/pahali/pahali-models.js"><\/script>');
+document.write('<script src="/assets/js/pahali/pahali-datasources.js"><\/script>');

@@ -366,6 +366,7 @@
 @section('scripts-data')
 
   var data_sources = {{ $datasources }};
+  $.extend(pahali.datasources, {{ $datasources }});
 
   var edit_id = 0;
   var config_data = new Object();

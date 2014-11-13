@@ -54,7 +54,8 @@ $( document ).ready(function() {
     }).done(function( response ) {
       pahali.datasource__ = $.extend({}, pahali.datasource);
       pahali.datasource = $.extend({}, response.datasource);
-      if (response.datasource.config == null) {
+      if (response.datasource.config == null ||
+          response.datasource.config == "") {
         $.extend(pahali.datasource, pahali.datasource__);
       };
 

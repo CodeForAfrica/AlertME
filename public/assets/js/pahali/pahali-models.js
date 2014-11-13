@@ -1,7 +1,9 @@
 /**
- * Pahali.JS Data Source Module
+ * Pahali.JS MODELS
  * -----------------------------------------------------------------------------
  */
+
+pahali.datasources = {};
 
 pahali.datasource = {};
 
