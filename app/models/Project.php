@@ -27,11 +27,6 @@ class Project extends Eloquent {
       return $this->belongsTo('DataSource');
     }
 
-    function datasourceconfig()
-    {
-      return $this->belongsTo('DataSourceConfig');
-    }
-
     function datasourcesync()
     {
       return $this->belongsTo('DataSourceSync');
