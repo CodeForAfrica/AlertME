@@ -22,37 +22,50 @@ class Project extends Eloquent {
 
     }
 
-    function datasource()
+
+    // Accessors & Mutators
+
+    public function getDataAttribute($value)
+    {
+      return json_decode($value);
+    }
+
+    public function setDataAttribute($value)
+    {
+      $this->attributes['data'] = json_encode($value);
+    }
+
+
+    // Relations
+
+    public function datasource()
     {
       return $this->belongsTo('DataSource');
     }
 
-    function datasourcesync()
+    public function datasourcesync()
     {
       return $this->belongsTo('DataSourceSync');
     }
 
-    function datasourcedata()
+    public function datasourcedata()
     {
       return $this->belongsTo('DataSourceData');
     }
 
-    function datasourcedata_single()
-    {
-      return json_decode(DB::table('data_source_datas_'.$this->datasource_id)
-        ->where('data_id', $this->project_id)->first()->data);
-    }
-
-    function categories()
+    public function categories()
     {
       return $this->belongsToMany('Category', 'project_category');
     }
 
-    function geocode()
+    public function geocode()
     {
       if (trim($this->geo_address) == '') return array( 'lat' => 0 , 'lng' => 0 );
       return $this->hasOne('Geocode', 'address', 'geo_address');
     }
+
+
+    // Other functions
 
     function geo()
     {

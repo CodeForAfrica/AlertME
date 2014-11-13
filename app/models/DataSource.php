@@ -38,7 +38,7 @@ class DataSource extends Eloquent {
 
   public function getConfigAttribute($value)
   {
-      return json_decode($value);
+    return json_decode($value);
   }
 
   public function setConfigAttribute($value)
@@ -48,7 +48,7 @@ class DataSource extends Eloquent {
 
   public function getColumnsAttribute($value)
   {
-      return json_decode($value);
+    return json_decode($value);
   }
 
   public function setColumnsAttribute($value)

@@ -165,12 +165,8 @@ class HomeController extends BaseController {
       '/520x293.png256?'.
       'access_token=pk.eyJ1IjoiY29kZWZvcmFmcmljYSIsImEiOiJVLXZVVUtnIn0.JjVvqHKBGQTNpuDMJtZ8Qg';
 
-    $cols = $project->datasource->columns;
-    $project_data = $project->datasourcedata_single();
-
     $data = compact(
-      'project', 'map_image_link',
-      'cols', 'project_data'
+      'project', 'map_image_link'
     );
     return View::make('home.project', $data);
   }

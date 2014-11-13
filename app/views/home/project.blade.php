@@ -44,18 +44,18 @@
           <hr/>
           <h6>Details</h6>
           <div class="project-details">
-            @for ($i = 0; $i < count($cols); $i++)
+            @foreach($project->data as $key => $value)
               <div class="row">
                 <div class="col-md-4 text-right">
-                  <small><b>{{ $cols[$i] }}</b></small>
+                  <small><b>{{ $key }}</b></small>
                 </div>
                 <div class="col-md-8">
                   <small>
-                    {{ empty($project_data->$cols[$i]) ? '-' : $project_data->$cols[$i] }}
+                    {{ empty($value) ? '-' : $value }}
                   </small>
                 </div>
               </div>
-            @endfor
+            @endforeach
           </div>
         </div>
 
