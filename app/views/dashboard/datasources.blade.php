@@ -42,7 +42,7 @@
 
           <div class="col-md-2 text-left">
             <p><button type="button" class="btn btn-link btn-sm" alt="{{ $datasource->id }}"
-              id="config-data-source-{{ $datasource->id }}" data-toggle="modal" data-target="#configModal">
+              id="btn-configure-{{ $datasource->id }}" data-toggle="modal" data-target="#configModal">
               <span class="fui-cmd"></span> Configure</button></p>
             <p><button type="button" class="btn btn-link btn-sm" alt="{{ $datasource->id }}"
               id="edit-data-source-{{ $datasource->id }}" data-toggle="modal" data-target="#editModal">
@@ -148,22 +148,176 @@
         <div class="modal-body">
           <p><em>This is where you tell the system how your data source is structured.</em></p>
           <div class="well">
-            <div class="row">
+
+
+            <!-- Title -->
+            <div class="row config-title">
               <div class="col-sm-3">
                 <p><b>Data Source</b></p>
               </div>
               <div class="col-sm-9">
-                <p id="title"></p>
+                <p id="config-title"></p>
+              </div> <!-- /.col-sm-9 -->
+            </div> <!-- /.row .config-title -->
+
+
+            <!-- Columns -->
+            <div class="row config-columns">
+              <div class="col-sm-3">
+                <p><b>Columns</b></p>
               </div>
-            </div>
+              <div class="col-sm-9">
+                <p id="config-columns-list"></p>
+
+                <!-- Alerts -->
+                <div class="alert alert-info" role="alert" style="display:none;">
+                  <span class="fui-alert-circle"></span> We are still fetching this data source's details...<br/>
+                  <button class="btn btn-sm btn-link" id="btn-config-refresh">
+                  <i class="fa fa-refresh"></i> Refresh to check for update</button>
+                </div>
+                <div class="alert alert-danger" role="alert" style="display:none;">
+                  <p>
+                    <span class="fui-alert-circle"></span> This data source has an error.
+                    Please check that the data is well structured, delete it and add it again.<br/>
+                  </p>
+                </div>
+
+              </div> <!-- /.col-sm-9 -->
+            </div> <!-- /.row .config-columns -->
+
+
+            <!-- Config Screen -->
+            <div class="row config-screen">
+              <div class="col-sm-3">
+                <p><b>Configuration</b></p>
+              </div>
+              <div class="col-sm-9">
+
+                <!-- Alerts -->
+                <div class="alert alert-success alert-ready" role="alert" style="display:none;">
+                  <span class="fui-alert-circle"></span> This data source is ready for configuriation.<br/>
+                  <button class="btn btn-sm btn-link" id="btn-config-new">
+                    <span class="fui-cmd"></span> Configure now
+                  </button>
+                </div>
+
+                <!-- List configuration -->
+                <div class="config-list" style="display:none;">
+                  <p>Platform required columns and related data source columns:</p>
+                  <table class="table">
+                    <thead><tr><th>Platform</th><th>Data Source</th></tr></thead>
+                    <tbody>
+                      <tr><td>ID</td><td>'+ds_cols[config_id]+'</td></tr>
+                      <tr><td>Title</td><td>'+ds_cols[config_title]+'</td></tr>
+                      <tr><td>Description</td><td>'+ds_cols[config_desc]+'</td></tr>
+                      <tr><td>Geo Type</td><td></td></tr>
+                      <tr><td>Geo Lat</td><td></td></tr>
+                      <tr><td>Geo Lng</td><td></td></tr>
+                      <tr><td>Geo Address</td><td></td></tr>
+                      <tr><td>Status</td><td>'+ds_cols[config_status]+'</td></tr>
+                    </tbody>
+                  </table>
+                </div> <!-- /.config-list -->
+
+                <!-- Edit configuration -->
+                <div class="config-edit" style="display:none;">
+                  <div class="alert alert-success">
+                    <p>Columns configuration for each project\row of data.</p>
+
+                    <p>
+                      <b>ID</b> <small><em>(Important! Unique identifier)</em></small><br/>
+                      <select id="config-sel-id"
+                        class="form-control select select-primary select-block mbl">
+                      </select>
+                    </p>
+
+                    <p>
+                      <b>Title</b><br/>
+                      <select id="config-sel-title"
+                        class="form-control select select-primary select-block mbl">
+                      </select>
+                    </p>
+                    <p>
+                      <b>Description</b><br/>
+                      <select id="config-sel-desc"
+                        class="form-control select select-primary select-block mbl">
+                      </select>
+                    </p>
+                    <p>
+                      <b>Geolocation</b><br/>
+                      <div class="row">
+                        <div class="col-xs-3">Type:</div>
+                        <div class="col-xs-9">
+                          <label class="radio config-radio-geo-type">
+                            <input type="radio" name="config-sel-geo-type" id="config-sel-geo-type-lat-lng"
+                              value="lat_lng" data-toggle="radio" checked="">
+                            Lat + Lng
+                          </label>
+                          <label class="radio config-radio-geo-type">
+                            <input type="radio" name="config-sel-geo-type" id="config-sel-geo-type-add"
+                              value="address" data-toggle="radio">
+                            Address
+                          </label>
+                        </div>
+                      </div>
+                      <div id="config-edit-geo-type">
+                        <div class="row config-edit-geo-type-lat-lng">
+                          <div class="col-xs-3">Lat:</div>
+                          <div class="col-xs-9">
+                            <select id="config-sel-geo-lat"
+                              class="form-control select select-primary mbl">
+                            </select>
+                          </div>
+                        </div>
+                        <div class="row config-edit-geo-type-lat-lng">
+                          <div class="col-xs-3">Long:</div>
+                          <div class="col-xs-9">
+                            <select id="config-sel-geo-lng"
+                              class="form-control select select-primary mbl">
+                            </select>
+                          </div>
+                        </div>
+                        <div class="row config-edit-geo-type-add" style="display:none;">
+                          <div class="col-xs-3">Address:</div>
+                          <div class="col-xs-9">
+                            <select id="config-sel-geo-add"
+                              class="form-control select select-primary mbl">
+                            </select>
+                          </div>
+                        </div>
+                      </div> <!-- /#geo_type -->
+                    </p>
+                    <p>
+                      <b>Status</b><br/>
+                      <select id="config-sel-status"
+                        class="form-control select select-primary select-block mbl">
+                      </select>
+                    </p>
+
+                    <p id="config-edit-error" class="text-danger alert alert-danger" style="display:none;">
+                      <small><b>Error:</b> Please define all columns.</small>
+                    </p>
+                  </div>
+                </div> <!-- /.config-edit -->
+
+              </div> <!-- /.col-sm-9 -->
+            </div> <!-- /.row .config-screen -->
+
+            <p class="text-center" id="config-loading">
+              <i class="fa fa-circle-o-notch fa-spin"></i><br/>Loading configuration...
+            </p>
+
           </div>
         </div>
 
         <div class="modal-footer">
-          <button type="button" class="btn btn-default btn-embossed btn-wide close-modal" data-dismiss="modal">Close</button>
-          <span id="edit-config-btn">
-            <button type="button" class="btn btn-info btn-embossed btn-wide" id="edit-config">Edit</button>
-          </span>
+          <button type="button" class="btn btn-default btn-embossed btn-wide close-modal"
+            data-dismiss="modal">Close</button>
+
+          <button type="button" class="btn btn-info btn-embossed btn-wide"
+            id="btn-config-edit" style="display:none;">Edit</button>
+          <button type="button" class="btn btn-primary btn-embossed btn-wide"
+            id="btn-config-save" style="display:none;">Save</button>
         </div>
 
       </div>
@@ -232,5 +386,6 @@
 @stop
 
 @section('scripts')
-  <script src="/assets/js/backend/datasources.js"></script>
+  <script src="{{ secure_asset('assets/js/backend/datasources.js') }}"></script>
+  <script src="{{ secure_asset('assets/js/backend/datasource-configure.js') }}"></script>
 @stop
