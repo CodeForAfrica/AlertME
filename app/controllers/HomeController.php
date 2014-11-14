@@ -22,8 +22,6 @@ class HomeController extends BaseController {
     $projects = DB::table('projects')->take(10)->get();
     $projects_count = DB::table('projects')->count();
 
-    $categories = $projects;
-
     $data = compact(
       'home','projects','projects_count'
     );

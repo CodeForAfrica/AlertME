@@ -24,12 +24,14 @@ class DataSource extends Eloquent {
 
     DataSource::deleting(function($datasource)
     {
-      DataSourceSync::where('datasource_id', '=', $datasource->id)->delete();
+      DataSourceSync::where('datasource_id', $datasource->id)->delete();
 
-      DataSourceData::where('datasource_id', '=', $datasource->id)->delete();
-      Schema::dropIfExists('data_source_datas_'.$datasource->id);
+      DataSourceData::where('datasource_id', $datasource->id)->delete();
 
-      Project::where('datasource_id', '=', $datasource->id)->delete();
+      $projects = $datasource->projects;
+      foreach ($projects as $project) {
+        $project->delete();
+      }
     });
   }
 
@@ -77,7 +79,7 @@ class DataSource extends Eloquent {
 
   // Other functions
 
-  function sync( $sync )
+  function syncData( $sync )
   {
     // Add DataSource Sync
     $ds_sync = new DataSourceSync;
@@ -127,6 +129,13 @@ class DataSource extends Eloquent {
     
     $this->datasourcedata->raw = $csv;
     $this->datasourcedata->save();
+
+    // Set Categories
+    $categories = Category::all();
+    foreach ($categories as $category) {
+      $category->keywordAssign();
+    }
+    Log::info('Category assignment finished.');
     
     $ds_sync->sync_status = 1;
     $ds_sync->save();

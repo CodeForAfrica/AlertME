@@ -2,100 +2,100 @@
 
 class Project extends Eloquent {
 
-    protected $table = 'projects';
-    protected $fillable = array('project_id');
+  protected $table = 'projects';
+  protected $fillable = array('project_id');
 
-    public static function boot()
+  public static function boot()
+  {
+    parent::boot();
+
+    // Setup event bindings...
+    Project::created(function($project)
     {
-      parent::boot();
 
-      // Setup event bindings...
-      Project::created(function($project)
-      {
+    });
 
-      });
+    Project::deleting(function($project)
+    {
+      $project->categories()->detach();
+    });
 
-      Project::deleted(function($project)
-      {
-        DB::table('project_category')->where('project_id', $project->id)->delete();
-      });
+  }
 
+
+  // Accessors & Mutators
+
+  public function getDataAttribute($value)
+  {
+    return json_decode($value);
+  }
+
+  public function setDataAttribute($value)
+  {
+    $this->attributes['data'] = json_encode($value);
+  }
+
+
+  // Relations
+
+  public function datasource()
+  {
+    return $this->belongsTo('DataSource');
+  }
+
+  public function datasourcesync()
+  {
+    return $this->belongsTo('DataSourceSync');
+  }
+
+  public function datasourcedata()
+  {
+    return $this->belongsTo('DataSourceData');
+  }
+
+  public function categories()
+  {
+    return $this->belongsToMany('Category', 'project_category');
+  }
+
+  public function geocode()
+  {
+    if (trim($this->geo_address) == '') return array( 'lat' => 0 , 'lng' => 0 );
+    return $this->hasOne('Geocode', 'address', 'geo_address');
+  }
+
+
+  // Other functions
+
+  function geo()
+  {
+    $geo = new stdClass(); $geo->lat = 450; $geo->lng = 450;
+    if($this->geo_type == 'lat_lng') {
+      $geo->lat = floatval ($this->geo_lat);
+      $geo->lng = floatval ($this->geo_lng);
     }
-
-
-    // Accessors & Mutators
-
-    public function getDataAttribute($value)
-    {
-      return json_decode($value);
+    if($this->geo_type == 'address' && trim($this->geo_address) != '') {
+      $geocode = Geocode::where('address', $this->geo_address)->first();
+      $geo->lat = floatval ($geocode->lat);
+      $geo->lng = floatval ($geocode->lng);
     }
+    return $geo;
+  }
 
-    public function setDataAttribute($value)
-    {
-      $this->attributes['data'] = json_encode($value);
-    }
-
-
-    // Relations
-
-    public function datasource()
-    {
-      return $this->belongsTo('DataSource');
-    }
-
-    public function datasourcesync()
-    {
-      return $this->belongsTo('DataSourceSync');
-    }
-
-    public function datasourcedata()
-    {
-      return $this->belongsTo('DataSourceData');
-    }
-
-    public function categories()
-    {
-      return $this->belongsToMany('Category', 'project_category');
-    }
-
-    public function geocode()
-    {
-      if (trim($this->geo_address) == '') return array( 'lat' => 0 , 'lng' => 0 );
-      return $this->hasOne('Geocode', 'address', 'geo_address');
-    }
-
-
-    // Other functions
-
-    function geo()
-    {
-      $geo = new stdClass(); $geo->lat = 450; $geo->lng = 450;
-      if($this->geo_type == 'lat_lng') {
-        $geo->lat = floatval ($this->geo_lat);
-        $geo->lng = floatval ($this->geo_lng);
-      }
-      if($this->geo_type == 'address' && trim($this->geo_address) != '') {
-        $geocode = Geocode::where('address', $this->geo_address)->first();
-        $geo->lat = floatval ($geocode->lat);
-        $geo->lng = floatval ($geocode->lng);
-      }
-      return $geo;
-    }
-
-    function  geojson()
-    {
-      $geo = $this->geo();
-      $geojson = array(
-        'type' => 'FeatureCollection',
-        'features' => array(
-          array(
-            'type' => 'Feature',
-            'geometry' => array('type' => 'Point', 'coordinates' => array($geo->lng , $geo->lat)),
-            'properties' => array('prop0' => 'value0')
-          )
+  function  geojson()
+  {
+    $geo = $this->geo();
+    $geojson = array(
+      'type' => 'FeatureCollection',
+      'features' => array(
+        array(
+          'type' => 'Feature',
+          'geometry' => array('type' => 'Point', 'coordinates' => array($geo->lng , $geo->lat)),
+          'properties' => array('prop0' => 'value0')
         )
-      );
-      return json_encode($geojson);
-    }
+      )
+    );
+    return json_encode($geojson);
+  }
 
 }

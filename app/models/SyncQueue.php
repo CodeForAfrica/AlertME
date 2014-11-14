@@ -19,18 +19,7 @@ class SyncQueue {
       $datasources = DataSource::where('config_status', 1)->get();
 
       foreach ($datasources as $datasource) {
-        $datasource->sync($sync);
-      }
-
-      // Set Categories once sync is done
-      $categories = Category::all();
-      foreach ($categories as $category) {
-        Queue::push('CategoryQueue', array(
-          'cat_id' => $category->id,
-          'cat_new' => $category,
-          'cat_old' => $category,
-          'new' => false
-        ));
+        $datasource->syncData($sync);
       }
 
 
