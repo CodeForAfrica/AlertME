@@ -167,12 +167,12 @@
                 <p><b>Columns</b></p>
               </div>
               <div class="col-sm-9">
-                <p id="config-columns-list" style="display:none;"></p>
+                <p class="config-columns-list" style="display:none;"></p>
 
                 <!-- Alerts -->
                 <div class="alert alert-info" role="alert" style="display:none;">
                   <span class="fui-alert-circle"></span> We are still fetching this data source's details...<br/>
-                  <button class="btn btn-sm btn-link" id="btn-config-refresh">
+                  <button class="btn btn-sm btn-link btn-config-refresh">
                     <i class="fa fa-refresh"></i> Refresh to check for update
                   </button>
                 </div>
