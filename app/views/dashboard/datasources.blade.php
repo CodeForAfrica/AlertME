@@ -122,16 +122,21 @@
             <p><span id="del_desc"></span></p>
             <p><small><span id="del_url"></span></small></p>
           </div>
-        </div>
+
+          <p class="text-center" id="loading-delete" style="display:none;" >
+            <i class="fa fa-circle-o-notch fa-spin"></i> Deleting this Data Source and all its contents...<br/>
+            <small>This might take a few minutes</small>
+          </p>
+        </div> <!-- /.modal-body -->
 
         <div class="modal-footer">
           <button type="button" class="btn btn-default btn-embossed btn-wide close-modal" data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-danger btn-embossed btn-wide" id="delete-data-source">Delete Data Source</button>
+          <button type="button" class="btn btn-danger btn-embossed btn-wide" id="btn-delete">Delete Data Source</button>
         </div>
 
-      </div>
+      </div> <!-- /.modal-content -->
     </div>
-  </div>
+  </div> <!-- /.modal -->
 
   <!-- Configure Modal -->
   <div class="modal fade" id="configModal" tabindex="-1" role="dialog" aria-labelledby="configModalLabel" aria-hidden="true">

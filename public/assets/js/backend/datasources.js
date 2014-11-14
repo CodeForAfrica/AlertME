@@ -116,7 +116,10 @@ $( document ).ready(function() {
 
   });
 
-  $('#delete-data-source').click(function() {
+  $('#btn-delete').click(function() {
+    $('#loading-delete').fadeIn();
+    $('#btn-delete').addClass('disabled');
+    $('#btn-delete').attr('disabled', 'disabled');
 
     $.ajax({
       type: "DELETE",
