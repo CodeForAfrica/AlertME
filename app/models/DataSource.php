@@ -145,9 +145,9 @@ class DataSource extends Eloquent {
 
     foreach ( $csv as $row ) {
       $project = Project::firstOrCreate( array(
-        'project_id' => $row[ $cols[ $config->id->col ] ]
+        'data_id' => $row[ $cols[ $config->id->col ] ]
       ));
-      $project = Project::where('project_id', $row[ $cols[ $config->id->col ]])->first();
+      $project = Project::where('data_id', $row[ $cols[ $config->id->col ]])->first();
       $project->datasource_id = $this->id;
       $project->data_source_sync_id = $ds_sync->id;
 

@@ -12,7 +12,7 @@ class ApiProjectController extends \BaseController {
     //
     $projects = array();
     $projects_categories = array();
-    $sel_cols_projects = array('projects.id', 'projects.project_id',
+    $sel_cols_projects = array('projects.id', 'projects.data_id',
       'projects.title', 'projects.description', 'projects.geo_type',
       'projects.geo_address', 'projects.geo_lat', 'projects.geo_lng',
       'projects.status');
