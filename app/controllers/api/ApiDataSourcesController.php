@@ -97,8 +97,8 @@ class ApiDataSourceController extends \BaseController {
 		$datasource->description = Input::get('description');
 		$datasource->url = Input::get('url');
 
-		$datasource->config = Input::get('config');
-		$datasource->config_status = Input::get('config_status');
+		$datasource->config = Input::get('config', $datasource->config);
+		$datasource->config_status = Input::get('config_status', $datasource->config_status);
 
 		$datasource->save();
 

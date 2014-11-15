@@ -178,6 +178,7 @@ class DataSource extends Eloquent {
     if(!filter_var($this->url, FILTER_VALIDATE_URL))
     {
       // Not a Valid URL
+      Log::error("DataSource Fetch: Not a valid URL $this->url.");
       return false;
     } else {
       // Is a Valid URL
@@ -185,15 +186,14 @@ class DataSource extends Eloquent {
 
       if($file_headers[0] == 'HTTP/1.0 404 Not Found'){
         // echo "The file $filename does not exist";
+        Log::error("DataSource Fetch: The file $this->url does not exist.");
         return false;
       } else if ($file_headers[0] == 'HTTP/1.0 302 Found' && $file_headers[7] == 'HTTP/1.0 404 Not Found'){
-        // echo "The file $filename does not exist, and I got redirected to a custom 404 page..";
+        // echo "The file $filename does not exist, and I got redirected to a custom 404 page.";
+        Log::error("DataSource Fetch: The file $this->url does not exist, and I got redirected to a custom 404 page.");
         return false;
       }
     }
-
-    // Validate File Exists
-    if (! file_exists ( $this->url)) return false;
 
     // Return array of csv
     return $this->csv_to_array($this->url);
