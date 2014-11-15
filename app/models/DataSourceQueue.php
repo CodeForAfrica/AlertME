@@ -25,22 +25,13 @@ class DataSourceQueue {
       return;
     }
 
-    // Get DataSource data
-    $datasourcedata = DataSourceData::firstOrCreate( array(
-      'datasource_id' => $datasource->id
-    ));
-
-    $ds_data = $datasourcedata->fetch();
+    $ds_data = $datasource->fetch();
 
     if(!$ds_data) {
       $datasource->config_status = 0;
       $datasource->save();
     } else {
-      $datasourcedata->headers = array_keys($ds_data[0]);
-      $datasourcedata->raw = $ds_data;
-      $datasourcedata->save();
-
-      $datasource->columns = $datasourcedata->headers;
+      $datasource->columns = array_keys($ds_data[0]);
       $datasource->config_status = 2;
       $datasource->save();
     }

@@ -115,11 +115,6 @@ class Project extends Eloquent {
     return $this->belongsTo('DataSourceSync');
   }
 
-  public function datasourcedata()
-  {
-    return $this->belongsTo('DataSourceData');
-  }
-
   public function categories()
   {
     return $this->belongsToMany('Category', 'project_category');

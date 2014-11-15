@@ -13,6 +13,7 @@ class DeleteDataSourceDatasTable extends Migration {
 	public function up()
 	{
 		//
+		Schema::dropIfExists('data_source_datas');
 	}
 
 	/**
