@@ -23,6 +23,8 @@ class RenameDatasourcesTable extends Migration {
 		Schema::table('data_source_datas', function($table)
 		{
 		  $table->renameColumn('data_source_id', 'datasource_id');
+		  $table->binary('headers')->nullable();
+		  $table->binary('raw')->nullable();
 		});
 		Schema::table('data_source_syncs', function($table)
 		{
