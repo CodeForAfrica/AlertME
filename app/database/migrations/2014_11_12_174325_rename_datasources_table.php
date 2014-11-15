@@ -18,13 +18,6 @@ class RenameDatasourcesTable extends Migration {
 		{
 		  Schema::rename('data_sources', 'datasources');
 		}
-		Schema::table('data_source_configs', function($table)
-		{
-			if (Schema::hasColumn('data_source_configs', 'data_source_id'))
-			{
-			  $table->renameColumn('data_source_id', 'datasource_id');
-			}
-		});
 		Schema::table('data_source_syncs', function($table)
 		{
 		  $table->renameColumn('data_source_id', 'datasource_id');
@@ -44,10 +37,6 @@ class RenameDatasourcesTable extends Migration {
 	{
 		//
 		Schema::rename('datasources', 'data_sources');
-		Schema::table('data_source_configs', function($table)
-		{
-		  $table->renameColumn('datasource_id', 'data_source_id');
-		});
 		Schema::table('data_source_syncs', function($table)
 		{
 		  $table->renameColumn('datasource_id', 'data_source_id');

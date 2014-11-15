@@ -12,26 +12,30 @@ class MoveConfigToDatasourcesTable extends Migration {
    */
   public function up()
   {
-    $configs = DB::table('data_source_configs')->get();
-    
-    Schema::table('datasources', function(Blueprint $table)
+    if (Schema::hasTable('data_source_configs'))
     {
       //
-      $table->mediumText('columns')->after('url')->nullable();
-      $table->mediumText('config')->after('columns')->nullable();
-      $table->integer('config_status')->after('config')->default(3);
-    });
+      $configs = DB::table('data_source_configs')->get();
     
-    Schema::drop('data_source_configs');
+      Schema::table('datasources', function(Blueprint $table)
+      {
+        //
+        $table->mediumText('columns')->after('url')->nullable();
+        $table->mediumText('config')->after('columns')->nullable();
+        $table->integer('config_status')->after('config')->default(3);
+      });
+      
+      Schema::drop('data_source_configs');
 
-    foreach ($configs as $config) {
-      DB::table('datasources')
-        ->where('id', $config->datasource_id)
-        ->update(array(
-            'columns' => $config->data_source_columns,
-            'config' => $config->config,
-            'config_status' => $config->config_status
-          ));
+      foreach ($configs as $config) {
+        DB::table('datasources')
+          ->where('id', $config->datasource_id)
+          ->update(array(
+              'columns' => $config->data_source_columns,
+              'config' => $config->config,
+              'config_status' => $config->config_status
+            ));
+      }
     }
 
   }
@@ -43,34 +47,7 @@ class MoveConfigToDatasourcesTable extends Migration {
    */
   public function down()
   {
-    $datasources = DB::table('datasources')->get();
-    
-    Schema::table('datasources', function(Blueprint $table)
-    {
-      //
-      $table->dropColumn(array('columns', 'config', 'config_status'));
-    });
-    
-    Schema::create('data_source_configs', function(Blueprint $table)
-    {
-      $table->increments('id');
-      $table->integer('datasource_id');
-      $table->mediumText('data_source_columns')->nullable();
-      $table->mediumText('config')->nullable();
-      $table->integer('config_status')->default(3);
-      $table->timestamps();
-    });
 
-    foreach ($datasources as $datasource) {
-      DB::table('data_source_configs')->insert(
-        array(
-          'datasource_id' => $datasource->id,
-          'data_source_columns' => $datasource->columns,
-          'config' => $datasource->config,
-          'config_status' => $datasource->config_status
-        )
-      );
-    }
   }
 
 }
