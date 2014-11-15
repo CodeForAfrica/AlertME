@@ -119,7 +119,7 @@ class ApiDataSourceController extends \BaseController {
 	public function destroy($id)
 	{
 		//
-		Datasource::find($id)->delete();
+		DataSource::find($id)->delete();
 		return Response::json(array(
 				'error' => false,
 				'message' => 'Datasource deleted.'),
