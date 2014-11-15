@@ -10,7 +10,7 @@ class ApiDataSourceController extends \BaseController {
 	public function index()
 	{
 		//
-		$datasources =  Datasource::all();
+		$datasources =  DataSource::all();
 		return Response::json(array(
 				'error' => false,
 				'datasources' => $datasources->toArray()),
@@ -38,7 +38,7 @@ class ApiDataSourceController extends \BaseController {
 	public function store()
 	{
 		//
-		$datasource = new Datasource;
+		$datasource = new DataSource;
 		$datasource->title = Input::get('title');
 		$datasource->description = Input::get('desc');
 		$datasource->url = Input::get('url');
@@ -62,7 +62,7 @@ class ApiDataSourceController extends \BaseController {
 	public function show($id)
 	{
 		//
-		$datasource =  Datasource::find($id);
+		$datasource =  DataSource::find($id);
 		return Response::json(array(
 				'error' => false,
 				'datasource' => $datasource->toArray()),
@@ -92,7 +92,7 @@ class ApiDataSourceController extends \BaseController {
 	public function update($id)
 	{
 		//
-		$datasource = Datasource::find($id);
+		$datasource = DataSource::find($id);
 		$datasource->title = Input::get('title');
 		$datasource->description = Input::get('description');
 		$datasource->url = Input::get('url');
