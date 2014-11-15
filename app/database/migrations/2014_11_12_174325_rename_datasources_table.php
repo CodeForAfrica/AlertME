@@ -13,7 +13,7 @@ class RenameDatasourcesTable extends Migration {
 	public function up()
 	{
 		//
-		DB::statement('ALTER TABLE data_source_datas ROW_FORMAT=DYNAMIC');
+		// DB::statement('ALTER TABLE data_source_datas ROW_FORMAT=DYNAMIC');
 
 		Schema::rename('data_sources', 'datasources');
 		Schema::table('data_source_configs', function($table)
