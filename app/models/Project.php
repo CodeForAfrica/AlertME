@@ -25,6 +25,73 @@ class Project extends Eloquent {
 
   // Accessors & Mutators
 
+  public function getTitleAttribute($value)
+  {
+    if (strlen($value) == 0){
+      $value = '[No Title]';
+    }
+
+    if (ctype_upper($value)) {
+      $value = strtolower($value);
+      $value = ucwords($value);
+    }
+
+    return $value;
+  }
+
+  public function setTitleAttribute($value)
+  {
+    if (strlen($value) > 254){
+      $value = substr($value, 0, 250);
+      $value = $value . '...';
+    }
+    $this->attributes['title'] = $value;
+  }
+
+  public function getDescriptionAttribute($value)
+  {
+    if (strlen($value) == 0){
+      $value = '[No Description]';
+    }
+    if (ctype_upper($value)) {
+      $value = strtolower($value);
+      $value = ucfirst($value);
+    }
+    return $value;
+  }
+
+  public function setDescriptionAttribute($value)
+  {
+    $this->attributes['description'] = $value;
+  }
+
+  public function getGeoAddressAttribute($value)
+  {
+    return $value;
+  }
+
+  public function setGeoAdressAttribute($value)
+  {
+    if (strlen($value) > 254){
+      $value = substr($value, 0, 254);
+    }
+    $this->attributes['geo_address'] = $value;
+  }
+
+  public function getStatusAttribute($value)
+  {
+    return $value;
+  }
+
+  public function setStatusAttribute($value)
+  {
+    if ($this->status != $value) {
+      // Create Alert
+      // Alert::create(array('project_id' => $project->id));
+    }
+    $this->attributes['status'] = $value;
+  }
+
   public function getDataAttribute($value)
   {
     return json_decode($value);

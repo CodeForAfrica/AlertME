@@ -9,7 +9,7 @@ class DataSource extends Eloquent {
    * 1: Configured successfully
    * 2: Ready to configure
    * 3: Fetching columns
-   * 4:
+   * 4: 
    */
 
   public static function boot()
@@ -129,6 +129,8 @@ class DataSource extends Eloquent {
     
     $this->datasourcedata->raw = $csv;
     $this->datasourcedata->save();
+
+    // TODO: Send alerts created from sync
     
     $ds_sync->sync_status = 1;
     $ds_sync->save();
@@ -147,47 +149,23 @@ class DataSource extends Eloquent {
       $project = Project::firstOrCreate( array(
         'data_id' => $row[ $cols[ $config->id->col ] ]
       ));
-      $project = Project::where('data_id', $row[ $cols[ $config->id->col ]])->first();
+
       $project->datasource_id = $this->id;
       $project->data_source_sync_id = $ds_sync->id;
 
-      $row[ $cols[ $config->title->col ] ] = strtolower($row[ $cols[ $config->title->col ] ]);
-      $row[ $cols[ $config->desc->col ] ] = strtolower($row[ $cols[ $config->desc->col ] ]);
-      $row[ $cols[ $config->title->col ] ] = ucwords($row[ $cols[ $config->title->col ] ]);
-      $row[ $cols[ $config->desc->col ] ] = ucfirst($row[ $cols[ $config->desc->col ] ]);
+      $project->title = $row[ $cols[ $config->title->col ] ];
 
-      if (strlen($row[ $cols[ $config->title->col ] ]) == 0){
-        $row[ $cols[ $config->title->col ] ] = '[No Title]';
-      }
-      if (strlen($row[ $cols[ $config->desc->col ] ]) == 0){
-        $row[ $cols[ $config->desc->col ] ] = '[No Description]';
-      }
-
-      if (strlen($row[ $cols[ $config->title->col ] ]) > 254){
-        $project->title = substr($row[ $cols[ $config->title->col ] ], 0, 250);
-        $project->title = $project->title . '...';
-      } else {
-        $project->title = $row[ $cols[ $config->title->col ] ];
-      }
       $project->description = $row[ $cols[ $config->desc->col ] ];
+      
 
       if ( $config->geo->type == 'address' ) {
         $project->geo_type = 'address';
-        if (strlen($row[ $cols[ $config->geo->address->col ] ]) > 254){
-          $project->geo_address = substr($row[ $cols[ $config->title->col ] ], 0, 250);
-        } else {
-          $project->geo_address = $row[ $cols[ $config->geo->address->col ] ];
-        }
+        $project->geo_address = $row[ $cols[ $config->geo->address->col ] ];
       }
       if ( $config->geo->type == 'lat_lng' ) {
         $project->geo_type = 'lat_lng';
         $project->geo_lat = $row[ $cols[ $config->geo->lat_lng->lat->col ] ];
         $project->geo_lng = $row[ $cols[ $config->geo->lat_lng->lng->col ] ];
-      }
-
-      if ($project->status != $row[ $cols[ $config->status->col ] ] && $project->status != null) {
-        // Send Alert
-        //Alert::create(array('project_id' => $project->id));
       }
 
       $project->status = $row[ $cols[ $config->status->col ] ];

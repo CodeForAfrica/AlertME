@@ -106,7 +106,6 @@ class DataSourceData extends Eloquent {
    */
   function csv_to_array($filename='', $delimiter=',')
   {
-
     $header = NULL;
     $data = array();
     if (($handle = fopen($filename, 'r')) !== FALSE)
