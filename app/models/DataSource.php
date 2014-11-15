@@ -26,8 +26,6 @@ class DataSource extends Eloquent {
     {
       DataSourceSync::where('datasource_id', $datasource->id)->delete();
 
-      DataSourceData::where('datasource_id', $datasource->id)->delete();
-
       $projects = $datasource->projects;
       foreach ($projects as $project) {
         $project->delete();

@@ -47,6 +47,9 @@ class PahaliUpdate extends Command {
 
 		// DB Migrate
 		$this->call('migrate');
+
+		$this->call('clear-compiled');
+		$this->call('dump-autoload');
 	}
 
 	/**
