@@ -22,7 +22,10 @@ class RenameDatasourcesTable extends Migration {
 
 		Schema::table('data_source_configs', function($table)
 		{
-		  $table->renameColumn('data_source_id', 'datasource_id');
+			if (Schema::hasColumn('data_source_configs', 'data_source_id'))
+			{
+			  $table->renameColumn('data_source_id', 'datasource_id');
+			}
 		});
 		Schema::table('data_source_datas', function($table)
 		{
