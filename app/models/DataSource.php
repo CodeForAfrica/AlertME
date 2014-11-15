@@ -129,13 +129,6 @@ class DataSource extends Eloquent {
     
     $this->datasourcedata->raw = $csv;
     $this->datasourcedata->save();
-
-    // Set Categories
-    $categories = Category::all();
-    foreach ($categories as $category) {
-      $category->keywordAssign();
-    }
-    Log::info('Category assignment finished.');
     
     $ds_sync->sync_status = 1;
     $ds_sync->save();
@@ -147,6 +140,8 @@ class DataSource extends Eloquent {
   {
     $cols = $this->columns; // String Keys
     $config = $this->config; // Integer position
+
+    $categories = Category::all();
 
     foreach ( $csv as $row ) {
       $project = Project::firstOrCreate( array(
@@ -198,6 +193,10 @@ class DataSource extends Eloquent {
       $project->status = $row[ $cols[ $config->status->col ] ];
 
       $project->data = $row;
+
+      foreach ($categories as $category) {
+        $project->assignCategory($category);
+      }
 
       $project->save();
     }

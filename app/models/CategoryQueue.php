@@ -7,7 +7,11 @@ class CategoryQueue {
     Log::info('['.$job->getJobId().':'.$job->attempts().'] Category assignment started.');
 
     $category = Category::find($data['cat_id']);
-    $category->keywordAssign();
+    $projects = Project::all();
+    foreach ($projects as $project)
+    {
+      $project->assignCategory($category);
+    }
 
     Log::info('['.$job->getJobId().':'.$job->attempts().'] Category assignment completed.');
 

@@ -52,36 +52,6 @@ class Category extends Eloquent {
 
   // Other Functions
 
-  function keywordAssign ()
-  {
-    $keywords = explode(",", $this->keywords);
-
-    $projects = Project::all();
-
-    foreach ($projects as $project)
-    {
-      //
-      $project->categories()->detach($this->id);
-
-      $assign_cat = false;
-
-      foreach ( $keywords as $keyword ) {
-        $in_title  = stripos( $project->title, $keyword );
-        $in_desc   = stripos( $project->description, $keyword );
-        $in_sector = stripos( $project->status, $keyword );
-
-        // If keyword found
-        if ($in_title !== false || $in_desc !== false || $in_sector !== false) {
-          $assign_cat = true;
-        }
-      }
-
-      if ($assign_cat) {
-        $project->categories()->attach($this->id);
-      }
-    }
-  }
-
   static function geocoded()
   {
     $sel_cols_projects = array('projects.id', 'projects.project_id',

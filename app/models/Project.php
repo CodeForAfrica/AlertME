@@ -98,4 +98,28 @@ class Project extends Eloquent {
     return json_encode($geojson);
   }
 
+  function assignCategory($category)
+  {
+    $this->categories()->detach($category->id);
+
+    $assign_cat = false;
+
+    $keywords = explode(",", $category->keywords);
+
+    foreach ( $keywords as $keyword ) {
+      $in_title  = stripos( $this->title, $keyword );
+      $in_desc   = stripos( $this->description, $keyword );
+      $in_sector = stripos( $this->status, $keyword );
+
+      // If keyword found
+      if ($in_title !== false || $in_desc !== false || $in_sector !== false) {
+        $assign_cat = true;
+      }
+    }
+
+    if ($assign_cat) {
+      $this->categories()->attach($category->id);
+    }
+  }
+
 }
