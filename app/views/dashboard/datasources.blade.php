@@ -30,7 +30,7 @@
     @else
 
       @foreach ( $datasources as $datasource )
-        <div class="row" id="data-source-{{ $datasource->id }}">
+        <div class="row data-source" id="data-source-{{ $datasource->id }}">
 
           <div class="col-md-10">
             <p class="lead" id="title">{{ $datasource->title }}</p>
@@ -38,7 +38,7 @@
             <p><small>Url:
               <a href="{{ $datasource->url }}" target="_blank" id="url">{{ $datasource->url }}</a>
             </small></p>
-          </div>
+          </div> <!-- /.col-md-10 -->
 
           <div class="col-md-2 text-left">
             <p><button type="button" class="btn btn-link btn-sm" alt="{{ $datasource->id }}"
@@ -51,7 +51,7 @@
               id="del-data-source-{{ $datasource->id }}" data-toggle="modal" data-target="#deleteModal">
               <span class="text-danger"><span class="fui-trash"></span> Delete</button></span>
             </p>
-          </div>
+          </div> <!-- /.col-md-2 -->
 
         </div> <!-- /.row -->
         <hr/>
@@ -103,6 +103,7 @@
     </div>
   </div>
 
+
   <!-- Delete Modal -->
   <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -137,6 +138,7 @@
       </div> <!-- /.modal-content -->
     </div>
   </div> <!-- /.modal -->
+
 
   <!-- Configure Modal -->
   <div class="modal fade" id="configModal" tabindex="-1" role="dialog" aria-labelledby="configModalLabel" aria-hidden="true">
@@ -330,6 +332,7 @@
     </div>
   </div>
 
+
   <!-- Sync Modal -->
   <div class="modal fade" id="syncModal" tabindex="-1" role="dialog"
       aria-labelledby="syncModalLabel" aria-hidden="true">
@@ -397,23 +400,12 @@
 @section('scripts-data')
 
   var data_sources = {{ $datasources }};
-  $.extend(pahali.datasources, {{ $datasources }});
+  $.extend( pahali.datasources, {{ $datasources }} );
 
   var edit_id = 0;
   var config_data = new Object();
   var data_source_columns = [];
   var ds_config = new Object();
-
-  var config_id = -1;
-  var config_title = -1;
-  var config_desc = -1;
-  var config_geo_type = 'lat_lng';
-  var config_geo_lat = -1;
-  var config_geo_lng = -1;
-  var config_geo_add = -1;
-  var config_status = -1;
-
-  var config_sel_cols_html = '';
 
 @stop
 

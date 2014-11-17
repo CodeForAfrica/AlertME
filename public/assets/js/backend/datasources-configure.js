@@ -157,10 +157,9 @@ function configEditShow() {
   $('#btn-config-edit').hide();
   $('#btn-config-save').show();
 
-  config_sel_cols_html = '<option value="-1">Select column</option>';
+  var config_sel_cols_html = '<option value="-1">Select column</option>';
   $.each(pahali.datasource.columns, function( index, value ) {
-    config_sel_cols_html = config_sel_cols_html +
-        '<option value="' + index + '">' + value + '</option>';
+    config_sel_cols_html += '<option value="' + index + '">' + value + '</option>';
   });
 
   $('.config-edit select').html(config_sel_cols_html);
