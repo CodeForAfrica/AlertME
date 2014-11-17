@@ -312,7 +312,7 @@ In the root folder, simply run:
 php artisan pahali:upgrade
 ```
 
-<small>**Sometimes the command has also been updated so make sure to run it twice.*</small>
+<small>**Sometimes the command has also been updated so try to run it twice if things don't look right.*</small>
 
 
 
