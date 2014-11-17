@@ -27,7 +27,7 @@ function getUrlParameters(parameter, staticURL, decode){
   if(!returnBool) return false;
 }
 
-function setUrlParameters(parameter, staticURL, encode){
+function setUrlParameters(parameter, value, staticURL, encode){
   /*
   Function: setUrlParameters
   Description: Set the value of URL parameters either from
@@ -36,22 +36,33 @@ function setUrlParameters(parameter, staticURL, encode){
   URL: www.davidlemayian.com
   */
   var currLocation = (staticURL.length)? staticURL : window.location.hash;
-  if (!currLocation) return false ;
-  var parArr = currLocation.split("#!/")[1].split("&");
-  var returnBool = true;
+  if (!currLocation){
+    var parArr = [];
+  } else {
+    var parArr = currLocation.split("#!/")[1].split("&");
+  }
+  var parArrNew = [];
+  var returnUrl = '';
 
+  value = (encode) ? encodeURIComponent(value) : value;
 
-  for(var i = 0; i < parArr.length; i++){
-    parr = parArr[i].split("=");
-    if(parr[0] == parameter){
-      return (encode) ? decodeURIComponent(parr[1]) : parr[1];
-      returnBool = true;
-    }else{
-      returnBool = false;
+  if (getUrlParameters(parameter, staticURL, encode) != false) {
+    // Paramete exists in URL
+    for(var i = 0; i < parArr.length; i++){
+      parr = parArr[i].split("=");
+      if(parr[0] == parameter){
+        parArrNew[i] = parr[0] + '=' + value;
+      }else{
+        parArrNew[i] = parr[0] + '=' + parr[1];
+      }
     }
+  } else {
+    parArrNew = parArr;
+    parArrNew.push(parameter + '=' + value);
   }
 
-  if(!returnBool) return false;
+  return '!/' + parArrNew.join('&');
+
 }
 
 function isEmail(email){

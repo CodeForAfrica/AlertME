@@ -78,6 +78,7 @@ $( document ).ready(function() {
     }).done(function(response) {
 
       projects_categories = response.projects_categories;
+      pahali.map.set({'categories': projects_categories});
 
       map.removeLayer(markers);
 
@@ -138,6 +139,8 @@ $( document ).ready(function() {
       $('.map-loading').fadeOut();
       listMarkers();
 
+      pahali.map.shareable();
+
     });
 
   }
@@ -163,9 +166,6 @@ $( document ).ready(function() {
 
     $('#marker-no').html(inBounds.length);
   }
-
-
-  pahali.map.shareable();
 
 
 });
