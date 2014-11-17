@@ -38,6 +38,9 @@
       <p><b>Confirm subscription by visiting this <u>{{ $confirm_link }}</u>.</b></p>
       <small>Link not working? Copy and paste this link into your browser:<br/><u>{{ $confirm_url }}</u></small>
       <br/><br/>
+      
+    </td></tr>
+    <tr><td>
       <small><unsubscribe>Didn't subscribe? You can ignore this e-mail.</unsubscribe></small>
     </td></tr>
   </tbody>
