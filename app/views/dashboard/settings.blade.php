@@ -2,11 +2,16 @@
 
 @section('content')
 <div class="settings">
-  <h5>Settings</h5>
-
-  <hr/>
-
+  
   {{ Form::open(array('url' => 'dashboard/settings')) }}
+
+    <h5>
+      Settings
+      <button type="submit" class="btn btn-primary btn-embossed btn-wide"
+        style="margin-left: 30px;">Save Changes</button>
+    </h5>
+
+    <hr/>
 
     <h6>Geocode</h6>
 
@@ -17,8 +22,6 @@
         value="{{ $geoapi->key }}" name="key">
       <p class="help-block">Example block-level help text here.</p>
     </div>
-
-    <button type="submit" class="btn btn-primary btn-lg btn-embossed btn-wide">Save Changes</button>
 
   {{ Form::close() }}
 
