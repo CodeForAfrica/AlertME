@@ -4,21 +4,21 @@ use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
-class PahaliUpdate extends Command {
+class PahaliUpgrade extends Command {
 
 	/**
 	 * The console command name.
 	 *
 	 * @var string
 	 */
-	protected $name = 'pahali:update';
+	protected $name = 'pahali:upgrade';
 
 	/**
 	 * The console command description.
 	 *
 	 * @var string
 	 */
-	protected $description = 'Update the Pahali platform.';
+	protected $description = 'Upgrade the Pahali Platform.';
 
 	/**
 	 * Create a new command instance.
@@ -38,18 +38,16 @@ class PahaliUpdate extends Command {
 	public function fire()
 	{
 		//
+		$this->info('Running "git pull"...');
+		shell_exec('git pull');
 
-		$this->info('Updating bower components...');
-		shell_exec('bower update');
+		// DB Migrate
+		$this->call('migrate');
 
-		$this->info('Updating node components...');
-		shell_exec('npm update');
+		$this->call('clear-compiled');
+		$this->call('dump-autoload');
 
-		$this->info('Running "grunt bower_concat"...');
-		shell_exec('grunt bower_concat');
-		
-		// Clear Cache
-		$this->call('cache:clear');
+		$this->call('pahali:update');
 	}
 
 	/**

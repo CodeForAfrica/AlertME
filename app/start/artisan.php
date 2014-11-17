@@ -11,5 +11,6 @@
 |
 */
 
+Artisan::add(new PahaliUpgrade);
 Artisan::add(new PahaliUpdate);
 
