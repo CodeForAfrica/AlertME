@@ -185,7 +185,7 @@ $( document ).ready(function() {
     var data = {
       email: $('#map-alert-email').val().trim(),
       bounds: bound,
-      _token: csrf_token
+      _token: pahali.csrf_token
     };
     $.ajax({
       type: "POST",

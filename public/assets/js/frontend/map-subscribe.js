@@ -77,7 +77,7 @@ $( document ).ready(function() {
       center: center,
       zoom: map.getZoom(),
       geojson: JSON.stringify(map_subcribe_rectangle.toGeoJSON()),
-      _token: csrf_token
+      _token: pahali.csrf_token 
     };
     $.ajax({
       type: "POST",
