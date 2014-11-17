@@ -44,7 +44,7 @@
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-2.1.1.min.js"><\/script>')</script>
-    <script src="{{ secure_asset('assets/js/vendor/underscore-min.js') }}"></script>
+    <script src="{{ secure_asset('assets/js/_bower.js') }}"></script>
     <script src="{{ secure_asset('assets/js/vendor/readmore.min.js') }}"></script>
 
     <script src="{{ secure_asset('assets/js/plugins.js') }}"></script>
