@@ -116,7 +116,8 @@
       <!-- MODALS -->
 
       <!-- Subscribe Modal -->
-      <div class="modal" id="subscriptionModal" tabindex="-1" role="dialog" aria-labelledby="subscriptionModalLabel" aria-hidden="true">
+      <div class="modal" id="subscriptionModal" tabindex="-1" role="dialog"
+        aria-labelledby="subscriptionModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
 
@@ -197,13 +198,13 @@
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
 
-      <!-- Subscribe error modal -->
+      <!-- Subscribe zoom error modal -->
       <div class="modal fade" id="modal-subscribe-error" tabindex="-1" role="dialog"
         aria-labelledby="modal-subscribe-error-label" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-body text-center">
-              <p class="text-danger">
+              <p>
                 <span class="fa fa-rocket fa-4x"></span><br/>
                 Unfortunately we cannot create subscriptions this far out.<br/>
                 Zoom in closer to get this to work.
@@ -211,7 +212,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default btn-embossed" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-danger btn-embossed btn-wide"
+              <button type="button" class="btn btn-primary btn-embossed btn-wide"
                 onclick="javascript:map.setZoom(11);$('#modal-subscribe-error').modal('hide');">Zoom In</button>
             </div>
           </div>
