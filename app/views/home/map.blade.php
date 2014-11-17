@@ -79,13 +79,13 @@
           <button id="map-ctrl-zoom-in" class="btn btn-sm btn-embossed btn-primary">+</button>
           <button id="map-ctrl-zoom-out" class="btn btn-sm btn-embossed btn-primary">-</button>
         </div>
-        <br/><br/>
+        <!-- <br/><br/>
         <button class="map-ctrl-search btn btn-sm btn-embossed btn-primary">
           <small><span class="fa fa-search"></span></small></button>
         <br/><br/>
         <button class="map-ctrl-alert btn btn-sm btn-embossed btn-primary"
           data-toggle="modal" data-target="#alertModal">
-          #</button>
+          #</button> -->
       </div> <!-- /.map-controls -->
 
       <div class="map-loading text-center">
