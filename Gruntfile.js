@@ -9,7 +9,6 @@ module.exports = function(grunt) {
         dest: 'public/assets/js/_bower.js',
         cssDest: 'public/assets/css/_bower.css',
         exclude: [
-          'jquery',
           'modernizr'
         ],
         dependencies: {
