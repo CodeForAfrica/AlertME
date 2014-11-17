@@ -164,17 +164,19 @@ class Project extends Eloquent {
   {
     $this->categories()->detach($category->id);
 
+    $cols = $this->datasource->columns;
+    $config = $this->datasource->config; 
+
     $assign_cat = false;
 
     $keywords = explode(",", $category->keywords);
 
     foreach ( $keywords as $keyword ) {
-      $in_title  = stripos( $this->title, $keyword );
-      $in_desc   = stripos( $this->description, $keyword );
-      $in_sector = stripos( $this->status, $keyword );
+      $in_title  = stripos( $this->data->$cols[ $config->title->col ], $keyword );
+      $in_desc   = stripos( $this->data->$cols[ $config->desc->col ], $keyword );
 
       // If keyword found
-      if ($in_title !== false || $in_desc !== false || $in_sector !== false) {
+      if ($in_title !== false || $in_desc !== false ) {
         $assign_cat = true;
       }
     }
