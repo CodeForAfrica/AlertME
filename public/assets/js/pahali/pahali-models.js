@@ -37,10 +37,4 @@ pahali.datasource.config = {
   }
 };
 
-pahali.map = {
-  id: 'map',
-  options: {
-    map: 'undefined',
-    type: 'leaflet'
-  }
-};
+
