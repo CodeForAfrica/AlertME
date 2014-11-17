@@ -32,7 +32,9 @@ After spinning up your instance, you should install Linux, Nginx, MySQL, PHP (LE
 
 ##### 2. Install PHP Command Line Interface
 
-    sudo apt-get install php5-cli
+```console
+sudo apt-get install php5-cli
+```
 
 ##### 3. Install Git
 
@@ -95,19 +97,36 @@ You can learn more about installing and managing supervisor [here](https://www.d
 
 ##### 7. Ruby Requirements
 
-    sudo apt-get install ruby-dev
+```console
+sudo apt-get install ruby-dev
 
-    # Uninstall
-    sudo apt-get purge libruby1.9.1 ruby-dev ruby1.9.1 ruby1.9.1-dev
+# Uninstall
+sudo apt-get purge libruby1.9.1 ruby-dev ruby1.9.1 ruby1.9.1-dev
+```
 
 Install gems
-    
-    sudo gem install premailer getopt nokogiri
 
+```console
+sudo gem install premailer getopt nokogiri
+```
 
 ##### 8. Update MySQL
 
-    sudo apt-get install mysql-server-5.6
+```console
+sudo apt-get install mysql-server-5.6
+```
+
+
+##### 9. Install NPM & Bower
+
+```console
+sudo apt-get install nodejs
+sudo ln -s /usr/bin/nodejs /usr/bin/node
+curl -L https://npmjs.org/install.sh | sudo sh
+
+sudo npm install -g bower
+```
+
 
 
 
@@ -265,10 +284,13 @@ Finally, to see the page on *example.com* you would need to add the file `/etc/n
 
 Enable the site by creating a symlink:
 
-    sudo ln -s /etc/nginx/sites-available/greenalert /etc/nginx/sites-enabled/greenalert
-    sudo service nginx restart
+```console
+sudo ln -s /etc/nginx/sites-available/greenalert /etc/nginx/sites-enabled/greenalert
+sudo service nginx restart
+```
 
 Now if you visit *example.com*, you will be able to see the basic #GreenAlert website loaded.
+
 
 
 ### Loading Data
@@ -276,6 +298,22 @@ Now if you visit *example.com*, you will be able to see the basic #GreenAlert we
 ##### [ Coming Soon ]
 
 Hint: It's all about the Dashboard.
+
+
+
+
+### Updating the Platform
+
+We've created a simple command to update the platform from the git branch you are on.
+
+In the root folder, simply run:
+```console
+php artisan pahali:update
+```
+
+<small>**Sometimes the command has also been updated so make sure to run it twice.*</small>
+
+
 
 
 
