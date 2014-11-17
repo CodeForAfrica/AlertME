@@ -117,13 +117,14 @@ sudo apt-get install mysql-server-5.6
 ```
 
 
-##### 9. Install NPM & Bower
+##### 9. Install NPM , Grunt & Bower
 
 ```console
 sudo apt-get install nodejs
 sudo ln -s /usr/bin/nodejs /usr/bin/node
 curl -L https://npmjs.org/install.sh | sudo sh
 
+sudo npm install -g grunt-cli
 sudo npm install -g bower
 ```
 
@@ -302,13 +303,13 @@ Hint: It's all about the Dashboard.
 
 
 
-### Updating the Platform
+### Upgrading the Platform
 
-We've created a simple command to update the platform from the git branch you are on.
+We've created a simple command to upgrade the platform from the git branch you are on.
 
 In the root folder, simply run:
 ```console
-php artisan pahali:update
+php artisan pahali:upgrade
 ```
 
 <small>**Sometimes the command has also been updated so make sure to run it twice.*</small>
