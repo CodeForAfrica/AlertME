@@ -39,17 +39,26 @@ class PahaliUpdate extends Command {
 	{
 		//
 
-		// Clear Cache
-		$this->call('cache:clear');
-
 		$this->info('Running "git pull"...');
 		shell_exec('git pull');
+
+		$this->info('Updating bower components...');
+		shell_exec('bower update');
+
+		$this->info('Updating node components...');
+		shell_exec('npm update');
+
+		$this->info('Running "grunt bower_concat"...');
+		shell_exec('grunt bower_concat');
 
 		// DB Migrate
 		$this->call('migrate');
 
 		$this->call('clear-compiled');
 		$this->call('dump-autoload');
+
+		// Clear Cache
+		$this->call('cache:clear');
 	}
 
 	/**
