@@ -36,3 +36,11 @@ pahali.datasource.config = {
     title: 'Status', col: -1
   }
 };
+
+pahali.map = {
+  id: 'map',
+  options: {
+    map: 'undefined',
+    type: 'leaflet'
+  }
+};

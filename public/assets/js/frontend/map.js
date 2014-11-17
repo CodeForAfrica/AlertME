@@ -43,6 +43,8 @@ $( document ).ready(function() {
   }).setView([-28.4792625, 24.6727135], 5);
   map.scrollWheelZoom.disable();
 
+  pahali.map.options.map = map;
+
   pahali.map.center();
 
   // Map controls
@@ -57,18 +59,6 @@ $( document ).ready(function() {
   markers = new L.MarkerClusterGroup({
     showCoverageOnHover: false
   });
-
-  // Map events
-  map.on('zoomend, moveend', function(e) {
-    // Create shareable link
-    var loc_bounds = map.getBounds();
-    window.location.hash = "#!/bounds="+
-    loc_bounds._southWest.lat+","+loc_bounds._southWest.lng+","+
-    loc_bounds._northEast.lat+","+loc_bounds._northEast.lng;
-
-    listMarkers();
-  });
-
 
 
 
@@ -175,20 +165,7 @@ $( document ).ready(function() {
   }
 
 
-
-  /**
-   * Map link
-   * ---------------------------------------------------------------------------
-   */
-  if(getUrlParameters("center", "", true) != false){
-    var map_ctr = getUrlParameters("center", "", true).split(",");
-    var map_zoom = getUrlParameters("zoom", "", true);
-    map.setView([map_ctr[0], map_ctr[1]], map_zoom);
-  }
-  if(getUrlParameters("bounds", "", true) != false){
-    var map_bounds = getUrlParameters("bounds", "", true).split(",");
-    map.fitBounds([[map_bounds[0], map_bounds[1]],[map_bounds[2], map_bounds[3]]]);
-  }
+  pahali.map.shareable();
 
 
 });
