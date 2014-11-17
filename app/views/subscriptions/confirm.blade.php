@@ -40,7 +40,7 @@
             <div class="form-group">
               <label for="subscriber-email" class="col-sm-2 control-label">Email</label>
               <div class="col-sm-10">
-                <label id="subscriber-email" class="col-sm-2 control-label">{{ $user->email }}</label>
+                <label id="subscriber-email" class="col-sm-2 control-label">{{ $user_email }}</label>
               </div>
             </div>
             <div class="form-group">

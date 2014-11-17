@@ -186,10 +186,16 @@ class ApiSubscriptionController extends \BaseController {
       'access_token=pk.eyJ1IjoiY29kZWZvcmFmcmljYSIsImEiOiJVLXZVVUtnIn0.JjVvqHKBGQTNpuDMJtZ8Qg';
 
     $map_link = secure_asset('map/#!/bounds='.$subscription->bounds);
+
+    $user_email = substr(explode("@", $user->email)[0], 0, 1);
+    for ($i=0; $i < strlen(substr(explode("@", $user->email)[0], 1)); $i++) { 
+      $user_email .= 'x';
+    }
+    $user_email .= '@'.explode("@", $user->email)[1];
     
     $data = compact(
       'msg_confirm', 'msg_details',
-      'subscription', 'user',
+      'subscription', 'user', 'user_email',
       'map_image_link', 'map_link'
     );
     return View::make('subscriptions.confirm', $data);
