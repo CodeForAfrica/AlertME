@@ -124,7 +124,7 @@ $( document ).ready(function() {
     $.ajax({
       type: "DELETE",
       url: pahali.base_url+"/api/v1/datasources/"+edit_id,
-    }).done(function( response ) {
+    }).always(function( response ) {
       window.location.replace("/dashboard/datasources");
     });
 
