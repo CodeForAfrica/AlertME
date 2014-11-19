@@ -55,7 +55,7 @@ class ApiCategoryController extends \BaseController {
 				'error' => false,
 				'category' => $category->toArray()
 			),
-			200
+			201
 		);
 	}
 
