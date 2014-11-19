@@ -120,10 +120,22 @@ sudo apt-get install mysql-server-5.6
 ##### 9. Install NPM , Grunt & Bower
 
 ```console
-sudo apt-get install nodejs
-sudo ln -s /usr/bin/nodejs /usr/bin/node
-curl -L https://npmjs.org/install.sh | sudo sh
+curl -sL https://deb.nodesource.com/setup | sudo bash -
+sudo apt-get install -y nodejs
 
+```
+
+*Optional*: if you run `node` and `npm` in shell and they don't work, you can fix them as such:
+
+```console
+sudo ln -s /usr/bin/nodejs /usr/bin/node
+
+curl -L https://npmjs.org/install.sh | sudo sh
+```
+
+Now let's install `grunt-cli` and `bower` as such:
+
+```console
 sudo npm install -g grunt-cli
 sudo npm install -g bower
 ```
