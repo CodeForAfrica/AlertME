@@ -42,26 +42,26 @@
     @yield('footer')
 
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-2.1.1.min.js"><\/script>')</script>
-    <script src="/assets/js/vendor/underscore-min.js"></script>
-    <script src="/assets/js/vendor/readmore.min.js"></script>
+    <script src="{{ secure_asset('assets/js/_bower.js') }}"></script>
+    <script src="{{ secure_asset('assets/js/vendor/readmore.min.js') }}"></script>
 
-    <script src="/assets/js/plugins.js"></script>
-    <script src="/assets/js/application.js"></script>
+    <script src="{{ secure_asset('assets/js/plugins.js') }}"></script>
+    <script src="{{ secure_asset('assets/js/application.js') }}"></script>
     <!--<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>-->
 
-    <script src="/assets/js/flat-ui.min.js"></script>
+    <script src="{{ secure_asset('assets/js/flat-ui.min.js') }}"></script>
+
+    <script src="{{ secure_asset('assets/js/pahali/pahali.js') }}"></script>
 
     <script>
-      var base_url = "{{ URL::to('/') }}";
-      var csrf_token = "{{ csrf_token() }}";
+      pahali.base_url = "{{ URL::to('/') }}";
+      pahali.csrf_token = "{{ csrf_token() }}";
       @section('scripts-data')
         
       @show
     </script>
 
-    <script src="/assets/js/main.js"></script>
+    <script src="{{ secure_asset('assets/js/main.js') }}"></script>
 
     @yield('scripts')
 

@@ -8,10 +8,10 @@
 
     <div class="container ">
       <div class="page-header">
-        <h1>{{ $about->title == '' ? 'About' : $about->title; }}</h1>
+        <h1>{{ $about->data->title == '' ? 'About' : $about->data->title; }}</h1>
       </div>
 
-      @if ( $about->description == '' )
+      @if ( $about->data->description == '' )
 
         <p>South African law says planned development projects, including mines,
           dams, power stations, roads and landfill sites, need to have their
@@ -29,7 +29,7 @@
 
       @else
 
-        {{ Markdown::render($about->description) }}
+        {{ Markdown::render($about->data->description) }}
 
       @endif
 

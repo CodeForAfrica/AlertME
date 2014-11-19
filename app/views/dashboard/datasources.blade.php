@@ -7,7 +7,7 @@
   <h5>
     Data Sources
     <button type="button" class="btn btn-info btn-embossed btn-wide btn-sm"
-      id="data-source-sync" data-toggle="modal" data-target="#syncModal">
+      id="btn-sync-modal" data-toggle="modal" data-target="#syncModal">
       <span class="fui-radio-unchecked"></span> Sync
     </button>
     <button type="button" class="btn btn-primary btn-embossed btn-wide btn-sm data-source-add"
@@ -30,7 +30,7 @@
     @else
 
       @foreach ( $datasources as $datasource )
-        <div class="row" id="data-source-{{ $datasource->id }}">
+        <div class="row data-source" id="data-source-{{ $datasource->id }}">
 
           <div class="col-md-10">
             <p class="lead" id="title">{{ $datasource->title }}</p>
@@ -38,11 +38,11 @@
             <p><small>Url:
               <a href="{{ $datasource->url }}" target="_blank" id="url">{{ $datasource->url }}</a>
             </small></p>
-          </div>
+          </div> <!-- /.col-md-10 -->
 
           <div class="col-md-2 text-left">
             <p><button type="button" class="btn btn-link btn-sm" alt="{{ $datasource->id }}"
-              id="config-data-source-{{ $datasource->id }}" data-toggle="modal" data-target="#configModal">
+              id="btn-configure-{{ $datasource->id }}" data-toggle="modal" data-target="#configModal">
               <span class="fui-cmd"></span> Configure</button></p>
             <p><button type="button" class="btn btn-link btn-sm" alt="{{ $datasource->id }}"
               id="edit-data-source-{{ $datasource->id }}" data-toggle="modal" data-target="#editModal">
@@ -51,7 +51,7 @@
               id="del-data-source-{{ $datasource->id }}" data-toggle="modal" data-target="#deleteModal">
               <span class="text-danger"><span class="fui-trash"></span> Delete</button></span>
             </p>
-          </div>
+          </div> <!-- /.col-md-2 -->
 
         </div> <!-- /.row -->
         <hr/>
@@ -103,6 +103,7 @@
     </div>
   </div>
 
+
   <!-- Delete Modal -->
   <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -122,16 +123,22 @@
             <p><span id="del_desc"></span></p>
             <p><small><span id="del_url"></span></small></p>
           </div>
-        </div>
+
+          <p class="text-center" id="loading-delete" style="display:none;" >
+            <i class="fa fa-circle-o-notch fa-spin"></i> Deleting this Data Source and all its contents...<br/>
+            <small>This might take a few minutes</small>
+          </p>
+        </div> <!-- /.modal-body -->
 
         <div class="modal-footer">
           <button type="button" class="btn btn-default btn-embossed btn-wide close-modal" data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-danger btn-embossed btn-wide" id="delete-data-source">Delete Data Source</button>
+          <button type="button" class="btn btn-danger btn-embossed btn-wide" id="btn-delete">Delete Data Source</button>
         </div>
 
-      </div>
+      </div> <!-- /.modal-content -->
     </div>
-  </div>
+  </div> <!-- /.modal -->
+
 
   <!-- Configure Modal -->
   <div class="modal fade" id="configModal" tabindex="-1" role="dialog" aria-labelledby="configModalLabel" aria-hidden="true">
@@ -148,30 +155,187 @@
         <div class="modal-body">
           <p><em>This is where you tell the system how your data source is structured.</em></p>
           <div class="well">
-            <div class="row">
+
+
+            <!-- Title -->
+            <div class="row config-title">
               <div class="col-sm-3">
                 <p><b>Data Source</b></p>
               </div>
               <div class="col-sm-9">
-                <p id="title"></p>
+                <p id="config-title"></p>
+              </div> <!-- /.col-sm-9 -->
+            </div> <!-- /.row .config-title -->
+
+
+            <!-- Columns -->
+            <div class="row config-columns">
+              <div class="col-sm-3">
+                <p><b>Columns</b></p>
               </div>
-            </div>
+              <div class="col-sm-9">
+                <p class="config-columns-list" style="display:none;"></p>
+
+                <!-- Alerts -->
+                <div class="alert alert-info" role="alert" style="display:none;">
+                  <span class="fui-alert-circle"></span> We are still fetching this data source's details...<br/>
+                  <button class="btn btn-sm btn-link btn-config-refresh">
+                    <i class="fa fa-refresh"></i> Refresh to check for update
+                  </button>
+                </div>
+                <div class="alert alert-danger" role="alert" style="display:none;">
+                  <p>
+                    <span class="fui-alert-circle"></span> This data source has an error.
+                    Please check that the data is well structured, delete it and add it again.<br/>
+                  </p>
+                </div>
+
+              </div> <!-- /.col-sm-9 -->
+            </div> <!-- /.row .config-columns -->
+
+
+            <!-- Config Screen -->
+            <div class="row config-screen" style="display:none;">
+              <div class="col-sm-3">
+                <p><b>Configuration</b></p>
+              </div>
+              <div class="col-sm-9">
+
+                <!-- Alerts -->
+                <div class="alert alert-success alert-ready" role="alert" style="display:none;">
+                  <span class="fui-alert-circle"></span> This data source is ready for configuriation.<br/>
+                  <button class="btn btn-sm btn-link" id="btn-config-new">
+                    <span class="fui-cmd"></span> Configure now
+                  </button>
+                </div>
+
+                <!-- List configuration -->
+                <div class="config-list" style="display:none;">
+                  <p>Platform required columns and related data source columns:</p>
+                  <table class="table">
+                    <thead><tr><th>Platform</th><th>Data Source</th></tr></thead>
+                    <tbody>
+                      <tr><td>ID</td><td>'+ds_cols[config_id]+'</td></tr>
+                      <tr><td>Title</td><td>'+ds_cols[config_title]+'</td></tr>
+                      <tr><td>Description</td><td>'+ds_cols[config_desc]+'</td></tr>
+                      <tr><td>Geo Type</td><td></td></tr>
+                      <tr><td>Geo Lat</td><td></td></tr>
+                      <tr><td>Geo Lng</td><td></td></tr>
+                      <tr><td>Geo Address</td><td></td></tr>
+                      <tr><td>Status</td><td>'+ds_cols[config_status]+'</td></tr>
+                    </tbody>
+                  </table>
+                </div> <!-- /.config-list -->
+
+                <!-- Edit configuration -->
+                <div class="config-edit" style="display:none;">
+                  <div class="alert alert-success">
+                    <p>Columns configuration for each project\row of data.</p>
+
+                    <p>
+                      <b>ID</b> <small><em>(Important! Unique identifier)</em></small><br/>
+                      <select id="config-sel-id"
+                        class="form-control select select-primary select-block mbl">
+                      </select>
+                    </p>
+
+                    <p>
+                      <b>Title</b><br/>
+                      <select id="config-sel-title"
+                        class="form-control select select-primary select-block mbl">
+                      </select>
+                    </p>
+                    <p>
+                      <b>Description</b><br/>
+                      <select id="config-sel-desc"
+                        class="form-control select select-primary select-block mbl">
+                      </select>
+                    </p>
+                    <p>
+                      <b>Geolocation</b><br/>
+                      <div class="row">
+                        <div class="col-xs-3">Type:</div>
+                        <div class="col-xs-9">
+                          <label class="radio config-radio-geo-type">
+                            <input type="radio" name="config-sel-geo-type" id="config-sel-geo-type-lat-lng"
+                              value="lat_lng" data-toggle="radio" checked="">
+                            Lat + Lng
+                          </label>
+                          <label class="radio config-radio-geo-type">
+                            <input type="radio" name="config-sel-geo-type" id="config-sel-geo-type-add"
+                              value="address" data-toggle="radio">
+                            Address
+                          </label>
+                        </div>
+                      </div>
+                      <div id="config-edit-geo-type">
+                        <div class="row config-edit-geo-type-lat-lng">
+                          <div class="col-xs-3">Lat:</div>
+                          <div class="col-xs-9">
+                            <select id="config-sel-geo-lat"
+                              class="form-control select select-primary mbl">
+                            </select>
+                          </div>
+                        </div>
+                        <div class="row config-edit-geo-type-lat-lng">
+                          <div class="col-xs-3">Long:</div>
+                          <div class="col-xs-9">
+                            <select id="config-sel-geo-lng"
+                              class="form-control select select-primary mbl">
+                            </select>
+                          </div>
+                        </div>
+                        <div class="row config-edit-geo-type-add" style="display:none;">
+                          <div class="col-xs-3">Address:</div>
+                          <div class="col-xs-9">
+                            <select id="config-sel-geo-add"
+                              class="form-control select select-primary mbl">
+                            </select>
+                          </div>
+                        </div>
+                      </div> <!-- /#geo_type -->
+                    </p>
+                    <p>
+                      <b>Status</b><br/>
+                      <select id="config-sel-status"
+                        class="form-control select select-primary select-block mbl">
+                      </select>
+                    </p>
+
+                    <p id="config-edit-error" class="text-danger alert alert-danger" style="display:none;">
+                      <small><b>Error:</b> Please define all columns.</small>
+                    </p>
+                  </div>
+                </div> <!-- /.config-edit -->
+
+              </div> <!-- /.col-sm-9 -->
+            </div> <!-- /.row .config-screen -->
+
+            <p class="text-center" id="config-loading">
+              <i class="fa fa-circle-o-notch fa-spin"></i><br/>Loading configuration...
+            </p>
+
           </div>
         </div>
 
         <div class="modal-footer">
-          <button type="button" class="btn btn-default btn-embossed btn-wide close-modal" data-dismiss="modal">Close</button>
-          <span id="edit-config-btn">
-            <button type="button" class="btn btn-info btn-embossed btn-wide" id="edit-config">Edit</button>
-          </span>
+          <button type="button" class="btn btn-default btn-embossed btn-wide close-modal"
+            data-dismiss="modal">Close</button>
+
+          <button type="button" class="btn btn-info btn-embossed btn-wide"
+            id="btn-config-edit" style="display:none;">Edit</button>
+          <button type="button" class="btn btn-primary btn-embossed btn-wide"
+            id="btn-config-save" style="display:none;">Save</button>
         </div>
 
       </div>
     </div>
   </div>
 
+
   <!-- Sync Modal -->
-  <div class="modal fade" id="syncModal" tabindex="-1" role="dialog" aria-labelledby="syncModalLabel" aria-hidden="true">
+  <div class="modal fade" id="syncModal" tabindex="-1" role="dialog"
+      aria-labelledby="syncModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
 
@@ -184,8 +348,30 @@
 
         <div class="modal-body">
           <p>We will sync the following data sources:</p>
-          <div class="well" id="data-sources-sync">
-          </div>
+          <div class="well sync-screen">
+
+            <ol class="sync-list" style="display:none;"></ol>
+
+            <!-- Alerts -->
+            <div class="alert alert-danger" style="display:none;">
+              <p><span class="fui-alert-circle"></span>
+                It seems you don't have any data sources yet.
+                <button type="button" class="btn btn-primary btn-sm">
+                  <span class="fui-plus"></span> Add
+                </button>
+                some now to get started.
+              </p>
+            </div>
+            <div class="alert alert-warning" style="display:none;">
+              <p>
+                <span class="fui-alert-circle"></span>
+                <b>Oops:</b> There doesn't seem to be any data sources to sync at this moment. Please
+                <span class="text-primary"><span class="fui-cmd"></span>Configure</span>
+                some to be able to sync data.
+              </p>
+            </div>
+
+          </div> <!-- /. -->
           <p class="text-muted"><em>
             If you don't see the data source you want to sync in the list above,
             make sure it is configured. To do so, click the <span class="text-primary">
@@ -194,8 +380,10 @@
         </div>
 
         <div class="modal-footer">
-          <button type="button" class="btn btn-default btn-embossed btn-wide close-modal" data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-info btn-embossed btn-wide" id="sync-data-sources">Sync Data Sources</button>
+          <button type="button" class="btn btn-default btn-embossed btn-wide close-modal"
+            data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-info btn-embossed btn-wide"
+            id="btn-sync">Sync Data Sources</button>
         </div>
 
       </div>
@@ -211,26 +399,18 @@
 
 @section('scripts-data')
 
-var data_sources = {{ $datasources }};
+  var data_sources = {{ $datasources }};
+  $.extend( pahali.datasources, {{ $datasources }} );
 
-var edit_id = 0;
-var config_data = new Object();
-var data_source_columns = [];
-var ds_config = new Object();
-
-var config_id = -1;
-var config_title = -1;
-var config_desc = -1;
-var config_geo_type = 'lat_lng';
-var config_geo_lat = -1;
-var config_geo_lng = -1;
-var config_geo_add = -1;
-var config_status = -1;
-
-var config_sel_cols_html = '';
+  var edit_id = 0;
+  var config_data = new Object();
+  var data_source_columns = [];
+  var ds_config = new Object();
 
 @stop
 
 @section('scripts')
-  <script src="/assets/js/backend/datasources.js"></script>
+  <script src="{{ secure_asset('assets/js/backend/datasources.js') }}"></script>
+  <script src="{{ secure_asset('assets/js/backend/datasources-configure.js') }}"></script>
+  <script src="{{ secure_asset('assets/js/backend/datasources-sync.js') }}"></script>
 @stop

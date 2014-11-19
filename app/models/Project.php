@@ -2,71 +2,188 @@
 
 class Project extends Eloquent {
 
-    protected $table = 'projects';
-    protected $fillable = array('project_id');
+  protected $table = 'projects';
+  protected $fillable = array('data_id');
 
-    public static function boot()
+  public static function boot()
+  {
+    parent::boot();
+
+    // Setup event bindings...
+    Project::created(function($project)
     {
-      parent::boot();
 
-      // Setup event bindings...
-      Project::created(function($project)
-      {
+    });
 
-      });
+    Project::deleting(function($project)
+    {
+      $project->categories()->detach();
+    });
 
+  }
+
+
+  // Accessors & Mutators
+
+  public function getTitleAttribute($value)
+  {
+    if (strlen($value) == 0){
+      $value = '[No Title]';
     }
 
-    function datasource()
-    {
-      return $this->belongsTo('DataSource');
+    if (ctype_upper($value)) {
+      $value = strtolower($value);
+      $value = ucwords($value);
     }
 
-    function datasourceconfig()
-    {
-      return $this->belongsTo('DataSourceConfig');
-    }
+    return $value;
+  }
 
-    function datasourcesync()
-    {
-      return $this->belongsTo('DataSourceSync');
+  public function setTitleAttribute($value)
+  {
+    if (strlen($value) > 254){
+      $value = substr($value, 0, 250);
+      $value = $value . '...';
     }
+    $this->attributes['title'] = $value;
+  }
 
-    function datasourcedata()
-    {
-      return $this->belongsTo('DataSourceData');
+  public function getDescriptionAttribute($value)
+  {
+    if (strlen($value) == 0){
+      $value = '[No Description]';
     }
-
-    function datasourcedata_single()
-    {
-      return json_decode(DB::table('data_source_datas_'.$this->data_source_id)
-        ->where('data_id', $this->project_id)->first()->data);
+    if (ctype_upper($value)) {
+      $value = strtolower($value);
+      $value = ucfirst($value);
     }
+    return $value;
+  }
 
-    function categories()
-    {
-      return $this->belongsToMany('Category', 'project_category');
+  public function setDescriptionAttribute($value)
+  {
+    $this->attributes['description'] = $value;
+  }
+
+  public function getGeoAddressAttribute($value)
+  {
+    return $value;
+  }
+
+  public function setGeoAdressAttribute($value)
+  {
+    if (strlen($value) > 254){
+      $value = substr($value, 0, 254);
     }
+    $this->attributes['geo_address'] = $value;
+  }
 
-    function geocode()
-    {
-      if (trim($this->geo_address) == '') return array( 'lat' => 0 , 'lng' => 0 );
-      return $this->hasOne('Geocode', 'address', 'geo_address');
+  public function getStatusAttribute($value)
+  {
+    return $value;
+  }
+
+  public function setStatusAttribute($value)
+  {
+    if ($this->status != $value) {
+      // Create Alert
+      // Alert::create(array('project_id' => $project->id));
     }
+    $this->attributes['status'] = $value;
+  }
 
-    function geo()
-    {
-      $geo = new stdClass(); $geo->lat = 0; $geo->lng = 0;
-      if($this->geo_type == 'lat_lng') {
-        $geo->lat = floatval ($this->geo_lat);
-        $geo->lng = floatval ($this->geo_lng);
+  public function getDataAttribute($value)
+  {
+    return json_decode($value);
+  }
+
+  public function setDataAttribute($value)
+  {
+    $this->attributes['data'] = json_encode($value);
+  }
+
+
+  // Relations
+
+  public function datasource()
+  {
+    return $this->belongsTo('DataSource');
+  }
+
+  public function datasourcesync()
+  {
+    return $this->belongsTo('DataSourceSync');
+  }
+
+  public function categories()
+  {
+    return $this->belongsToMany('Category', 'project_category');
+  }
+
+  public function geocode()
+  {
+    if (trim($this->geo_address) == '') return array( 'lat' => 0 , 'lng' => 0 );
+    return $this->hasOne('Geocode', 'address', 'geo_address');
+  }
+
+
+  // Other functions
+
+  function geo()
+  {
+    $geo = new stdClass(); $geo->lat = 450; $geo->lng = 450;
+    if($this->geo_type == 'lat_lng') {
+      $geo->lat = floatval ($this->geo_lat);
+      $geo->lng = floatval ($this->geo_lng);
+    }
+    if($this->geo_type == 'address' && trim($this->geo_address) != '') {
+      $geocode = Geocode::where('address', $this->geo_address)->first();
+      $geo->lat = floatval ($geocode->lat);
+      $geo->lng = floatval ($geocode->lng);
+    }
+    return $geo;
+  }
+
+  function  geojson()
+  {
+    $geo = $this->geo();
+    $geojson = array(
+      'type' => 'FeatureCollection',
+      'features' => array(
+        array(
+          'type' => 'Feature',
+          'geometry' => array('type' => 'Point', 'coordinates' => array($geo->lng , $geo->lat)),
+          'properties' => array('prop0' => 'value0')
+        )
+      )
+    );
+    return json_encode($geojson);
+  }
+
+  function assignCategory($category)
+  {
+    $this->categories()->detach($category->id);
+
+    $cols = $this->datasource->columns;
+    $config = $this->datasource->config; 
+
+    $assign_cat = false;
+
+    $keywords = explode(",", $category->keywords);
+
+    foreach ( $keywords as $keyword ) {
+      $in_title  = stripos( $this->data->$cols[ $config->title->col ], $keyword );
+      $in_desc   = stripos( $this->data->$cols[ $config->desc->col ], $keyword );
+
+      // If keyword found
+      if ($in_title !== false || $in_desc !== false ) {
+        $assign_cat = true;
       }
-      if($this->geo_type == 'address' && trim($this->geo_address) != '') {
-        $geocode = Geocode::where('address', $this->geo_address)->first();
-        $geo->lat = floatval ($geocode->lat);
-        $geo->lng = floatval ($geocode->lng);
-      }
-      return $geo;
     }
+
+    if ($assign_cat) {
+      $this->categories()->attach($category->id);
+    }
+  }
 
 }

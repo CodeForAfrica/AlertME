@@ -14,7 +14,7 @@ $( document ).ready(function() {
     $('#loading-geo').fadeIn('slow');
     var place = searchBox.getPlace();
     window.location.href = "/map/#!/center="+place.geometry.location.k+","+
-    place.geometry.location.B+"&zoom=10";
+    place.geometry.location.B+"&zoom=11";
 
   });
 

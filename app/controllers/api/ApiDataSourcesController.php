@@ -39,15 +39,15 @@ class ApiDataSourceController extends \BaseController {
 	{
 		//
 		$datasource = new DataSource;
-		$datasource->title = Input::get('title');
-		$datasource->description = Input::get('desc');
-		$datasource->url = Input::get('url');
+		$datasource->title = Input::get('title', $datasource->title);
+		$datasource->description = Input::get('desc', $datasource->description);
+		$datasource->url = Input::get('url', $datasource->url);
 
 		$datasource->save();
 
 		return Response::json(array(
         'error' => false,
-        'datasources' => $datasource->toArray()),
+        'datasource' => $datasource->toArray()),
         200
     );
 	}
@@ -65,7 +65,7 @@ class ApiDataSourceController extends \BaseController {
 		$datasource =  DataSource::find($id);
 		return Response::json(array(
 				'error' => false,
-				'datasources' => $datasource->toArray()),
+				'datasource' => $datasource->toArray()),
 				200
 		);
 	}
@@ -93,14 +93,18 @@ class ApiDataSourceController extends \BaseController {
 	{
 		//
 		$datasource = DataSource::find($id);
-		$datasource->title = Input::get('title');
-		$datasource->description = Input::get('desc');
-		$datasource->url = Input::get('url');
+		$datasource->title = Input::get('title', $datasource->title);
+		$datasource->description = Input::get('description', $datasource->description);
+		$datasource->url = Input::get('url', $datasource->url);
+
+		$datasource->config = Input::get('config', $datasource->config);
+		$datasource->config_status = Input::get('config_status', $datasource->config_status);
 
 		$datasource->save();
+
 		return Response::json(array(
 				'error' => false,
-				'datasources' => $datasource->toArray()),
+				'datasource' => $datasource->toArray()),
 				200
 		);
 	}
@@ -118,7 +122,7 @@ class ApiDataSourceController extends \BaseController {
 		DataSource::find($id)->delete();
 		return Response::json(array(
 				'error' => false,
-				'message' => 'Data source deleted.'),
+				'message' => 'Datasource deleted.'),
 				200
 		);
 	}

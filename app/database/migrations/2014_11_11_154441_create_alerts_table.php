@@ -19,6 +19,14 @@ class CreateAlertsTable extends Migration {
 			$table->integer('status')->default(0);
 			$table->timestamps();
 		});
+
+		Schema::create('subscription_alert', function(Blueprint $table)
+		{
+			$table->increments('id');
+			$table->integer('subscription_id');
+			$table->integer('alert_id')->default(0);
+			$table->timestamps();
+		});
 	}
 
 	/**
@@ -28,7 +36,8 @@ class CreateAlertsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::dropIfExists('alerts');
+		Schema::drop('alerts');
+		Schema::drop('subscription_alert');
 	}
 
 }

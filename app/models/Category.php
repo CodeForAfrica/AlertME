@@ -2,98 +2,94 @@
 
 class Category extends Eloquent {
 
-    protected $table = 'categories';
+  protected $table = 'categories';
 
-    public static function boot()
+  public static function boot()
+  {
+    parent::boot();
+
+    // Setup event bindings...
+    Category::creating(function($category)
     {
-      parent::boot();
 
-      // Setup event bindings...
-      Category::creating(function($category)
-      {
+    });
 
-      });
+    Category::saving(function($category)
+    {
 
-      Category::saving(function($category)
-      {
+    });
 
-      });
+    Category::created(function($category)
+    {
+      Queue::push('CategoryQueue', array(
+        'cat_id' => $category->id
+      ));
+    });
 
-      Category::created(function($category)
-      {
-        $cat_old = Category::find($category->id);
-        Queue::push('CategoryQueue', array(
-          'cat_id' => $category->id,
-          'cat_new' => $category,
-          'cat_old' => $cat_old,
-          'new' => true
-        ));
-      });
+    Category::updated(function($category)
+    {
+      Queue::push('CategoryQueue', array(
+        'cat_id' => $category->id
+      ));
+    });
 
-      Category::updating(function($category)
-      {
-        $cat_old = Category::find($category->id);
-        Queue::push('CategoryQueue', array(
-          'cat_id' => $category->id,
-          'cat_new' => $category,
-          'cat_old' => $cat_old,
-          'new' => false
-        ));
-      });
-      Category::deleted(function($category)
-      {
-        self::keywordUnAssign($category);
-      });
+    Category::deleted(function($category)
+    {
+      DB::table('project_category')
+        ->where('category_id', $category->id)
+        ->delete();
+    });
+  }
+
+
+  // Relations
+
+  public function projects()
+  {
+    return $this->belongsToMany('Project');
+  }
+
+
+  // Other Functions
+
+  static function geocoded()
+  {
+    $sel_cols_projects = array('projects.id', 'projects.data_id',
+      'projects.title', 'projects.description', 'projects.geo_type',
+      'projects.geo_address', 'projects.geo_lat', 'projects.geo_lng',
+      'projects.status');
+    $sel_cols_geocodes = array('geocodes.lat', 'geocodes.lng',
+      'geocodes.status as geo_status');
+    $projects_lat_lng = DB::table('projects')
+                          ->where('geo_type', 'lat_lng')
+                          ->select( $sel_cols_projects )->get();
+    $projects_address = DB::table('projects')
+                          ->join('geocodes', 'projects.geo_address', '=', 'geocodes.address')
+                          ->where('projects.geo_type', '=', 'address')
+                          ->select( array_merge($sel_cols_projects, $sel_cols_geocodes) )->get();
+    $projects = array_merge($projects_lat_lng, $projects_address);
+
+    $projects_id = array();
+    foreach ($projects as $project) {
+      array_push( $projects_id, $project->id);
+    }
+    $projects_categories = DB::table('project_category')
+                             ->whereIn('project_id', $projects_id)
+                             ->select('category_id')
+                             ->distinct()
+                             ->get();
+    $category_ids = array();
+    foreach ($projects_categories as $projects_category) {
+      array_push( $category_ids, $projects_category->category_id);
+    }
+    
+    if (count($category_ids) == 0) {
+      return null;
     }
 
-    function projects()
-    {
-      return $this->belongsToMany('Project');
-    }
+    $categories = Category::whereIn('id', $category_ids)->get();
 
-    static function keywordUnAssign ( $category )
-    {
-      DB::table('project_category')->where('category_id', $category->id)->delete();
-    }
-
-    static function geocoded()
-    {
-      $sel_cols_projects = array('projects.id', 'projects.project_id',
-        'projects.title', 'projects.description', 'projects.geo_type',
-        'projects.geo_address', 'projects.geo_lat', 'projects.geo_lng',
-        'projects.status');
-      $sel_cols_geocodes = array('geocodes.lat', 'geocodes.lng',
-        'geocodes.status as geo_status');
-      $projects_lat_lng = DB::table('projects')
-                            ->where('geo_type', 'lat_lng')
-                            ->select( $sel_cols_projects )->get();
-      $projects_address = DB::table('projects')
-                            ->join('geocodes', 'projects.geo_address', '=', 'geocodes.address')
-                            ->where('projects.geo_type', '=', 'address')
-                            ->select( array_merge($sel_cols_projects, $sel_cols_geocodes) )->get();
-      $projects = array_merge($projects_lat_lng, $projects_address);
-
-      $projects_id = array();
-      foreach ($projects as $project) {
-        array_push( $projects_id, $project->id);
-      }
-      $projects_categories = DB::table('project_category')
-                               ->whereIn('project_id', $projects_id)
-                               ->select('category_id')
-                               ->distinct()
-                               ->get();
-      $category_ids = array();
-      foreach ($projects_categories as $projects_category) {
-        array_push( $category_ids, $projects_category->category_id);
-      }
-      
-      if (count($category_ids) == 0) {
-        return null;
-      }
-
-      $categories = Category::whereIn('id', $category_ids)->get();
-
-      return $categories;
-    }
+    return $categories;
+  }
 
 }

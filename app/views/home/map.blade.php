@@ -79,13 +79,13 @@
           <button id="map-ctrl-zoom-in" class="btn btn-sm btn-embossed btn-primary">+</button>
           <button id="map-ctrl-zoom-out" class="btn btn-sm btn-embossed btn-primary">-</button>
         </div>
-        <br/><br/>
+        <!-- <br/><br/>
         <button class="map-ctrl-search btn btn-sm btn-embossed btn-primary">
           <small><span class="fa fa-search"></span></small></button>
         <br/><br/>
         <button class="map-ctrl-alert btn btn-sm btn-embossed btn-primary"
           data-toggle="modal" data-target="#alertModal">
-          #</button>
+          #</button> -->
       </div> <!-- /.map-controls -->
 
       <div class="map-loading text-center">
@@ -116,7 +116,8 @@
       <!-- MODALS -->
 
       <!-- Subscribe Modal -->
-      <div class="modal" id="subscriptionModal" tabindex="-1" role="dialog" aria-labelledby="subscriptionModalLabel" aria-hidden="true">
+      <div class="modal" id="subscriptionModal" tabindex="-1" role="dialog"
+        aria-labelledby="subscriptionModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
 
@@ -129,8 +130,9 @@
 
             <div class="modal-body">
 
-              <div id="map-alert" style="height:200px; cursor:default;"></div>
+              <img id="map-alert" src="#" class="img-rounded img-responsive" />
               <hr/>
+
               <p>Enter your e-mail address below to receive alerts in this area.</p>
               <div class="form-horizontal" role="form">
                 <div class="form-group map-alert-email">
@@ -149,18 +151,22 @@
 
               <!-- ALERTS -->
               <!-- Loading -->
-              <div class="alert alert-info text-center" role="alert" style="display:none;"><small>
-                <i class="fa fa-circle-o-notch fa-spin"></i>
-                Subscribing... You'll soon be receiving updates from this area.
-              </small></div>
+              <div class="alert alert-info text-center" role="alert" style="display:none;">
+                <small>
+                  <i class="fa fa-circle-o-notch fa-spin"></i>
+                  Subscribing... You'll soon be receiving updates from this area.
+                </small>
+              </div>
               <!-- Success -->
               <div class="alert alert-success alert-dismissible" role="alert" style="display:none;">
                 <button type="button" class="close" data-dismiss="alert">
                   <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
                 </button>
-                <small><span class="fui-check-circle"></span> Awesome! Check your e-mail to confirm subscription.</small>
+                <small><span class="fui-check-circle"></span>
+                  Awesome! Check your e-mail to confirm subscription.
+                </small>
               </div>
-              <!-- Warn -->
+              <!-- Warning -->
               <div class="alert alert-warning alert-dismissible" role="alert" style="display:none;">
                 <button type="button" class="close" data-dismiss="alert">
                   <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
@@ -168,7 +174,9 @@
                 <small>
                   <span class="fui-alert-circle"></span>
                   <b>Hmm...</b>
-                  <span class="msg-error duplicate" style="display:none;"><br/>Seems like you are already subscribed to this area.</span>
+                  <span class="msg-error duplicate" style="display:none;"><br/>
+                    Seems like you are already subscribed to this area.
+                  </span>
                 </small>
               </div>
               <!-- Error -->
@@ -179,22 +187,51 @@
                 <small>
                   <span class="fui-alert-circle"></span>
                   <b>Oops!</b> Looks like something went wrong.
-                  <span class="msg-error email" style="display:none;"><br/>Please check the e-mail address entered.</span>
-                  <span class="msg-error limit" style="display:none;"><br/>You've reached the max number of alerts registration.</span>
-                  <span class="msg-error reload" style="display:none;"><br/>Please <a href="javascript:location.reload();">reload</a> the page and try again.</span>
+                  <span class="msg-error email" style="display:none;"><br/>
+                    Please check the e-mail address entered.
+                  </span>
+                  <span class="msg-error limit" style="display:none;"><br/>
+                    You've reached the max number of alerts registration.
+                  </span>
+                  <span class="msg-error reload" style="display:none;"><br/>
+                    Please <a href="javascript:location.reload();">reload</a> the page and try again.
+                  </span>
                 </small>
               </div>
 
             </div><!-- /.modal-body -->
 
             <div class="modal-footer">
-              <button type="button" class="close-modal btn btn-embossed btn-default" data-dismiss="modal">Close</button>
-              <button type="button" class="create-alert-btn btn btn-embossed btn-primary"># Create Alert</button>
+              <button type="button"
+                class="close-modal btn btn-embossed btn-default" data-dismiss="modal">Close</button>
+              <button type="button"
+                class="create-alert-btn btn btn-embossed btn-primary btn-wide"># Subscribe</button>
             </div><!-- /.modal-footer -->
 
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
+
+      <!-- Subscribe zoom error modal -->
+      <div class="modal fade" id="modal-subscribe-error" tabindex="-1" role="dialog"
+        aria-labelledby="modal-subscribe-error-label" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-body text-center">
+              <p>
+                <span class="fa fa-rocket fa-4x"></span><br/>
+                Unfortunately we cannot create subscriptions this far out.<br/>
+                Zoom in closer to get this to work.
+              </p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default btn-embossed" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary btn-embossed btn-wide"
+                onclick="javascript:map.setZoom(11);$('#modal-subscribe-error').modal('hide');">Zoom In</button>
+            </div>
+          </div>
+        </div>
+      </div> <!-- /.modal -->
 
 
     @endif
@@ -216,8 +253,6 @@
   <link href="{{ secure_asset('assets/css/MarkerCluster.css') }}" rel="stylesheet" />
   <link href="{{ secure_asset('assets/css/MarkerCluster.Default.css') }}" rel="stylesheet" />
   <script src="{{ secure_asset('assets/js/vendor/leaflet.markercluster.js') }}"></script>
-
-  <script src="{{ secure_asset('assets/js/pahali.js') }}"></script>
   
   <script src="{{ secure_asset('assets/js/frontend/routes.js') }}"></script>
   <script src="{{ secure_asset('assets/js/frontend/map.js') }}"></script>

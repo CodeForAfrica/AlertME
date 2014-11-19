@@ -33,13 +33,14 @@
 
         </div>
         <div class="col-md-5">
-          <img src="{{ $map_image_link }}" style="width: 100%;" class="img-rounded"/>
+          <img src="{{ $map_image_link }}" class="img-rounded img-responsive"
+            style="width:602px; height:202px; border:1px solid #ddd;"/>
           <br/><br/>
           <form class="form-horizontal" role="form" action="" method="post">
             <div class="form-group">
               <label for="subscriber-email" class="col-sm-2 control-label">Email</label>
               <div class="col-sm-10">
-                <label id="subscriber-email" class="col-sm-2 control-label">{{ $user->email }}</label>
+                <label id="subscriber-email" class="col-sm-2 control-label">{{ $user_email }}</label>
               </div>
             </div>
             <div class="form-group">

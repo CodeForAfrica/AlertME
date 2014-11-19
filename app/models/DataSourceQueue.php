@@ -6,38 +6,37 @@ class DataSourceQueue {
 
   }
 
-  function fetchDataSourceColumns($job, $data)
+  function fetchColumns($job, $data)
   {
-    Log::info('['.$job->getJobId().':'.$job->attempts().'] Fetch data columns started.');
+    Log::info('['.$job->getJobId().':'.$job->attempts().'] Fetch datasource columns started.');
 
-    $config = DataSourceConfig::find($data['config_id']);
-    if (!$config){
+    $datasource = DataSource::find($data['id']);
+
+    if (!$datasource){
       $job->delete();
       return;
     }
-
     if($job->attempts() > 3){
-      $config->config_status = 0;
-      $config->save();
+      $datasource->config_status = 0;
+      $datasource->save();
+
+      Log::info('['.$job->getJobId().':'.$job->attempts().'] Fetch datasource columns failed.');
       $job->delete();
       return;
     }
 
-    // Get data
-    $data = DataSourceData::firstOrCreate( array(
-      'data_source_id' => $config->data_source_id
-    ));
+    $ds_data = $datasource->fetch();
 
-    if ( !$data ) {
-      $config->config_status = 0;
-      $config->save();
+    if(!$ds_data) {
+      $datasource->config_status = 0;
+      $datasource->save();
     } else {
-      $config->data_source_columns = $data->headers;
-      $config->config_status = 2;
-      $config->save();
+      $datasource->columns = array_keys($ds_data[0]);
+      $datasource->config_status = 2;
+      $datasource->save();
     }
 
-    Log::info('['.$job->getJobId().':'.$job->attempts().'] Fetch data columns finished.');
+    Log::info('['.$job->getJobId().':'.$job->attempts().'] Fetch datasource columns successful.');
 
     $job->delete();
 

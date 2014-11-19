@@ -27,6 +27,44 @@ function getUrlParameters(parameter, staticURL, decode){
   if(!returnBool) return false;
 }
 
+function setUrlParameters(parameter, value, staticURL, encode){
+  /*
+  Function: setUrlParameters
+  Description: Set the value of URL parameters either from
+               current URL or static URL
+  Author: David Lemayian
+  URL: www.davidlemayian.com
+  */
+  var currLocation = (staticURL.length)? staticURL : window.location.hash;
+  if (!currLocation){
+    var parArr = [];
+  } else {
+    var parArr = currLocation.split("#!/")[1].split("&");
+  }
+  var parArrNew = [];
+  var returnUrl = '';
+
+  value = (encode) ? encodeURIComponent(value) : value;
+
+  if (getUrlParameters(parameter, staticURL, encode) != false) {
+    // Paramete exists in URL
+    for(var i = 0; i < parArr.length; i++){
+      parr = parArr[i].split("=");
+      if(parr[0] == parameter){
+        parArrNew[i] = parr[0] + '=' + value;
+      }else{
+        parArrNew[i] = parr[0] + '=' + parr[1];
+      }
+    }
+  } else {
+    parArrNew = parArr;
+    parArrNew.push(parameter + '=' + value);
+  }
+
+  return '!/' + parArrNew.join('&');
+
+}
+
 function isEmail(email){
-        return /^([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22))*\x40([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d))*$/.test( email );
+  return /^([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x22([^\x0d\x22\x5c\x80-\xff]|\x5c[\x00-\x7f])*\x22))*\x40([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d)(\x2e([^\x00-\x20\x22\x28\x29\x2c\x2e\x3a-\x3c\x3e\x40\x5b-\x5d\x7f-\xff]+|\x5b([^\x0d\x5b-\x5d\x80-\xff]|\x5c[\x00-\x7f])*\x5d))*$/.test( email );
 }

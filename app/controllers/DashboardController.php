@@ -43,21 +43,27 @@ class DashboardController extends BaseController {
 
   public function showPages()
   {
-    $about = Page::find(1);
-
-    $data = array(
-      'about' => $about
+    $home = Page::find(1);
+    $about = Page::find(2);
+    
+    $data = compact(
+      'home', 'about'
     );
-
     return View::make('dashboard.pages', $data);
   }
 
   public function setPages()
   {
-    $page = Page::find(1);
-    $page->title = Input::get('about_title');
-    $page->description = Input::get('about_desc');
-    $page->save();
+    $input = json_decode(json_encode(Input::all()), FALSE);
+
+    $home = Page::find(1);
+    $home->data = $input->home;
+    $home->save();
+
+    $about = Page::find(2);
+    $about->data = $input->about;
+    $about->save();
+
     return Redirect::to('dashboard/pages')->with('success', 'Successfully saved pages.');
   }
 
