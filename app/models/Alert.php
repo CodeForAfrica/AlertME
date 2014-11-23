@@ -4,6 +4,15 @@ class Alert extends Eloquent {
 
     protected $table = 'alerts';
 
+    /*
+     * STATUS CODES
+     * ------------
+     * 0: Created (Default)
+     * 1: 
+     * 2: 
+     * 3:
+     */
+
     public static function boot()
     {
       parent::boot();
