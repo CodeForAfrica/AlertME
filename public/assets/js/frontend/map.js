@@ -141,6 +141,10 @@ $( document ).ready(function() {
 
       pahali.map.shareable();
 
+      $(window).on('hashchange', function() {
+        pahali.map.shareable();
+      });
+
     });
 
   }
