@@ -49,6 +49,9 @@ Dashboard
         <a href="/dashboard" class="btn btn-embossed btn-primary
           {{Request::path() == 'dashboard' ? 'active' : '';}}">
           <span class="fui-home"></span> Home</a>
+       </div>
+       <hr/>
+       <div class="btn-group-vertical btn-block navigation-side">
         <a href="/dashboard/datasources" class="btn btn-embossed btn-primary
           {{Request::path() == 'dashboard/datasources' ? 'active' : '';}}">
           <span class="fui-upload"></span> Data Sources</a>
@@ -58,6 +61,9 @@ Dashboard
         <a href="/dashboard/pages" class="btn btn-embossed btn-primary
           {{Request::path() == 'dashboard/pages' ? 'active' : '';}}">
           <span class="fui-document"></span> Pages</a>
+      </div>
+      <hr/>
+      <div class="btn-group-vertical btn-block navigation-side">
         <a href="/dashboard/settings" class="btn btn-embossed btn-primary
           {{Request::path() == 'dashboard/settings' ? 'active' : '';}}">
           <span class="fui-gear"></span> Settings</a>
