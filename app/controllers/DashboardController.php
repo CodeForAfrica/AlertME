@@ -18,7 +18,6 @@ class DashboardController extends BaseController {
 
     return View::make('dashboard.datasources', $data);
   }
-
   public function syncDataSources()
   {
     $sync = new Sync;
@@ -28,7 +27,6 @@ class DashboardController extends BaseController {
 
     return Redirect::to('dashboard/datasources')->with('success', 'Data source sync started successfully.');
   }
-
 
   public function showCategories()
   {
@@ -65,6 +63,18 @@ class DashboardController extends BaseController {
     $about->save();
 
     return Redirect::to('dashboard/pages')->with('success', 'Successfully saved pages.');
+  }
+
+
+  public function showSubscriptions()
+  {
+    $categories = Category::all();
+
+    $data = array(
+      'categories' => $categories
+    );
+
+    return View::make('dashboard.categories', $data);
   }
 
 

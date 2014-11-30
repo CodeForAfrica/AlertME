@@ -64,6 +64,12 @@ Dashboard
       </div>
       <hr/>
       <div class="btn-group-vertical btn-block navigation-side">
+        <a href="/dashboard/subscriptions" class="btn btn-embossed btn-primary
+          {{Request::path() == 'dashboard/subscriptions' ? 'active' : '';}}">
+          <b>#</b> Subscriptions</a>
+      </div>
+      <hr/>
+      <div class="btn-group-vertical btn-block navigation-side">
         <a href="/dashboard/settings" class="btn btn-embossed btn-primary
           {{Request::path() == 'dashboard/settings' ? 'active' : '';}}">
           <span class="fui-gear"></span> Settings</a>
