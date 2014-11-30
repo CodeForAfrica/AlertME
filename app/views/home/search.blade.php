@@ -48,11 +48,10 @@
           @endforeach
 
           <br/>
-          <div class="text-center"><div class="pagination">
-            <ul>
-              {{ $pagination_html }}
-            </ul>
-          </div></div>
+          <div class="text-center">
+            {{ $projects->appends(array('q' => Input::get('q')))->links() }}
+          </div>
+          
         </div><!-- /.col-md-8 -->
 
       </div> <!-- /.row -->
