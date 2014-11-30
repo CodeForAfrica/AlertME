@@ -110,6 +110,10 @@ $( document ).ready(function() {
           continue;
         }
 
+        if (project.title == '' || project.title == null) {
+          project.title = '[ No Title ]';
+        };
+
         var marker = new L.Marker(loc);
 
         var marker_html = '<h6>'+project.title+'</h6>'+
