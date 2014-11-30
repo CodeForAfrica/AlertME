@@ -68,13 +68,13 @@ class DashboardController extends BaseController {
 
   public function showSubscriptions()
   {
-    $categories = Category::all();
+    $subscriptions = Subscription::all();
 
-    $data = array(
-      'categories' => $categories
+    $data = compact(
+      'subscriptions'
     );
 
-    return View::make('dashboard.categories', $data);
+    return View::make('dashboard.subscriptions', $data);
   }
 
 
