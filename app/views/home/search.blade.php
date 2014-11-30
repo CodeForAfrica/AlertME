@@ -28,7 +28,7 @@
         </div>
       </div> <!-- /.row -->
 
-      <hr/>
+      <hr style="border-top:2px solid #e7e9ec;"/>
 
       <div class="row">
         <div class="col-md-8">
