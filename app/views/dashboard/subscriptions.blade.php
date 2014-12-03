@@ -17,13 +17,45 @@
       <p class="lead">It seems there are no subscriptions yet.</p>
     @else
 
-      @foreach ($subscriptions as $subscription)
-        {{ $subscription->id }}
-        <hr/>
-      @endforeach
+      <div class="row">
+        <div class="col-md-8">
 
-      <div class="text-center">
-        {{ $subscriptions->links() }}
+          @foreach ($subscriptions as $key => $subscription)
+            <p>
+              <a href="{{ secure_asset('subscriptions/'.$subscription->confirm_token) }}" target="_blank">
+                {{ $subscription->confirm_token }}
+              </a>
+              <span style="width:10px; display:inline-block;"></span>
+              @if ($subscription->status == 0 )
+                <small><span class="label label-info">Unconfirmed</span></small>
+              @elseif ($subscription->status == 1)
+                <small><span class="label label-success">Confirmed</span></small>
+              @endif
+              <br/>
+              <small>Email: {{ $subscription->user->email }}</small>
+            </p>
+
+            <hr/>
+          @endforeach
+          
+          <div class="text-center">
+            {{ $subscriptions->links() }}
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="well">
+            <p><b>Overview</b></p>
+            <div class="row">
+              <div class="col-sm-3">
+                <p><b>Total:</b></p>
+              </div>
+              <div class="col-sm-9">
+                <p>{{ $subscriptions->getTotal() }}</p>
+              </div>
+            </div>
+            
+          </div>
+        </div>
       </div>
 
     @endif
