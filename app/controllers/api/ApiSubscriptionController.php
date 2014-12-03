@@ -10,7 +10,7 @@ class ApiSubscriptionController extends \BaseController {
   public function index()
   {
     //
-    $subscriptions = Subscription::all();
+    $subscriptions = Subscription::paginate(10);;
     return Response::json(array(
       'error' => false,
       'subscriptions' => $subscriptions->toArray(),
