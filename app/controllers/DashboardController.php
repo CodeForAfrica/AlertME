@@ -68,7 +68,7 @@ class DashboardController extends BaseController {
 
   public function showSubscriptions()
   {
-    $subscriptions = Subscription::paginate(10);
+    $subscriptions = User::find(Auth::id())->subscriptions()->paginate(10);
 
     $data = compact(
       'subscriptions'

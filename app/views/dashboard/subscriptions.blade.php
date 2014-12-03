@@ -14,7 +14,7 @@
   <div class="subscriptions-list">
 
     @if (count($subscriptions) === 0)
-      <p class="lead">It seems there are no subscriptions yet.</p>
+      <p class="lead">It seems you don't have any subscriptions yet.</p>
     @else
 
       <div class="row">
