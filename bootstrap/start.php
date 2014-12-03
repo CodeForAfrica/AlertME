@@ -26,7 +26,7 @@ $app = new Illuminate\Foundation\Application;
 
 $env = $app->detectEnvironment(array(
 
-	'local' => array('*.local'),
+	'local' => array('*.local', 'lema-mac'),
   'development' => array('greenalert-dev-3'),
 	'production' => array('greenalert*'),
 

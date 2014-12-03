@@ -29,7 +29,7 @@ class MoveConfigToDatasourcesTable extends Migration {
 
       foreach ($configs as $config) {
         DB::table('datasources')
-          ->where('id', $config->datasource_id)
+          ->where('id', $config->data_source_id)
           ->update(array(
               'columns' => $config->data_source_columns,
               'config' => $config->config,

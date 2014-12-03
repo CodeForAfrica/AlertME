@@ -10,7 +10,7 @@ class ApiSubscriptionController extends \BaseController {
   public function index()
   {
     //
-    $subscriptions = Subscription::all();
+    $subscriptions = Subscription::paginate(10);;
     return Response::json(array(
       'error' => false,
       'subscriptions' => $subscriptions->toArray(),
@@ -209,6 +209,7 @@ class ApiSubscriptionController extends \BaseController {
     $subscription = Subscription::first();
     $user = User::find($subscription->user_id);
 
+    // Get first project
     $project = Project::first();
     $project_geo = $project->geo();
     if (strlen($project->title) > 80) {
@@ -218,23 +219,24 @@ class ApiSubscriptionController extends \BaseController {
       $project->description = substr($project->description, 0, 200).'...';
     }
 
-    switch (Input::get('type')) {
-      case 'alert':
-        $view_name = 'emails.subscription.alert';
-        $map_image_link = 'https://api.tiles.mapbox.com/v4/codeforafrica.ji193j10'.
-          '/pin-l-star+27AE60('.$project_geo->lng.','.$project_geo->lat.')'.
-          '/'.$project_geo->lng.','.$project_geo->lat.',11'.
-          '/600x250.png?'.
-          'access_token=pk.eyJ1IjoiY29kZWZvcmFmcmljYSIsImEiOiJVLXZVVUtnIn0.JjVvqHKBGQTNpuDMJtZ8Qg';
-        break;
-      
-      default:
-        $view_name = 'emails.subscription.new';
-        $map_image_link = 'https://api.tiles.mapbox.com/v4/codeforafrica.ji193j10'.
-          '/geojson('.urlencode($subscription->geojson).')'.
-          '/auto/600x250.png?'.
-          'access_token=pk.eyJ1IjoiY29kZWZvcmFmcmljYSIsImEiOiJVLXZVVUtnIn0.JjVvqHKBGQTNpuDMJtZ8Qg';
-        break;
+    // Check email type
+    if (preg_match('/alert*/', Input::get('type'))) {
+      $view_name = 'emails.alerts.default';
+      $map_image_link = 'https://api.tiles.mapbox.com/v4/codeforafrica.ji193j10'.
+        '/pin-l-star+27AE60('.$project_geo->lng.','.$project_geo->lat.')'.
+        '/'.$project_geo->lng.','.$project_geo->lat.',11'.
+        '/600x250.png?'.
+        'access_token=pk.eyJ1IjoiY29kZWZvcmFmcmljYSIsImEiOiJVLXZVVUtnIn0.JjVvqHKBGQTNpuDMJtZ8Qg';
+
+      if (Input::get('type') == 'alert_status') {
+        $view_name = 'emails.alerts.status';
+      }
+    } else {
+      $view_name = 'emails.subscription.new';
+      $map_image_link = 'https://api.tiles.mapbox.com/v4/codeforafrica.ji193j10'.
+        '/geojson('.urlencode($subscription->geojson).')'.
+        '/auto/600x250.png?'.
+        'access_token=pk.eyJ1IjoiY29kZWZvcmFmcmljYSIsImEiOiJVLXZVVUtnIn0.JjVvqHKBGQTNpuDMJtZ8Qg';
     }
 
     // New Subscription

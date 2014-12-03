@@ -44,9 +44,11 @@
                 </label>
 
                 @if (count($categories) > 3 )
-                  @for ($i = 0; $i < 3; $i++)
-                    <label class="btn btn-inverse cat-sel" data-cat-id="{{$i}}">
-                      <input type="radio" name="options" id="cat-{{$i}}"> <i class="fa fa-tree fa-2x"></i><br/> Forestry
+                  @for ($i = 0; $i < 2; $i++)
+                    <label class="btn btn-inverse cat-sel" data-cat-id="{{$categories[$i]->id}}">
+                      <input type="radio" name="options" id="cat-{{$i}}">
+                        <i class="fa fa-dot-circle-o fa-2x"></i><br/>
+                        {{ $categories[$i]->title }}
                     </label>
                   @endfor
                   <div class="btn-group" data-toggle="buttons">
@@ -54,15 +56,20 @@
                       <input type="radio" name="options" id="cat-other"> <i class="fa fa-ellipsis-h fa-2x"></i><br/>Other
                     </label>
                     <ul class="dropdown-menu" role="menu">
-                      @for ($i = 3; $i < count($categories); $i++)
-                        <li><a href="#" class="cat-sel" data-cat-id="{{$i}}">Dropdown link</a></li>
+                      @for ($i = 2; $i < count($categories); $i++)
+                        <li>
+                          <a href="#" class="cat-sel" data-cat-id="{{$categories[$i]->id}}">
+                            {{ $categories[$i]->title }}
+                          </a>
+                        </li>
                       @endfor
                     </ul>
                   </div>
                 @else
                   @for ($i = 0; $i < count($categories); $i++)
                     <label class="btn btn-inverse cat-sel" data-cat-id="{{$categories[$i]->id}}">
-                      <input type="radio" name="options" id="option2"> <i class="fa fa-dot-circle-o fa-2x"></i><br/>
+                      <input type="radio" name="options" id="option2">
+                        <i class="fa fa-dot-circle-o fa-2x"></i><br/>
                         {{ $categories[$i]->title }}
                     </label>
                   @endfor

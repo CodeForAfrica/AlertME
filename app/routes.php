@@ -40,6 +40,8 @@ Route::group(array('before' => 'auth'), function()
   Route::get('dashboard/pages', 'DashboardController@showPages');
   Route::post('dashboard/pages', 'DashboardController@setPages');
 
+  Route::get('dashboard/subscriptions', 'DashboardController@showSubscriptions');
+
   Route::get('dashboard/settings', 'DashboardController@showSettings');
   Route::post('dashboard/settings', 'DashboardController@setSettings');
 });

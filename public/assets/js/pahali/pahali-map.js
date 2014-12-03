@@ -89,19 +89,7 @@
 
   });
 
-  
-  var Pahali_Category = Backbone.Model.extend({
-
-  });
-
-  var Pahali_Categories = Backbone.Collection.extend({
-    model: Pahali_Category
-  });
-
-
   pahali.map = new Pahali_Map({'categories': {}});
-
-  pahali.categories = new Pahali_Categories;
 
 
 }( jQuery ));

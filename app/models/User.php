@@ -25,9 +25,25 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	protected $fillable = array('email');
 
-	function sync()
+
+	/**
+   * ROLES
+   * -----------
+   * 0: Unassigned user
+   * 1: Super Administrator
+   * 2: Suspended
+   * 3: Deleted
+   */
+
+
+	public function sync()
 	{
 		return $this->hasMany('Sync');
+	}
+
+	public function subscriptions()
+	{
+		return $this->hasMany('Subscription');
 	}
 
 }

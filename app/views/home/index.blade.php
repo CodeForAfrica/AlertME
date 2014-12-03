@@ -106,14 +106,19 @@
       </div>
     </div>
 
-    <div class="container text-center" style="padding: 50px 0;">
+    <div class="container text-center home-logos" style="padding: 50px 0;">
       <p>
-        <a href="http://oxpeckers.org" target="_blank">
-          <img src="/assets/img/logos/oxpeckers.png" style="height:110px;"/>
+        <a href="http://www.sej.org/" target="_blank">
+          <img src="/assets/img/logos/sej.png"/>
         </a>
-        <span style="width:50px; display:inline-block;"></span>
+        <a href="http://africannewschallenge.org" target="_blank">
+          <img src="/assets/img/logos/anic.png" style="height:80px;"/>
+        </a>
+        <a href="http://oxpeckers.org" target="_blank">
+          <img src="/assets/img/logos/oxpeckers.png"/>
+        </a>
         <a href="http://codeforafrica.org" target="_blank">
-          <img src="/assets/img/logos/c4a.png" style="height:110px;"/>
+          <img src="/assets/img/logos/cfafrica.png"/>
         </a>
       </p>
     </div>
