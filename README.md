@@ -4,6 +4,7 @@
 Get to know more about your environment.
 
 **NOTE: This project is still in initial development.**
+*(We intend to break things along the way)*
 
 ### Requirements
 
