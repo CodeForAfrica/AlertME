@@ -45,8 +45,8 @@
 
                 @if (count($categories) > 3 )
                   @for ($i = 0; $i < 2; $i++)
-                    <label class="btn btn-inverse cat-sel" data-cat-id="{{$categories[$i]->id}}">
-                      <input type="radio" name="options" id="cat-{{$i}}">
+                    <label class="btn btn-inverse cat-sel" data-cat-id="{{ $categories[$i]->id }}">
+                      <input type="radio" name="options" id="cat-{{ $i }}">
                         <i class="fa fa-dot-circle-o fa-2x"></i><br/>
                         {{ $categories[$i]->title }}
                     </label>
@@ -58,7 +58,7 @@
                     <ul class="dropdown-menu" role="menu">
                       @for ($i = 2; $i < count($categories); $i++)
                         <li>
-                          <a href="#" class="cat-sel" data-cat-id="{{$categories[$i]->id}}">
+                          <a href="#" class="cat-sel" data-cat-id="{{ $categories[$i]->id }}">
                             {{ $categories[$i]->title }}
                           </a>
                         </li>
@@ -67,7 +67,7 @@
                   </div>
                 @else
                   @for ($i = 0; $i < count($categories); $i++)
-                    <label class="btn btn-inverse cat-sel" data-cat-id="{{$categories[$i]->id}}">
+                    <label class="btn btn-inverse cat-sel" data-cat-id="{{ $categories[$i]->id }}">
                       <input type="radio" name="options" id="option2">
                         <i class="fa fa-dot-circle-o fa-2x"></i><br/>
                         {{ $categories[$i]->title }}
