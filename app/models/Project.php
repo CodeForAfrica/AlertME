@@ -27,20 +27,21 @@ class Project extends Eloquent {
 
   public function getTitleAttribute($value)
   {
-    if (strlen($value) == 0){
-      $value = '[No Title]';
-    }
-
-    if (ctype_upper($value)) {
-      $value = strtolower($value);
-      $value = ucwords($value);
-    }
-
     return $value;
   }
 
   public function setTitleAttribute($value)
   {
+    $upper_check = preg_replace("/[^a-zA-Z]+/", "", $value);
+    if (ctype_upper($upper_check)) {
+      $value = strtolower($value);
+      $value = ucwords($value);
+    }
+
+    if (strlen($value) == 0){
+      $value = '[No Title]';
+    }
+
     if (strlen($value) > 254){
       $value = substr($value, 0, 250);
       $value = $value . '...';
@@ -50,18 +51,21 @@ class Project extends Eloquent {
 
   public function getDescriptionAttribute($value)
   {
-    if (strlen($value) == 0){
-      $value = '[No Description]';
-    }
-    if (ctype_upper($value)) {
-      $value = strtolower($value);
-      $value = ucfirst($value);
-    }
     return $value;
   }
 
   public function setDescriptionAttribute($value)
   {
+    $upper_check = preg_replace("/[^a-zA-Z]+/", "", $value);
+    if (ctype_upper($upper_check)) {
+      $value = strtolower($value);
+      $value = ucfirst($value);
+    }
+
+    if (strlen($value) == 0){
+      $value = '[No Description]';
+    }
+
     $this->attributes['description'] = $value;
   }
 
