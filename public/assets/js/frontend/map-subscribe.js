@@ -72,6 +72,7 @@ $( document ).ready(function() {
       bounds._northEast.lat + "," + bounds._northEast.lng;
     var center = map.getCenter().lng + "," + map.getCenter().lat;
     var data = {
+      type: 'map',
       email: $('#map-alert-email').val().trim(),
       bounds: bound,
       center: center,
