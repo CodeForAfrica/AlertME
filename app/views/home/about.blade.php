@@ -35,7 +35,7 @@
 
     </div> <!-- /.container -->
 
-  </div> <!-- /.data-sources-list -->
+  </div> <!-- /.about -->
 
 @stop
 
