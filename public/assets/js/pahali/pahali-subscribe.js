@@ -49,12 +49,17 @@
         url: "/api/v1/subscriptions",
         data: data
       }).done(function(response) {
-        console.log('SUCCESSFUL: Subscription');
+        // console.log('SUCCESSFUL: Subscription');
       }).fail(function(response) {
-        console.log('FAILED: Subscription');
+        // console.log('FAILED: Subscription');
       }).always(function(response) {
-        // Always
-        pahali.subscribe.set({'response': response});
+        pahali.subscribe.set({
+          'response': response,
+          'subscribed': true
+        });
+        if (typeof pahali.subscribe.callback === 'function') {
+          pahali.subscribe.callback();
+        }
       });
 
     },
@@ -72,7 +77,11 @@
 
   });
 
-  pahali.subscribe = new Pahali_Subscribe;
+  pahali.subscribe = new Pahali_Subscribe({
+    'response': {},
+    'subscribed': false
+  });
+
 
 }( jQuery ));
 
