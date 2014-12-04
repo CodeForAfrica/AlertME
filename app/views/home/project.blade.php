@@ -4,11 +4,11 @@
 
 @section('content')
 
-  <div class="about">
+  <div class="project">
 
     <div class="container ">
       <div class="page-header">
-        <h4>{{ $project->title }}</h4>
+        <h4>{{ strlen($project->title) > 80 ? substr($project->title, 0, 80).'...' : $project->title }}</h4>
       </div>
 
       @if(isset($msg_confirm))
@@ -33,10 +33,10 @@
           <img src="{{ $map_image_link }}" style="width:100%;"
             class="img-responsive img-rounded"/>
           <br/>
-          <a href="#" class="btn btn-block btn-embossed btn-primary">
-            <span class="fa fa-globe"></span>
-            Subscribe for Alerts
-          </a>
+          <button class="btn btn-wide btn-embossed btn-primary"
+            data-toggle="modal" data-target="#subscriptionModal">
+            <span class="fa fa-globe"></span> Subscribe for Alerts
+          </button>
         </div>
 
         <div class="col-md-7">
@@ -79,7 +79,104 @@
 
     </div> <!-- /.container -->
 
-  </div> <!-- /.data-sources-list -->
+    <!-- MODALS -->
+
+    <!-- Subscribe Modal -->
+    <div class="modal" id="subscriptionModal" tabindex="-1" role="dialog"
+      aria-labelledby="subscriptionModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+
+          <div class="modal-header">
+            <button type="button" class="close close-modal" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+            </button>
+            <h4 class="modal-title" id="subscriptionModalLabel">Subscribe for Alerts</h4>
+          </div><!-- /.modal-header -->
+
+          <div class="modal-body">
+
+            <p><b>{{ strlen($project->title) > 80 ? substr($project->title, 0, 80).'...' : $project->title }}</b></p>
+            <hr/>
+
+            <img id="subscription-map" class="img-rounded img-responsive"
+              style="background: #eee url('{{ $map_image_link }}') no-repeat center; height:200px; width:100%; background-size:cover;"/>
+            <hr/>
+
+            <p>Enter your e-mail address below to receive alerts on this project.</p>
+            <div class="form-horizontal" role="form">
+              <div class="form-group subscription-email">
+                <label for="subscription-email" class="col-sm-2 control-label">Email</label>
+                <div class="col-sm-8">
+                  <input type="email" class="form-control" id="subscription-email" placeholder="Email">
+                </div>
+              </div>
+            </div>
+
+            <!-- ALERTS -->
+            <!-- Loading -->
+            <div class="alert alert-info text-center" role="alert" style="display:none;">
+              <small>
+                <i class="fa fa-circle-o-notch fa-spin"></i>
+                Subscribing... You'll soon be receiving updates on this project.
+              </small>
+            </div>
+            <!-- Success -->
+            <div class="alert alert-success alert-dismissible" role="alert" style="display:none;">
+              <button type="button" class="close" data-dismiss="alert">
+                <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+              </button>
+              <small><span class="fui-check-circle"></span>
+                Awesome! Check your e-mail to confirm subscription.
+              </small>
+            </div>
+            <!-- Warning -->
+            <div class="alert alert-warning alert-dismissible" role="alert" style="display:none;">
+              <button type="button" class="close" data-dismiss="alert">
+                <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+              </button>
+              <small>
+                <span class="fui-alert-circle"></span>
+                <b>Hmm...</b>
+                <span class="msg-error duplicate" style="display:none;"><br/>
+                  Seems like you are already subscribed to this project.
+                </span>
+              </small>
+            </div>
+            <!-- Error -->
+            <div class="alert alert-danger alert-dismissible" role="alert" style="display:none;">
+              <button type="button" class="close" data-dismiss="alert">
+                <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+              </button>
+              <small>
+                <span class="fui-alert-circle"></span>
+                <b>Oops!</b> Looks like something went wrong.
+                <span class="msg-error email" style="display:none;"><br/>
+                  Please check the e-mail address entered.
+                </span>
+                <span class="msg-error limit" style="display:none;"><br/>
+                  You've reached the max number of alerts registration.
+                </span>
+                <span class="msg-error reload" style="display:none;"><br/>
+                  Please <a href="javascript:location.reload();">reload</a> the page and try again.
+                </span>
+              </small>
+            </div>
+
+          </div><!-- /.modal-body -->
+
+          <div class="modal-footer">
+            <button type="button"
+              class="close-modal btn btn-embossed btn-default" data-dismiss="modal">Close</button>
+            <button type="button"
+              class="subscribe-btn btn btn-embossed btn-primary btn-wide"># Subscribe</button>
+          </div><!-- /.modal-footer -->
+
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+  </div> <!-- /.project -->
 
 @stop
 
@@ -91,5 +188,12 @@
       lessLink: '<a href="#">Less...</a>'
     });
   </script>
+
+  <script type="text/javascript">
+    var map_image_link = '{{ $map_image_link }}';
+    var project_id = {{ $project->id }};
+  </script>
+
+  <script src="{{ secure_asset('assets/js/frontend/project.js') }}"></script>
 @stop
 
