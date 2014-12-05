@@ -34,6 +34,16 @@
           <img src="{{ $map_image_link }}" style="width:100%;"
             class="img-responsive img-rounded"/>
           <br/>
+          <!-- Go to www.addthis.com/dashboard to customize your tools -->
+          <div class="addthis_sharing_toolbox"></div>
+          <!-- Go to www.addthis.com/dashboard to customize your tools -->
+          <script type="text/javascript" src="https://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5481e9a015b90c80" async="async"></script>
+          <hr/>
+          <a href="{{ secure_asset('project/'.$project->id) }}" target="_blank"
+            class="btn btn-block btn-primary btn-embossed">
+            <span class="fa fa-globe"></span> View on #GreenAlert
+          </a>
+          <br/>
         </div>
 
 
