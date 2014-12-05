@@ -38,11 +38,21 @@
           <!-- Go to www.addthis.com/dashboard to customize your tools -->
           <script type="text/javascript" src="https://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5481e9a015b90c80" async="async"></script>
           <hr/>
-          <button class="btn btn-block btn-embossed btn-primary"
-            data-toggle="modal" data-target="#subscriptionModal">
-            <span class="fa fa-globe"></span> Subscribe for Alerts
-          </button>
-          <br/>
+          <div class="row">
+            <div class="col-sm-6">
+              <p><button class="btn btn-block btn-embossed btn-primary"
+                data-toggle="modal" data-target="#subscriptionModal">
+                <span class="fa fa-globe"></span> Subscribe for Alerts
+              </button></p>
+            </div>
+            <div class="col-sm-6">
+              <p><button class="btn btn-block btn-embossed btn-info"
+                data-toggle="modal" data-target="#subscriptionModal">
+                <span class="fui-windows"></span> Embed Project
+              </button></p>
+            </div>
+          </div>
+          <hr/>
         </div> <!-- /.col-md-5 -->
 
         <div class="col-md-7">

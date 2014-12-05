@@ -41,7 +41,7 @@
           <hr/>
           <a href="{{ secure_asset('project/'.$project->id) }}" target="_blank"
             class="btn btn-block btn-primary btn-embossed">
-            <span class="fa fa-globe"></span> View on #GreenAlert
+            <span class="fui-link"></span> View on #GreenAlert
           </a>
           <br/>
         </div>
