@@ -99,6 +99,14 @@ class ApiProjectController extends \BaseController {
   public function show($id)
   {
     //
+    $project = Project::find($id);
+
+    return Response::json(array(
+        'error' => false,
+        'project' => $project,
+      ),
+      200
+    );
   }
 
 
