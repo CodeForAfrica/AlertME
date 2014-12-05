@@ -33,10 +33,11 @@
           <img src="{{ $map_image_link }}" style="width:100%;"
             class="img-responsive img-rounded"/>
           <br/>
-          <button class="btn btn-wide btn-embossed btn-primary"
+          <button class="btn btn-block btn-embossed btn-primary"
             data-toggle="modal" data-target="#subscriptionModal">
             <span class="fa fa-globe"></span> Subscribe for Alerts
           </button>
+          <br/>
         </div> <!-- /.col-md-5 -->
 
         <div class="col-md-7">
