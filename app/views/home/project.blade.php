@@ -33,6 +33,11 @@
           <img src="{{ $map_image_link }}" style="width:100%;"
             class="img-responsive img-rounded"/>
           <br/>
+          <!-- Go to www.addthis.com/dashboard to customize your tools -->
+          <div class="addthis_sharing_toolbox"></div>
+          <!-- Go to www.addthis.com/dashboard to customize your tools -->
+          <script type="text/javascript" src="https://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5481e9a015b90c80" async="async"></script>
+          <hr/>
           <button class="btn btn-block btn-embossed btn-primary"
             data-toggle="modal" data-target="#subscriptionModal">
             <span class="fa fa-globe"></span> Subscribe for Alerts
@@ -197,5 +202,7 @@
   </script>
 
   <script src="{{ secure_asset('assets/js/frontend/project.js') }}"></script>
+
+  
 @stop
 
