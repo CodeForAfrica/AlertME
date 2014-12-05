@@ -192,6 +192,7 @@
   <script type="text/javascript">
     var map_image_link = '{{ $map_image_link }}';
     var project_id = {{ $project->id }};
+    var geojson = '{{ $geojson }}';
   </script>
 
   <script src="{{ secure_asset('assets/js/frontend/project.js') }}"></script>

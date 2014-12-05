@@ -124,6 +124,11 @@ class Project extends Eloquent {
     return $this->belongsToMany('Category', 'project_category');
   }
 
+  public function subscriptions()
+  {
+    return $this->hasMany('Subscription');
+  }
+
   public function geocode()
   {
     if (trim($this->geo_address) == '') return array( 'lat' => 0 , 'lng' => 0 );

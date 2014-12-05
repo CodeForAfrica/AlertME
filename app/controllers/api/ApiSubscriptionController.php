@@ -109,6 +109,7 @@ class ApiSubscriptionController extends \BaseController {
     $subscription = new Subscription;
     $subscription->user_id = $user->id;
     $subscription->confirm_token = $confirm_token;
+    $subscription->geojson = Input::get('geojson');
 
     if (Input::get('type') == 'project') {
 
@@ -124,8 +125,7 @@ class ApiSubscriptionController extends \BaseController {
       $subscription->bounds = Input::get('bounds');
       $subscription->center = Input::get('center');
       $subscription->zoom = Input::get('zoom');
-
-      $subscription->geojson = Input::get('geojson');
+      
     }
 
     $subscription->save();

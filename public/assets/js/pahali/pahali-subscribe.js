@@ -16,7 +16,8 @@
       this.set({
         'type': 'project',
         'email': email,
-        'project_id': project_id
+        'project_id': project_id,
+        'geojson': geojson
       });
 
       if (!this.validate_email()) return false;
@@ -31,6 +32,7 @@
       var data = {
         type: this.get('type'),
         email: this.get('email'),
+        geojson: this.get('geojson'),
         
         // Project
         project_id: this.get('project_id'),
@@ -39,8 +41,7 @@
         bounds: this.get('bounds'),
         center: this.get('center'),
         zoom: this.get('zoom'),
-        geojson: this.get('geojson'),
-
+        
         _token: pahali.csrf_token
       };
 

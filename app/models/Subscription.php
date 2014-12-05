@@ -22,15 +22,26 @@ class Subscription extends Eloquent {
     // Setup event bindings...
     Subscription::created(function($subscription)
     {
-      $user = DB::table('users')->where('id', $subscription->user_id)->first();
+      $user = $subscription->user;
+      $project_id = $subscription->project_id;
+
       $confirm_link = link_to('subscriptions/'.$subscription->confirm_token, 'link', null, true);
       $confirm_url = secure_asset('subscriptions/'.$subscription->confirm_token);
-      $map_image_link = 'https://api.tiles.mapbox.com/v4/codeforafrica.ji193j10'.
-        '/geojson('.urlencode($subscription->geojson).')'.
-        '/auto/600x250.png?'.
-        'access_token=pk.eyJ1IjoiY29kZWZvcmFmcmljYSIsImEiOiJVLXZVVUtnIn0.JjVvqHKBGQTNpuDMJtZ8Qg';
+
+      if ($subscription->project_id == 0) {
+        $map_image_link = 'https://api.tiles.mapbox.com/v4/codeforafrica.ji193j10'.
+          '/geojson('.urlencode($subscription->geojson).')'.
+          '/auto/600x250.png?'.
+          'access_token=pk.eyJ1IjoiY29kZWZvcmFmcmljYSIsImEiOiJVLXZVVUtnIn0.JjVvqHKBGQTNpuDMJtZ8Qg';
+      } else {
+        $map_image_link = 'http://api.tiles.mapbox.com/v4/codeforafrica.ji193j10/'.
+          $subscription->geojson.'/600x250.png256?'.
+          'access_token=pk.eyJ1IjoiY29kZWZvcmFmcmljYSIsImEiOiJVLXZVVUtnIn0.JjVvqHKBGQTNpuDMJtZ8Qg';
+        $project_title = $subscription->project->title;
+      }
+
       $data = compact(
-        'subscription', 'user',
+        'subscription', 'user', 'project_id', 'project_title',
         'map_image_link', 'confirm_link', 'confirm_url'
       );
 
@@ -51,6 +62,11 @@ class Subscription extends Eloquent {
   public function user()
   {
     return $this->belongsTo('User');
+  }
+
+  public function project()
+  {
+    return $this->belongsTo('Project');
   }
 
 
