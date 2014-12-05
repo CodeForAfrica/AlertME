@@ -6,7 +6,7 @@
 
   <div class="project">
 
-    <div class="container ">
+    <div class="container">
       <div class="page-header">
         <h4>{{ strlen($project->title) > 80 ? substr($project->title, 0, 80).'...' : $project->title }}</h4>
       </div>
@@ -37,19 +37,19 @@
             data-toggle="modal" data-target="#subscriptionModal">
             <span class="fa fa-globe"></span> Subscribe for Alerts
           </button>
-        </div>
+        </div> <!-- /.col-md-5 -->
 
         <div class="col-md-7">
-          <p>{{$project->description}}</p>
+          <p>{{ $project->description }}</p>
           <hr/>
           <h6>Details</h6>
           <div class="project-details">
-            @foreach($project->data as $key => $value)
+            @foreach( $project->data as $key => $value )
               <div class="row">
-                <div class="col-md-4 text-right">
+                <div class="col-xs-4 text-right">
                   <small><b>{{ $key }}</b></small>
                 </div>
-                <div class="col-md-8">
+                <div class="col-xs-8">
                   <small>
                     {{ empty($value) ? '-' : $value }}
                   </small>
@@ -57,7 +57,7 @@
               </div>
             @endforeach
           </div>
-        </div>
+        </div> <!-- /.col-md-7 -->
 
       </div> <!-- /.row -->
 
