@@ -74,9 +74,9 @@
         </p>
         <hr/>
         <p class="text-muted"><em>
-          All code on this website is <a href="http://github.com/CodeForAfrica/">Open Source</a>.</br>
+          All code on this website is <a href="http://github.com/CodeForAfrica/" target="_blank">Open Source</a>.</br>
           Content on this site, made by Oxpeckers, is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative Commons Attribution-ShareAlike 4.0 International License</a>.</br>
-          Refer to our <a href="#">attributions</a> page for attributions of other work on the site.
+          Refer to our <a href="{{ secure_asset('about') }}" target="_blank">attributions</a> page for attributions of other work on the site.
         </em></p>
       </div>
       <div class="col-md-6 text-right">
