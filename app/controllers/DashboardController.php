@@ -84,11 +84,19 @@ class DashboardController extends BaseController {
 
   public function showProfile()
   {
+    $user = Auth::user();
+    $data = array(
+      'user' => $user
+    );
+    return View::make('dashboard.profile', $data);
+  }
+  public function setProfile()
+  {
     $geoapi = GeoApi::find(1);
     $data = array(
       'geoapi' => $geoapi
     );
-    return View::make('dashboard.settings', $data);
+    return Redirect::to('dashboard/profile')->with('success', 'Successfully saved profile.');
   }
 
   public function showSettings()
@@ -105,7 +113,7 @@ class DashboardController extends BaseController {
     $geoapi = GeoApi::find(1);
     $geoapi->key = Input::get('key');
     $geoapi->save();
-    return Redirect::to('dashboard/settings')->with('success', 'Successfully saved settings');
+    return Redirect::to('dashboard/settings')->with('success', 'Successfully saved settings.');
   }
 
 }

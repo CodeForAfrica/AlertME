@@ -43,6 +43,7 @@ Route::group(array('before' => 'auth'), function()
   Route::get('dashboard/subscriptions', 'DashboardController@showSubscriptions');
 
   Route::get('dashboard/profile', 'DashboardController@showProfile');
+  Route::post('dashboard/profile', 'DashboardController@setProfile');
   Route::get('dashboard/settings', 'DashboardController@showSettings');
   Route::post('dashboard/settings', 'DashboardController@setSettings');
 });
