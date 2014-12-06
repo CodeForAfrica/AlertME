@@ -82,6 +82,15 @@ class DashboardController extends BaseController {
   }
 
 
+  public function showProfile()
+  {
+    $geoapi = GeoApi::find(1);
+    $data = array(
+      'geoapi' => $geoapi
+    );
+    return View::make('dashboard.settings', $data);
+  }
+
   public function showSettings()
   {
     $geoapi = GeoApi::find(1);

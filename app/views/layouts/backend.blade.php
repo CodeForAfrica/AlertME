@@ -70,6 +70,11 @@ Dashboard
       </div>
       <hr/>
       <div class="btn-group-vertical btn-block navigation-side">
+        <a href="/dashboard/profile" class="btn btn-embossed btn-primary
+          {{Request::path() == 'dashboard/profile' ? 'active' : '';}}">
+          <span class="fui-user"></span> Profile</a>
+      </div>
+      <div class="btn-group-vertical btn-block navigation-side">
         <a href="/dashboard/settings" class="btn btn-embossed btn-primary
           {{Request::path() == 'dashboard/settings' ? 'active' : '';}}">
           <span class="fui-gear"></span> Settings</a>
