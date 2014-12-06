@@ -52,18 +52,12 @@
           <hr/>
           <h6>Details</h6>
           <div class="project-details">
-            @foreach($project->data as $key => $value)
-              <div class="row">
-                <div class="col-xs-4 text-right">
-                  <small><b>{{ $key }}</b></small>
-                </div>
-                <div class="col-xs-8">
-                  <small>
-                    {{ empty($value) ? '-' : $value }}
-                  </small>
-                </div>
-              </div>
-            @endforeach
+            <dl class="dl-horizontal">
+              @foreach($project->data as $key => $value)
+                <dt><small>{{ $key }}</small></dt>
+                <dd><small>{{ empty($value) ? '-' : $value }}</small></dd>
+              @endforeach
+            </dl>
           </div>
           <br/>
         </div>
