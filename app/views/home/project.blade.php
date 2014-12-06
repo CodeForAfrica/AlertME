@@ -47,7 +47,7 @@
             </div>
             <div class="col-sm-6">
               <p><button class="btn btn-block btn-embossed btn-info"
-                data-toggle="modal" data-target="#subscriptionModal">
+                data-toggle="modal" data-target="#embedModal">
                 <span class="fui-windows"></span> Embed Project
               </button></p>
             </div>
@@ -192,6 +192,32 @@
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
+    <!-- Embed Modal -->
+    <div class="modal fade" id="embedModal" tabindex="-1" role="dialog"
+      aria-labelledby="embedModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+            </button>
+            <h4 class="modal-title" id="embedModalLabel"><span class="fui-windows"></span> Embed Project</h4>
+          </div>
+          <div class="modal-body">
+            <p>Embed this project into your website by using the folowing iframe:</p>
+            <div class="form-group">
+              <input onClick="this.setSelectionRange(0, this.value.length)" class="form-control"
+                value="<iframe src=&quot;{{ secure_asset('api/v1/projects/'.$project->id.'?embed=true') }}&quot; width=&quot;425&quot; height=&quot;355&quot; frameborder=&quot;0&quot; marginwidth=&quot;0&quot; marginheight=&quot;0&quot; style=&quot;border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;&quot; allowfullscreen>Loading project...</iframe>"
+                style="color:#34495e;" readonly />
+            </div>
+          </div> <!-- /,modal-body -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-embossed btn-wide btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
   </div> <!-- /.project -->
 
 @stop
@@ -213,6 +239,5 @@
 
   <script src="{{ secure_asset('assets/js/frontend/project.js') }}"></script>
 
-  
 @stop
 
