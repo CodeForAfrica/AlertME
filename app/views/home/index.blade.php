@@ -106,7 +106,7 @@
       </div>
     </div>
 
-    <div class="container text-center home-logos" style="padding: 50px 0;">
+    <div class="container text-center home-logos" style="padding: 70px 0;">
       <p>
         <a href="http://www.sej.org/" target="_blank">
           <img src="{{ secure_asset('assets/img/logos/sej.png') }}"/>
