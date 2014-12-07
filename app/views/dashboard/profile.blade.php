@@ -35,6 +35,21 @@
         <hr/>
 
         <h6>Change Password</h6>
+        <div class="row">
+          <div class="col-md-3">
+            <p class="text-muted"><em>To change your password, simply input the password here and hit save.</em></p>
+          </div>
+          <div class="col-md-7">
+            <div class="form-group">
+              {{ Form::label('password1', 'New password:') }}
+              {{ Form::password('password1', array('class' => 'form-control', 'placeholder' => 'New password' )); }}
+            </div>
+            <div class="form-group">
+              {{ Form::label('password2', 'Retype new password:') }}
+              {{ Form::password('password2', array('class' => 'form-control', 'placeholder' => 'New password once more' )); }}
+            </div>
+          </div>
+        </div>
 
 
       </div>

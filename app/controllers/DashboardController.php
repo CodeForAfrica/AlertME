@@ -96,7 +96,14 @@ class DashboardController extends BaseController {
     $user->fullname = Input::get('fullname');
     $user->email = Input::get('email');
     $user->save();
-    return Redirect::to('dashboard/profile')->with('success', 'Successfully saved profile.');
+    if (Input::get('password1') != '') {
+      if (Input::get('password1') != Input::get('password2')) {
+        return Redirect::to('dashboard/profile')->with('error', 'Passwords don\'t match.');
+      }
+      $user->password = Hash::make(Input::get('password1'));
+      $user->save();
+    }
+    return Redirect::to('dashboard/profile')->with('success', 'Successfully saved profile changes.');
   }
 
   public function showSettings()
