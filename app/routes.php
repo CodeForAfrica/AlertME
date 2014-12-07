@@ -27,6 +27,12 @@ Route::get('login', 'AuthController@showLogin');
 Route::post('login', 'AuthController@postLogin');
 Route::get('logout', 'AuthController@getLogout');
 
+Route::get('login/remind-me', 'RemindersController@getRemind');
+Route::post('login/remind-me', 'RemindersController@postRemind');
+Route::get('password/reset/{token}', 'RemindersController@getReset');
+Route::post('password/reset', 'RemindersController@postReset');
+
+
 // Secure Routes
 Route::group(array('before' => 'auth'), function()
 {
