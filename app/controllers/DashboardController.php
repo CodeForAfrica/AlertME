@@ -94,8 +94,24 @@ class DashboardController extends BaseController {
   {
     $user = Auth::user();
     $user->fullname = Input::get('fullname');
-    $user->email = Input::get('email');
     $user->save();
+
+    
+    $email_old = $user->email;
+    $email_new = Input::get('email');
+    if ($email_new != $email_old) {
+      $validator = Validator::make(
+        array('email' => $email_new),
+        array('email' => 'required|email|unique:users')
+      );
+      if ($validator->fails())
+      {
+        return Redirect::to('dashboard/profile')->with('error', $validator->messages());
+      }
+      $user->email = $email_new;
+      $user->save();
+    }
+
     if (Input::get('password1') != '') {
       if (Input::get('password1') != Input::get('password2')) {
         return Redirect::to('dashboard/profile')->with('error', 'Passwords don\'t match.');
