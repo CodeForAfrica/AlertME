@@ -92,10 +92,10 @@ class DashboardController extends BaseController {
   }
   public function setProfile()
   {
-    $geoapi = GeoApi::find(1);
-    $data = array(
-      'geoapi' => $geoapi
-    );
+    $user = Auth::user();
+    $user->fullname = Input::get('fullname');
+    $user->email = Input::get('email');
+    $user->save();
     return Redirect::to('dashboard/profile')->with('success', 'Successfully saved profile.');
   }
 

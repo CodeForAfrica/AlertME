@@ -22,7 +22,7 @@
           </div>
           <div class="col-md-7">
             <div class="form-group">
-              {{ Form::label('fullname', 'Full Names:') }}
+              {{ Form::label('fullname', 'Full Name:') }}
               {{ Form::text('fullname', $user->fullname, array('class' => 'form-control', 'placeholder' => 'Green Alerter' )); }}
             </div>
             <div class="form-group">
@@ -32,7 +32,6 @@
           </div>
         </div>
         
-
         <hr/>
 
         <h6>Change Password</h6>
