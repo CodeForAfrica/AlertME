@@ -72,10 +72,8 @@
 
   {{ Form::close() }}
 
-</div> <!-- /.about -->
+</div> <!-- /.pages -->
 
-</div> <!-- /.col-md-10 -->
-</div> <!-- /.row -->
 @stop
 
 @section('scripts-data')

@@ -390,11 +390,8 @@
     </div>
   </div>
 
-
 </div> <!-- /.data-sources -->
 
-</div> <!-- /.col-md-10 -->
-</div> <!-- /.row -->
 @stop
 
 @section('scripts-data')

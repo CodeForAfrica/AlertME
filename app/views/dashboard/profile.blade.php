@@ -47,7 +47,4 @@
   {{ Form::close() }}
 
 </div> <!-- /.profile -->
-
-</div> <!-- /.col-md-10 -->
-</div> <!-- /.row -->
 @stop
