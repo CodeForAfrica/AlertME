@@ -47,7 +47,7 @@ Login
 
         {{ Form::close() }}
 
-        <a class="login-link" href="#">Lost your password?</a>
+        <a class="login-link" href="{{ secure_asset('login/remind-me') }}">Forgot password?</a>
       </div>
     </div>
   </div>
