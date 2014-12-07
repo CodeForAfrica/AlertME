@@ -19,6 +19,27 @@ Login
     <div class="col-md-4 col-md-offset-4">
       <div class="login-form">
 
+        <!-- Success Messages -->
+        @if ($message = Session::get('status'))
+          <div class="alert alert-success alert-block">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <p><small>
+              <b>Success:</b>
+              {{{ $message }}}
+            </small></p>
+          </div>
+        @endif
+        <!-- Not So Success Messages -->
+        @if ($message = Session::get('error'))
+          <div class="alert alert-danger alert-block">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <p><small>
+              <b>Error:</b>
+              {{{ $message }}}
+            </small></p>
+          </div>
+        @endif
+
         {{ Form::open(array('url' => 'login')) }}
 
           <div class="form-group {{{ $errors->has('username') ? 'has-error' : '' }}}">
