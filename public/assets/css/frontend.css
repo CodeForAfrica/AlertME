@@ -47,11 +47,10 @@ footer {
 }
 
 .home-logos a {
-  margin-right: 25px;
-  margin-left: 25px;
 }
   .home-logos a img {
-    height: 90px;
+    margin: 10px 25px;
+    height: 70px;
     opacity: 1;
     -webkit-transition: all 0.5s;
     transition: all 0.5s;
