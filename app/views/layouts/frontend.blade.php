@@ -69,12 +69,12 @@
           <a href="/">Home</a> .
           <a href="/about">About</a> .
           <a href="/dashboard">Dashoard</a> .
-          <a href="#" target="_blank">Github</a> .
+          <a href="https://github.com/CodeForAfrica/GreenAlert" target="_blank">Github</a> .
           <a href="http://oxpeckers.org" target="_blank">Oxpeckers</a>
         </p>
         <hr/>
         <p class="text-muted"><em>
-          All code on this website is <a href="http://github.com/CodeForAfrica/" target="_blank">Open Source</a>.</br>
+          All code on this website is <a href="https://github.com/CodeForAfrica/GreenAlert" target="_blank">Open Source</a>.</br>
           Content on this site, made by Oxpeckers, is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative Commons Attribution-ShareAlike 4.0 International License</a>.</br>
           Refer to our <a href="{{ secure_asset('about') }}" target="_blank">attributions</a> page for attributions of other work on the site.
         </em></p>
