@@ -1,7 +1,7 @@
 @extends('layouts.base')
 
 @section('title')
-Login
+Forgot Password
 @stop
 
 {{-- Content --}}
@@ -11,7 +11,7 @@ Login
 
   <div class="row">
     <div class="col-md-4 col-md-offset-4">
-      <h4>Login</h4>
+      <h4>Forgot Password</h4>
     </div>
   </div>
 
@@ -40,35 +40,17 @@ Login
           </div>
         @endif
 
-        {{ Form::open(array('url' => 'login')) }}
+        <form action="{{ action('RemindersController@postRemind') }}" method="POST">
+          <div class="form-group {{{ $errors->has('email') ? 'has-error' : '' }}}">
+            <input type="email" name="email" class="form-control login-field"
+              value="{{ Input::old('email') }}" placeholder="Email Address" id="login-email">
+            <label class="login-field-icon fui-mail" for="login-email"></label>
 
-          <div class="form-group {{{ $errors->has('username') ? 'has-error' : '' }}}">
-            <input type="text" name="username" class="form-control login-field"
-              value="{{ Input::old('username') }}" placeholder="Username" id="login-name">
-            <label class="login-field-icon fui-user" for="login-name"></label>
-
-            <p class="small text-danger text-right">{{ $errors->first('username') }}</small>
+            <p class="small text-danger text-right">{{ $errors->first('email') }}</small>
           </div>
+          <button class="btn btn-primary btn-embossed btn-lg btn-block" type="submit">Send Reminder</button>
+        </form>
 
-          <div class="form-group {{{ $errors->has('password') ? 'has-error' : '' }}}">
-            <input type="password" name="password" class="form-control login-field"
-              value="" placeholder="Password" id="login-pass">
-            <label class="login-field-icon fui-lock" for="login-pass"></label>
-
-            <p class="small text-danger text-right">{{ $errors->first('password') }}</small>
-          </div>
-
-          <div class="form-group checkbox" style="height:20px;">
-            <label for="remember-me" style="line-height: 100%; padding-left: 0;">
-              <input type="checkbox" name="remember-me" id="remember-me" data-toggle="checkbox"> Remember me
-            </label>
-          </div>
-
-          <button class="btn btn-primary btn-embossed btn-lg btn-block" type="submit">Log in</button>
-
-        {{ Form::close() }}
-
-        <a class="login-link" href="{{ secure_asset('login/remind-me') }}">Forgot password?</a>
       </div>
     </div>
   </div>

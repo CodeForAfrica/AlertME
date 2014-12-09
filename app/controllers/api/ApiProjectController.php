@@ -99,6 +99,27 @@ class ApiProjectController extends \BaseController {
   public function show($id)
   {
     //
+    $project = Project::find($id);
+
+    if (Input::has('embed')) {
+      $geojson = 'pin-l-circle-stroked+1abc9c('.$project->geo()->lng.','.$project->geo()->lat.')/'.
+        $project->geo()->lng.','.$project->geo()->lat.'),13';
+
+      $map_image_link = 'http://api.tiles.mapbox.com/v4/codeforafrica.ji193j10/'.
+        $geojson.'/600x250.png256?'.
+        'access_token=pk.eyJ1IjoiY29kZWZvcmFmcmljYSIsImEiOiJVLXZVVUtnIn0.JjVvqHKBGQTNpuDMJtZ8Qg';
+      $data = compact(
+        'project', 'map_image_link', 'geojson'
+      );
+      return View::make('home.project_embed', $data);
+    }
+
+    return Response::json(array(
+        'error' => false,
+        'project' => $project,
+      ),
+      200
+    );
   }
 
 

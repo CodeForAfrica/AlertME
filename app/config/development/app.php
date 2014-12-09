@@ -17,6 +17,6 @@ return array(
 
   'timezone' => 'Africa/Nairobi',
   
-  'url' => 'http://dev.greenalert.codeforafrica.net',
+  'url' => 'https://dev.greenalert.codeforafrica.net',
 
 );

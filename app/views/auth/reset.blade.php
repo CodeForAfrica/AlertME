@@ -1,7 +1,7 @@
 @extends('layouts.base')
 
 @section('title')
-Login
+Reset Password
 @stop
 
 {{-- Content --}}
@@ -11,7 +11,7 @@ Login
 
   <div class="row">
     <div class="col-md-4 col-md-offset-4">
-      <h4>Login</h4>
+      <h4>Reset Password</h4>
     </div>
   </div>
 
@@ -19,16 +19,6 @@ Login
     <div class="col-md-4 col-md-offset-4">
       <div class="login-form">
 
-        <!-- Success Messages -->
-        @if ($message = Session::get('status'))
-          <div class="alert alert-success alert-block">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <p><small>
-              <b>Success:</b>
-              {{{ $message }}}
-            </small></p>
-          </div>
-        @endif
         <!-- Not So Success Messages -->
         @if ($message = Session::get('error'))
           <div class="alert alert-danger alert-block">
@@ -40,16 +30,15 @@ Login
           </div>
         @endif
 
-        {{ Form::open(array('url' => 'login')) }}
+        <form action="{{ action('RemindersController@postReset') }}" method="POST">
+          <input type="hidden" name="token" value="{{ $token }}">
+          <div class="form-group {{{ $errors->has('email') ? 'has-error' : '' }}}">
+            <input type="email" name="email" class="form-control login-field"
+              value="{{ Input::old('email') }}" placeholder="Email Address" id="login-email">
+            <label class="login-field-icon fui-mail" for="login-email"></label>
 
-          <div class="form-group {{{ $errors->has('username') ? 'has-error' : '' }}}">
-            <input type="text" name="username" class="form-control login-field"
-              value="{{ Input::old('username') }}" placeholder="Username" id="login-name">
-            <label class="login-field-icon fui-user" for="login-name"></label>
-
-            <p class="small text-danger text-right">{{ $errors->first('username') }}</small>
+            <p class="small text-danger text-right">{{ $errors->first('email') }}</small>
           </div>
-
           <div class="form-group {{{ $errors->has('password') ? 'has-error' : '' }}}">
             <input type="password" name="password" class="form-control login-field"
               value="" placeholder="Password" id="login-pass">
@@ -57,18 +46,16 @@ Login
 
             <p class="small text-danger text-right">{{ $errors->first('password') }}</small>
           </div>
+          <div class="form-group {{{ $errors->has('password_confirmation') ? 'has-error' : '' }}}">
+            <input type="password" name="password_confirmation" class="form-control login-field"
+              value="" placeholder="Confirm Password" id="login-pass">
+            <label class="login-field-icon fui-lock" for="login-pass"></label>
 
-          <div class="form-group checkbox" style="height:20px;">
-            <label for="remember-me" style="line-height: 100%; padding-left: 0;">
-              <input type="checkbox" name="remember-me" id="remember-me" data-toggle="checkbox"> Remember me
-            </label>
+            <p class="small text-danger text-right">{{ $errors->first('password_confirmation') }}</small>
           </div>
+          <button class="btn btn-primary btn-embossed btn-lg btn-block" type="submit">Reset Password</button>
+        </form>
 
-          <button class="btn btn-primary btn-embossed btn-lg btn-block" type="submit">Log in</button>
-
-        {{ Form::close() }}
-
-        <a class="login-link" href="{{ secure_asset('login/remind-me') }}">Forgot password?</a>
       </div>
     </div>
   </div>

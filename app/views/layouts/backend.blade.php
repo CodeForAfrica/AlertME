@@ -70,6 +70,11 @@ Dashboard
       </div>
       <hr/>
       <div class="btn-group-vertical btn-block navigation-side">
+        <a href="/dashboard/profile" class="btn btn-embossed btn-primary
+          {{Request::path() == 'dashboard/profile' ? 'active' : '';}}">
+          <span class="fui-user"></span> Profile</a>
+      </div>
+      <div class="btn-group-vertical btn-block navigation-side">
         <a href="/dashboard/settings" class="btn btn-embossed btn-primary
           {{Request::path() == 'dashboard/settings' ? 'active' : '';}}">
           <span class="fui-gear"></span> Settings</a>
@@ -77,7 +82,7 @@ Dashboard
     </div>
 
     <div class="col-md-10">
-      <!-- Success-Messages -->
+      <!-- Success Messages -->
       @if ($message = Session::get('success'))
         <div class="alert alert-success alert-block">
           <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -87,12 +92,26 @@ Dashboard
           </small></p>
         </div>
       @endif
+      <!-- Not So Success Messages -->
+      @if ($message = Session::get('error'))
+        <div class="alert alert-danger alert-block">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <p><small>
+            <b>Error:</b>
+            {{{ $message }}}
+          </small></p>
+        </div>
+      @endif
 @stop
 
 @section('footer')
+</div> <!-- /.col-md-10 -->
+</div> <!-- /.row -->
+
 <br/>
-<div class="container-fluid">
-  <hr/>
-  <p class="text-muted text-right"><small>Built by Code for Africa</small></p>
-</div>
+
+<hr/>
+<p class="text-muted text-right"><small>Built by Code for Africa</small></p>
+
+</div> <!-- /.container-fluid -->
 @stop

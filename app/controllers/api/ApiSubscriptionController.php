@@ -39,61 +39,94 @@ class ApiSubscriptionController extends \BaseController {
    */
   public function store()
   {
-    //
-    $confirm_token = md5(Input::get('bounds').Input::get('email'));
-    $bounds = explode(",", Input::get('bounds'));
-    
-    // Validate data
-    $data = Input::all();
-    $data = array_add($data , 'confirm_token', $confirm_token);
+    // VALIDATORS
+
+    // Validate type
     $rules = array(
-      'email' => 'required|email',
-      'bounds' => 'required',
-      'confirm_token' => 'unique:subscriptions'
+      'type' => array('required', 'in:project,map')
     );
     $messages = array(
-      'email.required' => 'NO_EMAIL',
-      'email.email' => 'NOT_EMAIL',
-      'bounds.required' => 'NO_BOUNDS',
-      'confirm_token.unique' => 'DUPLICATE',
+      'type.required' => 'NO_TYPE'
     );
-    $validator = Validator::make($data, $rules, $messages);
-    if ($validator->fails())
-    {
+    $validator = Validator::make(Input::all(), $rules, $messages);
+    if ($validator->fails()) {
       return Response::json(
         array(
           'error' => true,
           'validator' => $validator->messages()
         ),
-        200
+        500
       );
     }
-    if ( count($bounds) != 4 ){
-      return Response::json(array(
-        'error' => true,
-        'validator' => 'BOUNDS_ERROR'),
-        200
+
+    // Validate email + duplicate
+    if (Input::get('type') == 'project') {
+      $confirm_token = md5(Input::get('project_id').Input::get('email'));
+    } elseif (Input::get('type') == 'map') {
+      $confirm_token = md5(Input::get('bounds').Input::get('email'));
+    }
+    $data = Input::all();
+    $data = array_add($data , 'confirm_token', $confirm_token);
+    $rules = array(
+      'email' => array('required','email'),
+      'confirm_token' => 'unique:subscriptions'
+    );
+    $messages = array(
+      'email.required' => 'NO_EMAIL',
+      'email.email' => 'NOT_EMAIL',
+      'confirm_token.unique' => 'DUPLICATE'
+    );
+    $validator = Validator::make($data, $rules, $messages);
+    if ($validator->fails()) {
+      return Response::json(
+        array(
+          'error' => true,
+          'validator' => $validator->messages()
+        ),
+        500
       );
     }
+
+    // Validate bounds
+    if (Input::get('type') == 'map') {
+      $bounds = explode(",", Input::get('bounds'));
+      if ( count($bounds) != 4 || !Input::has('bounds')){
+        return Response::json(array(
+          'error' => true,
+          'validator' => 'BOUNDS_ERROR'),
+          500
+        );
+      }
+    }
+
+
+    // SUBSCRIBE
 
     // Create User or First
     User::firstOrCreate(array('email' => Input::get('email')));
     $user = User::where('email', Input::get('email'))->first();
 
-    // Subscription
     $subscription = new Subscription;
     $subscription->user_id = $user->id;
-    $subscription->sw_lat = $bounds[0];
-    $subscription->sw_lng = $bounds[1];
-    $subscription->ne_lat = $bounds[2];
-    $subscription->ne_lng = $bounds[3];
     $subscription->confirm_token = $confirm_token;
-    $subscription->bounds = Input::get('bounds');
-
-    $subscription->center = Input::get('center');
-    $subscription->zoom = Input::get('zoom');
-
     $subscription->geojson = Input::get('geojson');
+
+    if (Input::get('type') == 'project') {
+
+      $subscription->project_id = Input::get('project_id');
+      
+    } elseif (Input::get('type') == 'map') {
+
+      $subscription->sw_lat = $bounds[0];
+      $subscription->sw_lng = $bounds[1];
+      $subscription->ne_lat = $bounds[2];
+      $subscription->ne_lng = $bounds[3];
+      
+      $subscription->bounds = Input::get('bounds');
+      $subscription->center = Input::get('center');
+      $subscription->zoom = Input::get('zoom');
+      
+    }
 
     $subscription->save();
 

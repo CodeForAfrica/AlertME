@@ -30,11 +30,15 @@
 
   <tbody>
     <tr><td>
+      @if ( $project_id != 0 )
+        <p><b>{{ strlen($project_title) > 80 ? substr($project_title, 0, 80).'...' : $project_title }}</b></p>
+        <hr/>
+      @endif
       <p>
         <img src="{{ $map_image_link }}" class="img-rounded img-responsive"
           style="width:602px; height:202px; border:1px solid #ddd;"/>
       </p>
-      <p>Awesome! You are one step away from starting to receive alerts from this area.</p>
+      <p>Awesome! You are one step away from starting to receive alerts from this {{ $project_id == 0 ? 'area' : 'project' }}.</p>
       <p><b>Confirm subscription by visiting this <u>{{ $confirm_link }}</u>.</b></p>
       <small>Link not working? Copy and paste this link into your browser:<br/><u>{{ $confirm_url }}</u></small>
       <br/><br/>
@@ -46,7 +50,5 @@
   </tbody>
 
 </table>
-
-
 
 @stop

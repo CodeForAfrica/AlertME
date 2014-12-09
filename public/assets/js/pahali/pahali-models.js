@@ -38,3 +38,7 @@ pahali.datasource.config = {
 };
 
 
+pahali.project = {};
+pahali.projects = {};
+
+pahali.subscribe = {};
