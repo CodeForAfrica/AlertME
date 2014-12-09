@@ -47,9 +47,8 @@
 
     <script src="{{ secure_asset('assets/js/plugins.js') }}"></script>
     <script src="{{ secure_asset('assets/js/application.js') }}"></script>
-    <!--<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>-->
 
-    <script src="{{ secure_asset('assets/js/flat-ui.min.js') }}"></script>
+    <!-- <script src="{{ secure_asset('assets/js/flat-ui.min.js') }}"></script> -->
 
     <script src="{{ secure_asset('assets/js/pahali/pahali.js') }}"></script>
 

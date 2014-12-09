@@ -10,10 +10,18 @@
       <div class="page-header">
         <h3>
           Subscription
-          <button type="button" class="btn btn-wide btn-embossed btn-default pull-right"
-            data-toggle="modal" data-target="#unsubscribeModal">
-            Unsubscribe
-          </button>
+          @if ($subscription->trashed())
+            <small class="text-danger">[Unsubscribed]</small>
+            <button type="button" class="btn btn-wide btn-embossed btn-primary pull-right"
+              data-toggle="modal" data-target="#unsubscribeModal">
+              Restore Subscription
+            </button>
+          @else
+            <button type="button" class="btn btn-wide btn-embossed btn-default pull-right"
+              data-toggle="modal" data-target="#unsubscribeModal">
+              Unsubscribe
+            </button>
+          @endif
         </h3>
       </div>
 
@@ -30,7 +38,7 @@
       <div class="row">
         <div class="col-md-7">
           <p>
-            <a href="{{$map_link}}" target="_blank">
+            <a href="{{ $map_link }}" target="_blank">
               Projects in this area <span class="fui-arrow-right"></span>
             </a>
           </p>
@@ -85,18 +93,22 @@
             <button type="button" class="close" data-dismiss="modal">
               <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
             </button>
-            <h4 class="modal-title" id="unsubscribeModalLabel">Unsubscribe</h4>
+            <h4 class="modal-title" id="unsubscribeModalLabel">
+              {{ $subscription->trashed() ? 'Restore Subscription' : 'Unsubscribe' }}
+            </h4>
           </div>
           <div class="modal-body">
-            Are you sure you want to unsubscribe?
+              Are you sure you want to {{ $subscription->trashed() ? 'restore your subscription' : 'unsubscribe' }}?
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default btn-embossed btn-wide" data-dismiss="modal">
               Close
             </button>
-            <button type="button" class="btn btn-danger btn-embossed btn-wide">
-              Unsubscribe
-            </button>
+            <button type="button"
+              class="btn btn-{{ $subscription->trashed() ? 'primary' : 'danger' }} btn-embossed btn-wide unsubscribe-btn"
+              data-loading-text="{{ $subscription->trashed() ? 'Restoring' : 'Unsubscribing' }}...">
+              {{ $subscription->trashed() ? 'Restore Subscription' : 'Unsubscribe' }}
+            </button>            
           </div>
         </div>
       </div>
@@ -107,4 +119,20 @@
 @stop
 
 @section('scripts')
+  <script type="text/javascript">
+    $('.unsubscribe-btn').on('click', function () {
+      var $btn = $(this).button('loading')
+      $.ajax({
+        url: "{{ secure_asset('api/v1/subscriptions/'.$subscription->id) }}",
+        type: 'DELETE',
+        data: {
+          '_token': '{{ csrf_token() }}',
+          {{ $subscription->trashed() ? '"restore": 1,' : '' }}
+          'confirm_token': '{{ $subscription->confirm_token }}'
+        }
+      }).done(function(response) {
+        location.reload();
+      });
+    })
+  </script>
 @stop
