@@ -69,9 +69,9 @@ class DashboardController extends BaseController {
   public function showSubscriptions()
   {
     if (Auth::user()->role_id == 1) {
-      $subscriptions = Subscription::paginate(10);
+      $subscriptions = Subscription::withTrashed()->paginate(10);
     } else {
-      $subscriptions = User::find(Auth::id())->subscriptions()->paginate(10);
+      $subscriptions = User::find(Auth::id())->subscriptions()->withTrashed()->paginate(10);
     }
 
     $data = compact(

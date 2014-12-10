@@ -1,10 +1,16 @@
 <?php
 
+use Illuminate\Database\Eloquent\SoftDeletingTrait;
+
 class Subscription extends Eloquent {
+
+  use SoftDeletingTrait;
 
   protected $table = 'subscriptions';
 
   protected $hidden = array('confirm_token');
+
+  protected $dates = ['deleted_at'];
 
   /**
    * STATUS CODE

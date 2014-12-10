@@ -187,6 +187,35 @@ class ApiSubscriptionController extends \BaseController {
   public function destroy($id)
   {
     //
+    $subscription = Subscription::withTrashed()->find($id);
+
+    if ($subscription->confirm_token != Input::get('confirm_token')) {
+      return Response::json(array(
+          'error' => true,
+          'message' => 'Sorry, we were not able to unsubscribe you.',
+          'status' => 'UNSUBSCRIBE_FAILED'
+        ),
+        405
+      );
+    }
+
+    if (Input::get('restore') == 1) {
+      $subscription->status = 1;
+      $subscription->save();
+      $subscription->restore();
+    } else {
+      $subscription->status = 2;
+      $subscription->save();
+      $subscription->delete();
+    }
+    
+    return Response::json(array(
+        'error' => false,
+        'subscription' => $subscription->toArray(),
+        'status' => 'DELETED'
+      ),
+      200
+    );
   }
 
 
@@ -199,7 +228,7 @@ class ApiSubscriptionController extends \BaseController {
   public function confirm($confirm_token)
   {
     //
-    $subscription = Subscription::where('confirm_token', $confirm_token)->firstOrFail();
+    $subscription = Subscription::withTrashed()->where('confirm_token', $confirm_token)->firstOrFail();
     if ($subscription->status == 0) {
       $subscription->status = 1;
       $subscription->save();
