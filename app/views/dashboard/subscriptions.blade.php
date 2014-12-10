@@ -26,11 +26,15 @@
                 {{ $subscription->confirm_token }}
               </a>
               <span style="width:10px; display:inline-block;"></span>
-              @if ($subscription->status == 0 )
-                <small><span class="label label-info">Unconfirmed</span></small>
-              @elseif ($subscription->status == 1)
-                <small><span class="label label-success">Confirmed</span></small>
-              @endif
+              <small>
+                @if ( $subscription->trashed() )
+                  <span class="label label-danger">Unsubscribed</span>
+                @elseif ( $subscription->status == 0 )
+                  <span class="label label-info">Unconfirmed</span>
+                @elseif ( $subscription->status == 1 )
+                  <span class="label label-success">Confirmed</span>
+                @endif
+              </small>
               <br/>
               <small>Email: {{ $subscription->user->email }}</small>
             </p>

@@ -200,8 +200,12 @@ class ApiSubscriptionController extends \BaseController {
     }
 
     if (Input::get('restore') == 1) {
+      $subscription->status = 1;
+      $subscription->save();
       $subscription->restore();
     } else {
+      $subscription->status = 2;
+      $subscription->save();
       $subscription->delete();
     }
     
