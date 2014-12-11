@@ -13,8 +13,8 @@ $( document ).ready(function() {
 
     $('#loading-geo').fadeIn('slow');
     var place = searchBox.getPlace();
-    window.location.href = "/map/#!/center="+place.geometry.location.k+","+
-    place.geometry.location.B+"&zoom=11";
+    window.location.href = "/map/#!/center="+place.geometry.location.lat()+","+
+    place.geometry.location.lng()+"&zoom=11";
 
   });
 
