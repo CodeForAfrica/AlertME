@@ -49,7 +49,10 @@
             "bounds",
             loc_bounds._southWest.lat+","+loc_bounds._southWest.lng+","+
             loc_bounds._northEast.lat+","+loc_bounds._northEast.lng, "",
-            false);
+            false
+          );
+        window.location.hash = removeUrlParameters("center", false);
+        window.location.hash = removeUrlParameters("zoom", false);
       });
     },
 
