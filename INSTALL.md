@@ -1,12 +1,9 @@
-\#GreenAlert
-============
+# Installation
 
-Get to know more about your environment.
+\#GreenAlert is built using [Laravel](#laravel-php-framework), *the PHP framework for web artisans*. For more information on getting started with Laravel, check out there extensive documentation [here](http://laravel.com/docs/4.2/quick).
 
-**NOTE: This project is still in initial development.**
-*(We intend to break things along the way)*
 
-### Requirements
+#### Requirements
 
 - PHP v5.4.7+
 - Git
@@ -17,13 +14,7 @@ Get to know more about your environment.
 - 256MB RAM
 
 
-
-### Installation
-
-\#GreenAlert is built using ***the PHP framework for web artisans***, [Laravel](http://laravel.com). For more information on getting started with Laravel, check out there extensive documentation [here](http://laravel.com/docs/4.2/quick).
-
-
-#### Server Configuration
+### Server Configuration
 
 We recommend setting up with [Debian Wheezy](https://www.debian.org/releases/wheezy/). #GreenAlert will though be able to run on any system setup that meets the [requirements](#requirements).
 
@@ -143,9 +134,7 @@ sudo npm install -g bower
 
 
 
-
-
-#### Application Set Up
+### Application Set Up
 
 Now that we have our server set up, we can set up the application. Here, we clone the main repository and install the needed packages. At the end, we should be able to see a welcome page displayed on the browser.
 
@@ -232,10 +221,6 @@ Once saved, reload supervisor as such:
 Running `sudo supervisorctl` again, should show you the programs running.
 
 
-
-
-
-
 ##### 7. Configure Nginx
 
 First create ssl keys:
@@ -309,16 +294,6 @@ sudo service nginx restart
 Now if you visit *example.com*, you will be able to see the basic #GreenAlert website loaded.
 
 
-
-### Loading Data
-
-##### [ Coming Soon ]
-
-Hint: It's all about the Dashboard.
-
-
-
-
 ### Upgrading the Platform
 
 We've created a simple command to upgrade the platform from the git branch you are on.
@@ -331,6 +306,12 @@ php artisan pahali:upgrade
 <small>*Sometimes the command has also been updated so try to run it twice if things don't look right.*</small>
 
 
+
+### Loading Data
+
+##### [ Coming Soon ]
+
+Hint: It's all about the Dashboard.
 
 
 
@@ -345,7 +326,6 @@ The GPL ([V2](http://choosealicense.com/licenses/gpl-2.0/) or [V3](http://choose
 Find out more by checking out the `LICENSE` file [here](./LICENSE).
 
 
-
 ### Contact
 
 Have any questions? Feel free to reach us at [kazini@codeforafrica.org](mailto:kazini@codeforafrica.org).
@@ -353,6 +333,7 @@ Have any questions? Feel free to reach us at [kazini@codeforafrica.org](mailto:k
 
 
 ---
+
 
 
 ## Laravel PHP Framework
