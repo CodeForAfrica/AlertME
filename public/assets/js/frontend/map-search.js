@@ -1,3 +1,6 @@
+var user_lat = 0;
+var user_lng = 0;
+
 $( document ).ready(function() {
   var input = document.getElementById('search-geo');
   var options = {
@@ -37,6 +40,8 @@ $( document ).ready(function() {
       };
 
       function success_my_geo (position) {
+        user_lat = position.coords.latitude;
+        user_lng = position.coords.longitude;
         var latlng = new google.maps.LatLng(
             position.coords.latitude, position.coords.longitude);
         var geocoder = new google.maps.Geocoder();
@@ -55,6 +60,8 @@ $( document ).ready(function() {
 
               if(itemCountry == "ZA"){
                 $('#search-geo').val(results[1].formatted_address);
+                window.location.href = "/map/#!/center="+user_lat+","+
+                  user_lng+"&zoom=11";
               } else {
                 $('#search-my-geo-alert').fadeIn();
               }
