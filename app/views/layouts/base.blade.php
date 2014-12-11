@@ -10,6 +10,8 @@
     <meta name="description" content="@yield('meta_description', 'Keeping an eye out on the environment.')">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <meta name="google-site-verification" content="Pcw6RyloANHvjuK_Y9by9fpUw1H7U14PKKtPlPsgHP4" />
+
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <link rel="shortcut icon" href="{{ secure_asset('assets/img/favicon.ico') }}">
 
