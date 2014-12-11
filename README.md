@@ -12,7 +12,7 @@ Some key featutres of this platform include:
 3. Automated category assignment via keyword search.
 4. Subscription of alerts in a specified area or individual project.
 
-**NOTE: This project is still in very initial development.**
+**NOTE: This project is still in very initial development.**  
 *(We intend to break things along the way but will do our best to keep it consistent)*
 
 
