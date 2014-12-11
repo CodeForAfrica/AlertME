@@ -94,13 +94,13 @@
             <p>Last Updated</p>
             <p><b>16th Oct, 2014</b></p>
             <p>Petitions</p>
-            <p><b>200+</b></p>
+            <p><small>Coming soon..</small><b></b></p>
           </div>
           <div class="col-md-3">
             <p>Subscribers</p>
-            <p><b>1,000+</b></p>
+            <p><small>Coming soon..</small><b></b></p>
             <p>Subscriptions</p>
-            <p><b>3,000+</b></p>
+            <p><small>Coming soon..</small><b></b></p>
           </div>
         </div>
       </div>
