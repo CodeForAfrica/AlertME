@@ -18,7 +18,7 @@
             </span>
             <input class="form-control" placeholder="Province, town, city or region..."
               name="search-geo" id="search-geo"
-              data-toggle="tooltip" data-placement="top" title="This is autocomplete powered so select from the drop down list after you start typing.">
+              data-toggle="tooltip" data-placement="top" title="This is autocomplete powered so select your location from the drop down list after you start typing.">
           </div>
         </div>
       </div>
@@ -26,7 +26,7 @@
 
       <p><button class="btn btn-link" style="color:#fff;" id="search-my-geo">
         <span class="fa fa-crosshairs"></span> Use my location
-      </a></button></p>
+      </button></p>
 
       <p id="loading-geo" style="display:none;" >
         <i class="fa fa-crosshairs fa-spin"></i>
