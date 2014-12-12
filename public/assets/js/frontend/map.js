@@ -72,6 +72,8 @@ $( document ).ready(function() {
     var bound = bounds._southWest.lat + "," + bounds._northEast.lat + "," +
       bounds._southWest.lat + "," + bounds._northEast.lng;
 
+    pahali.categories.fetch({data: {pivot: 1}});
+
     $.ajax({
       type: "GET",
       url: '/api/v1/projects?map=1'
@@ -147,7 +149,7 @@ $( document ).ready(function() {
 
     });
 
-  }
+  };
   loadMarkers();
 
 
