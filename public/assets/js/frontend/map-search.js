@@ -8,6 +8,8 @@ $( document ).ready(function() {
   };
   searchBox = new google.maps.places.Autocomplete(input, options);
 
+  $('#search-geo').tooltip('hide')
+
   /**
    * Google Geocoder Search Box
    * ---------------------------------------------------------------------------
