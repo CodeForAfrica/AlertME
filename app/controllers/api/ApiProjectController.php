@@ -10,6 +10,41 @@ class ApiProjectController extends \BaseController {
   public function index()
   {
     //
+    $projects = Project::paginate(10);
+
+    if (Input::get('all') == 1) {
+      ini_set('memory_limit', '-1');
+      ini_set('max_execution_time', 0);
+      $projects = Project::all();
+    }
+
+    foreach ($projects as $key => $project) {
+      $projects[$key]['geo'] = $project->geo();
+      unset($projects[$key]['geo_lat']);
+      unset($projects[$key]['geo_lng']);
+    }
+
+    if (Input::get('geo_only') == 1) {
+      foreach ($projects as $key => $project) {
+        if ($projects[$key]['geo']->lat == 450) {
+          unset($projects[$key]);
+        } 
+      }
+    }
+
+    if (Input::get('min') == 1 || Input::get('all') == 1) {
+      foreach ($projects as $key => $project) {
+        $projects[$key] = array_only($project->toArray(), array('id', 'geo'));
+      }
+    }
+
+    return Response::json(array(
+        'error' => false,
+        'projects' => $projects->toArray()
+      ),
+      200
+    );
+
     $projects = array();
     $projects_categories = array();
     $sel_cols_projects = array('projects.id', 'projects.data_id',
