@@ -16,10 +16,9 @@
             <span class="input-group-btn">
               <button type="submit" class="btn"><span class="fa fa-globe fa-lg"></span></button>
             </span>
-            <input type="text" class="form-control" placeholder="Province, town, city or region" name="search-geo" id="search-geo">
-            <span class="input-group-btn">
-              <button type="submit" class="btn"><span class="fui-arrow-right"></span></button>
-            </span>
+            <input class="form-control" placeholder="Province, town, city or region..."
+              name="search-geo" id="search-geo"
+              data-toggle="tooltip" data-placement="top" title="This is autocomplete powered so select your location from the drop down list after you start typing.">
           </div>
         </div>
       </div>
@@ -27,7 +26,7 @@
 
       <p><button class="btn btn-link" style="color:#fff;" id="search-my-geo">
         <span class="fa fa-crosshairs"></span> Use my location
-      </a></button></p>
+      </button></p>
 
       <p id="loading-geo" style="display:none;" >
         <i class="fa fa-crosshairs fa-spin"></i>
@@ -47,7 +46,7 @@
               <button type="button" class="close" data-dismiss="alert">
                 <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
               </button>
-              <strong>Oops!</strong> It seems your location didn't work. Try search instead.
+              <strong>Oops!</strong> It seems your are not in South Africa. Try search instead.
             </div>
           </div>
         </div>

@@ -22,8 +22,6 @@ body { padding-top: 76px; }
   padding-top: 100px;
 }
   #search-geo {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
     padding-left: 1px;
   }
 
