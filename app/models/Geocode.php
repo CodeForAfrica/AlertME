@@ -51,6 +51,13 @@ class Geocode extends Eloquent {
                 'geo_lat' => $geocode->lat,
                 'geo_lng' => $geocode->lng
               ));
+        } else {
+          DB::table('projects')
+            ->where('geo_address', '')
+            ->update(array(
+                'geo_lat' => 450,
+                'geo_lng' => 450
+              ));
         }
       }
 
