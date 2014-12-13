@@ -44,6 +44,13 @@ class Geocode extends Eloquent {
             $geocode = Geocode::fetchGeo( $geocode );
             $geocode->save();
           }
+
+          DB::table('projects')
+            ->where('geo_address', $address->geo_address)
+            ->update(array(
+                'geo_lat' => $geocode->lat,
+                'geo_lng' => $geocode->lng
+              ));
         }
       }
 
