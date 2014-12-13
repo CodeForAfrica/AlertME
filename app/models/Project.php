@@ -140,13 +140,14 @@ class Project extends Eloquent {
 
   function geo()
   {
+    $project = DB::table('projects')->where('id', $this->id)->first();
     $geo = new stdClass(); $geo->lat = 450; $geo->lng = 450;
-    if($this->geo_type == 'lat_lng') {
-      $geo->lat = floatval ($this->geo_lat);
-      $geo->lng = floatval ($this->geo_lng);
+    if($project->geo_type == 'lat_lng') {
+      $geo->lat = floatval ($project->geo_lat);
+      $geo->lng = floatval ($project->geo_lng);
     }
-    if($this->geo_type == 'address' && trim($this->geo_address) != '') {
-      $geocode = Geocode::where('address', $this->geo_address)->first();
+    if($project->geo_type == 'address' && trim($project->geo_address) != '') {
+      $geocode = Geocode::where('address', $project->geo_address)->first();
       $geo->lat = floatval ($geocode->lat);
       $geo->lng = floatval ($geocode->lng);
     }
