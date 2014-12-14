@@ -119,7 +119,9 @@ class Project extends Eloquent {
   }
 
 
+
   // Query Scopes
+  
   public function scopeHasGeo($query)
   {
     return $query->whereBetween('geo_lat', array(-90, 90))
