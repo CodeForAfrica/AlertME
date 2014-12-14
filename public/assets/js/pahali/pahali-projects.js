@@ -31,10 +31,6 @@
           this.callback();
         };
       });
-    },
-
-    pull_callback: function() {
-
     }
 
   });
