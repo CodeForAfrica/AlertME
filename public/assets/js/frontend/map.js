@@ -90,8 +90,7 @@ $( document ).ready(function() {
       if (typeof project.get('data') === 'undefined') {
         project.pull({
           callback: function() {
-            // Update the marker
-            console.log('Project updated.');
+            // Update the marker pop up
             marker_html = '<h6>'+project.get('title')+'</h6>'+
               '<small><a href="/project/'+project.get('id')+'" target="_blank">'+
               'Learn more <span class="fui-arrow-right"></span></a></small>';
