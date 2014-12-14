@@ -95,28 +95,11 @@
           #</button> -->
       </div> <!-- /.map-controls -->
 
-      <div class="map-loading text-center">
+      <!-- <div class="map-loading text-center">
         <div id="info">
           <p class="lead"><i class="fa fa-globe fa-spin"></i> Loading map...</p>
         </div>
-      </div> <!-- /.map-loading -->
-
-      <!-- <div class="home-search text-center container-fluid">
-        <div class="row">
-          <div class="col-md-4 col-md-offset-4">
-            <h1 class="text-default">#GreenAlert</h1>
-            <p class="lead">Search for EIAs Near You</p>
-            <div class="form-group">
-              <input type="text" class="form-control input-hg" id="search-geo" placeholder="Enter a location">
-              <span class="glyphicon glyphicon-globe form-control-feedback"></span>
-            </div>
-            <p class="text-primary" id="loading-geo" style="display:none;">
-              <i class="fa fa-circle-o-notch fa-spin"></i>
-              Finding Projects Near You...
-            </p>
-          </div>
-        </div>
-      </div> -->
+      </div> --> <!-- /.map-loading -->
 
 
 
@@ -249,6 +232,7 @@
 
 @section('scripts-data')
   var categories = {{ $categories != NULL ? $categories : 'false' }};
+  pahali.projects.set( {{ $projects_all->toJSON() }} );
 @stop
 
 @section('scripts')
