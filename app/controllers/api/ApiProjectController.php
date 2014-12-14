@@ -10,34 +10,31 @@ class ApiProjectController extends \BaseController {
   public function index()
   {
     //
-    $projects = Project::paginate(10);
-
-    if (Input::get('all') == 1) {
+    
+    if ( Input::get('all') == 1 ) {
       ini_set('memory_limit', '-1');
       ini_set('max_execution_time', 0);
-      $projects = Project::all();
-    }
-
-    foreach ($projects as $key => $project) {
-      $projects[$key]['geo'] = $project->geo();
-      unset($projects[$key]['geo_lat']);
-      unset($projects[$key]['geo_lng']);
-    }
-
-    if (Input::get('geo_only') == 1) {
-      foreach ($projects as $key => $project) {
-        if ($projects[$key]['geo']->lat == 450) {
-          unset($projects[$key]);
-        } 
+      if (Input::get('geo_only') == 1) {
+        $projects = Project::select('id', 'geo_lat', 'geo_lng')->hasGeo()->get();
+      } else {
+        $projects = Project::all(array('id', 'geo_lat', 'geo_lng'));
+      }
+    } else {
+      if (Input::get('min') == 1) {
+        if (Input::get('geo_only') == 1) {
+          $projects = Project::select('id', 'geo_lat', 'geo_lng')->hasGeo()->paginate(10);
+        } else {
+          $projects = Project::select('id', 'geo_lat', 'geo_lng')->paginate(10);
+        }
+      } else{
+        if (Input::get('geo_only') == 1) {
+          $projects = Project::hasGeo()->paginate(10);
+        } else {
+          $projects = Project::paginate(10);
+        }
       }
     }
-
-    if (Input::get('min') == 1 || Input::get('all') == 1) {
-      foreach ($projects as $key => $project) {
-        $projects[$key] = array_only($project->toArray(), array('id', 'geo'));
-      }
-    }
-
+    
     return Response::json(array(
         'error' => false,
         'projects' => $projects->toArray()
