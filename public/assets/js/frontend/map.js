@@ -21,6 +21,9 @@ $(window).resize(function(){
 });
 
 
+
+
+
 // Markers
 var markers;
 var markers_arr = [];
@@ -42,8 +45,9 @@ $( document ).ready(function() {
   map.scrollWheelZoom.disable();
 
   pahali.map.set({'map': map});
-
+  
   pahali.map.center();
+
   pahali.map.shareable();
 
   // Map controls

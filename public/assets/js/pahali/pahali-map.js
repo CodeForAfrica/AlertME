@@ -25,6 +25,7 @@
 
     // Center map with list consideration
     center: function () {
+      // TODO: This should be independent
       if ($('.map-list').length) {
         var map_move_x = -0.5 * (
           $('.map-list').width() +
