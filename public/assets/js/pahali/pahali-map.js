@@ -9,7 +9,19 @@
 
 (function ( $ ) {
 
+  var Pahali_Map_Markers = Backbone.Collection.extend({
+
+  });
+
   var Pahali_Map = Backbone.Model.extend({
+
+    defaults: {
+      'categories':  {}
+    },
+
+    initialize: function() {
+      this.markers = new Pahali_Map_Markers;
+    },
 
     // Center map with list consideration
     center: function () {
@@ -54,6 +66,12 @@
         window.location.hash = removeUrlParameters("center", false);
         window.location.hash = removeUrlParameters("zoom", false);
       });
+
+      // On window hashchange
+      model = this;
+      $(window).on('hashchange', {model: model}, function( event ) {
+        event.data.model.shareable();
+      });
     },
 
     // Filter by Category
@@ -92,8 +110,7 @@
 
   });
 
-  pahali.map = new Pahali_Map({'categories': {}});
-
+  pahali.map = new Pahali_Map();
 
 }( jQuery ));
 

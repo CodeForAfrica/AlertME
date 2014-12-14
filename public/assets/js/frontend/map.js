@@ -20,8 +20,6 @@ $(window).resize(function(){
   resizeMap();
 });
 
-// console.log($('body').height() +":" +(footerHeight + 500));
-
 
 // Markers
 var markers;
@@ -46,19 +44,22 @@ $( document ).ready(function() {
   pahali.map.set({'map': map});
 
   pahali.map.center();
+  pahali.map.shareable();
 
   // Map controls
   $('#map-ctrl-zoom-in').click(function () {
-    map.zoomIn();
+    pahali.map.get('map').zoomIn();
   });
   $('#map-ctrl-zoom-out').click(function () {
-    map.zoomOut();
+    pahali.map.get('map').zoomOut();
   });
 
   // Overlapping markers
   markers = new L.MarkerClusterGroup({
     showCoverageOnHover: false
   });
+  pahali.map.set({'markers': markers});
+  pahali.map.get('map').addLayer(markers);
 
 
 
@@ -66,112 +67,58 @@ $( document ).ready(function() {
    * Load Markers
    * ---------------------------------------------------------------------------
    */
-  function loadMarkers () {
 
-    var bounds = map.getBounds();
-    var bound = bounds._southWest.lat + "," + bounds._northEast.lat + "," +
-      bounds._southWest.lat + "," + bounds._northEast.lng;
+  var bounds = pahali.map.get('map').getBounds();
+  var bound = bounds._southWest.lat + "," + bounds._northEast.lat + "," +
+    bounds._southWest.lat + "," + bounds._northEast.lng;
 
-    pahali.categories.fetch({data: {pivot: 1}});
+  function addMarker (project) {
+    var loc = new L.LatLng(
+      project.get('geo_lat'),
+      project.get('geo_lng')
+    );
+    var marker = new L.Marker(loc);
+    var marker_html = '<h6>'+project.get('title')+'</h6>'+
+        '<small><a href="/project/'+project.get('id')+'" target="_blank">'+
+        'Learn more <span class="fui-arrow-right"></span></a></small>';
 
-    $.ajax({
-      type: "GET",
-      url: '/api/v1/projects?map=1'
-    }).done(function(response) {
+    marker.title = project.get('title');
+    marker.alt = project.get('id');
 
-      projects_categories = response.projects_categories;
-      pahali.map.set({'categories': projects_categories});
-
-      map.removeLayer(markers);
-
-      markers = new L.MarkerClusterGroup({
-        showCoverageOnHover: false
-      });
-      markers_arr = [];
-
-      for (var i = 0; i < response.projects.length; i++) {
-        var project = response.projects[i];
-
-        var loc = new L.LatLng(
-          project.geo_lat,
-          project.geo_lng
-        );
-        if (project.geo_type == "address" && project.lat && project.lng &&
-          project.geo_address.trim() != "" && project.geo_address != null &&
-          project.geo_status == 1) {
-          loc = new L.LatLng(
-            project.lat,
-            project.lng
-          );
-        } else if (project.geo_type == "lat_lng") {
-          loc = new L.LatLng(
-            project.geo_lat,
-            project.geo_lng
-          );
-        } else {
-          continue;
-        }
-
-        var marker = new L.Marker(loc);
-
-        var marker_html = '<h6>'+project.title+'</h6>'+
-          '<small><a href="/project/'+project.id+'" target="_blank">'+
-          'Learn more <span class="fui-arrow-right"></span></a></small>';
-
-        marker.title = project.title;
-
-        marker.bindPopup(marker_html);
-
-        if (!is_touch_device()) {
-          marker.on('mouseover', function () {
-            this.openPopup();
-          });
-        };
-
-        markers.addLayer(marker);
-
-        markers_arr.push({
-          id: project.id,
-          marker: marker
+    marker.on('popupopen', function () {
+      if (typeof project.get('data') === 'undefined') {
+        project.pull({
+          callback: function() {
+            // Update the marker
+            console.log('Project updated.');
+            marker_html = '<h6>'+project.get('title')+'</h6>'+
+              '<small><a href="/project/'+project.get('id')+'" target="_blank">'+
+              'Learn more <span class="fui-arrow-right"></span></a></small>';
+            marker.setPopupContent(marker_html);
+          }
         });
-      }
-
-      map.addLayer(markers);
-
-      $('.map-loading').fadeOut();
-      listMarkers();
-
-      pahali.map.shareable();
-
-      $(window).on('hashchange', function() {
-        pahali.map.shareable();
-      });
-
+      };
     });
 
-  };
-  loadMarkers();
+    marker.bindPopup(marker_html);
 
-
-
-  /**
-   * List Markers in view
-   * ---------------------------------------------------------------------------
-   */
-  function listMarkers () {
-    // Construct an empty list to fill with onscreen markers.
-    var inBounds = [],
-    // Get the map bounds - the top-left and bottom-right locations.
-      bounds = map.getBounds();
-
-    $.each(markers_arr, function( index, marker ) {
-      if (bounds.contains(marker.marker.getLatLng())) {
-        inBounds.push(marker.marker.options.title);
-      }
+    marker.on('mouseover', function () {
+      this.openPopup();
     });
 
-    $('#marker-no').html(inBounds.length);
+    pahali.map.get('markers').addLayer(marker);
+
+    pahali.map.markers.add({
+      'project_id': project.get('id'),
+      'marker': marker
+    });
   }
+
+  pahali.categories.fetch({data: {pivot: 1}});
+
+  _.each(pahali.projects.models, function (project) {
+    addMarker(project);
+  });
 
 
 });
