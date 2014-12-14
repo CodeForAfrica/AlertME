@@ -14,7 +14,9 @@ module.exports = function(grunt) {
         dependencies: {
           'underscore': 'jquery',
           'backbone': 'underscore',
-          'jquery-mousewheel': 'jquery'
+          'jquery-mousewheel': 'jquery',
+          'flat-ui': 'bootstrap',
+          'font-awesome': 'bootstrap'
         },
         bowerOptions: {
           relative: false
