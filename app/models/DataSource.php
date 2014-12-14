@@ -115,12 +115,6 @@ class DataSource extends Eloquent {
     $this->setProjects($csv, $ds_sync);
     Log::info('Projects update completed.');
 
-    // Geocode
-    if ($this->config->geo->type == 'address') {
-      Geocode::geocodeProjects( $this->id );
-      Log::info('Geocode complete.');
-    }
-
     // TODO: Send alerts created from sync
     
     $ds_sync->sync_status = 1;

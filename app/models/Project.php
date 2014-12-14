@@ -74,10 +74,22 @@ class Project extends Eloquent {
     return $value;
   }
 
-  public function setGeoAdressAttribute($value)
+  public function setGeoAddressAttribute($value)
   {
     if (strlen($value) > 254){
       $value = substr($value, 0, 254);
+    }
+    if ($this->geo_type == 'address') {
+      $geocode = Geocode::firstOrCreate( array(
+        'address' => $value
+      ));
+      if ($geocode != false && $value != '') {
+        $this->geo_lat = $geocode->lat;
+        $this->geo_lng = $geocode->lng;
+      } else {
+        $this->geo_lat = 450;
+        $this->geo_lng = 450;
+      }
     }
     $this->attributes['geo_address'] = $value;
   }

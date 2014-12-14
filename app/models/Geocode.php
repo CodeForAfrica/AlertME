@@ -12,8 +12,14 @@ class Geocode extends Eloquent {
       // Setup event bindings...
       Geocode::creating(function($geocode)
       {
-        $geocode = Geocode::fetchGeo( $geocode );
+        if (trim($geocode->address) == '') return false;
+      });
 
+      Geocode::created(function($geocode)
+      {
+        $geocode = Geocode::find( $geocode->id );
+        $geocode->fetchGeo();
+        $geocode->save();
         return $geocode;
       });
 
@@ -24,76 +30,37 @@ class Geocode extends Eloquent {
       return $this->belongsTo('GeoApi');
     }
 
-    public static function geocodeProjects ( $ds_id )
-    {
-      if (!$ds_id){
-        return;
-      }
-      
-      $addresses = DB::table('projects')->where('datasource_id', '=', $ds_id)->groupby('geo_address')->get(array('geo_address'));
-
-      foreach ( $addresses as $address ){
-
-        if ( trim($address->geo_address) != '' )
-        {
-          $geocode = Geocode::firstOrCreate( array(
-            'address' => $address->geo_address
-          ));
-
-          if( $geocode->status == 0 ) {
-            $geocode = Geocode::fetchGeo( $geocode );
-            $geocode->save();
-          }
-
-          DB::table('projects')
-            ->where('geo_address', $address->geo_address)
-            ->update(array(
-                'geo_lat' => $geocode->lat,
-                'geo_lng' => $geocode->lng
-              ));
-        } else {
-          DB::table('projects')
-            ->where('geo_address', '')
-            ->update(array(
-                'geo_lat' => 450,
-                'geo_lng' => 450
-              ));
-        }
-      }
-
-    }
-
-    public static function fetchGeo ( $geocode )
+    public function fetchGeo ()
     {
       $geoapi = GeoApi::find(1);
-      $geocode->geo_api_id = 1;
+      $this->geo_api_id = 1;
+
       $url = 'https://maps.googleapis.com/maps/api/geocode/json?'.
-        'address='.str_replace(" ", "+", $geocode->address).
+        'address='.str_replace(" ", "+", $this->address).
         '&region=za'.
         '&key='.$geoapi->key;
       $api_response = json_decode( file_get_contents($url), true );
 
-      $geocode->api_response = json_encode( $api_response );
+      $this->api_response = json_encode( $api_response );
 
       if ( $api_response != 0 )
       {
         // Geocode successful
         if ( $api_response['status'] == "OK" ) {
-          $geocode->lat = $api_response['results'][0]['geometry']['location']['lat'];
-          $geocode->lng = $api_response['results'][0]['geometry']['location']['lng'];
-          $geocode->status = 1;
+          $this->lat = $api_response['results'][0]['geometry']['location']['lat'];
+          $this->lng = $api_response['results'][0]['geometry']['location']['lng'];
+          $this->status = 1;
         }
         // Geocode over limit
         if ( $api_response['status'] == "OVER_QUERY_LIMIT" ) {
-          $geocode->status = 0;
+          $this->status = 0;
         }
         // Geocode no results
         if ( $api_response['status'] == "ZERO_RESULTS" ) {
-          $geocode->status = 2;
+          $this->status = 2;
         }
-
       }
 
-      return $geocode;
+      return $this;
     }
 }
