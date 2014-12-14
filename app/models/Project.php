@@ -119,6 +119,15 @@ class Project extends Eloquent {
   }
 
 
+  // Query Scopes
+  public function scopeHasGeo($query)
+  {
+    return $query->whereBetween('geo_lat', array(-90, 90))
+                 ->whereBetween('geo_lng', array(-180, 180));
+  }
+
+
+
   // Relations
 
   public function datasource()
