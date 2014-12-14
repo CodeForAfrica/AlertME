@@ -118,8 +118,6 @@ $( document ).ready(function() {
     });
   }
 
-  pahali.categories.fetch({data: {pivot: 1}});
-
   _.each(pahali.projects.models, function (project) {
     addMarker(project);
   });

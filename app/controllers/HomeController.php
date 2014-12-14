@@ -45,6 +45,12 @@ class HomeController extends BaseController {
     $projects_all = Project::select('id', 'geo_lat', 'geo_lng')->hasGeo()->get();
 
     $categories = Category::geocoded();
+    foreach ($categories as $key => $category) {
+      $pivot = DB::table('project_category')
+                  ->where('category_id', $category->id)
+                  ->lists('project_id');
+      $categories[$key] = array_add($categories[$key], 'projects_pivot', $pivot);
+    }
 
     $data = compact(
       'projects', 'projects_all',

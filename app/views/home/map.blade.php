@@ -74,7 +74,8 @@
                     </label>
                   @endfor
                 @endif
-              </div>
+
+              </div> <!-- /.filter-cat -->
             @endif
           </div> <!-- /.map-filter.container-fluid.text-left -->
         </div> <!-- /.map-list -->
@@ -232,6 +233,7 @@
 
 @section('scripts-data')
   var categories = {{ $categories != NULL ? $categories : 'false' }};
+  pahali.categories.set( {{ $categories->toJSON() }} );
   pahali.projects.set( {{ $projects_all->toJSON() }} );
 @stop
 
