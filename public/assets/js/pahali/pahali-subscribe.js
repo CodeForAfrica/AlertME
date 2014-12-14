@@ -11,6 +11,11 @@
   
   var Pahali_Subscribe = Backbone.Model.extend({
 
+    defaults: {
+      'response': {},
+      'subscribed': false
+    },
+
     project: function (project_id, email) {
 
       this.set({
@@ -78,10 +83,7 @@
 
   });
 
-  pahali.subscribe = new Pahali_Subscribe({
-    'response': {},
-    'subscribed': false
-  });
+  pahali.subscribe = new Pahali_Subscribe();
 
 
 }( jQuery ));
