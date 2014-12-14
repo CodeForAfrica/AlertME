@@ -116,6 +116,8 @@ $( document ).ready(function() {
       'project_id': project.get('id'),
       'marker': marker
     });
+
+    project.set({'marker': marker});
   }
 
   _.each(pahali.projects.models, function (project) {
