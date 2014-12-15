@@ -21,6 +21,7 @@
     "underscore": "~1.7.0",
     "backbone": "~1.1.2",
     "flat-ui": "~2.2.2",
-    "font-awesome": "~4.2.0"
+    "font-awesome": "~4.2.0",
+    "leaflet.markercluster": "~0.4.0"
   }
 }

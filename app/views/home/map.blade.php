@@ -238,14 +238,12 @@
 @stop
 
 @section('scripts')
-  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
 
   <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.2/mapbox.js'></script>
   <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.2/mapbox.css' rel='stylesheet' />
 
-  <link href="{{ secure_asset('assets/css/MarkerCluster.css') }}" rel="stylesheet" />
-  <link href="{{ secure_asset('assets/css/MarkerCluster.Default.css') }}" rel="stylesheet" />
-  <script src="{{ secure_asset('assets/js/vendor/leaflet.markercluster.js') }}"></script>
+  <link href="{{ secure_asset('assets/css/_bower.leaflet.css') }}" rel="stylesheet" />
+  <script src="{{ secure_asset('assets/js/_bower.leaflet.js') }}"></script>
   
   <script src="{{ secure_asset('assets/js/frontend/routes.js') }}"></script>
   <script src="{{ secure_asset('assets/js/frontend/map.js') }}"></script>

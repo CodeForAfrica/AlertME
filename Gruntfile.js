@@ -9,7 +9,7 @@ module.exports = function(grunt) {
         dest: 'public/assets/js/_bower.js',
         cssDest: 'public/assets/css/_bower.css',
         exclude: [
-          'modernizr'
+          'modernizr', 'leaflet.markercluster'
         ],
         dependencies: {
           'underscore': 'jquery',
@@ -17,6 +17,23 @@ module.exports = function(grunt) {
           'jquery-mousewheel': 'jquery',
           'flat-ui': 'bootstrap',
           'font-awesome': 'bootstrap'
+        },
+        bowerOptions: {
+          relative: false
+        }
+      },
+      leaflet: {
+        dest: 'public/assets/js/_bower.leaflet.js',
+        cssDest: 'public/assets/css/_bower.leaflet.css',
+        include: [
+          'leaflet.markercluster'
+        ],
+        mainFiles: {
+          'leaflet.markercluster': [
+            'dist/leaflet.markercluster-src.js',
+            'dist/MarkerCluster.css',
+            'dist/MarkerCluster.Default.css'
+          ]
         },
         bowerOptions: {
           relative: false
