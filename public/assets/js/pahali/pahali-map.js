@@ -26,6 +26,12 @@
         if (typeof this.get('map') === 'undefined') return;
         if (!this.get('shareable')) return;
 
+        if (typeof this.get('markers') !== 'undefined') {
+          if (!this.get('map').hasLayer(this.get('markers'))) {
+            this.get('map').addLayer(this.get('markers'));
+          };
+        };
+
         this.share_link_process();
         this.share_link_create_enable();
 
@@ -56,12 +62,13 @@
         this.get('map').fitBounds([
           [map_bounds[0], map_bounds[1]],[map_bounds[2], map_bounds[3]]
         ]);
-        console.log('Map Bounds fit.');
       };
       
       // Category option
       if(getUrlParameters('category', '', true) != false){
         $( '*[data-cat-id="'+getUrlParameters('category', '', true)+'"]' ).trigger( 'click' );
+      } else {
+        $( '*[data-cat-id="all_not_set"]' ).trigger( 'click' );
       };
     },
 
@@ -134,32 +141,27 @@
     filter_by_category: function (cat_id, categories, projects) {
       $('.cat-sel').removeClass('active');
       
-      window.location.hash = setUrlParameters('category', cat_id, '', true);
-
-      var projects_markers = [];
+      if (cat_id != 'all_not_set') {
+        this.set('pahali_changed_hash', true);
+        window.location.hash = setUrlParameters('category', cat_id, '', true);
+      };
       
-      if (cat_id == 'all') {
+      var map_markers = this.get('markers');
+      map_markers.clearLayers();
+      
+      if (cat_id == 'all' || cat_id == 'all_not_set') {
         projects.each(function(project) {
-          projects_markers.push(project.get('marker'));
+          map_markers.addLayer( project.get('marker') );
         });
       } else {
         $.each(categories.get(cat_id).get('projects_pivot'), function (index, project_id) {
           var project = projects.get(project_id);
           if (typeof project !== 'undefined') {
-            projects_markers.push(project.get('marker'));
+            map_markers.addLayer( project.get('marker') );
           };
         });
       }
 
-      this.get('map').removeLayer(this.get('markers'));
-      var markerClusterGroup = new L.MarkerClusterGroup({
-        showCoverageOnHover: false
-      });
-      $.each(projects_markers, function( index, project_marker ) {
-        markerClusterGroup.addLayer(project_marker);
-      });
-      this.get('map').addLayer(markerClusterGroup);
-      this.set({'markers': markerClusterGroup});
     }
 
   });

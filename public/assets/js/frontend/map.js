@@ -34,42 +34,24 @@ map = L.mapbox.map('map', 'codeforafrica.ji193j10',{
 }).setView([-28.4792625, 24.6727135], 5);
 map.scrollWheelZoom.disable();
 
-pahali.map.set({'map': map});
-
 
 // Markers
 var markers;
 var markers_arr = [];
 
 
-// On Document Ready
 $( document ).ready(function() {
-  
-  // Map controls
-  $('#map-ctrl-zoom-in').click(function () {
-    pahali.map.get('map').zoomIn();
-  });
-  $('#map-ctrl-zoom-out').click(function () {
-    pahali.map.get('map').zoomOut();
-  });
-
-  // Overlapping markers
-  markers = new L.MarkerClusterGroup({
-    showCoverageOnHover: false
-  });
-  pahali.map.set({'markers': markers});
-  pahali.map.get('map').addLayer(pahali.map.get('markers'));
-
-
 
   /**
    * Load Markers
    * ---------------------------------------------------------------------------
    */
 
-  var bounds = pahali.map.get('map').getBounds();
-  var bound = bounds._southWest.lat + "," + bounds._northEast.lat + "," +
-    bounds._southWest.lat + "," + bounds._northEast.lng;
+  // Overlapping markers
+  markers = new L.MarkerClusterGroup({
+    showCoverageOnHover: false
+  });
+  pahali.map.set({'markers': markers});
 
   function addMarker (project) {
     var loc = new L.LatLng(
@@ -104,14 +86,30 @@ $( document ).ready(function() {
       this.openPopup();
     });
 
-    project.set({'marker': marker});
+    project.set('marker', marker);
 
     pahali.map.get('markers').addLayer(project.get('marker'));
     
   }
 
-  _.each(pahali.projects.models, function (project) {
+  pahali.projects.each(function(project) {
     addMarker(project);
+  });
+
+
+  /**
+   * Load Map
+   * ---------------------------------------------------------------------------
+   */
+
+  pahali.map.set({'map': map});
+  
+  // Map controls
+  $('#map-ctrl-zoom-in').click(function () {
+    pahali.map.get('map').zoomIn();
+  });
+  $('#map-ctrl-zoom-out').click(function () {
+    pahali.map.get('map').zoomOut();
   });
 
 });
