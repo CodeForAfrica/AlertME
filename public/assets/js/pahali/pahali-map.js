@@ -9,41 +9,65 @@
 
 (function ( $ ) {
 
-  var Pahali_Map_Markers = Backbone.Collection.extend({
-
-  });
-
   var Pahali_Map = Backbone.Model.extend({
 
     defaults: {
       'categories':  {},
-      'shareable': true
+      'shareable': true,
+      'pahali_changed_hash': false,
+      'share_on_hashchange_count': 0,
+      'share_on_hashchange_count_max': 1
     },
 
-    initialize: function() {
-      this.markers = new Pahali_Map_Markers;
+    initialize: function () {
+
+      // Make Shareable
+      this.on('change:map', function (event) {
+        if (typeof this.get('map') === 'undefined') return;
+        if (!this.get('shareable')) return;
+
+        this.share_link_process();
+        this.share_link_create_enable();
+
+        // On window hashchange e.g back button
+        $(window).on('hashchange', $.proxy( this.share_on_hashchange, this ));
+      });
     },
 
-    // Center map with list consideration
-    center: function () {
-      // TODO: This should be independent
-      if ($('.map-list').length) {
-        var map_move_x = -0.5 * (
-          $('.map-list').width() +
-          parseInt($('.map-list').css('padding-top').replace('px', '')) +
-          parseInt($('.map-list').css('padding-bottom').replace('px', ''))
-        );
-        this.get('map').panBy(
-          L.point(map_move_x, 0, false),
-          {animate: false}
-        );
+
+    /* Shareable
+     * -------------------------------------------------------------------------
+     */
+
+    // Shareable: Process link present
+    share_link_process: function () {
+      // Map options
+      if (getUrlParameters('center', '', true) == false && getUrlParameters('bounds', '', true) == false) {
+        this.get('map').setView([-28.4792625, 24.6727135], 5, {animate: false});
+        this.center();
       };
-      console.log('Centered');
+      if(getUrlParameters('center', '', true) != false){
+        var map_ctr = getUrlParameters('center', '', true).split(',');
+        var map_zoom = getUrlParameters('zoom', '', true);
+        this.get('map').setView([map_ctr[0], map_ctr[1]], map_zoom);
+      };
+      if(getUrlParameters('bounds', '', true) != false){
+        var map_bounds = getUrlParameters('bounds', '', true).split(',');
+        this.get('map').fitBounds([
+          [map_bounds[0], map_bounds[1]],[map_bounds[2], map_bounds[3]]
+        ]);
+        console.log('Map Bounds fit.');
+      };
+      
+      // Category option
+      if(getUrlParameters('category', '', true) != false){
+        $( '*[data-cat-id="'+getUrlParameters('category', '', true)+'"]' ).trigger( 'click' );
+      };
     },
 
-
-    // Create Share Link
-    share_create_link: function () {
+    // Shareable: Create link to enable share
+    share_link_create: function () {
+      this.set('pahali_changed_hash', true);
       var loc_bounds = this.get('map').getBounds();
       window.location.hash = setUrlParameters(
           'bounds',
@@ -52,77 +76,90 @@
           false
         );
       window.location.hash = removeUrlParameters('center', false);
-      window.location.hash = removeUrlParameters("zoom", false);
+      window.location.hash = removeUrlParameters('zoom', false);
+    },
+    share_link_create_enable: function () {
+      this.get('map').on('zoomend, moveend', this.share_link_create, this);
+    },
+    share_link_create_disable: function () {
+      this.get('map').off('zoomend, moveend', this.share_link_create, this);
     },
 
-    // Make link shareable
-    shareable: function () {
-      if (!this.get('shareable')) return;
-      
-      this.get('map').off('zoomend, moveend', this.share_create_link, this);
+    // Shareable: When back button pressed
+    share_on_hashchange: function () {
+      // Making sure it isn't hash change from share_link_create      
+      if (this.get('pahali_changed_hash')) return this.set('pahali_changed_hash', false);
 
-      // Map options
-      if(getUrlParameters('center', '', true) != false){
-        var map_ctr = getUrlParameters('center', '', true).split(',');
-        var map_zoom = getUrlParameters('zoom', '', true);
-        this.get('map').setView([map_ctr[0], map_ctr[1]], map_zoom);
-      }
-      if(getUrlParameters('bounds', '', true) != false){
-        var map_bounds = getUrlParameters('bounds', '', true).split(',');
-        this.get('map').fitBounds([
-          [map_bounds[0], map_bounds[1]],[map_bounds[2], map_bounds[3]]
-        ]);
-      }
       if (getUrlParameters('center', '', true) == false && getUrlParameters('bounds', '', true) == false) {
-        this.get('map').setView([-28.4792625, 24.6727135], 5, {animate: false});
-        this.center();
+        this.set('share_on_hashchange_count_max', 1);
+      } else {
+        this.set('share_on_hashchange_count_max', 0);
       };
 
-      // Category option
-      if(getUrlParameters('category', '', true) != false){
-        $( '*[data-cat-id="'+getUrlParameters('category', '', true)+'"]' ).trigger( 'click' );
-      }
+      this.share_link_create_disable();
 
-      // Create link
-      this.get('map').on('zoomend, moveend', this.share_create_link, this);
-
-      // On window hashchange
-      $(window).on('hashchange', $.proxy( this.shareable, this ));
+      this.get('map').on('zoomend, moveend', this.share_on_hashchange_end, this);
+      this.share_link_process(); 
     },
+    share_on_hashchange_end: function () {
+      var count = this.get('share_on_hashchange_count');
+      if (count < this.get('share_on_hashchange_count_max')) {
+        return this.set('share_on_hashchange_count', count+1);
+      };
+      this.set('share_on_hashchange_count', 0);
+      this.get('map').off('zoomend, moveend', this.share_on_hashchange_end, this);
+      this.share_link_create_enable();
+    },
+
+
+    // Center map with list consideration
+    center: function () {
+      // TODO: This should be independent
+      if ($('.map-list').length) {
+        var map_move_x = -0.5 * (
+          $('.map-list').width() +
+          parseInt($('.map-list').css('padding-left').replace('px', '')) +
+          parseInt($('.map-list').css('padding-right').replace('px', ''))
+        );
+        this.get('map').panBy(
+          L.point(map_move_x, 0, false),
+          {animate: false}
+        );
+      };
+    },
+
 
 
     // Filter by Category
-    filter_by_category: function (cat_id) {
+    filter_by_category: function (cat_id, categories, projects) {
       $('.cat-sel').removeClass('active');
       
       window.location.hash = setUrlParameters('category', cat_id, '', true);
 
-      var markers_sel = [];
+      var projects_markers = [];
       
       if (cat_id == 'all') {
-        $.each(markers_arr, function( index, marker_arr ) {
-          markers_sel.push(marker_arr);
+        projects.each(function(project) {
+          projects_markers.push(project.get('marker'));
         });
       } else {
-        $.each(this.get('categories'), function( index, projects_category ) {
-          if (projects_category.category_id == cat_id) {
-            $.each(markers_arr, function( index, marker_arr ) {
-              if (marker_arr.id == projects_category.project_id) {
-                markers_sel.push(marker_arr);
-              };
-            });
+        $.each(categories.get(cat_id).get('projects_pivot'), function (index, project_id) {
+          var project = projects.get(project_id);
+          if (typeof project !== 'undefined') {
+            projects_markers.push(project.get('marker'));
           };
         });
       }
 
-      this.get('map').removeLayer(markers);
-      markers = new L.MarkerClusterGroup({
+      this.get('map').removeLayer(this.get('markers'));
+      var markerClusterGroup = new L.MarkerClusterGroup({
         showCoverageOnHover: false
       });
-      $.each(markers_sel, function( index, marker_sel ) {
-        markers.addLayer(marker_sel.marker);
+      $.each(projects_markers, function( index, project_marker ) {
+        markerClusterGroup.addLayer(project_marker);
       });
-      this.get('map').addLayer(markers);
+      this.get('map').addLayer(markerClusterGroup);
+      this.set({'markers': markerClusterGroup});
     }
 
   });

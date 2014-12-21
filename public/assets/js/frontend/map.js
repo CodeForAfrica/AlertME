@@ -1,7 +1,10 @@
 /**
- * Map Javascript File
+ * Map.js
  * -----------------------------------------------------------------------------
  */
+
+var map;
+
 
 // Resize the page
 function resizeMap () {
@@ -34,19 +37,14 @@ map.scrollWheelZoom.disable();
 pahali.map.set({'map': map});
 
 
-
 // Markers
 var markers;
 var markers_arr = [];
-
-var map;
 
 
 // On Document Ready
 $( document ).ready(function() {
   
-  pahali.map.shareable();
-
   // Map controls
   $('#map-ctrl-zoom-in').click(function () {
     pahali.map.get('map').zoomIn();
@@ -60,7 +58,7 @@ $( document ).ready(function() {
     showCoverageOnHover: false
   });
   pahali.map.set({'markers': markers});
-  pahali.map.get('map').addLayer(markers);
+  pahali.map.get('map').addLayer(pahali.map.get('markers'));
 
 
 
@@ -106,19 +104,14 @@ $( document ).ready(function() {
       this.openPopup();
     });
 
-    pahali.map.get('markers').addLayer(marker);
-
-    pahali.map.markers.add({
-      'project_id': project.get('id'),
-      'marker': marker
-    });
-
     project.set({'marker': marker});
+
+    pahali.map.get('markers').addLayer(project.get('marker'));
+    
   }
 
   _.each(pahali.projects.models, function (project) {
     addMarker(project);
   });
-
 
 });
