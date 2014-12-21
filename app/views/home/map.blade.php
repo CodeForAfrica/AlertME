@@ -107,7 +107,7 @@
       <!-- MODALS -->
 
       <!-- Subscribe Modal -->
-      <div class="modal" id="subscriptionModal" tabindex="-1" role="dialog"
+      <div class="modal fade" id="subscriptionModal" tabindex="-1" role="dialog"
         aria-labelledby="subscriptionModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -121,7 +121,7 @@
 
             <div class="modal-body">
 
-              <img id="map-alert" src="#" class="img-rounded img-responsive" />
+              <img id="map-alert" data-src="holder.js/300x200" class="img-rounded img-responsive" />
               <hr/>
 
               <p>Enter your e-mail address below to receive alerts in this area.</p>
@@ -239,8 +239,8 @@
 
 @section('scripts')
 
-  <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.2/mapbox.js'></script>
-  <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.2/mapbox.css' rel='stylesheet' />
+  <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.js'></script>
+  <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.css' rel='stylesheet' />
 
   <link href="{{ secure_asset('assets/css/_bower.leaflet.css') }}" rel="stylesheet" />
   <script src="{{ secure_asset('assets/js/_bower.leaflet.js') }}"></script>
