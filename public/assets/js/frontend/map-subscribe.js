@@ -30,7 +30,7 @@ $( document ).ready(function() {
     $('.create-alert-btn').removeClass('disabled');
   }
   $('#subscriptionModal').on('show.bs.modal', function () {
-    if (map.getZoom() < 11) {
+    if (pahali.map.get('map').getZoom() < 11) {
       $('#modal-subscribe-error').modal('show')
       return false;
     };
