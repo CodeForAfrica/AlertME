@@ -16,13 +16,12 @@
     "tests"
   ],
   "dependencies": {
-    "bootstrap": "~3.3.1",
     "jquery": "~2.1.1",
     "underscore": "~1.7.0",
     "backbone": "~1.1.2",
-    "flat-ui": "~2.2.2",
+    "bootstrap": "~3.3.1",
+    "flat-ui": "DavidLemayian/Flat-UI",
     "font-awesome": "~4.2.0",
-    "leaflet.markercluster": "~0.4.0",
-    "holderjs": "~2.4.1"
+    "leaflet.markercluster": "~0.4.0"
   }
 }
