@@ -15,7 +15,10 @@ module.exports = function(grunt) {
           'underscore': 'jquery',
           'backbone': 'underscore',
           'jquery-mousewheel': 'jquery',
-          'flat-ui': 'bootstrap',
+          'jquery-ui': 'jquery',
+          'jquery-ui-touch-punch': ['jquery', 'jquery-ui'],
+          'bootstrap': ['jquery', 'jquery-ui', 'jquery-ui-touch-punch'],
+          'flat-ui': ['bootstrap', 'jquery', 'jquery-ui', 'jquery-ui-touch-punch'],
           'font-awesome': 'flat-ui'
         },
         bowerOptions: {
