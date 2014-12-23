@@ -10,12 +10,12 @@ var map_image_link;
 $( document ).ready(function() {
 
   // Create Alert Map
-  map_subcribe_rectangle = L.rectangle(pahali.map.get('map').getBounds(), {color: "#2ECC71", weight: 1});
-  map_image_link = 'https://api.tiles.mapbox.com/v4/codeforafrica.ji193j10/' +
-    'geojson(' + encodeURI(JSON.stringify(map_subcribe_rectangle.toGeoJSON())) + ')/' +
-    'auto/600x200.png?' +
-    'access_token=pk.eyJ1IjoiY29kZWZvcmFmcmljYSIsImEiOiJVLXZVVUtnIn0.JjVvqHKBGQTNpuDMJtZ8Qg';
-  $('#map-alert').attr('src', map_image_link);
+  // map_subcribe_rectangle = L.rectangle(pahali.map.get('map').getBounds(), {color: "#2ECC71", weight: 1});
+  // map_image_link = 'https://api.tiles.mapbox.com/v4/codeforafrica.ji193j10/' +
+  //   'geojson(' + encodeURI(JSON.stringify(map_subcribe_rectangle.toGeoJSON())) + ')/' +
+  //   'auto/600x200.png?' +
+  //   'access_token=pk.eyJ1IjoiY29kZWZvcmFmcmljYSIsImEiOiJVLXZVVUtnIn0.JjVvqHKBGQTNpuDMJtZ8Qg';
+  // $('#map-alert').attr('src', map_image_link);
 
   // Modal Controls
   function alertsReset() {

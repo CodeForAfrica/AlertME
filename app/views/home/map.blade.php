@@ -29,7 +29,7 @@
 
         <div class="map-list bg-primary text-center">
 
-          <div class="form-group">
+          <div class="form-group search-geo">
             <div class="input-group">
               <span class="input-group-btn">
                 <button class="btn" data-toggle="tooltip" data-placement="bottom" title="Auto-complete powered">
@@ -175,7 +175,8 @@
 
             <div class="modal-body">
 
-              <img id="map-alert" data-src="holder.js/300x200" class="img-rounded img-responsive" />
+              <img id="map-alert" data-src="holder.js/600x200/#1ABC9C:#fff/text:Loading map..." class="img-rounded img-responsive"
+                style="width:100%; height:200px;"/>
               <hr/>
 
               <p>Enter your e-mail address below to receive alerts in this area.</p>
