@@ -10,21 +10,23 @@
       <h5>{{ $home->data->banner->description }}</h5>
       <br/>
 
-      <div class="row" style="margin-bottom:5px;">
+      <div class="row search-geo" style="margin-bottom:5px;">
         <div class="col-md-4 col-md-offset-4">
           <div class="input-group input-group-hg input-group-rounded">
             <span class="input-group-btn">
-              <button type="submit" class="btn"><span class="fa fa-globe fa-lg"></span></button>
+              <button class="btn" data-toggle="tooltip" data-placement="left" title="Auto-complete powered">
+                <span class="fa fa-globe fa-lg"></span>
+              </button>
             </span>
             <input class="form-control" placeholder="Province, town, city or region..."
-              name="search-geo" id="search-geo"
-              data-toggle="tooltip" data-placement="top" title="Auto-complete Powered: Select your location from the drop down list after you start typing.">
+              name="search-geo" id="search-geo">
           </div>
         </div>
       </div>
 
 
-      <p><button class="btn btn-link" style="color:#fff;" id="search-my-geo">
+      <p><button class="btn btn-link" style="color:#fff;" id="search-my-geo"
+        data-loading-text='<i class="fa fa-crosshairs fa-spin"></i> Locating you...'>
         <span class="fa fa-crosshairs"></span> Use my location
       </button></p>
 
@@ -33,24 +35,34 @@
         Finding projects in this area...
       </p>
 
-      <p id="loading-my-geo" style="display:none;" >
-        <i class="fa fa-crosshairs fa-spin"></i>
-        Locating you...
-      </p>
-
-      <div class="container text-left">
+      <div class="alerts container text-left">
         <div class="row">
-          <div class="col-md-6 col-md-offset-3">
+          <div class="col-md-4 col-md-offset-4">
             <div class="alert alert-warning alert-dismissible" role="alert"
-              style="padding: 10px 35px 10px 15px; display:none;" id="search-my-geo-alert">
+                style="padding: 10px 35px 10px 15px; display:none;" id="search-my-geo-alert">
               <button type="button" class="close" data-dismiss="alert">
                 <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
               </button>
-              <strong>Oops!</strong> It seems your are not in South Africa. Try search instead.
+              <strong>Geolocation Failed</strong><br/>
+              <small>Oops! It seems your are not in <em>South Africa</em>. Try searching for a location instead.</small>
             </div>
-          </div>
-        </div>
-      </div>
+            <div class="alert alert-danger alert-dismissible" role="alert"
+                style="padding: 10px 35px 10px 15px; display:none;" id="search-my-geo-alert-denied">
+              <button type="button" class="close" data-dismiss="alert">
+                <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+              </button>
+              <strong>Geolocation Failed</strong><br/>
+              <small>
+                It seems you haven't enabled <em>geolocation</em> in your browser. Fortunately you can fix this.<br/>
+                <strong>Learn more:</strong> 
+                  <a href="https://support.google.com/chrome/answer/142065?hl=en" target="_blank">Chrome</a> |
+                  <a href="https://www.mozilla.org/en-US/firefox/geolocation/" target="_blank">Firefox</a>
+              </small>
+            </div>
+          </div> <!-- /.col-md-6 -->
+        </div> <!-- /.row -->
+      </div> <!-- /.alerts -->
+            
 
       <br/><br/><br/><br/>
     </div>
