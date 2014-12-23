@@ -117,22 +117,32 @@
       </div>
     </div>
 
-    <div class="container text-center home-logos" style="padding: 70px 0;">
-      <p>
-        <a href="http://www.sej.org/" target="_blank">
-          <img src="{{ secure_asset('assets/img/logos/sej.png') }}"/>
-        </a>
-        <a href="http://africannewschallenge.org" target="_blank">
-          <img src="{{ secure_asset('assets/img/logos/anic.png') }}" style="height:65px;"/>
-        </a>
-        <a href="http://oxpeckers.org" target="_blank">
-          <img src="{{ secure_asset('assets/img/logos/oxpeckers-long.png') }}"/>
-        </a>
-        <a href="http://codeforafrica.org" target="_blank">
-          <img src="{{ secure_asset('assets/img/logos/cfafrica.png') }}"/>
-        </a>
-      </p>
-    </div>
+    <div class="container text-left home-logos" style="padding: 70px 0;">
+      <div class="row">
+        <div class="col-md-2 col-md-offset-1">
+          <h4>Partners</h4>
+          <p>#GreenAlert has been made possible through support from the following partners:</p>
+        </div>
+        <div class="col-md-7 col-md-offset-1">
+          <p>
+            <a href="http://oxpeckers.org" target="_blank">
+              <img src="{{ secure_asset('assets/img/logos/oxpeckers-long.png') }}"/>
+            </a>
+          </p>
+          <p>
+            <a href="http://www.codeforafrica.org" target="_blank">
+              <img src="{{ secure_asset('assets/img/logos/cfafrica.png') }}"/>
+            </a>
+            <a href="http://africannewschallenge.org" target="_blank">
+              <img src="{{ secure_asset('assets/img/logos/anic.png') }}" style="height:65px;"/>
+            </a>
+            <a href="http://www.sej.org/" target="_blank">
+              <img src="{{ secure_asset('assets/img/logos/sej.png') }}"/>
+            </a>
+          </p>
+        </div>
+      </div> <!-- /.row -->
+    </div> <!-- /.home-logos -->
 
   </div> <!-- /.home.index -->
 
