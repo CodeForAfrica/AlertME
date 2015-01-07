@@ -144,7 +144,7 @@
       </div> <!-- /.row -->
     </div> <!-- /.home-logos -->
 
-  </div> <!-- /.home.index -->
+  </div> <!-- /.home-index -->
 
 @stop
 
