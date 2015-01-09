@@ -29,16 +29,18 @@
 
         <div class="map-list bg-primary text-center">
 
-          <div class="form-group search-geo">
-            <div class="input-group">
-              <span class="input-group-btn">
-                <button class="btn" data-toggle="tooltip" data-placement="bottom" title="Auto-complete powered">
-                  <span class="fa fa-globe fa-lg"></span>
-                </button>
-              </span>
-              <input class="form-control" placeholder="Province, town, city or region..."
-                name="search-geo" id="search-geo">
-            </div>
+          <div class="search-geo" style="margin-top:20px;">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-btn">
+                  <button class="btn" data-toggle="tooltip" data-placement="bottom" title="Auto-complete powered">
+                    <span class="fa fa-globe fa-lg"></span>
+                  </button>
+                </span>
+                <input class="form-control" placeholder="Province, town, city or region..."
+                  name="search-geo" id="search-geo">
+              </div>
+            </div> <!-- /.form-group -->
 
             <p>
               <button class="btn btn-link" style="color:#fff;" autocomplete="off"
@@ -46,7 +48,7 @@
                 <span class="fa fa-crosshairs"></span> Use my location
               </button>
             </p>
-          </div> <!-- /.form-group -->
+          </div> <!-- /.search-geo -->
 
           <p id="loading-geo" style="display:none;" >
             <i class="fa fa-crosshairs fa-spin"></i>
