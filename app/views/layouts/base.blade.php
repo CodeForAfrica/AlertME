@@ -43,7 +43,6 @@
 
 
     <script src="{{ secure_asset('assets/js/_bower.js') }}"></script>
-    <script src="{{ secure_asset('assets/js/vendor/readmore.min.js') }}"></script>
 
     <script src="{{ secure_asset('assets/js/plugins.js') }}"></script>
     <script src="{{ secure_asset('assets/js/application.js') }}"></script>
