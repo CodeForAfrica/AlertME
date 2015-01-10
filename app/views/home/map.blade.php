@@ -88,7 +88,7 @@
 
               <div class="filter-cat" style="overflow-x:scroll;">
                 <div class="btn-group btn-group-lg" data-toggle="buttons"
-                    style="white-space: nowrap; border-radius: 6px;">
+                    style="white-space: nowrap; border-radius: 6px; border: 2px solid #fff;">
                   
                   <label class="btn btn-inverse cat-sel cat-all" data-cat-id="all"
                       style="float: none; display: inline-block;">
