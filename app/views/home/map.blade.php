@@ -27,58 +27,73 @@
 
         <div id="map"></div> <!-- /#map -->
 
-        <div class="map-list bg-primary text-center" style="overflow-y:scroll; overflow-x:hidden;">
+        <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#collapse-map-list" aria-expanded="false" aria-controls="collapse-map-list" id="collapse-map-list-btn-open"
+            style="position:absolute; top:92px; left: -10px; z-index:999999; display:none;">
+          <span class="fui-arrow-right"></span>
+        </button>
 
-          <div class="search-geo" style="margin-top:20px;">
-            <div class="form-group">
-              <div class="input-group">
-                <span class="input-group-btn">
-                  <button class="btn" data-toggle="tooltip" data-placement="bottom" title="Auto-complete powered">
-                    <span class="fa fa-globe fa-lg"></span>
+        <div class="map-list bg-primary text-center collapse width container-fluid" id="collapse-map-list"
+            style="overflow-y:scroll; overflow-x:hidden; max-width:100%;">
+          <div class="row">
+            <div class="col-xs-11">
+              <div class="search-geo">
+                <div class="input-group">
+                  <span class="input-group-btn">
+                    <button class="btn" data-toggle="tooltip" data-placement="bottom" title="Auto-complete powered">
+                      <span class="fa fa-globe fa-lg"></span>
+                    </button>
+                  </span>
+                  <input class="form-control" placeholder="Province, town, city or region..."
+                    name="search-geo" id="search-geo">
+                </div>
+
+                <p>
+                  <button class="btn btn-link" style="color:#fff;" autocomplete="off"
+                    id="search-my-geo" data-loading-text='<i class="fa fa-crosshairs fa-spin"></i> Locating you...'>
+                    <span class="fa fa-crosshairs"></span> Use my location
                   </button>
-                </span>
-                <input class="form-control" placeholder="Province, town, city or region..."
-                  name="search-geo" id="search-geo">
-              </div>
-            </div> <!-- /.form-group -->
+                </p>
+              </div> <!-- /.search-geo -->
 
-            <p>
-              <button class="btn btn-link" style="color:#fff;" autocomplete="off"
-                id="search-my-geo" data-loading-text='<i class="fa fa-crosshairs fa-spin"></i> Locating you...'>
-                <span class="fa fa-crosshairs"></span> Use my location
+              <p id="loading-geo" style="display:none;" >
+                <i class="fa fa-crosshairs fa-spin"></i>
+                Finding projects in this area...
+              </p>
+
+              <div class="alerts text-left">
+                <div class="alert alert-warning alert-dismissible" role="alert"
+                    style="padding: 10px 35px 10px 15px; display:none;" id="search-my-geo-alert">
+                  <button type="button" class="close" data-dismiss="alert">
+                    <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                  </button>
+                  <strong>Geolocation Failed</strong><br/>
+                  <small>Oops! It seems your are not in <em>South Africa</em>. Try searching for a location instead.</small>
+                </div>
+
+                <div class="alert alert-danger alert-dismissible" role="alert"
+                    style="padding: 10px 35px 10px 15px; display:none;" id="search-my-geo-alert-denied">
+                  <button type="button" class="close" data-dismiss="alert">
+                    <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                  </button>
+                  <strong>Geolocation Failed</strong><br/>
+                  <small>
+                    It seems you haven't enabled <em>geolocation</em> in your browser. Fortunately you can fix this.<br/>
+                    <strong>Learn more:</strong> 
+                      <a href="https://support.google.com/chrome/answer/142065?hl=en" target="_blank">Chrome</a> |
+                      <a href="https://www.mozilla.org/en-US/firefox/geolocation/" target="_blank">Firefox</a>
+                  </small>
+                </div>
+              </div> <!-- /.alerts -->
+
+            </div> <!-- /.col-xs-11 -->
+
+            <div class="col-xs-1">
+              <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#collapse-map-list" aria-expanded="false" aria-controls="collapse-map-list" id="collapse-map-list-btn-close"
+                  style="margin-right:-25px;">
+                <span class="fui-arrow-left"></span>
               </button>
-            </p>
-          </div> <!-- /.search-geo -->
-
-          <p id="loading-geo" style="display:none;" >
-            <i class="fa fa-crosshairs fa-spin"></i>
-            Finding projects in this area...
-          </p>
-
-          <div class="alerts text-left">
-            <div class="alert alert-warning alert-dismissible" role="alert"
-                style="padding: 10px 35px 10px 15px; display:none;" id="search-my-geo-alert">
-              <button type="button" class="close" data-dismiss="alert">
-                <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-              </button>
-              <strong>Geolocation Failed</strong><br/>
-              <small>Oops! It seems your are not in <em>South Africa</em>. Try searching for a location instead.</small>
             </div>
-
-            <div class="alert alert-danger alert-dismissible" role="alert"
-                style="padding: 10px 35px 10px 15px; display:none;" id="search-my-geo-alert-denied">
-              <button type="button" class="close" data-dismiss="alert">
-                <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-              </button>
-              <strong>Geolocation Failed</strong><br/>
-              <small>
-                It seems you haven't enabled <em>geolocation</em> in your browser. Fortunately you can fix this.<br/>
-                <strong>Learn more:</strong> 
-                  <a href="https://support.google.com/chrome/answer/142065?hl=en" target="_blank">Chrome</a> |
-                  <a href="https://www.mozilla.org/en-US/firefox/geolocation/" target="_blank">Firefox</a>
-              </small>
-            </div>
-          </div> <!-- /.alerts -->
+          </div> <!-- /.row -->
 
           <hr/>
 
@@ -88,7 +103,7 @@
 
               <div class="filter-cat" style="overflow-x:scroll;">
                 <div class="btn-group btn-group-lg" data-toggle="buttons"
-                    style="white-space: nowrap; border-radius: 6px;">
+                    style="white-space: nowrap; border-radius: 6px; border: 2px solid #fff;">
                   
                   <label class="btn btn-inverse cat-sel cat-all" data-cat-id="all"
                       style="float: none; display: inline-block;">
@@ -120,13 +135,6 @@
           <button id="map-ctrl-zoom-in" class="btn btn-sm btn-embossed btn-primary">+</button>
           <button id="map-ctrl-zoom-out" class="btn btn-sm btn-embossed btn-primary">-</button>
         </div>
-        <!-- <br/><br/>
-        <button class="map-ctrl-search btn btn-sm btn-embossed btn-primary">
-          <small><span class="fa fa-search"></span></small></button>
-        <br/><br/>
-        <button class="map-ctrl-alert btn btn-sm btn-embossed btn-primary"
-          data-toggle="modal" data-target="#alertModal">
-          #</button> -->
       </div> <!-- /.map-controls -->
 
       <!-- <div class="map-loading text-center">
@@ -287,5 +295,22 @@
   <script src="{{ secure_asset('assets/js/frontend/map-subscribe.js') }}"></script>
 
   <script src="{{ secure_asset('assets/js/frontend/map-search.js') }}"></script>
+
+  <script type="text/javascript">
+    window.onload = function () {
+      if($('body').width() > ($('#collapse-map-list').width() * 2)) {
+        $('#collapse-map-list').collapse('show');
+      } else {
+        $('#collapse-map-list-btn-open').show();
+      }
+      
+      $('#collapse-map-list').on('hidden.bs.collapse', function () {
+        $('#collapse-map-list-btn-open').fadeIn();
+      });
+      $('#collapse-map-list').on('show.bs.collapse', function () {
+        $('#collapse-map-list-btn-open').hide();
+      });
+    }
+  </script>
 
 @stop

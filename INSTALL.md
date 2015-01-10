@@ -331,6 +331,8 @@ php artisan pahali:upgrade
 
 <small>*Sometimes the command has also been updated so try to run it twice if things don't look right.*</small>
 
+***Note: This command does a hard reset for git so please make sure to check the status of all tracked files.***
+
 
 
 ### Loading Data
