@@ -39,6 +39,7 @@ class PahaliUpgrade extends Command {
 	{
 		//
 		$this->info('Running "git pull"...');
+		shell_exec('git reset --hard');
 		shell_exec('git pull');
 
 		// DB Migrate

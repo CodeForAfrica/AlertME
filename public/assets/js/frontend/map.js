@@ -13,9 +13,11 @@ function resizeMap () {
   parseInt($('footer').css('padding-bottom').replace('px', ''));
   if($('body').height() > (500 +  footerHeight)) {
     // Map loading
-    $('.home-map, .map-loading, .home-map .map-wrapper, .home-map .map-list').height($('body').height() - footerHeight );
+    $('.home-map, .map-loading, .home-map .map-wrapper').height($('body').height() - footerHeight );
+    $('.home-map .map-list').height($('body').height() - footerHeight - 30);
   } else {
-    $('.home-map, .map-loading, .home-map .map-wrapper, .home-map .map-list').height(500);
+    $('.home-map, .map-loading, .home-map .map-wrapper').height(500);
+    $('.home-map .map-list').height(470);
   }
 }
 resizeMap();

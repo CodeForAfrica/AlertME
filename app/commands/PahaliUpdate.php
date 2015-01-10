@@ -39,6 +39,9 @@ class PahaliUpdate extends Command {
 	{
 		//
 
+		$this->info('Updating composer components...');
+		shell_exec('composer update');
+
 		$this->info('Updating bower components...');
 		shell_exec('bower update');
 
