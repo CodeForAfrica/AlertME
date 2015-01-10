@@ -27,7 +27,7 @@
 
         <div id="map"></div> <!-- /#map -->
 
-        <div class="map-list bg-primary text-center">
+        <div class="map-list bg-primary text-center" style="overflow-y:scroll; overflow-x:hidden;">
 
           <div class="search-geo" style="margin-top:20px;">
             <div class="form-group">
@@ -82,58 +82,35 @@
 
           <hr/>
 
+          <div class="map-filter container-fluid text-left">
+            @if (count($categories) != 0)
+              <p><b>Categories</b></p>
+
+              <div class="filter-cat" style="overflow-x:scroll;">
+                <div class="btn-group btn-group-lg" data-toggle="buttons"
+                    style="white-space: nowrap; border-radius: 6px;">
+                  
+                  <label class="btn btn-inverse cat-sel cat-all" data-cat-id="all"
+                      style="float: none; display: inline-block;">
+                    <input type="radio" name="options" id="cat-all"> <i class="fa fa-globe fa-1x"></i> All
+                  </label>@for ($i = 0; $i < count($categories); $i++)<label
+                    class="btn btn-inverse cat-sel" data-cat-id="{{ $categories[$i]->id }}"
+                    style="float:none; display:inline-block;">
+                      <input type="radio" name="options" id="option2"> {{ $categories[$i]->title }}
+                  </label>@endfor
+
+                </div>
+              </div> <!-- /.filter-cat -->
+            @endif
+          </div> <!-- /.map-filter.container-fluid.text-left -->
+
+          <hr/>
+
           <button class="map-ctrl-alert btn-block btn btn-lg btn-embossed btn-primary"
             data-toggle="modal" data-target="#subscriptionModal">
             # Subscribe for alerts in this area
           </button>
 
-          <hr/>
-
-          <div class="map-filter container-fluid text-left">
-            @if (count($categories) != 0)
-              <p><b>Categories</b></p>
-
-              <div class="btn-group btn-group-justified filter-cat" data-toggle="buttons">
-                
-                <label class="btn btn-inverse cat-sel cat-all" data-cat-id="all">
-                  <input type="radio" name="options" id="cat-all"> <i class="fa fa-globe fa-2x"></i><br/> All
-                </label>
-
-                @if (count($categories) > 3 )
-                  @for ($i = 0; $i < 2; $i++)
-                    <label class="btn btn-inverse cat-sel" data-cat-id="{{ $categories[$i]->id }}">
-                      <input type="radio" name="options" id="cat-{{ $i }}">
-                        <i class="fa fa-dot-circle-o fa-2x"></i><br/>
-                        {{ $categories[$i]->title }}
-                    </label>
-                  @endfor
-                  <div class="btn-group" data-toggle="buttons">
-                    <label class="btn btn-inverse dropdown-toggle cat-other" data-toggle="dropdown">
-                      <input type="radio" name="options" id="cat-other"> <i class="fa fa-ellipsis-h fa-2x"></i><br/>Other
-                    </label>
-                    <ul class="dropdown-menu" role="menu">
-                      @for ($i = 2; $i < count($categories); $i++)
-                        <li>
-                          <a href="#" class="cat-sel" data-cat-id="{{ $categories[$i]->id }}">
-                            {{ $categories[$i]->title }}
-                          </a>
-                        </li>
-                      @endfor
-                    </ul>
-                  </div>
-                @else
-                  @for ($i = 0; $i < count($categories); $i++)
-                    <label class="btn btn-inverse cat-sel" data-cat-id="{{ $categories[$i]->id }}">
-                      <input type="radio" name="options" id="option2">
-                        <i class="fa fa-dot-circle-o fa-2x"></i><br/>
-                        {{ $categories[$i]->title }}
-                    </label>
-                  @endfor
-                @endif
-
-              </div> <!-- /.filter-cat -->
-            @endif
-          </div> <!-- /.map-filter.container-fluid.text-left -->
         </div> <!-- /.map-list -->
 
       </div> <!-- /.map-wrapper -->
