@@ -33,7 +33,7 @@
         </button>
 
         <div class="map-list bg-primary text-center collapse width container-fluid" id="collapse-map-list"
-            style="overflow-y:scroll; overflow-x:hidden;">
+            style="overflow-y:scroll; overflow-x:hidden; max-width:100%;">
           <div class="row">
             <div class="col-xs-11">
               <div class="search-geo">
@@ -135,13 +135,6 @@
           <button id="map-ctrl-zoom-in" class="btn btn-sm btn-embossed btn-primary">+</button>
           <button id="map-ctrl-zoom-out" class="btn btn-sm btn-embossed btn-primary">-</button>
         </div>
-        <!-- <br/><br/>
-        <button class="map-ctrl-search btn btn-sm btn-embossed btn-primary">
-          <small><span class="fa fa-search"></span></small></button>
-        <br/><br/>
-        <button class="map-ctrl-alert btn btn-sm btn-embossed btn-primary"
-          data-toggle="modal" data-target="#alertModal">
-          #</button> -->
       </div> <!-- /.map-controls -->
 
       <!-- <div class="map-loading text-center">
@@ -305,7 +298,12 @@
 
   <script type="text/javascript">
     window.onload = function () {
-      $('#collapse-map-list').collapse('show');
+      if($('body').width() > ($('#collapse-map-list').width() * 2)) {
+        $('#collapse-map-list').collapse('show');
+      } else {
+        $('#collapse-map-list-btn-open').show();
+      }
+      
       $('#collapse-map-list').on('hidden.bs.collapse', function () {
         $('#collapse-map-list-btn-open').fadeIn();
       });
