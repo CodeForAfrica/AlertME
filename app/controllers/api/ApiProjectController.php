@@ -10,6 +10,38 @@ class ApiProjectController extends \BaseController {
   public function index()
   {
     //
+    
+    if ( Input::get('all') == 1 ) {
+      ini_set('memory_limit', '-1');
+      ini_set('max_execution_time', 0);
+      if (Input::get('geo_only') == 1) {
+        $projects = Project::select('id', 'geo_lat', 'geo_lng')->hasGeo()->get();
+      } else {
+        $projects = Project::all(array('id', 'geo_lat', 'geo_lng'));
+      }
+    } else {
+      if (Input::get('min') == 1) {
+        if (Input::get('geo_only') == 1) {
+          $projects = Project::select('id', 'geo_lat', 'geo_lng')->hasGeo()->paginate(10);
+        } else {
+          $projects = Project::select('id', 'geo_lat', 'geo_lng')->paginate(10);
+        }
+      } else{
+        if (Input::get('geo_only') == 1) {
+          $projects = Project::hasGeo()->paginate(10);
+        } else {
+          $projects = Project::paginate(10);
+        }
+      }
+    }
+    
+    return Response::json(array(
+        'error' => false,
+        'projects' => $projects->toArray()
+      ),
+      200
+    );
+
     $projects = array();
     $projects_categories = array();
     $sel_cols_projects = array('projects.id', 'projects.data_id',
@@ -101,9 +133,18 @@ class ApiProjectController extends \BaseController {
     //
     $project = Project::find($id);
 
+    if (!$project) {
+      return Response::json(array(
+          'error' => true,
+          'project' => 'Not found',
+        ),
+        404
+      );
+    }
+
     if (Input::has('embed')) {
-      $geojson = 'pin-l-circle-stroked+1abc9c('.$project->geo()->lng.','.$project->geo()->lat.')/'.
-        $project->geo()->lng.','.$project->geo()->lat.'),13';
+      $geojson = 'pin-l-circle-stroked+1abc9c('.$project->geo_lng.','.$project->geo_lat.')/'.
+        $project->geo_lng.','.$project->geo_lat.'),13';
 
       $map_image_link = 'http://api.tiles.mapbox.com/v4/codeforafrica.ji193j10/'.
         $geojson.'/600x250.png256?'.

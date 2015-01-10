@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/CodeForAfricaLabs/GreenAlert.git"
+    "url": "https://github.com/CodeForAfrica/GreenAlert.git"
   },
   "keywords": [
     "pahali",
@@ -28,7 +28,7 @@
   "author": "Code for Africa",
   "license": "GPL v3",
   "bugs": {
-    "url": "https://github.com/CodeForAfricaLabs/GreenAlert/issues"
+    "url": "https://github.com/CodeForAfrica/GreenAlert/issues"
   },
-  "homepage": "https://github.com/CodeForAfricaLabs/GreenAlert"
+  "homepage": "https://github.com/CodeForAfrica/GreenAlert"
 }

@@ -42,12 +42,19 @@ class HomeController extends BaseController {
   public function showMap()
   {
     $projects = DB::table('projects')->take(10)->get();
+    $projects_all = Project::select('id', 'geo_lat', 'geo_lng')->hasGeo()->get();
 
     $categories = Category::geocoded();
+    foreach ($categories as $key => $category) {
+      $pivot = DB::table('project_category')
+                  ->where('category_id', $category->id)
+                  ->lists('project_id');
+      $categories[$key] = array_add($categories[$key], 'projects_pivot', $pivot);
+    }
 
-    $data = array(
-      'projects' => $projects,
-      'categories' => $categories
+    $data = compact(
+      'projects', 'projects_all',
+      'categories'
     );
     return View::make('home.map', $data);
   }

@@ -28,11 +28,67 @@
         <div id="map"></div> <!-- /#map -->
 
         <div class="map-list bg-primary text-center">
-          <button class="map-ctrl-alert btn btn-wide btn-embossed btn-primary"
-            data-toggle="modal" data-target="#subscriptionModal">
-            <span class="fa fa-globe"></span> Subscribe for alerts in this area
-          </button>
+
+          <div class="search-geo" style="margin-top:20px;">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-btn">
+                  <button class="btn" data-toggle="tooltip" data-placement="bottom" title="Auto-complete powered">
+                    <span class="fa fa-globe fa-lg"></span>
+                  </button>
+                </span>
+                <input class="form-control" placeholder="Province, town, city or region..."
+                  name="search-geo" id="search-geo">
+              </div>
+            </div> <!-- /.form-group -->
+
+            <p>
+              <button class="btn btn-link" style="color:#fff;" autocomplete="off"
+                id="search-my-geo" data-loading-text='<i class="fa fa-crosshairs fa-spin"></i> Locating you...'>
+                <span class="fa fa-crosshairs"></span> Use my location
+              </button>
+            </p>
+          </div> <!-- /.search-geo -->
+
+          <p id="loading-geo" style="display:none;" >
+            <i class="fa fa-crosshairs fa-spin"></i>
+            Finding projects in this area...
+          </p>
+
+          <div class="alerts text-left">
+            <div class="alert alert-warning alert-dismissible" role="alert"
+                style="padding: 10px 35px 10px 15px; display:none;" id="search-my-geo-alert">
+              <button type="button" class="close" data-dismiss="alert">
+                <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+              </button>
+              <strong>Geolocation Failed</strong><br/>
+              <small>Oops! It seems your are not in <em>South Africa</em>. Try searching for a location instead.</small>
+            </div>
+
+            <div class="alert alert-danger alert-dismissible" role="alert"
+                style="padding: 10px 35px 10px 15px; display:none;" id="search-my-geo-alert-denied">
+              <button type="button" class="close" data-dismiss="alert">
+                <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+              </button>
+              <strong>Geolocation Failed</strong><br/>
+              <small>
+                It seems you haven't enabled <em>geolocation</em> in your browser. Fortunately you can fix this.<br/>
+                <strong>Learn more:</strong> 
+                  <a href="https://support.google.com/chrome/answer/142065?hl=en" target="_blank">Chrome</a> |
+                  <a href="https://www.mozilla.org/en-US/firefox/geolocation/" target="_blank">Firefox</a>
+              </small>
+            </div>
+          </div> <!-- /.alerts -->
+
           <hr/>
+
+          <button class="map-ctrl-alert btn-block btn btn-lg btn-embossed btn-primary"
+            data-toggle="modal" data-target="#subscriptionModal">
+            # Subscribe for alerts in this area
+          </button>
+
+          <hr/>
+
           <div class="map-filter container-fluid text-left">
             @if (count($categories) != 0)
               <p><b>Categories</b></p>
@@ -74,7 +130,8 @@
                     </label>
                   @endfor
                 @endif
-              </div>
+
+              </div> <!-- /.filter-cat -->
             @endif
           </div> <!-- /.map-filter.container-fluid.text-left -->
         </div> <!-- /.map-list -->
@@ -95,35 +152,18 @@
           #</button> -->
       </div> <!-- /.map-controls -->
 
-      <div class="map-loading text-center">
+      <!-- <div class="map-loading text-center">
         <div id="info">
           <p class="lead"><i class="fa fa-globe fa-spin"></i> Loading map...</p>
         </div>
-      </div> <!-- /.map-loading -->
-
-      <!-- <div class="home-search text-center container-fluid">
-        <div class="row">
-          <div class="col-md-4 col-md-offset-4">
-            <h1 class="text-default">#GreenAlert</h1>
-            <p class="lead">Search for EIAs Near You</p>
-            <div class="form-group">
-              <input type="text" class="form-control input-hg" id="search-geo" placeholder="Enter a location">
-              <span class="glyphicon glyphicon-globe form-control-feedback"></span>
-            </div>
-            <p class="text-primary" id="loading-geo" style="display:none;">
-              <i class="fa fa-circle-o-notch fa-spin"></i>
-              Finding Projects Near You...
-            </p>
-          </div>
-        </div>
-      </div> -->
+      </div> --> <!-- /.map-loading -->
 
 
 
       <!-- MODALS -->
 
       <!-- Subscribe Modal -->
-      <div class="modal" id="subscriptionModal" tabindex="-1" role="dialog"
+      <div class="modal fade" id="subscriptionModal" tabindex="-1" role="dialog"
         aria-labelledby="subscriptionModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -137,7 +177,8 @@
 
             <div class="modal-body">
 
-              <img id="map-alert" src="#" class="img-rounded img-responsive" />
+              <img id="map-alert" data-src="holder.js/600x200/#1ABC9C:#fff/text:Loading map..." class="img-rounded img-responsive"
+                style="width:100%; height:200px;"/>
               <hr/>
 
               <p>Enter your e-mail address below to receive alerts in this area.</p>
@@ -249,21 +290,25 @@
 
 @section('scripts-data')
   var categories = {{ $categories != NULL ? $categories : 'false' }};
+  pahali.categories.set( {{ $categories->toJSON() }} );
+  pahali.projects.set( {{ $projects_all->toJSON() }} );
 @stop
 
 @section('scripts')
+  
   <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
 
-  <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.2/mapbox.js'></script>
-  <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.2/mapbox.css' rel='stylesheet' />
+  <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.js'></script>
+  <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.css' rel='stylesheet' />
 
-  <link href="{{ secure_asset('assets/css/MarkerCluster.css') }}" rel="stylesheet" />
-  <link href="{{ secure_asset('assets/css/MarkerCluster.Default.css') }}" rel="stylesheet" />
-  <script src="{{ secure_asset('assets/js/vendor/leaflet.markercluster.js') }}"></script>
+  <link href="{{ secure_asset('assets/css/_bower.leaflet.css') }}" rel="stylesheet" />
+  <script src="{{ secure_asset('assets/js/_bower.leaflet.js') }}"></script>
   
   <script src="{{ secure_asset('assets/js/frontend/routes.js') }}"></script>
   <script src="{{ secure_asset('assets/js/frontend/map.js') }}"></script>
   <script src="{{ secure_asset('assets/js/frontend/map-categories.js') }}"></script>
   <script src="{{ secure_asset('assets/js/frontend/map-subscribe.js') }}"></script>
+
+  <script src="{{ secure_asset('assets/js/frontend/map-search.js') }}"></script>
 
 @stop

@@ -74,10 +74,22 @@ class Project extends Eloquent {
     return $value;
   }
 
-  public function setGeoAdressAttribute($value)
+  public function setGeoAddressAttribute($value)
   {
     if (strlen($value) > 254){
       $value = substr($value, 0, 254);
+    }
+    if ($this->geo_type == 'address') {
+      $geocode = Geocode::firstOrCreate( array(
+        'address' => $value
+      ));
+      if ($geocode != false && $value != '') {
+        $this->geo_lat = $geocode->lat;
+        $this->geo_lng = $geocode->lng;
+      } else {
+        $this->geo_lat = 450;
+        $this->geo_lng = 450;
+      }
     }
     $this->attributes['geo_address'] = $value;
   }
@@ -105,6 +117,17 @@ class Project extends Eloquent {
   {
     $this->attributes['data'] = json_encode($value);
   }
+
+
+
+  // Query Scopes
+  
+  public function scopeHasGeo($query)
+  {
+    return $query->whereBetween('geo_lat', array(-90, 90))
+                 ->whereBetween('geo_lng', array(-180, 180));
+  }
+
 
 
   // Relations
@@ -140,13 +163,14 @@ class Project extends Eloquent {
 
   function geo()
   {
+    $project = DB::table('projects')->where('id', $this->id)->first();
     $geo = new stdClass(); $geo->lat = 450; $geo->lng = 450;
-    if($this->geo_type == 'lat_lng') {
-      $geo->lat = floatval ($this->geo_lat);
-      $geo->lng = floatval ($this->geo_lng);
+    if($project->geo_type == 'lat_lng') {
+      $geo->lat = floatval ($project->geo_lat);
+      $geo->lng = floatval ($project->geo_lng);
     }
-    if($this->geo_type == 'address' && trim($this->geo_address) != '') {
-      $geocode = Geocode::where('address', $this->geo_address)->first();
+    if($project->geo_type == 'address' && trim($project->geo_address) != '') {
+      $geocode = Geocode::where('address', $project->geo_address)->first();
       $geo->lat = floatval ($geocode->lat);
       $geo->lng = floatval ($geocode->lng);
     }

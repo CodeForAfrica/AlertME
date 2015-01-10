@@ -13,9 +13,7 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <link rel="shortcut icon" href="{{ secure_asset('assets/img/favicon.ico') }}">
 
-    <link rel="stylesheet" href="{{ secure_asset('assets/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ secure_asset('assets/css/flat-ui.min.css') }}">
-    <link href="{{ secure_asset('assets/css/font-awesome.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ secure_asset('assets/css/_bower.css') }}">
 
     @yield('stylesheets')
 

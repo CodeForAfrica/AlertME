@@ -217,13 +217,6 @@
 @stop
 
 @section('scripts')
-  <script src="{{ secure_asset('assets/js/vendor/readmore.min.js') }}"></script>
-  <script type="text/javascript">
-    $('.project-details').readmore({
-      moreLink: '<a href="#">More...</a>',
-      lessLink: '<a href="#">Less...</a>'
-    });
-  </script>
 
   <script type="text/javascript">
     var map_image_link = '{{ $map_image_link }}';

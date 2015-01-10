@@ -11,13 +11,18 @@ class ApiCategoryController extends \BaseController {
 	{
 		//
 		$categories =  Category::all();
-		$projects = DB::table('project_category')
-									->select('id', 'project_id', 'category_id')
-									->get();
+		if (Input::get('pivot') == 1) {
+			foreach ($categories as $key => $category) {
+				$pivot = DB::table('project_category')
+									->where('category_id', $category->id)
+									->lists('project_id');
+				$categories[$key] = array_add($categories[$key], 'projects_pivot', $pivot);
+			}
+		}
+		
 		return Response::json(array(
 				'error' => false,
-				'categories' => $categories->toArray(),
-				'projects' => $projects
+				'categories' => $categories->toArray()
 			),
 			200
 		);

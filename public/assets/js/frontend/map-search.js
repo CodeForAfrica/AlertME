@@ -1,37 +1,44 @@
 var user_lat = 0;
 var user_lng = 0;
 
-$( document ).ready(function() {
-  var input = document.getElementById('search-geo');
-  var options = {
-    componentRestrictions: {country: 'za'}
-  };
-  searchBox = new google.maps.places.Autocomplete(input, options);
 
-  $('#search-geo').tooltip('hide')
+$( document ).ready(function() {
+
+  $('.search-geo .btn').tooltip('hide');
 
   /**
    * Google Geocoder Search Box
    * ---------------------------------------------------------------------------
    */
-  google.maps.event.addListener(searchBox, 'place_changed', function() {
 
-    $('#loading-geo').fadeIn('slow');
-    var place = searchBox.getPlace();
-    window.location.href = "/map/#!/center="+place.geometry.location.lat()+","+
-    place.geometry.location.lng()+"&zoom=11";
+  if (typeof google !== 'undefined') {
+    var input = document.getElementById('search-geo');
+    var options = {
+      componentRestrictions: {country: 'za'}
+    };
+    searchBox = new google.maps.places.Autocomplete(input, options);
+    google.maps.event.addListener(searchBox, 'place_changed', function() {
 
-  });
+      $('#loading-geo').fadeIn('slow');
+      var place = searchBox.getPlace();
+      window.location.href = "/map/#!/center="+place.geometry.location.lat()+","+
+      place.geometry.location.lng()+"&zoom=11";
 
+    });
+  };
+  
 
   /**
    * User's Location
    * ---------------------------------------------------------------------------
    */
 
-  $('#search-my-geo').click(function () {
+  $('#search-my-geo').on('click', function () {
     $('#search-my-geo-alert').fadeOut();
-    $('#loading-my-geo').fadeIn();
+    $('#search-my-geo-alert-denied').fadeOut();
+
+    var $btn = $(this).button('loading');
+
     if (navigator.geolocation) {
       // Geolocation can work
 
@@ -67,31 +74,29 @@ $( document ).ready(function() {
               } else {
                 $('#search-my-geo-alert').fadeIn();
               }
-              $('#loading-my-geo').fadeOut();
 
             } else {
-              $('#loading-my-geo').fadeOut();
               $('#search-my-geo-alert').fadeIn();
             }
           } else {
-            $('#loading-my-geo').fadeOut();
             $('#search-my-geo-alert').fadeIn();
           }
+          $btn.button('reset');
         });
       };
 
       function error_my_geo (err) {
-        // console.warn('ERROR(' + err.code + '): ' + err.message);
-        $('#loading-my-geo').fadeOut();
-        $('#search-my-geo-alert').fadeIn();
+        $('#search-my-geo-alert-denied').fadeIn();
+        $btn.button('reset');
       };
 
       navigator.geolocation.getCurrentPosition(
         success_my_geo, error_my_geo, options_my_geo );
+
     } else {
       // Geolocation doesn't work
-      $('#loading-my-geo').fadeOut();
-      $('#search-my-geo-alert').fadeIn();
+      $btn.button('reset');
+      $('#search-my-geo-alert-denied').fadeIn();
     }
   });
 
