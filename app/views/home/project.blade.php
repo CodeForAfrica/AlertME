@@ -1,6 +1,6 @@
 @extends('layouts.frontend')
 
-@section('title') Project | {{ strlen($project->title) > 80 ? substr($project->title, 0, 80).'...' : $project->title }} @stop
+@section('title') {{ strlen($project->title) > 80 ? substr($project->title, 0, 80).'...' : $project->title }} @stop
 
 @section('content')
 
