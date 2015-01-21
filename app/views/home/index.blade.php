@@ -4,7 +4,7 @@
 
   <div class="home-index">
 
-    <div class="container-fluid bg-primary text-center" style="background:linear-gradient(rgba(52, 73, 94, 0.45), rgba(52, 73, 94, 0.45)), url('/assets/img/bg/rhino-lady.jpg') top; background-size: cover;">
+    <div class="container-fluid bg-primary text-center" style="background:linear-gradient(rgba(52, 73, 94, 0.45), rgba(52, 73, 94, 0.45)), url('/assets/img/bg/chemical-plant.jpg') center; background-size: cover;">
       <br/><br/>
       <h3>{{ $home->data->banner->title }}</h3>
       <h5>{{ $home->data->banner->description }}</h5>
