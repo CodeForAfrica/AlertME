@@ -104,7 +104,7 @@ class HomeController extends BaseController {
     $geojson = 'pin-l-circle-stroked+1abc9c('.$project->geo()->lng.','.$project->geo()->lat.')/'.
       $project->geo()->lng.','.$project->geo()->lat.'),13';
 
-    $map_image_link = 'http://api.tiles.mapbox.com/v4/codeforafrica.ji193j10/'.
+    $map_image_link = 'https://api.tiles.mapbox.com/v4/codeforafrica.ji193j10/'.
       $geojson.'/520x293.png256?'.
       'access_token=pk.eyJ1IjoiY29kZWZvcmFmcmljYSIsImEiOiJVLXZVVUtnIn0.JjVvqHKBGQTNpuDMJtZ8Qg';
 
