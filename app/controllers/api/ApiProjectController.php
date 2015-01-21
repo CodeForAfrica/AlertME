@@ -133,6 +133,11 @@ class ApiProjectController extends \BaseController {
     //
     $project = Project::find($id);
 
+    if ($id == 'random') {
+      $projects = Project::all();
+      $project = $projects[mt_rand(0, count($projects) - 1)];
+    }
+
     if (!$project) {
       return Response::json(array(
           'error' => true,

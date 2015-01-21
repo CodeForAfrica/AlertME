@@ -90,7 +90,16 @@ class HomeController extends BaseController {
 
   public function showProject($id)
   {
-    $project = Project::findOrFail($id);
+    $project = Project::find($id);
+
+    if ($id == 'random') {
+      $projects = Project::all();
+      $project = $projects[mt_rand(0, count($projects) - 1)];
+    }
+
+    if (!$project) {
+      return Redirect::to('search')->with('error', 'Oops! It seems we can\'t find the page you are looking for. Try search instead.');
+    }
 
     $geojson = 'pin-l-circle-stroked+1abc9c('.$project->geo()->lng.','.$project->geo()->lat.')/'.
       $project->geo()->lng.','.$project->geo()->lat.'),13';
