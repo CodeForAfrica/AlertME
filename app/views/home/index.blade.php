@@ -64,10 +64,11 @@
       </div> <!-- /.alerts -->
             
 
-      <br/><br/><br/><br/>
+      <br/><br/><br/>
     </div>
 
-    <div class="container text-center" style="padding: 50px 0;">
+    <div class="container text-center">
+      <br/><br/>
       <h3>{{ $home->data->how->title }}</h3><br/>
       <div class="row">
         <div class="col-md-4">
@@ -91,33 +92,52 @@
           </span>
           {{ Markdown::render($home->data->how->blurbs[2]->description) }}
         </div>
-      </div>
-    </div>
+      </div> <!-- /.row -->
+      <br/><br/>
+    </div> <!-- /.container -->
 
-    <div class="container-fluid bg-info text-right" style="padding: 50px 0;">
+    <div class="container-fluid text-right palette palette-turquoise"><br/><br/>
       <div class="container">
         <div class="row">
-          <div class="col-md-6 text-center">
+          <div class="col-sm-6 palette palette-turquoise text-center">
+            <br/><br/>
             <p class="lead">No. of EIAs tracked</p>
             <h1 style="font-size: 100px;">{{ number_format($projects_count) }}</h1>
-          </div>
-          <div class="col-md-3">
-            <p>Last Updated</p>
-            <p><b>16th Oct, 2014</b></p>
-            <p>Petitions</p>
-            <p><small>Coming soon..</small><b></b></p>
-          </div>
-          <div class="col-md-3">
-            <p>Subscribers</p>
-            <p><small>Coming soon..</small><b></b></p>
-            <p>Subscriptions</p>
-            <p><small>Coming soon..</small><b></b></p>
-          </div>
-        </div>
-      </div>
-    </div>
+            <div style="height:14px;"></div>
+          </div> <!-- /.col-md-6 .bg-info -->
+          <div class="col-sm-6">
+            <div class="row">
+              <div class="col-xs-6 palette palette-wet-asphalt">
+                <br/>
+                <p>Last Updated</p>
+                <p><small><b>10th Jan, 2015</b></small></p>
+              </div>
+              <div class="col-xs-6 palette palette-carrot">
+                <br/>
+                <p>Petitions</p>
+                <p><small>Coming soon..</small><b></b></p>
+              </div>
+            </div><!-- /.row -->
+            <div class="row">
+              <div class="col-xs-6 palette palette-concrete">
+                <br/>
+                <p>Subscribers</p>
+                <p><small>Coming soon..</small><b></b></p>
+              </div>
+              <div class="col-xs-6 palette palette-alizarin">
+                <br/>
+                <p>Subscriptions</p>
+                <p><small>Coming soon..</small><b></b></p>
+              </div>
+            </div> <!-- /.row -->
+          </div> <!-- /.col-md-6 -->
+        </div> <!-- /.row -->
+      </div> <!-- /.container -->
+      <br/><br/>
+    </div> <!-- /.container-fluid -->
 
-    <div class="container text-left home-logos" style="padding: 70px 0;">
+    <div class="container text-left home-logos">
+      <br/><br/>
       <div class="row">
         <div class="col-md-2 col-md-offset-1">
           <h4>Partners</h4>
@@ -142,6 +162,7 @@
           </p>
         </div>
       </div> <!-- /.row -->
+      <br/><br/>
     </div> <!-- /.home-logos -->
 
   </div> <!-- /.home-index -->
