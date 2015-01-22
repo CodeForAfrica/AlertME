@@ -97,9 +97,16 @@
 
           <hr/>
 
-          <div class="map-filter container-fluid text-left">
+          <button class="map-ctrl-alert btn-block btn btn-lg btn-embossed btn-primary"
+            data-toggle="modal" data-target="#subscriptionModal">
+            # Subscribe for alerts in this area
+          </button>
+
+          <hr/>
+
+          <div class="map-filter text-left">
             @if (count($categories) != 0)
-              <p><b>Categories</b></p>
+              <p><b>Category filter:</b></p>
 
               <div class="filter-cat" style="overflow-x:scroll;">
                 <div class="btn-group btn-group-lg" data-toggle="buttons"
@@ -117,14 +124,17 @@
                 </div>
               </div> <!-- /.filter-cat -->
             @endif
-          </div> <!-- /.map-filter.container-fluid.text-left -->
+          </div> <!-- /.map-filter.text-left -->
 
           <hr/>
 
-          <button class="map-ctrl-alert btn-block btn btn-lg btn-embossed btn-primary"
-            data-toggle="modal" data-target="#subscriptionModal">
-            # Subscribe for alerts in this area
-          </button>
+          <div class="text-left">
+            <p><b>Share this map:</b></p>
+            <!-- Go to www.addthis.com/dashboard to customize your tools -->
+            <div class="addthis_sharing_toolbox"></div>
+            <!-- Go to www.addthis.com/dashboard to customize your tools -->
+            <script type="text/javascript" src="https://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5481e9a015b90c80" async="async"></script>
+          </div> <!-- /.text-left -->
 
         </div> <!-- /.map-list -->
 
