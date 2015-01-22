@@ -33,7 +33,7 @@
 
       @endif
 
-      <hr/>
+      <hr style="margin:50px 0;"/>
 
       <div class="row home-logos">
         <div class="col-md-3">
