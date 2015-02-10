@@ -5,7 +5,12 @@
 
 
 // On Document Ready
-$( document ).ready(function() {
+$(document).ready(function () {
+
+  /**
+   * ActNOW
+   * -----------------------------------------------------------------------------------------------------------------*/
+
 
   // Modal Controls
   function alertsReset() {
@@ -16,9 +21,9 @@ $( document ).ready(function() {
     $('#subscriptionModal .alert-success').fadeOut();
     $('#subscriptionModal .alert-warning').fadeOut();
     $('#subscriptionModal .alert-danger').fadeOut();
-    
+
     $('.subscribe-btn').removeClass('disabled');
-  }
+  };
 
   $('#subscriptionModal').on('shown.bs.modal', function () {
     alertsReset();
@@ -28,13 +33,13 @@ $( document ).ready(function() {
   $('.subscribe-btn').click(function () {
     alertsReset();
     // Check e-mail
-    if( $('#subscription-email').val().trim() == '' ) {
+    if ($('#subscription-email').val().trim() == '') {
       $('.subscription-email').addClass('has-error');
       $('#subscriptionModal .alert-danger').fadeIn();
       $('#subscriptionModal .alert-danger .msg-error.email').fadeIn();
       return;
     }
-    if(!isEmail($('#subscription-email').val())) {
+    if (!isEmail($('#subscription-email').val())) {
       $('.subscription-email').addClass('has-error');
       $('#subscriptionModal .alert-danger').fadeIn();
       $('#subscriptionModal .alert-danger .msg-error.email').fadeIn();
@@ -50,15 +55,18 @@ $( document ).ready(function() {
       response = pahali.subscribe.get('response');
       if (typeof response.error === 'function') {
         response = pahali.subscribe.get('response').responseJSON;
-      };
+      }
+      ;
 
       if (response.status == 'OK') {
         $('#subscriptionModal .alert-success').fadeIn();
-      };
+      }
+      ;
       if (response.status == 'OVER_LIMIT') {
         $('#subscriptionModal .alert-danger').fadeIn();
         $('#subscriptionModal .alert-danger .msg-error.limit').fadeIn();
-      };
+      }
+      ;
       if (response.error) {
         var validator = response.validator;
         if (validator.email) {
@@ -67,16 +75,20 @@ $( document ).ready(function() {
           $('#map-alert-email').attr('disabled', false);
           $('.map-alert-email').addClass('has-error');
           $('.create-alert-btn').removeClass('disabled');
-        };
+        }
+        ;
         if (validator.bounds) {
           $('#subscriptionModal .alert-danger').fadeIn();
           $('#subscriptionModal .alert-danger .msg-error.reload').fadeIn();
-        };
+        }
+        ;
         if (validator.confirm_token) {
           $('#subscriptionModal .alert-warning').fadeIn();
           $('#subscriptionModal .alert-warning .msg-error.duplicate').fadeIn();
-        };
-      };
+        }
+        ;
+      }
+      ;
 
       $('#subscriptionModal .alert-info').fadeOut();
     };
