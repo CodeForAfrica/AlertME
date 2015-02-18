@@ -13,7 +13,8 @@
 
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#ga-navbar-collapse-1">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                data-target="#ga-navbar-collapse-1">
           <span class="sr-only">Toggle navigation</span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
@@ -46,7 +47,7 @@
           <div class="form-group">
             <div class="input-group">
               <input class="form-control" id="navbarInput-01" type="search" placeholder="Search"
-                name="q" value="{{Input::get('q')}}">
+                     name="q" value="{{Input::get('q')}}">
               <span class="input-group-btn">
                 <button type="submit" class="btn"><span class="fui-search"></span></button>
               </span>
@@ -54,9 +55,11 @@
           </div>
         </form>
 
-      </div><!-- /.navbar-collapse -->
+      </div>
+      <!-- /.navbar-collapse -->
 
-    </div><!-- /.container -->
+    </div>
+    <!-- /.container -->
   </nav>
 @stop
 
@@ -74,14 +77,21 @@
           </p>
           <hr/>
           <p class="text-muted"><em>
-            All code on this website is <a href="https://github.com/CodeForAfrica/GreenAlert" target="_blank">Open Source</a>.</br>
-            Content on this site, made by Oxpeckers, is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative Commons Attribution-ShareAlike 4.0 International License</a>.</br>
-            Refer to our <a href="{{ secure_asset('about') }}" target="_blank">attributions</a> page for attributions of other work on the site.
-          </em></p>
+              All code on this website is <a href="https://github.com/CodeForAfrica/GreenAlert" target="_blank">Open
+                Source</a>.</br>
+              Content on this site, made by Oxpeckers, is licensed under a <a rel="license"
+                                                                              href="http://creativecommons.org/licenses/by-sa/4.0/"
+                                                                              target="_blank">Creative Commons
+                Attribution-ShareAlike 4.0 International License</a>.</br>
+              Refer to our <a href="{{ secure_asset('about') }}" target="_blank">attributions</a> page for attributions
+              of other work on the site.
+            </em></p>
         </div>
         <div class="col-md-6 text-right">
           <h3 class="text-muted">#GreenAlert</h3>
+
           <p>An <a href="http://oxpeckers.org" target="_blank">Oxpeckers'</a> Project</p>
+
           <p>Built by <a href="http://codeforafrica.org" target="_blank">Code for Africa</a></p>
         </div>
       </div>
@@ -89,21 +99,28 @@
   </footer>
 
   <!-- UserVoice JavaScript SDK (only needed once on a page) -->
-  <script>(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//widget.uservoice.com/bFsioBFsYYe3fBl1hFBFOQ.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})()</script>
+  <script>(function () {
+      var uv = document.createElement('script');
+      uv.type = 'text/javascript';
+      uv.async = true;
+      uv.src = '//widget.uservoice.com/n2LtUkxiieON2Mzal595lA.js';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(uv, s)
+    })()</script>
 
   <!-- A tab to launch the Classic Widget -->
   <script>
-  UserVoice = window.UserVoice || [];
-  UserVoice.push(['showTab', 'classic_widget', {
-    mode: 'full',
-    primary_color: '#1abc9c',
-    link_color: '#2980b9',
-    default_mode: 'support',
-    forum_id: 277432,
-    tab_label: 'Feedback & Support',
-    tab_color: '#1abc9c',
-    tab_position: 'middle-right',
-    tab_inverted: false
-  }]);
+    UserVoice = window.UserVoice || [];
+    UserVoice.push(['showTab', 'classic_widget', {
+      mode: 'full',
+      primary_color: '#1abc9c',
+      link_color: '#2980b9',
+      default_mode: 'support',
+      forum_id: 284002,
+      tab_label: 'Feedback & Support',
+      tab_color: '#1abc9c',
+      tab_position: 'middle-right',
+      tab_inverted: false
+    }]);
   </script>
 @stop
