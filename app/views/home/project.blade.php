@@ -50,7 +50,7 @@
                         data-target="#subscriptionModal">Follow
                 </button>
                 <button type="button" class="btn btn-primary btn-block btn-embossed" data-toggle="modal"
-                        data-target="#actnow-modal-share">Share
+                        data-target="#actnow-modal-share">Share / Embed
                 </button>
               </div>
             </div>
