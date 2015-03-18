@@ -27,14 +27,14 @@ class MakeCustomPagesContent extends Migration {
 		$page->slug = '/';
 		$page->data = array(
 			'banner' => array(
-				'title' => 'Find Environmental Impact Assesments Near You',
+				'title' => 'Find Environmental Impact Assessments Near You',
 				'description' => 'And register for alerts in your area...'
 			),
 			'how' => array(
 				'title' => 'How #GreenAlert Works',
 				'blurbs' => array(
 					array(
-						'description' => 'Find Environmental Impact Assesments happening near you.'
+						'description' => 'Find Environmental Impact Assessments happening near you.'
 					),
 					array(
 						'description' => 'Register for alerts in your area to get updates of new or current EIAs.'
