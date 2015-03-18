@@ -26,7 +26,7 @@
               {{ Form::text('fullname', $user->fullname, array('class' => 'form-control', 'placeholder' => 'Green Alerter' )); }}
             </div>
             <div class="form-group">
-              {{ Form::label('email', 'E-mail Adress:') }}
+              {{ Form::label('email', 'E-mail Address:') }}
               {{ Form::text('email', $user->email, array('class' => 'form-control', 'placeholder' => 'green@alert.org' )); }}
             </div>
           </div>
