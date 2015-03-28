@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "2c94ec2d847d1ac3bc77c38fe74a234a",
+    "hash": "9c3bb6f59d096459a1698b9a3e0cdc76",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -2331,6 +2331,48 @@
             "description": "Symfony Translation Component",
             "homepage": "http://symfony.com",
             "time": "2015-01-03 15:23:51"
+        },
+        {
+            "name": "yangqi/htmldom",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/DavidLemayian/Htmldom.git",
+                "reference": "00e542b6b1bde17918c56a2aedb3e6c1950cb47e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/DavidLemayian/Htmldom/zipball/00e542b6b1bde17918c56a2aedb3e6c1950cb47e",
+                "reference": "00e542b6b1bde17918c56a2aedb3e6c1950cb47e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Yangqi\\Htmldom": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "yangqi",
+                    "email": "i@yangqi.me"
+                }
+            ],
+            "description": "Simple Html Dom Parser for Laravel 4",
+            "keywords": [
+                "html parser",
+                "laravel"
+            ],
+            "support": {
+                "source": "https://github.com/DavidLemayian/Htmldom/tree/master"
+            },
+            "time": "2015-03-28 01:40:07"
         }
     ],
     "packages-dev": [],
@@ -2338,7 +2380,8 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "graham-campbell/markdown": 20,
-        "emil/inliner": 20
+        "emil/inliner": 20,
+        "yangqi/htmldom": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

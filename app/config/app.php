@@ -126,6 +126,8 @@ return array(
 
 		'Emil\Inliner\InlinerServiceProvider',
 
+        'Yangqi\Htmldom\HtmldomServiceProvider',
+
 	),
 
 	/*
@@ -194,6 +196,8 @@ return array(
 		'View'              => 'Illuminate\Support\Facades\View',
 
 		'Markdown' => 'GrahamCampbell\Markdown\Facades\Markdown',
+
+        'Htmldom' => 'Yangqi\Htmldom\Htmldom',
 
 	),
 
