@@ -81,8 +81,10 @@ Route::group(array('prefix' => 'api/v1'), function()
 });
 
 
-// Scraper
+// Scraping
 
 Route::get('scrapers', 'ScrapersController@index');
 Route::get('scrapers/{id_or_slug}', 'ScrapersController@show');
+Route::get('scrapers/{id_or_slug}/run', 'ScrapersController@scrape');
+
 Route::resource('scrapes', 'ScrapesController');

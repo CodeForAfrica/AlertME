@@ -32,12 +32,14 @@ class ScrapersController extends \BaseController {
             $scraper = Scraper::where( 'slug', $id_or_slug )->firstOrFail();
         }
 
+        $scraper = $scraper->toArray() + array( 'scrapes' => $scraper->scrapes->toArray());
+
         return $scraper;
     }
 
     public function scrape ( $id_or_slug )
     {
-        $scraper = Scraper::find($id_or_slug);
+        $scraper = $this->show( $id_or_slug );
 
         return $scraper;
     }
