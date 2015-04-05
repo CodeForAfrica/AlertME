@@ -2,14 +2,14 @@
 
 class ScrapersController extends \BaseController {
 
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
-	public function index()
-	{
-		// Load Scrapers if don't exist
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
+    public function index()
+    {
+        // Load Scrapers if don't exist
         $scraper = Scraper::find(1);
         if (!$scraper) {
             $scraper = new Scraper;
@@ -18,30 +18,38 @@ class ScrapersController extends \BaseController {
             $scraper->save();
         }
 
-
         $scrapers = Scraper::all();
 
         return $scrapers;
-	}
+    }
 
-    public  function show ( $id_or_slug )
+    public function show($id_or_slug)
     {
-        if (is_numeric($id_or_slug)){
-            $scraper = Scraper::findOrFail( $id_or_slug );
+        if (is_numeric($id_or_slug)) {
+            $scraper = Scraper::findOrFail($id_or_slug);
         } else {
-            $scraper = Scraper::where( 'slug', $id_or_slug )->firstOrFail();
+            $scraper = Scraper::where('slug', $id_or_slug)->firstOrFail();
         }
 
-        $scraper = $scraper->toArray() + array( 'scrapes' => $scraper->scrapes->toArray());
+        $scraper = $scraper->toArray() + array('scrapes' => $scraper->scrapes->toArray());
 
         return $scraper;
     }
 
-    public function scrape ( $id_or_slug )
+    public function scrape($id_or_slug)
     {
-        $scraper = $this->show( $id_or_slug );
+        $scraper = $this->show($id_or_slug);
 
-        return $scraper;
+        $run_scraper = camel_case($scraper['slug']);
+
+        return $this->$run_scraper();
+    }
+
+    public function neasPortal()
+    {
+        $neas_portal = new NeasPortal();
+
+        return $neas_portal->scrape();
     }
 
 

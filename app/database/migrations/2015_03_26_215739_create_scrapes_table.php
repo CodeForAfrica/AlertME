@@ -16,10 +16,10 @@ class CreateScrapesTable extends Migration {
 		{
 			$table->increments('id');
             $table->integer('scraper_id');
-            $table->string('file_location');
+            $table->string('file_location')->default(storage_path().'/scrapes/');
             $table->string('file_name');
-            $table->text('stats');
-            $table->integer('status');
+            $table->string('stats')->default(0);
+            $table->integer('status')->default(0);
 			$table->timestamps();
 		});
 	}

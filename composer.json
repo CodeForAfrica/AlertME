@@ -11,6 +11,10 @@
     {
       "type": "vcs",
       "url": "https://github.com/DavidLemayian/Htmldom"
+    },
+    {
+      "url": "https://github.com/sanis/laravel4-goutte.git",
+      "type": "git"
     }
   ],
   "require": {
@@ -20,7 +24,8 @@
     "graham-campbell/markdown": "2.0.*@dev",
     "doctrine/dbal": "2.3.5",
     "emil/inliner": "dev-master",
-    "yangqi/htmldom": "dev-master"
+    "yangqi/htmldom": "dev-master",
+    "elvedia/goutte": "dev-master"
   },
   "autoload": {
     "classmap": [
