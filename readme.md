@@ -1,23 +1,43 @@
-## Laravel PHP Framework
+\#GreenAlert
+============
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/downloads.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+*Get to know more about your environment.*
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
+\#GreenAlert is a geo-aware web platform that is working to make it easier for everyone to get invloved in decisions made about the environment around them. This is achieved by giving easy access to the data and allowing subscription of alerts.
 
-Laravel is accessible, yet powerful, providing powerful tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+Some key featutres of this platform include:
 
-## Official Documentation
+1. Geocodes and caches addresses for easy mapping.
+2. Allows defining data in the dashboard from **any** CSV.
+3. Automated category assignment via keyword search.
+4. Subscription of alerts in a specified area or individual project.
 
-Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
+**NOTE: This project is still in very initial development.**  
+*(We intend to break things along the way but will do our best to keep it consistent)*
 
-## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
+### Installation
+
+Want to run your own instance? Check out the [INSTALL.md](./INSTALL.md) file.
+
+
+### Contributing
+
+We'd love to hear from you! Submit feature requests + bug reports in [the issues section](https://github.com/CodeForAfrica/GreenAlert/issues).
+
+---
 
 ### License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+We care about sharing improvements.
+
+The GPL ([V2](http://choosealicense.com/licenses/gpl-2.0/) or [V3](http://choosealicense.com/licenses/gpl-3.0/)) is a copyleft license that requires anyone who distributes your code or a derivative work to make the source available under the same terms. V3 is similar to V2, but further restricts use in hardware that forbids software alterations.
+
+**Linux**, **Git**, and **WordPress** use the GPL.
+
+Find out more by checking out the `LICENSE` file [here](./LICENSE).
+
+
+### Contact
+
+Have any questions? Feel free to reach us at [kazini@codeforafrica.org](mailto:kazini@codeforafrica.org).
