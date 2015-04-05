@@ -1,4 +1,4 @@
-<?php namespace App\Events;
+<?php namespace Greenalert\Events;
 
 abstract class Event {
 

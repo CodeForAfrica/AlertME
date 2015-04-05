@@ -26,7 +26,7 @@ return [
 	|
 	*/
 
-	'url' => 'http://localhost',
+	'url' => 'https://greenalert',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -39,7 +39,7 @@ return [
 	|
 	*/
 
-	'timezone' => 'UTC',
+	'timezone' => 'Africa/Nairobi',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -139,11 +139,11 @@ return [
 		/*
 		 * Application Service Providers...
 		 */
-		'App\Providers\AppServiceProvider',
-		'App\Providers\BusServiceProvider',
-		'App\Providers\ConfigServiceProvider',
-		'App\Providers\EventServiceProvider',
-		'App\Providers\RouteServiceProvider',
+		'Greenalert\Providers\AppServiceProvider',
+		'Greenalert\Providers\BusServiceProvider',
+		'Greenalert\Providers\ConfigServiceProvider',
+		'Greenalert\Providers\EventServiceProvider',
+		'Greenalert\Providers\RouteServiceProvider',
 
 	],
 

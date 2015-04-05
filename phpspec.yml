@@ -1,5 +1,5 @@
 suites:
     main:
-        namespace: App
-        psr4_prefix: App
+        namespace: Greenalert
+        psr4_prefix: Greenalert
         src_path: app
