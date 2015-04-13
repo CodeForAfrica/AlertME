@@ -44,7 +44,7 @@ Route::post('password/reset', 'RemindersController@postReset');
 
 
 // Secure Routes
-Route::group(array('before' => 'auth'), function()
+Route::group(array('middleware' => 'auth'), function()
 {
     Route::get('dashboard', 'DashboardController@showHome');
 
@@ -65,7 +65,7 @@ Route::group(array('before' => 'auth'), function()
 });
 
 
-Route::get('/authtest', array('before' => 'auth.basic', function()
+Route::get('/authtest', array('middleware' => 'auth.basic', function()
 {
     return View::make('hello');
 }));
@@ -73,12 +73,12 @@ Route::get('/authtest', array('before' => 'auth.basic', function()
 
 // API v1
 
-Route::group(array('prefix' => 'api/v1', 'before' => 'auth.basic'), function()
+Route::group(array('prefix' => 'api/v1', 'middleware' => 'auth.basic'), function()
 {
     Route::resource('datasources', 'ApiDataSourceController');
     Route::resource('categories', 'ApiCategoryController');
 });
-Route::group(array('prefix' => 'api/v1'/*, 'before' => 'csrf'*/), function()
+Route::group(array('prefix' => 'api/v1'/*, 'middleware' => 'csrf'*/), function()
 {
     Route::get('subscriptions/email', 'ApiSubscriptionController@email');
     Route::resource('subscriptions', 'ApiSubscriptionController');
