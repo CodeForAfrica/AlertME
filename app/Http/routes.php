@@ -15,8 +15,8 @@
 Route::get('home', 'HomeController@index');
 
 Route::controllers([
-	'auth' => 'Auth\AuthController',
-	'password' => 'Auth\PasswordController',
+    'auth'     => 'Auth\AuthController',
+    'password' => 'Auth\PasswordController',
 ]);
 
 //
@@ -34,8 +34,7 @@ Route::post('subscriptions/{confirm_token}', 'ApiSubscriptionController@confirm'
 
 
 // Secure Routes
-Route::group(array('middleware' => 'auth'), function()
-{
+Route::group(array('middleware' => 'auth'), function () {
     Route::get('dashboard', 'DashboardController@showHome');
 
     Route::get('dashboard/datasources', 'DashboardController@showDataSources');
@@ -55,26 +54,22 @@ Route::group(array('middleware' => 'auth'), function()
 });
 
 
-Route::get('/authtest', array('middleware' => 'auth.basic', function()
-{
+Route::get('/authtest', array('middleware' => 'auth.basic', function () {
     return View::make('hello');
 }));
 
 
 // API v1
 
-Route::group(array('prefix' => 'api/v1', 'middleware' => 'auth.basic'), function()
-{
+Route::group(array('prefix' => 'api/v1', 'middleware' => 'auth.basic'), function () {
     Route::resource('datasources', 'ApiDataSourceController');
     Route::resource('categories', 'ApiCategoryController');
 });
-Route::group(array('prefix' => 'api/v1'/*, 'middleware' => 'csrf'*/), function()
-{
+Route::group(array('prefix' => 'api/v1'/*, 'middleware' => 'csrf'*/), function () {
     Route::get('subscriptions/email', 'ApiSubscriptionController@email');
     Route::resource('subscriptions', 'ApiSubscriptionController');
 });
-Route::group(array('prefix' => 'api/v1'), function()
-{
+Route::group(array('prefix' => 'api/v1'), function () {
     Route::resource('projectsgeojson', 'ApiProjectsGeojsonController', array('only' => array('index', 'show')));
     Route::resource('projects', 'ApiProjectController', array('only' => array('index', 'show')));
     Route::resource('categories', 'ApiCategoryController', array('only' => array('index', 'show')));
@@ -93,4 +88,7 @@ Route::resource('scrapes', 'ScrapesController');
 
 Route::any('login', function () {
     return redirect('auth/login');
+});
+Route::any('logout', function () {
+    return redirect('auth/logout');
 });
