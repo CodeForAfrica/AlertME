@@ -40,8 +40,8 @@
 
             <div class="form-group {{{ $errors->has('password') ? 'has-error' : '' }}}">
               <input type="password" name="password" class="form-control login-field"
-                     value="" placeholder="Password" id="login-pass">
-              <label class="login-field-icon fui-lock" for="login-pass"></label>
+                     value="" placeholder="Password" id="password">
+              <label class="login-field-icon fui-lock" for="password"></label>
             </div>
 
             <div class="form-group checkbox" style="height:20px;">
