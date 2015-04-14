@@ -1,6 +1,6 @@
 <?php
 
-class FlatUIPresenter extends Illuminate\Pagination\Presenter {
+class FlatUIPresenter extends Illuminate\Pagination\BootstrapThreePresenter {
 
     public function getActivePageWrapper($text)
     {

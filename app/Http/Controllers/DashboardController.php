@@ -1,7 +1,12 @@
 <?php namespace Greenalert\Http\Controllers;
 
-use Greenalert\Http\Requests;
+use Greenalert\Category;
+use Greenalert\DataSource;
+use Greenalert\GeoApi;
 use Greenalert\Http\Controllers\Controller;
+use Greenalert\Page;
+use Greenalert\Subscription;
+use Greenalert\Sync;
 
 use Illuminate\Http\Request;
 
@@ -38,10 +43,10 @@ class DashboardController extends Controller {
     {
         $sync = new Sync;
         $sync->sync_status = 2;
-        $sync->user_id = Auth::id();
+        $sync->user_id = \Auth::id();
         $sync->save();
 
-        return Redirect::to('dashboard/datasources')->with('success', 'Data source sync started successfully.');
+        return redirect('dashboard/datasources')->with('success', 'Data source sync started successfully.');
     }
 
     public function showCategories()
@@ -69,7 +74,7 @@ class DashboardController extends Controller {
 
     public function setPages()
     {
-        $input = json_decode(json_encode(Input::all()), false);
+        $input = json_decode(json_encode(\Input::all()), false);
 
         $home = Page::find(1);
         $home->data = $input->home;
@@ -79,16 +84,16 @@ class DashboardController extends Controller {
         $about->data = $input->about;
         $about->save();
 
-        return Redirect::to('dashboard/pages')->with('success', 'Successfully saved pages.');
+        return redirect('dashboard/pages')->with('success', 'Successfully saved pages.');
     }
 
 
     public function showSubscriptions()
     {
-        if (Auth::user()->role_id == 1) {
+        if (\Auth::user()->role_id == 1) {
             $subscriptions = Subscription::withTrashed()->paginate(10);
         } else {
-            $subscriptions = User::find(Auth::id())->subscriptions()->withTrashed()->paginate(10);
+            $subscriptions = User::find(\Auth::id())->subscriptions()->withTrashed()->paginate(10);
         }
 
         $data = compact(
@@ -101,7 +106,7 @@ class DashboardController extends Controller {
 
     public function showProfile()
     {
-        $user = Auth::user();
+        $user = \Auth::user();
         $data = array(
             'user' => $user
         );
@@ -111,34 +116,34 @@ class DashboardController extends Controller {
 
     public function setProfile()
     {
-        $user = Auth::user();
-        $user->fullname = Input::get('fullname');
+        $user = \Auth::user();
+        $user->fullname = \Input::get('fullname');
         $user->save();
 
 
         $email_old = $user->email;
         $email_new = Input::get('email');
         if ($email_new != $email_old) {
-            $validator = Validator::make(
+            $validator = \Validator::make(
                 array('email' => $email_new),
                 array('email' => 'required|email|unique:users')
             );
             if ($validator->fails()) {
-                return Redirect::to('dashboard/profile')->with('error', $validator->messages());
+                return redirect('dashboard/profile')->with('error', $validator->messages());
             }
             $user->email = $email_new;
             $user->save();
         }
 
-        if (Input::get('password1') != '') {
-            if (Input::get('password1') != Input::get('password2')) {
-                return Redirect::to('dashboard/profile')->with('error', 'Passwords don\'t match.');
+        if (\Input::get('password1') != '') {
+            if (\Input::get('password1') != \Input::get('password2')) {
+                return redirect('dashboard/profile')->with('error', 'Passwords don\'t match.');
             }
-            $user->password = Hash::make(Input::get('password1'));
+            $user->password = \Hash::make(\Input::get('password1'));
             $user->save();
         }
 
-        return Redirect::to('dashboard/profile')->with('success', 'Successfully saved profile changes.');
+        return redirect('dashboard/profile')->with('success', 'Successfully saved profile changes.');
     }
 
     public function showSettings()
@@ -154,10 +159,10 @@ class DashboardController extends Controller {
     public function setSettings()
     {
         $geoapi = GeoApi::find(1);
-        $geoapi->key = Input::get('key');
+        $geoapi->key = \Input::get('key');
         $geoapi->save();
 
-        return Redirect::to('dashboard/settings')->with('success', 'Successfully saved settings.');
+        return redirect('dashboard/settings')->with('success', 'Successfully saved settings.');
     }
 
 }
