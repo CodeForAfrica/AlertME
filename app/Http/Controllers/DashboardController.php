@@ -8,6 +8,7 @@ use Greenalert\Page;
 use Greenalert\Subscription;
 use Greenalert\Sync;
 
+use Greenalert\User;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller {

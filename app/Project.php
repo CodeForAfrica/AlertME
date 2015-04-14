@@ -131,29 +131,29 @@ class Project extends Model {
 
     public function datasource()
     {
-        return $this->belongsTo('DataSource');
+        return $this->belongsTo('GreenAlert\DataSource');
     }
 
     public function datasourcesync()
     {
-        return $this->belongsTo('DataSourceSync');
+        return $this->belongsTo('GreenAlert\DataSourceSync');
     }
 
     public function categories()
     {
-        return $this->belongsToMany('Category', 'project_category');
+        return $this->belongsToMany('GreenAlert\Category', 'project_category');
     }
 
     public function subscriptions()
     {
-        return $this->hasMany('Subscription');
+        return $this->hasMany('GreenAlert\Subscription');
     }
 
     public function geocode()
     {
         if (trim($this->geo_address) == '') return array('lat' => 0, 'lng' => 0);
 
-        return $this->hasOne('Geocode', 'address', 'geo_address');
+        return $this->hasOne('GreenAlert\Geocode', 'address', 'geo_address');
     }
 
 

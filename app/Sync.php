@@ -32,12 +32,12 @@ class Sync extends Model {
 
     function datasourcesyncs()
     {
-        return $this->hasMany('DataSourceSync');
+        return $this->hasMany('GreenAlert\DataSourceSync');
     }
 
     function user()
     {
-        return $this->belongsTo('User');
+        return $this->belongsTo('GreenAlert\User');
     }
 
 }

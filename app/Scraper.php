@@ -6,7 +6,7 @@ class Scraper extends Model {
 
     public function scrapes()
     {
-        return $this->hasMany('Scrape');
+        return $this->hasMany('GreenAlert\Scrape');
     }
 
 }

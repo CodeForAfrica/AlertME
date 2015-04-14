@@ -19,7 +19,7 @@ class GeoApi extends Model {
 
     public function geocodes()
     {
-        return $this->hasMany('Geocode');
+        return $this->hasMany('GreenAlert\Geocode');
     }
 
 }

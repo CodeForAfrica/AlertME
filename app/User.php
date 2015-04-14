@@ -43,12 +43,12 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     public function sync()
     {
-        return $this->hasMany('Sync');
+        return $this->hasMany('GreenAlert\Sync');
     }
 
     public function subscriptions()
     {
-        return $this->hasMany('Subscription');
+        return $this->hasMany('GreenAlert\Subscription');
     }
 
 }

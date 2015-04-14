@@ -30,17 +30,17 @@ class DataSourceSync extends Model {
 
     function sync()
     {
-        return $this->belongsTo('Sync');
+        return $this->belongsTo('GreenAlert\Sync');
     }
 
     function datasource()
     {
-        return $this->belongsTo('DataSource');
+        return $this->belongsTo('GreenAlert\DataSource');
     }
 
     function projects()
     {
-        return $this->hasMany('Project');
+        return $this->hasMany('GreenAlert\Project');
     }
 
 }

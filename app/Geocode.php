@@ -28,7 +28,7 @@ class Geocode extends Model {
 
     public function geoapi()
     {
-        return $this->belongsTo('GeoApi');
+        return $this->belongsTo('GreenAlert\GeoApi');
     }
 
     public function fetchGeo()
