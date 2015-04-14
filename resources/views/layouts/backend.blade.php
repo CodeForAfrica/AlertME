@@ -1,7 +1,7 @@
 @extends('layouts.base')
 
 @section('title')
-Dashboard
+  Dashboard
 @stop
 
 @section('body-class') dashboard @stop
@@ -17,7 +17,8 @@ Dashboard
 
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#ga-navbar-collapse-1">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                data-target="#ga-navbar-collapse-1">
           <span class="sr-only">Toggle navigation</span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
@@ -31,87 +32,97 @@ Dashboard
       <div class="collapse navbar-collapse" id="ga-navbar-collapse-1">
 
         <a class="btn btn-default btn-sm navbar-btn navbar-right" type="button"
-          href="/logout">Logout</a>
+           href="/logout">Logout</a>
 
-      </div><!-- /.navbar-collapse -->
+      </div>
+      <!-- /.navbar-collapse -->
 
-    </div><!-- /.container -->
+    </div>
+    <!-- /.container -->
   </nav>
 @stop
 
 @section('navigation-side')
 
-<div class="container-fluid dashboard">
+  <div class="container-fluid dashboard">
 
-  <div class="row">
-    <div class="col-md-2">
-      <div class="btn-group-vertical btn-block navigation-side">
-        <a href="/dashboard" class="btn btn-embossed btn-primary
-          {{Request::path() == 'dashboard' ? 'active' : '';}}">
-          <span class="fui-home"></span> Home</a>
-       </div>
-       <hr/>
-       <div class="btn-group-vertical btn-block navigation-side">
-        <a href="/dashboard/datasources" class="btn btn-embossed btn-primary
-          {{Request::path() == 'dashboard/datasources' ? 'active' : '';}}">
-          <span class="fui-upload"></span> Data Sources</a>
-        <a href="/dashboard/categories" class="btn btn-embossed btn-primary
-          {{Request::path() == 'dashboard/categories' ? 'active' : '';}}">
-          <span class="fui-tag"></span> Categories</a>
-        <a href="/dashboard/pages" class="btn btn-embossed btn-primary
-          {{Request::path() == 'dashboard/pages' ? 'active' : '';}}">
-          <span class="fui-document"></span> Pages</a>
+    <div class="row">
+      <div class="col-md-2">
+        <div class="btn-group-vertical btn-block navigation-side">
+          <a href="{{ secure_url('/dashboard') }}" class="btn btn-embossed btn-primary
+          {{ Request::path() == 'dashboard' ? 'active' : '' }}">
+            <span class="fui-home"></span> Home</a>
+        </div>
+        <hr/>
+        <div class="btn-group-vertical btn-block navigation-side">
+          <a href="{{ secure_url('/dashboard/datasources') }}" class="btn btn-embossed btn-primary
+          {{ Request::path() == 'dashboard/datasources' ? 'active' : '' }}">
+            <span class="fui-upload"></span> Data Sources</a>
+          <a href="/dashboard/categories" class="btn btn-embossed btn-primary
+          {{ Request::path() == 'dashboard/categories' ? 'active' : '' }}">
+            <span class="fui-tag"></span> Categories</a>
+          <a href="/dashboard/pages" class="btn btn-embossed btn-primary
+          {{ Request::path() == 'dashboard/pages' ? 'active' : '' }}">
+            <span class="fui-document"></span> Pages</a>
+        </div>
+        <hr/>
+        <div class="btn-group-vertical btn-block navigation-side">
+          <a href="/dashboard/subscriptions" class="btn btn-embossed btn-primary
+          {{ Request::path() == 'dashboard/subscriptions' ? 'active' : '' }}">
+            <b>#</b> Subscriptions</a>
+        </div>
+        <hr/>
+        <div class="btn-group-vertical btn-block navigation-side">
+          <a href="/dashboard/profile" class="btn btn-embossed btn-primary
+          {{ Request::path() == 'dashboard/profile' ? 'active' : '' }}">
+            <span class="fui-user"></span> Profile</a>
+        </div>
+        <div class="btn-group-vertical btn-block navigation-side">
+          <a href="/dashboard/settings" class="btn btn-embossed btn-primary
+          {{ Request::path() == 'dashboard/settings' ? 'active' : '' }}">
+            <span class="fui-gear"></span> Settings</a>
+        </div>
       </div>
-      <hr/>
-      <div class="btn-group-vertical btn-block navigation-side">
-        <a href="/dashboard/subscriptions" class="btn btn-embossed btn-primary
-          {{Request::path() == 'dashboard/subscriptions' ? 'active' : '';}}">
-          <b>#</b> Subscriptions</a>
+
+      <div class="col-md-10">
+        <!-- Success Messages -->
+        @if ($message = Session::get('success'))
+          <div class="alert alert-success alert-block">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <p>
+              <small>
+                <b>Success:</b>
+                {{{ $message }}}
+              </small>
+            </p>
+          </div>
+          @endif
+              <!-- Not So Success Messages -->
+          @if ($message = Session::get('error'))
+            <div class="alert alert-danger alert-block">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <p>
+                <small>
+                  <b>Error:</b>
+                  {{{ $message }}}
+                </small>
+              </p>
+            </div>
+          @endif
+          @stop
+
+        @section('footer')
       </div>
-      <hr/>
-      <div class="btn-group-vertical btn-block navigation-side">
-        <a href="/dashboard/profile" class="btn btn-embossed btn-primary
-          {{Request::path() == 'dashboard/profile' ? 'active' : '';}}">
-          <span class="fui-user"></span> Profile</a>
-      </div>
-      <div class="btn-group-vertical btn-block navigation-side">
-        <a href="/dashboard/settings" class="btn btn-embossed btn-primary
-          {{Request::path() == 'dashboard/settings' ? 'active' : '';}}">
-          <span class="fui-gear"></span> Settings</a>
-      </div>
+      <!-- /.col-md-10 -->
     </div>
+    <!-- /.row -->
 
-    <div class="col-md-10">
-      <!-- Success Messages -->
-      @if ($message = Session::get('success'))
-        <div class="alert alert-success alert-block">
-          <button type="button" class="close" data-dismiss="alert">&times;</button>
-          <p><small>
-            <b>Success:</b>
-            {{{ $message }}}
-          </small></p>
-        </div>
-      @endif
-      <!-- Not So Success Messages -->
-      @if ($message = Session::get('error'))
-        <div class="alert alert-danger alert-block">
-          <button type="button" class="close" data-dismiss="alert">&times;</button>
-          <p><small>
-            <b>Error:</b>
-            {{{ $message }}}
-          </small></p>
-        </div>
-      @endif
-@stop
+    <br/>
 
-@section('footer')
-</div> <!-- /.col-md-10 -->
-</div> <!-- /.row -->
+    <hr/>
+    <p class="text-muted text-right">
+      <small>Built by Code for Africa</small>
+    </p>
 
-<br/>
-
-<hr/>
-<p class="text-muted text-right"><small>Built by Code for Africa</small></p>
-
-</div> <!-- /.container-fluid -->
+  </div> <!-- /.container-fluid -->
 @stop
