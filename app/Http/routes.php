@@ -88,3 +88,9 @@ Route::get('scrapers/{id_or_slug}', 'ScrapersController@show');
 Route::get('scrapers/{id_or_slug}/run', 'ScrapersController@scrape');
 
 Route::resource('scrapes', 'ScrapesController');
+
+// Redirects
+
+Route::any('login', function () {
+    return redirect('auth/login');
+});
