@@ -6,8 +6,8 @@
 
     <div class="container-fluid bg-primary text-center" style="background:linear-gradient(rgba(52, 73, 94, 0.45), rgba(52, 73, 94, 0.45)), url('/assets/img/bg/chemical-plant.jpg') center; background-size: cover;">
       <br/><br/>
-      <h3>{{ $home->data->banner->title }}</h3>
-      <h5>{{ $home->data->banner->description }}</h5>
+      <h3>{!! $home->data->banner->title !!}</h3>
+      <h5>{!! $home->data->banner->description !!}</h5>
       <br/>
 
       <div class="row search-geo" style="margin-bottom:5px;">
@@ -69,28 +69,28 @@
 
     <div class="container text-center">
       <br/><br/>
-      <h3>{{ $home->data->how->title }}</h3><br/>
+      <h3>{!! $home->data->how->title !!}</h3><br/>
       <div class="row">
         <div class="col-md-4">
           <span class="fa-stack fa-3x">
             <i class="fa fa-circle fa-stack-2x"></i>
             <i class="fa fa-map-marker fa-stack-1x fa-inverse"></i>
           </span>
-          {{ Markdown::render($home->data->how->blurbs[0]->description) }}
+          {!! Markdown::convertToHtml($home->data->how->blurbs[0]->description) !!}
         </div>
         <div class="col-md-4">
           <span class="fa-stack fa-3x">
             <i class="fa fa-circle fa-stack-2x"></i>
             <i class="fa fa-bolt fa-stack-1x fa-inverse"></i>
           </span>
-          {{ Markdown::render($home->data->how->blurbs[1]->description) }}
+          {!! Markdown::convertToHtml($home->data->how->blurbs[1]->description) !!}
         </div>
         <div class="col-md-4">
           <span class="fa-stack fa-3x">
             <i class="fa fa-circle fa-stack-2x"></i>
             <i class="fa fa-pencil-square-o fa-stack-1x fa-inverse"></i>
           </span>
-          {{ Markdown::render($home->data->how->blurbs[2]->description) }}
+          {!! Markdown::convertToHtml($home->data->how->blurbs[2]->description) !!}
         </div>
       </div> <!-- /.row -->
       <br/><br/>

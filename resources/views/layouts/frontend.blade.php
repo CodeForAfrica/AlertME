@@ -27,17 +27,17 @@
       <div class="collapse navbar-collapse" id="ga-navbar-collapse-1">
 
         <ul class="nav navbar-nav">
-          <li class="{{Request::path() == '/' ? 'active' : '';}}">
+          <li class="{{ Request::path() == '/' ? 'active' : '' }}">
             <a href="/">Home</a></li>
-          <li class="{{Request::path() == 'map' ? 'active' : '';}}">
+          <li class="{{ Request::path() == 'map' ? 'active' : '' }}">
             <a href="/map">Map</a></li>
-          <li class="{{Request::path() == 'about' ? 'active' : '';}}">
+          <li class="{{ Request::path() == 'about' ? 'active' : '' }}">
             <a href="/about">About</a></li>
           @if ( Auth::guest() )
-            <li class="{{Request::path() == 'login' ? 'active' : '';}}">
-              <a href="/login">Login</a></li>
+            <li class="{{ Request::path() == 'auth/login' ? 'active' : '' }}">
+              <a href="/auth/login">Login</a></li>
           @else
-            <li class="{{Request::path() == 'dashboard' ? 'active' : '';}}">
+            <li class="{{ Request::path() == 'dashboard' ? 'active' : '' }}">
               <a href="/dashboard">Dashboard</a></li>
           @endif
         </ul>
@@ -100,32 +100,48 @@
 
   {{--<!-- UserVoice JavaScript SDK (only needed once on a page) -->--}}
   {{--<script>(function () {--}}
-      {{--var uv = document.createElement('script');--}}
-      {{--uv.type = 'text/javascript';--}}
-      {{--uv.async = true;--}}
-      {{--uv.src = '//widget.uservoice.com/n2LtUkxiieON2Mzal595lA.js';--}}
-      {{--var s = document.getElementsByTagName('script')[0];--}}
-      {{--s.parentNode.insertBefore(uv, s)--}}
-    {{--})()</script>--}}
+  {{--var uv = document.createElement('script');--}}
+  {{--uv.type = 'text/javascript';--}}
+  {{--uv.async = true;--}}
+  {{--uv.src = '//widget.uservoice.com/n2LtUkxiieON2Mzal595lA.js';--}}
+  {{--var s = document.getElementsByTagName('script')[0];--}}
+  {{--s.parentNode.insertBefore(uv, s)--}}
+  {{--})()</script>--}}
 
   {{--<!-- A tab to launch the Classic Widget -->--}}
   {{--<script>--}}
-    {{--UserVoice = window.UserVoice || [];--}}
-    {{--UserVoice.push(['showTab', 'classic_widget', {--}}
-      {{--mode: 'full',--}}
-      {{--primary_color: '#1abc9c',--}}
-      {{--link_color: '#2980b9',--}}
-      {{--default_mode: 'support',--}}
-      {{--forum_id: 284002,--}}
-      {{--tab_label: 'Feedback & Support',--}}
-      {{--tab_color: '#1abc9c',--}}
-      {{--tab_position: 'middle-right',--}}
-      {{--tab_inverted: false--}}
-    {{--}]);--}}
+  {{--UserVoice = window.UserVoice || [];--}}
+  {{--UserVoice.push(['showTab', 'classic_widget', {--}}
+  {{--mode: 'full',--}}
+  {{--primary_color: '#1abc9c',--}}
+  {{--link_color: '#2980b9',--}}
+  {{--default_mode: 'support',--}}
+  {{--forum_id: 284002,--}}
+  {{--tab_label: 'Feedback & Support',--}}
+  {{--tab_color: '#1abc9c',--}}
+  {{--tab_position: 'middle-right',--}}
+  {{--tab_inverted: false--}}
+  {{--}]);--}}
   {{--</script>--}}
 
   <!-- Start of greenalert Zendesk Widget script -->
-  <script>/*<![CDATA[*/window.zEmbed||function(e,t){var n,o,d,i,s,a=[],r=document.createElement("iframe");window.zEmbed=function(){a.push(arguments)},window.zE=window.zE||window.zEmbed,r.src="javascript:false",r.title="",r.role="presentation",(r.frameElement||r).style.cssText="display: none",d=document.getElementsByTagName("script"),d=d[d.length-1],d.parentNode.insertBefore(r,d),i=r.contentWindow,s=i.document;try{o=s}catch(c){n=document.domain,r.src='javascript:var d=document.open();d.domain="'+n+'";void(0);',o=s}o.open()._l=function(){var o=this.createElement("script");n&&(this.domain=n),o.id="js-iframe-async",o.src=e,this.t=+new Date,this.zendeskHost=t,this.zEQueue=a,this.body.appendChild(o)},o.write('<body onload="document._l();">'),o.close()}("//assets.zendesk.com/embeddable_framework/main.js","greenalert.zendesk.com");/*]]>*/</script>
+  <script>/*<![CDATA[*/
+    window.zEmbed || function (e, t) {
+      var n, o, d, i, s, a = [], r = document.createElement("iframe");
+      window.zEmbed = function () {
+        a.push(arguments)
+      }, window.zE = window.zE || window.zEmbed, r.src = "javascript:false", r.title = "", r.role = "presentation", (r.frameElement || r).style.cssText = "display: none", d = document.getElementsByTagName("script"), d = d[d.length - 1], d.parentNode.insertBefore(r, d), i = r.contentWindow, s = i.document;
+      try {
+        o = s
+      } catch (c) {
+        n = document.domain, r.src = 'javascript:var d=document.open();d.domain="' + n + '";void(0);', o = s
+      }
+      o.open()._l = function () {
+        var o = this.createElement("script");
+        n && (this.domain = n), o.id = "js-iframe-async", o.src = e, this.t = +new Date, this.zendeskHost = t, this.zEQueue = a, this.body.appendChild(o)
+      }, o.write('<body onload="document._l();">'), o.close()
+    }("//assets.zendesk.com/embeddable_framework/main.js", "greenalert.zendesk.com");
+    /*]]>*/</script>
   <!-- End of greenalert Zendesk Widget script -->
 
 @stop
