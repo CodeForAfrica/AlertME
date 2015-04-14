@@ -32,16 +32,6 @@ Route::get('project/{id}', 'HomeController@showProject');
 Route::get('subscriptions/{confirm_token}', 'ApiSubscriptionController@confirm');
 Route::post('subscriptions/{confirm_token}', 'ApiSubscriptionController@confirm');
 
-// Authentication
-Route::get('login', 'AuthController@showLogin');
-Route::post('login', 'AuthController@postLogin');
-Route::get('logout', 'AuthController@getLogout');
-
-Route::get('login/remind-me', 'RemindersController@getRemind');
-Route::post('login/remind-me', 'RemindersController@postRemind');
-Route::get('password/reset/{token}', 'RemindersController@getReset');
-Route::post('password/reset', 'RemindersController@postReset');
-
 
 // Secure Routes
 Route::group(array('middleware' => 'auth'), function()
