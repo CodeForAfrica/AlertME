@@ -1,61 +1,86 @@
-@extends('app')
+@extends('layouts.base')
 
+@section('title')
+  Login
+@stop
+
+{{-- Content --}}
 @section('content')
-<div class="container-fluid">
-	<div class="row">
-		<div class="col-md-8 col-md-offset-2">
-			<div class="panel panel-default">
-				<div class="panel-heading">Login</div>
-				<div class="panel-body">
-					@if (count($errors) > 0)
-						<div class="alert alert-danger">
-							<strong>Whoops!</strong> There were some problems with your input.<br><br>
-							<ul>
-								@foreach ($errors->all() as $error)
-									<li>{{ $error }}</li>
-								@endforeach
-							</ul>
-						</div>
-					@endif
 
-					<form class="form-horizontal" role="form" method="POST" action="{{ url('/auth/login') }}">
-						<input type="hidden" name="_token" value="{{ csrf_token() }}">
+  <div class="container">
 
-						<div class="form-group">
-							<label class="col-md-4 control-label">E-Mail Address</label>
-							<div class="col-md-6">
-								<input type="email" class="form-control" name="email" value="{{ old('email') }}">
-							</div>
-						</div>
+    <div class="row">
+      <div class="col-md-4 col-md-offset-4">
+        <h4>Login</h4>
+      </div>
+    </div>
 
-						<div class="form-group">
-							<label class="col-md-4 control-label">Password</label>
-							<div class="col-md-6">
-								<input type="password" class="form-control" name="password">
-							</div>
-						</div>
+    <div class="row">
+      <div class="col-md-4 col-md-offset-4">
+        <div class="login-form">
 
-						<div class="form-group">
-							<div class="col-md-6 col-md-offset-4">
-								<div class="checkbox">
-									<label>
-										<input type="checkbox" name="remember"> Remember Me
-									</label>
-								</div>
-							</div>
-						</div>
+          @if (count($errors) > 0)
+            <div class="alert alert-danger">
+              <strong>Whoops!</strong> There were some problems with your input.<br><br>
+              <ul>
+                @foreach ($errors->all() as $error)
+                  <li>{{ $error }}</li>
+                @endforeach
+              </ul>
+            </div>
+          @endif
 
-						<div class="form-group">
-							<div class="col-md-6 col-md-offset-4">
-								<button type="submit" class="btn btn-primary">Login</button>
+          <form role="form" method="POST" action="{{ url('/auth/login') }}">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-								<a class="btn btn-link" href="{{ url('/password/email') }}">Forgot Your Password?</a>
-							</div>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
+            <div class="form-group {{{ $errors->has('username') ? 'has-error' : '' }}}">
+              <input type="text" name="username" class="form-control login-field"
+                     value="{{ Input::old('username') }}" placeholder="Username" id="login-name">
+            </div>
+
+            <div class="form-group {{{ $errors->has('password') ? 'has-error' : '' }}}">
+              <input type="password" name="password" class="form-control login-field"
+                     value="" placeholder="Password" id="login-pass">
+              <label class="login-field-icon fui-lock" for="login-pass"></label>
+            </div>
+
+            <div class="form-group checkbox" style="height:20px;">
+              <label for="remember" style="line-height: 100%; padding-left: 0;">
+                <input type="checkbox" name="remember" id="remember" data-toggle="checkbox"> Remember me
+              </label>
+            </div>
+
+            <button class="btn btn-primary btn-embossed btn-lg btn-block" type="submit">Log in</button>
+
+          </form>
+
+          <a class="login-link" href="{{ secure_url('/password/email') }}">Forgot password?</a>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+@endsection
+
+@section('stylesheets')
+  <style>
+    body {
+      padding-top: 100px;
+      padding-bottom: 40px;
+      background-color: #1abc9c;
+    }
+
+    .has-error .form-control, .has-error .select2-search input[type=text] {
+      color: #e74c3c;
+      border-color: #e74c3c !important;
+      box-shadow: none;
+    }
+  </style>
+@endsection
+
+@section('scripts')
+  <script>
+    $(':checkbox').radiocheck();
+  </script>
 @endsection

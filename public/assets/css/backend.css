@@ -1,0 +1,60 @@
+/**
+ *
+ */
+
+@import'base.css';
+
+.navigation-side a {
+  text-align: left;
+}
+  .navigation-side a span {
+    margin-right: 5px !important;
+  }
+
+.dashboard .alert {
+  padding: 5px 15px;
+}
+
+/* Data Sources */
+
+.data-sources h5 button {
+  margin: 0 5px;
+}
+  .data-sources h5 button:first-child {
+    margin-left: 30px;
+  }
+.data-sources .data-sources-list p, .categories .categories-list p {
+  margin-bottom: 0;
+}
+.data-sources .modal .form-group {
+  margin-bottom: 5px;
+}
+  .data-sources .modal .form-group label {
+    line-height: 100%;
+  }
+
+.data-sources #deleteModal .well p {
+  margin-bottom: 0;
+}
+
+#configModal .well .col-sm-3 p {
+  text-align: right;
+}
+
+#configModal .well .col-sm-9 #config-screen .radio {
+  display: inline-block;
+  margin-left: 20px;
+}
+
+#configModal #config-edit-error {
+  margin-bottom: 10px;
+}
+
+/* Categories */
+
+.categories .media-object {
+  max-width: 80px;
+}
+.categories #deleteModal p {
+  margin-bottom: 0;
+}
