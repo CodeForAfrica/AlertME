@@ -1,5 +1,8 @@
 <?php namespace Greenalert\Http\Controllers;
 
+use Greenalert\Page;
+use Illuminate\Support\Facades\DB;
+
 class HomeController extends Controller {
 
     /*
@@ -22,7 +25,7 @@ class HomeController extends Controller {
             'home', 'projects', 'projects_count'
         );
 
-        return View::make('home.index', $data);
+        return view('home.index', $data);
     }
 
 
@@ -33,7 +36,7 @@ class HomeController extends Controller {
             'about'
         );
 
-        return View::make('home.about', $data);
+        return view('home.about', $data);
     }
 
 
@@ -55,7 +58,7 @@ class HomeController extends Controller {
             'categories'
         );
 
-        return View::make('home.map', $data);
+        return view('home.map', $data);
     }
 
 
@@ -84,7 +87,7 @@ class HomeController extends Controller {
             'projects', 'projects_count'
         );
 
-        return View::make('home.search', $data);
+        return view('home.search', $data);
     }
 
 
@@ -116,7 +119,7 @@ class HomeController extends Controller {
             'project', 'map_image_link', 'geojson'
         );
 
-        return View::make('home.project', $data);
+        return view('home.project', $data);
     }
 
 }

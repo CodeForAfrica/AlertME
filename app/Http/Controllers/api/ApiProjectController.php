@@ -101,7 +101,7 @@ class ApiProjectController extends Controller {
                 'project', 'map_image_link', 'geojson'
             );
 
-            return View::make('home.project_embed', $data);
+            return view('home.project_embed', $data);
         }
 
         return Response::json(array(

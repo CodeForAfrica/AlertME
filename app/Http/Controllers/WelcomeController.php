@@ -34,7 +34,7 @@ class WelcomeController extends Controller {
             'home', 'projects', 'projects_count'
         );
 
-        return View::make('home.index', $data);
+        return view('home.index', $data);
     }
 
 
@@ -45,7 +45,7 @@ class WelcomeController extends Controller {
             'about'
         );
 
-        return View::make('home.about', $data);
+        return view('home.about', $data);
     }
 
 
@@ -67,7 +67,7 @@ class WelcomeController extends Controller {
             'categories'
         );
 
-        return View::make('home.map', $data);
+        return view('home.map', $data);
     }
 
 
@@ -96,7 +96,7 @@ class WelcomeController extends Controller {
             'projects', 'projects_count'
         );
 
-        return View::make('home.search', $data);
+        return view('home.search', $data);
     }
 
 
@@ -124,7 +124,7 @@ class WelcomeController extends Controller {
             'project', 'map_image_link', 'geojson'
         );
 
-        return View::make('home.project', $data);
+        return view('home.project', $data);
     }
 
 }

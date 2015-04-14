@@ -266,7 +266,7 @@ class ApiSubscriptionController extends Controller {
             'map_image_link', 'map_link'
         );
 
-        return View::make('subscriptions.confirm', $data);
+        return view('subscriptions.confirm', $data);
     }
 
 
@@ -315,7 +315,7 @@ class ApiSubscriptionController extends Controller {
             'confirm_link', 'confirm_url',
             'project'
         );
-        $view = View::make($view_name, $data);
+        $view = view($view_name, $data);
 
         if (Input::get('inline', 0) == 1) {
             return Inliner::inline($view);

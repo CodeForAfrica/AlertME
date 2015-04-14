@@ -19,7 +19,7 @@ class DashboardController extends Controller {
 
     public function showHome()
     {
-        return View::make('dashboard.home');
+        return view('dashboard.home');
     }
 
 
@@ -31,7 +31,7 @@ class DashboardController extends Controller {
             'datasources' => $datasources
         );
 
-        return View::make('dashboard.datasources', $data);
+        return view('dashboard.datasources', $data);
     }
 
     public function syncDataSources()
@@ -52,7 +52,7 @@ class DashboardController extends Controller {
             'categories' => $categories
         );
 
-        return View::make('dashboard.categories', $data);
+        return view('dashboard.categories', $data);
     }
 
     public function showPages()
@@ -64,7 +64,7 @@ class DashboardController extends Controller {
             'home', 'about'
         );
 
-        return View::make('dashboard.pages', $data);
+        return view('dashboard.pages', $data);
     }
 
     public function setPages()
@@ -95,7 +95,7 @@ class DashboardController extends Controller {
             'subscriptions'
         );
 
-        return View::make('dashboard.subscriptions', $data);
+        return view('dashboard.subscriptions', $data);
     }
 
 
@@ -106,7 +106,7 @@ class DashboardController extends Controller {
             'user' => $user
         );
 
-        return View::make('dashboard.profile', $data);
+        return view('dashboard.profile', $data);
     }
 
     public function setProfile()
@@ -148,7 +148,7 @@ class DashboardController extends Controller {
             'geoapi' => $geoapi
         );
 
-        return View::make('dashboard.settings', $data);
+        return view('dashboard.settings', $data);
     }
 
     public function setSettings()
