@@ -1,6 +1,6 @@
 <?php namespace Greenalert\Http\Controllers\api;
 
-use Greenalert\Http\Requests;
+use Greenalert\DataSource;
 use Greenalert\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
@@ -16,7 +16,7 @@ class ApiDataSourceController extends Controller {
     {
         $datasources = DataSource::all();
 
-        return Response::json(array(
+        return response()->json(array(
             'error'       => false,
             'datasources' => $datasources->toArray()),
             200
@@ -41,13 +41,13 @@ class ApiDataSourceController extends Controller {
     public function store()
     {
         $datasource = new DataSource;
-        $datasource->title = Input::get('title', $datasource->title);
-        $datasource->description = Input::get('desc', $datasource->description);
-        $datasource->url = Input::get('url', $datasource->url);
+        $datasource->title = \Input::get('title', $datasource->title);
+        $datasource->description = \Input::get('desc', $datasource->description);
+        $datasource->url = \Input::get('url', $datasource->url);
 
         $datasource->save();
 
-        return Response::json(array(
+        return response()->json(array(
             'error'      => false,
             'datasource' => $datasource->toArray()),
             200
@@ -65,7 +65,7 @@ class ApiDataSourceController extends Controller {
     {
         $datasource = DataSource::find($id);
 
-        return Response::json(array(
+        return response()->json(array(
             'error'      => false,
             'datasource' => $datasource->toArray()),
             200
@@ -94,16 +94,16 @@ class ApiDataSourceController extends Controller {
     public function update($id)
     {
         $datasource = DataSource::find($id);
-        $datasource->title = Input::get('title', $datasource->title);
-        $datasource->description = Input::get('description', $datasource->description);
-        $datasource->url = Input::get('url', $datasource->url);
+        $datasource->title = \Input::get('title', $datasource->title);
+        $datasource->description = \Input::get('description', $datasource->description);
+        $datasource->url = \Input::get('url', $datasource->url);
 
         $datasource->config = Input::get('config', $datasource->config);
-        $datasource->config_status = Input::get('config_status', $datasource->config_status);
+        $datasource->config_status = \Input::get('config_status', $datasource->config_status);
 
         $datasource->save();
 
-        return Response::json(array(
+        return response()->json(array(
             'error'      => false,
             'datasource' => $datasource->toArray()),
             200
@@ -121,7 +121,7 @@ class ApiDataSourceController extends Controller {
     {
         DataSource::find($id)->delete();
 
-        return Response::json(array(
+        return response()->json(array(
             'error'   => false,
             'message' => 'Datasource deleted.'),
             200

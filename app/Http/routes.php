@@ -29,8 +29,8 @@ Route::get('search', 'HomeController@getSearch');
 
 Route::get('project/{id}', 'HomeController@showProject');
 
-Route::get('subscriptions/{confirm_token}', 'ApiSubscriptionController@confirm');
-Route::post('subscriptions/{confirm_token}', 'ApiSubscriptionController@confirm');
+Route::get('subscriptions/{confirm_token}', 'api\ApiSubscriptionController@confirm');
+Route::post('subscriptions/{confirm_token}', 'api\ApiSubscriptionController@confirm');
 
 
 // Secure Routes
@@ -62,17 +62,17 @@ Route::get('/authtest', array('middleware' => 'auth.basic', function () {
 // API v1
 
 Route::group(array('prefix' => 'api/v1', 'middleware' => 'auth.basic'), function () {
-    Route::resource('datasources', 'ApiDataSourceController');
-    Route::resource('categories', 'ApiCategoryController');
+    Route::resource('datasources', 'api\ApiDataSourceController');
+    Route::resource('categories', 'api\ApiCategoryController');
 });
 Route::group(array('prefix' => 'api/v1'/*, 'middleware' => 'csrf'*/), function () {
-    Route::get('subscriptions/email', 'ApiSubscriptionController@email');
-    Route::resource('subscriptions', 'ApiSubscriptionController');
+    Route::get('subscriptions/email', 'api\ApiSubscriptionController@email');
+    Route::resource('subscriptions', 'api\ApiSubscriptionController');
 });
 Route::group(array('prefix' => 'api/v1'), function () {
-    Route::resource('projectsgeojson', 'ApiProjectsGeojsonController', array('only' => array('index', 'show')));
-    Route::resource('projects', 'ApiProjectController', array('only' => array('index', 'show')));
-    Route::resource('categories', 'ApiCategoryController', array('only' => array('index', 'show')));
+    Route::resource('projectsgeojson', 'api\ApiProjectsGeojsonController', array('only' => array('index')));
+    Route::resource('projects', 'api\ApiProjectController', array('only' => array('index', 'show')));
+    Route::resource('categories', 'api\ApiCategoryController', array('only' => array('index', 'show')));
 });
 
 

@@ -1,6 +1,6 @@
 <?php namespace Greenalert\Http\Controllers\api;
 
-use Greenalert\Http\Requests;
+use Greenalert\Category;
 use Greenalert\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
@@ -15,16 +15,16 @@ class ApiCategoryController extends Controller {
     public function index()
     {
         $categories = Category::all();
-        if (Input::get('pivot') == 1) {
+        if (\Input::get('pivot') == 1) {
             foreach ($categories as $key => $category) {
-                $pivot = DB::table('project_category')
+                $pivot = \DB::table('project_category')
                     ->where('category_id', $category->id)
                     ->lists('project_id');
                 $categories[ $key ] = array_add($categories[ $key ], 'projects_pivot', $pivot);
             }
         }
 
-        return Response::json(array(
+        return response()->json(array(
             'error'      => false,
             'categories' => $categories->toArray()
         ),
@@ -50,14 +50,14 @@ class ApiCategoryController extends Controller {
     public function store()
     {
         $category = new Category;
-        $category->title = Input::get('title');
-        $category->description = Input::get('desc');
-        $category->keywords = Input::get('keywords');
-        $category->icon_url = Input::get('icon_url');
+        $category->title = \Input::get('title');
+        $category->description = \Input::get('desc');
+        $category->keywords = \Input::get('keywords');
+        $category->icon_url = \Input::get('icon_url');
 
         $category->save();
 
-        return Response::json(array(
+        return response()->json(array(
             'error'    => false,
             'category' => $category->toArray()
         ),
@@ -75,12 +75,12 @@ class ApiCategoryController extends Controller {
     public function show($id)
     {
         $category = Category::find($id);
-        $projects = DB::table('project_category')
+        $projects = \DB::table('project_category')
             ->where('category_id', $id)
             ->select('id', 'project_id', 'category_id')
             ->get();
 
-        return Response::json(array(
+        return response()->json(array(
             'error'    => false,
             'category' => $category->toArray(),
             'projects' => $projects
@@ -99,14 +99,14 @@ class ApiCategoryController extends Controller {
     public function edit($id)
     {
         $category = Category::find($id);
-        $category->title = Input::get('title');
-        $category->description = Input::get('desc');
-        $category->keywords = Input::get('keywords');
-        $category->icon_url = Input::get('icon_url');
+        $category->title = \Input::get('title');
+        $category->description = \Input::get('desc');
+        $category->keywords = \Input::get('keywords');
+        $category->icon_url = \Input::get('icon_url');
 
         $category->save();
 
-        return Response::json(array(
+        return response()->json(array(
             'error'    => false,
             'category' => $category->toArray()),
             200
@@ -136,7 +136,7 @@ class ApiCategoryController extends Controller {
     {
         Category::find($id)->delete();
 
-        return Response::json(array(
+        return response()->json(array(
             'error'   => false,
             'message' => 'Category deleted.'),
             200

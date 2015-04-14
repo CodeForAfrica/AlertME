@@ -14,24 +14,22 @@ class ApiProjectsGeojsonController extends Controller {
      */
     public function index()
     {
-        $page = Input::get('page', 0);
+        $page = \Input::get('page', 0);
         $per_page = 200; //Input::get('per_page', 0);
-        $cat_id = Input::get('cat_id', -1);
+        $cat_id = \Input::get('cat_id', -1);
 
-        $GLOBALS['bounds'] = explode(",", Input::get('bounds', '-37.683820326693805,-18.437924653474393,-37.683820326693805,56.2939453125'));
+        $bounds = explode(",", \Input::get('bounds', '-37.683820326693805,-18.437924653474393,-37.683820326693805,56.2939453125'));
 
-        $projects = DB::table('projects')
+        $projects = \DB::table('projects')
             ->join('geocodes', 'projects.geo_address', '=', 'geocodes.address')
-            ->where(function ($query) {
-                $bounds = $GLOBALS['bounds'];
+            ->where(function ($query) use ($bounds) {
                 $query->where('projects.geo_type', '=', 'lat_lng')
                     ->where('projects.geo_lat', '>', $bounds[0])
                     ->where('projects.geo_lat', '<', $bounds[1])
                     ->where('projects.geo_lng', '>', $bounds[2])
                     ->where('projects.geo_lng', '<', $bounds[3]);
             })
-            ->orWhere(function ($query) {
-                $bounds = $GLOBALS['bounds'];
+            ->orWhere(function ($query) use ($bounds) {
                 $query->where('projects.geo_type', '=', 'address')
                     ->where('projects.geo_address', '<>', '')
                     ->where('geocodes.lat', '>', $bounds[0])
@@ -43,10 +41,9 @@ class ApiProjectsGeojsonController extends Controller {
             /*->take($per_page)*/
             ->get();
 
-
         $features = array();
         for ($i = 0; $i < count($projects); $i++) {
-            $geo = new stdClass();
+            $geo = new \stdClass();
             $geo->lat = 0;
             $geo->lng = 0;
             if ($projects[ $i ]->geo_type == 'lat_lng') {
@@ -83,13 +80,12 @@ class ApiProjectsGeojsonController extends Controller {
 
         }
 
-
         $feature_collection = array(
             'type'     => 'FeatureCollection',
             'features' => $features
         );
 
-        return Response::json($feature_collection);
+        return response()->json($feature_collection);
     }
 
     /**

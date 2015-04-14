@@ -1,7 +1,7 @@
 <?php namespace Greenalert\Http\Controllers\api;
 
-use Greenalert\Http\Requests;
 use Greenalert\Http\Controllers\Controller;
+use Greenalert\Project;
 
 use Illuminate\Http\Request;
 
@@ -14,23 +14,23 @@ class ApiProjectController extends Controller {
      */
     public function index()
     {
-        if (Input::get('all') == 1) {
+        if (\Input::get('all') == 1) {
             ini_set('memory_limit', '-1');
             ini_set('max_execution_time', 0);
-            if (Input::get('geo_only') == 1) {
+            if (\Input::get('geo_only') == 1) {
                 $projects = Project::select('id', 'geo_lat', 'geo_lng')->hasGeo()->get();
             } else {
                 $projects = Project::all(array('id', 'geo_lat', 'geo_lng'));
             }
         } else {
-            if (Input::get('min') == 1) {
-                if (Input::get('geo_only') == 1) {
+            if (\Input::get('min') == 1) {
+                if (\Input::get('geo_only') == 1) {
                     $projects = Project::select('id', 'geo_lat', 'geo_lng')->hasGeo()->paginate(10);
                 } else {
                     $projects = Project::select('id', 'geo_lat', 'geo_lng')->paginate(10);
                 }
             } else {
-                if (Input::get('geo_only') == 1) {
+                if (\Input::get('geo_only') == 1) {
                     $projects = Project::hasGeo()->paginate(10);
                 } else {
                     $projects = Project::paginate(10);
@@ -38,7 +38,7 @@ class ApiProjectController extends Controller {
             }
         }
 
-        return Response::json(array(
+        return response()->json(array(
             'error'    => false,
             'projects' => $projects->toArray()
         ),
@@ -82,7 +82,7 @@ class ApiProjectController extends Controller {
         }
 
         if (!$project) {
-            return Response::json(array(
+            return response()->json(array(
                 'error'   => true,
                 'project' => 'Not found',
             ),
@@ -90,7 +90,7 @@ class ApiProjectController extends Controller {
             );
         }
 
-        if (Input::has('embed')) {
+        if (\Input::has('embed')) {
             $geojson = 'pin-l-circle-stroked+1abc9c(' . $project->geo_lng . ',' . $project->geo_lat . ')/' .
                 $project->geo_lng . ',' . $project->geo_lat . '),13';
 
@@ -104,7 +104,7 @@ class ApiProjectController extends Controller {
             return view('home.project_embed', $data);
         }
 
-        return Response::json(array(
+        return response()->json(array(
             'error'   => false,
             'project' => $project,
         ),

@@ -1,8 +1,10 @@
 <?php namespace Greenalert\Http\Controllers\api;
 
-use Greenalert\Http\Requests;
 use Greenalert\Http\Controllers\Controller;
 
+use Greenalert\Project;
+use Greenalert\Subscription;
+use Greenalert\User;
 use Illuminate\Http\Request;
 
 class ApiSubscriptionController extends Controller {
@@ -16,7 +18,7 @@ class ApiSubscriptionController extends Controller {
     {
         $subscriptions = Subscription::paginate(10);
 
-        return Response::json(array(
+        return response()->json(array(
             'error'         => false,
             'subscriptions' => $subscriptions->toArray(),
             'status'        => 'OK'),
@@ -50,9 +52,9 @@ class ApiSubscriptionController extends Controller {
         $messages = array(
             'type.required' => 'NO_TYPE'
         );
-        $validator = Validator::make(Input::all(), $rules, $messages);
+        $validator = \Validator::make(\Input::all(), $rules, $messages);
         if ($validator->fails()) {
-            return Response::json(
+            return response()->json(
                 array(
                     'error'     => true,
                     'validator' => $validator->messages()
@@ -61,13 +63,15 @@ class ApiSubscriptionController extends Controller {
             );
         }
 
+        // TODO: Validate project_id + email
+
         // Validate email + duplicate
-        if (Input::get('type') == 'project') {
-            $confirm_token = md5(Input::get('project_id') . Input::get('email'));
-        } elseif (Input::get('type') == 'map') {
-            $confirm_token = md5(Input::get('bounds') . Input::get('email'));
+        if (\Input::get('type') == 'project') {
+            $confirm_token = md5(\Input::get('project_id') . \Input::get('email'));
+        } else {
+            $confirm_token = md5(\Input::get('bounds') . \Input::get('email'));
         }
-        $data = Input::all();
+        $data = \Input::all();
         $data = array_add($data, 'confirm_token', $confirm_token);
         $rules = array(
             'email'         => array('required', 'email'),
@@ -78,9 +82,9 @@ class ApiSubscriptionController extends Controller {
             'email.email'          => 'NOT_EMAIL',
             'confirm_token.unique' => 'DUPLICATE'
         );
-        $validator = Validator::make($data, $rules, $messages);
+        $validator = \Validator::make($data, $rules, $messages);
         if ($validator->fails()) {
-            return Response::json(
+            return response()->json(
                 array(
                     'error'     => true,
                     'validator' => $validator->messages()
@@ -90,10 +94,10 @@ class ApiSubscriptionController extends Controller {
         }
 
         // Validate bounds
-        if (Input::get('type') == 'map') {
-            $bounds = explode(",", Input::get('bounds'));
-            if (count($bounds) != 4 || !Input::has('bounds')) {
-                return Response::json(array(
+        if (\Input::get('type') == 'map') {
+            $bounds = explode(",", \Input::get('bounds'));
+            if (count($bounds) != 4 || !\Input::has('bounds')) {
+                return response()->json(array(
                     'error'     => true,
                     'validator' => 'BOUNDS_ERROR'),
                     500
@@ -104,28 +108,28 @@ class ApiSubscriptionController extends Controller {
 
         // SUBSCRIBE
 
-        User::firstOrCreate(array('email' => Input::get('email')));
-        $user = User::where('email', Input::get('email'))->first();
+        User::firstOrCreate(array('email' => \Input::get('email')));
+        $user = User::where('email', \Input::get('email'))->first();
 
         $subscription = new Subscription;
         $subscription->user_id = $user->id;
         $subscription->confirm_token = $confirm_token;
-        $subscription->geojson = Input::get('geojson');
+        $subscription->geojson = \Input::get('geojson');
 
-        if (Input::get('type') == 'project') {
+        if (\Input::get('type') == 'project') {
 
-            $subscription->project_id = Input::get('project_id');
+            $subscription->project_id = \Input::get('project_id');
 
-        } elseif (Input::get('type') == 'map') {
+        } elseif (\Input::get('type') == 'map') {
 
             $subscription->sw_lat = $bounds[0];
             $subscription->sw_lng = $bounds[1];
             $subscription->ne_lat = $bounds[2];
             $subscription->ne_lng = $bounds[3];
 
-            $subscription->bounds = Input::get('bounds');
-            $subscription->center = Input::get('center');
-            $subscription->zoom = Input::get('zoom');
+            $subscription->bounds = \Input::get('bounds');
+            $subscription->center = \Input::get('center');
+            $subscription->zoom = \Input::get('zoom');
 
         }
 
@@ -133,7 +137,7 @@ class ApiSubscriptionController extends Controller {
 
         $user->increment('subscriptions');
 
-        return Response::json(array(
+        return response()->json(array(
             'error'        => false,
             'subscription' => $subscription->toArray(),
             'status'       => 'OK'
@@ -185,8 +189,8 @@ class ApiSubscriptionController extends Controller {
     {
         $subscription = Subscription::withTrashed()->find($id);
 
-        if ($subscription->confirm_token != Input::get('confirm_token')) {
-            return Response::json(array(
+        if ($subscription->confirm_token != \Input::get('confirm_token')) {
+            return response()->json(array(
                 'error'   => true,
                 'message' => 'Sorry, we were not able to unsubscribe you.',
                 'status'  => 'UNSUBSCRIBE_FAILED'
@@ -195,7 +199,7 @@ class ApiSubscriptionController extends Controller {
             );
         }
 
-        if (Input::get('restore') == 1) {
+        if (\Input::get('restore') == 1) {
             $subscription->status = 1;
             $subscription->save();
             $subscription->restore();
@@ -205,7 +209,7 @@ class ApiSubscriptionController extends Controller {
             $subscription->delete();
         }
 
-        return Response::json(array(
+        return response()->json(array(
             'error'        => false,
             'subscription' => $subscription->toArray(),
             'status'       => 'DELETED'
@@ -232,8 +236,8 @@ class ApiSubscriptionController extends Controller {
         }
 
         $user = User::find($subscription->user_id);
-        if (Input::has('fullname')) {
-            $user->fullname = Input::get('fullname');
+        if (\Input::has('fullname')) {
+            $user->fullname = \Input::get('fullname');
             $user->save();
             $msg_details = 'Updated';
         }
@@ -287,7 +291,7 @@ class ApiSubscriptionController extends Controller {
         }
 
         // Check email type
-        if (preg_match('/alert*/', Input::get('type'))) {
+        if (preg_match('/alert*/', \Input::get('type'))) {
             $view_name = 'emails.alerts.default';
             $map_image_link = 'https://api.tiles.mapbox.com/v4/codeforafrica.ji193j10' .
                 '/pin-l-star+27AE60(' . $project_geo->lng . ',' . $project_geo->lat . ')' .
@@ -317,8 +321,9 @@ class ApiSubscriptionController extends Controller {
         );
         $view = view($view_name, $data);
 
-        if (Input::get('inline', 0) == 1) {
-            return Inliner::inline($view);
+        if (\Input::get('inline', 0) == 1) {
+            // TODO: Make inline view
+            // return Inliner::inline($view);
         }
 
         return $view;
