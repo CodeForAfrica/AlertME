@@ -52,7 +52,7 @@ class Subscription extends Model {
                 'map_image_link', 'confirm_link', 'confirm_url'
             );
 
-            Mail::queue('emails.subscription.new', $data, function($message) use ($user)
+            \Mail::queue('emails.subscription.new', $data, function($message) use ($user)
             {
                 $message->to($user->email)->subject('#GreenAlert | Confirm Subscription!');
             });

@@ -19,7 +19,7 @@ class Alert extends Model {
 
         // Setup event bindings...
         Alert::created(function ($alert) {
-            Queue::push('AlertQueue', array('id' => $alert->id));
+            \Queue::push('AlertQueue', array('id' => $alert->id));
         });
 
     }

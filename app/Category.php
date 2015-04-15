@@ -23,21 +23,21 @@ class Category extends Model {
 
         Category::created(function($category)
         {
-            Queue::push('CategoryQueue', array(
+            \Queue::push('CategoryQueue', array(
                 'cat_id' => $category->id
             ));
         });
 
         Category::updated(function($category)
         {
-            Queue::push('CategoryQueue', array(
+            \Queue::push('CategoryQueue', array(
                 'cat_id' => $category->id
             ));
         });
 
         Category::deleted(function($category)
         {
-            DB::table('project_category')
+            \DB::table('project_category')
                 ->where('category_id', $category->id)
                 ->delete();
         });
@@ -62,10 +62,10 @@ class Category extends Model {
             'projects.status');
         $sel_cols_geocodes = array('geocodes.lat', 'geocodes.lng',
             'geocodes.status as geo_status');
-        $projects_lat_lng = DB::table('projects')
+        $projects_lat_lng = \DB::table('projects')
             ->where('geo_type', 'lat_lng')
             ->select( $sel_cols_projects )->get();
-        $projects_address = DB::table('projects')
+        $projects_address = \DB::table('projects')
             ->join('geocodes', 'projects.geo_address', '=', 'geocodes.address')
             ->where('projects.geo_type', '=', 'address')
             ->select( array_merge($sel_cols_projects, $sel_cols_geocodes) )->get();
@@ -75,7 +75,7 @@ class Category extends Model {
         foreach ($projects as $project) {
             array_push( $projects_id, $project->id);
         }
-        $projects_categories = DB::table('project_category')
+        $projects_categories = \DB::table('project_category')
             ->whereIn('project_id', $projects_id)
             ->select('category_id')
             ->distinct()

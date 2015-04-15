@@ -1,8 +1,8 @@
 <?php namespace Greenalert\Http\Controllers;
 
+use Greenalert\Category;
 use Greenalert\Page;
 use Greenalert\Project;
-use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller {
 
@@ -19,8 +19,8 @@ class HomeController extends Controller {
     {
         $home = Page::find(1);
 
-        $projects = DB::table('projects')->take(10)->get();
-        $projects_count = DB::table('projects')->count();
+        $projects = \DB::table('projects')->take(10)->get();
+        $projects_count = \DB::table('projects')->count();
 
         $data = compact(
             'home', 'projects', 'projects_count'
@@ -48,7 +48,7 @@ class HomeController extends Controller {
 
         $categories = Category::geocoded();
         foreach ($categories as $key => $category) {
-            $pivot = DB::table('project_category')
+            $pivot = \DB::table('project_category')
                 ->where('category_id', $category->id)
                 ->lists('project_id');
             $categories[ $key ] = array_add($categories[ $key ], 'projects_pivot', $pivot);

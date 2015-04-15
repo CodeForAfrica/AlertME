@@ -26,7 +26,7 @@ class Sync extends Model {
 
         Sync::created(function($sync)
         {
-            Queue::push('SyncQueue', array('sync_id' => $sync->id));
+            \Queue::push('SyncQueue', array('sync_id' => $sync->id));
         });
     }
 

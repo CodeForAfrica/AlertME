@@ -20,7 +20,7 @@ class DataSource extends Model {
 
         // Setup event bindings...
         DataSource::created(function ($datasource) {
-            Queue::push('DataSourceQueue@fetchColumns', array('id' => $datasource->id));
+            \Queue::push('DataSourceQueue@fetchColumns', array('id' => $datasource->id));
         });
 
         DataSource::deleting(function ($datasource) {
@@ -88,7 +88,7 @@ class DataSource extends Model {
 
         // Fetch Data
         $csv = $this->fetch();
-        Log::info('Download completed.');
+        \Log::info('Download completed.');
         if (!$csv) {
             $ds_sync->sync_status = 3;
             $ds_sync->save();
@@ -98,7 +98,7 @@ class DataSource extends Model {
 
         // Check column change
         if (array_keys($csv[0]) != $this->columns) {
-            Log::info('Columns are differnt from configuration.');
+            \Log::info('Columns are differnt from configuration.');
 
             $ds_sync->sync_status = 4;
             $ds_sync->save();
@@ -114,7 +114,7 @@ class DataSource extends Model {
 
         // Set Projects from data fetched
         $this->setProjects($csv, $ds_sync);
-        Log::info('Projects update completed.');
+        \Log::info('Projects update completed.');
 
         // TODO: Send alerts created from sync
 
@@ -172,7 +172,7 @@ class DataSource extends Model {
         // Validate URL + Headers
         if (!filter_var($this->url, FILTER_VALIDATE_URL)) {
             // Not a Valid URL
-            Log::error("DataSource Fetch: Not a valid URL $this->url.");
+            \Log::error("DataSource Fetch: Not a valid URL $this->url.");
 
             return false;
         } else {
@@ -181,12 +181,12 @@ class DataSource extends Model {
 
             if ($file_headers[0] == 'HTTP/1.0 404 Not Found') {
                 // echo "The file $filename does not exist";
-                Log::error("DataSource Fetch: The file $this->url does not exist.");
+                \Log::error("DataSource Fetch: The file $this->url does not exist.");
 
                 return false;
             } else if ($file_headers[0] == 'HTTP/1.0 302 Found' && $file_headers[7] == 'HTTP/1.0 404 Not Found') {
                 // echo "The file $filename does not exist, and I got redirected to a custom 404 page.";
-                Log::error("DataSource Fetch: The file $this->url does not exist, and I got redirected to a custom 404 page.");
+                \Log::error("DataSource Fetch: The file $this->url does not exist, and I got redirected to a custom 404 page.");
 
                 return false;
             }

@@ -14,6 +14,7 @@ class Geocode extends Model {
         // Setup event bindings...
         Geocode::creating(function ($geocode) {
             if (trim($geocode->address) == '') return false;
+            return $geocode;
         });
 
         Geocode::created(function ($geocode) {
