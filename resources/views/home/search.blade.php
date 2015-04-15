@@ -10,7 +10,7 @@
       <div class="page-header">
         <h3>
           Search Results
-          <small>{{ $projects_count }} results for "{{ Input::get('q') }}"</small>
+          <small>{{ $projects_count }} results for "{{ \Input::get('q') }}"</small>
         </h3>
       </div>
 
@@ -19,14 +19,15 @@
           <form action="/search" role="search">
             <div class="input-group">
               <input class="form-control" id="navbarInput-01" type="search" placeholder="Search"
-                name="q" value="{{Input::get('q')}}">
+                     name="q" value="{{ \Input::get('q') }}">
               <span class="input-group-btn">
                 <button type="submit" class="btn"><span class="fui-search"></span></button>
               </span>
             </div>
           </form>
         </div>
-      </div> <!-- /.row -->
+      </div>
+      <!-- /.row -->
 
       <hr style="border-top:2px solid #e7e9ec;"/>
 
@@ -48,17 +49,21 @@
           @endforeach
 
           <br/>
+
           <div class="text-center">
-            {{ $projects->appends(array('q' => Input::get('q')))->links() }}
+            {!! with(new \Greenalert\Http\Controllers\FlatUIPresenter($projects->appends(['q' =>
+            \Input::get('q')])))->render() !!}
           </div>
-          
-        </div><!-- /.col-md-8 -->
 
-      </div> <!-- /.row -->
+        </div>
+        <!-- /.col-md-8 -->
 
-      
+      </div>
+      <!-- /.row -->
 
-    </div> <!-- /.container -->
+
+    </div>
+    <!-- /.container -->
 
   </div> <!-- /.data-sources-list -->
 

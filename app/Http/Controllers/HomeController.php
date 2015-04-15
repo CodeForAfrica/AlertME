@@ -1,6 +1,7 @@
 <?php namespace Greenalert\Http\Controllers;
 
 use Greenalert\Page;
+use Greenalert\Project;
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller {
@@ -42,7 +43,7 @@ class HomeController extends Controller {
 
     public function showMap()
     {
-        $projects = DB::table('projects')->take(10)->get();
+        $projects = \DB::table('projects')->take(10)->get();
         $projects_all = Project::select('id', 'geo_lat', 'geo_lng')->hasGeo()->get();
 
         $categories = Category::geocoded();
@@ -64,7 +65,7 @@ class HomeController extends Controller {
 
     public function getSearch()
     {
-        $q = Input::get('q');
+        $q = \Input::get('q');
 
         $projects_sql = Project::whereRaw(
             "MATCH(title, description, geo_address, status) AGAINST (? IN BOOLEAN MODE)",
@@ -105,7 +106,7 @@ class HomeController extends Controller {
         }
 
         if (!$project) {
-            return Redirect::to('search')->with('error', 'Oops! It seems we can\'t find the page you are looking for. Try search instead.');
+            return redirect('search')->with('error', 'Oops! It seems we can\'t find the page you are looking for. Try search instead.');
         }
 
         $geojson = 'pin-l-circle-stroked+1abc9c(' . $project->geo()->lng . ',' . $project->geo()->lat . ')/' .

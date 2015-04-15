@@ -1,20 +1,22 @@
-<?php
+<?php namespace Greenalert\Http\Controllers;
 
-class FlatUIPresenter extends Illuminate\Pagination\BootstrapThreePresenter {
+use Illuminate\Pagination\BootstrapThreePresenter;
 
-    public function getActivePageWrapper($text)
+class FlatUIPresenter extends BootstrapThreePresenter {
+
+    public function render()
     {
-        return '<li class="active"><a href="">' . $text . '</a></li>';
-    }
+        if ($this->hasPages())
+        {
+            return sprintf(
+                '<div class="pagination"><ul>%s %s %s</ul></div>',
+                $this->getPreviousButton(),
+                $this->getLinks(),
+                $this->getNextButton()
+            );
+        }
 
-    public function getDisabledTextWrapper($text)
-    {
-        return '<li class="disabled"><a href="">' . $text . '</a></li>';
-    }
-
-    public function getPageLinkWrapper($url, $page, $rel = null)
-    {
-        return '<li><a href="' . $url . '">' . $page . '</a></li>';
+        return '';
     }
 
 }
