@@ -8,7 +8,7 @@
 
     <div class="container ">
       <div class="page-header">
-        <h1>{{ $about->data->title == '' ? 'About' : $about->data->title; }}</h1>
+        <h1>{{ $about->data->title == '' ? 'About' : $about->data->title }}</h1>
       </div>
 
       @if ( $about->data->description == '' )
@@ -29,7 +29,7 @@
 
       @else
 
-        {{ Markdown::render($about->data->description) }}
+        {!! Markdown::convertToHtml($about->data->description) !!}
 
       @endif
 
