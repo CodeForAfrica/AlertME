@@ -284,9 +284,9 @@
 @stop
 
 @section('scripts-data')
-  var categories = {{ $categories != NULL ? $categories : 'false' }};
-  pahali.categories.set( {{ $categories->toJSON() }} );
-  pahali.projects.set( {{ $projects_all->toJSON() }} );
+  var categories = {!! $categories != NULL ? $categories : 'false' !!};
+  pahali.categories.set( {!! $categories->toJSON() !!} );
+  pahali.projects.set( {!! $projects_all->toJSON() !!} );
 @stop
 
 @section('scripts')
