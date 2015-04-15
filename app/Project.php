@@ -161,8 +161,8 @@ class Project extends Model {
 
     function geo()
     {
-        $project = DB::table('projects')->where('id', $this->id)->first();
-        $geo = new stdClass();
+        $project = \DB::table('projects')->where('id', $this->id)->first();
+        $geo = new \stdClass();
         $geo->lat = 450;
         $geo->lng = 450;
         if ($project->geo_type == 'lat_lng') {
