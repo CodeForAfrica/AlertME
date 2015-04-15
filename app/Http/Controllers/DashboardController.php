@@ -117,13 +117,14 @@ class DashboardController extends Controller {
 
     public function setProfile()
     {
+        // TODO: Better validation
+
         $user = \Auth::user();
         $user->fullname = \Input::get('fullname');
         $user->save();
 
-
         $email_old = $user->email;
-        $email_new = Input::get('email');
+        $email_new = \Input::get('email');
         if ($email_new != $email_old) {
             $validator = \Validator::make(
                 array('email' => $email_new),
@@ -136,11 +137,11 @@ class DashboardController extends Controller {
             $user->save();
         }
 
-        if (\Input::get('password1') != '') {
-            if (\Input::get('password1') != \Input::get('password2')) {
+        if (\Input::get('password') != '') {
+            if (\Input::get('password') != \Input::get('password_confirmation')) {
                 return redirect('dashboard/profile')->with('error', 'Passwords don\'t match.');
             }
-            $user->password = \Hash::make(\Input::get('password1'));
+            $user->password = \Hash::make(\Input::get('password'));
             $user->save();
         }
 
