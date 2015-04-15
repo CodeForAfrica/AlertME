@@ -61,12 +61,12 @@ class DataSource extends Model {
 
     public function datasourcesync()
     {
-        return $this->hasMany('GreenAlert\DataSourceSync', 'datasource_id');
+        return $this->hasMany('Greenalert\DataSourceSync', 'datasource_id');
     }
 
     public function projects()
     {
-        return $this->hasMany('GreenAlert\Project', 'datasource_id');
+        return $this->hasMany('Greenalert\Project', 'datasource_id');
     }
 
 

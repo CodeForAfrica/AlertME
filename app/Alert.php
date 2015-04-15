@@ -26,12 +26,12 @@ class Alert extends Model {
 
     function project()
     {
-        return $this->belongsTo('GreenAlert\Project');
+        return $this->belongsTo('Greenalert\Project');
     }
 
     public function subcriptions()
     {
-        return $this->belongsToMany('GreenAlert\Subscription', 'subscription_alert');
+        return $this->belongsToMany('Greenalert\Subscription', 'subscription_alert');
     }
 
 }

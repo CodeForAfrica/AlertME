@@ -63,17 +63,17 @@ class Subscription extends Model {
 
     public function alerts()
     {
-        return $this->belongsToMany('GreenAlert\Alert', 'subscription_alert');
+        return $this->belongsToMany('Greenalert\Alert', 'subscription_alert');
     }
 
     public function user()
     {
-        return $this->belongsTo('GreenAlert\User');
+        return $this->belongsTo('Greenalert\User');
     }
 
     public function project()
     {
-        return $this->belongsTo('GreenAlert\Project');
+        return $this->belongsTo('Greenalert\Project');
     }
 
 
