@@ -1,5 +1,6 @@
 <?php namespace Greenalert;
 
+use Greenalert\Commands\CategoryQueue;
 use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model {
@@ -23,16 +24,12 @@ class Category extends Model {
 
         Category::created(function($category)
         {
-            \Queue::push('CategoryQueue', array(
-                'cat_id' => $category->id
-            ));
+            \Queue::push(new CategoryQueue($category->id));
         });
 
         Category::updated(function($category)
         {
-            \Queue::push('CategoryQueue', array(
-                'cat_id' => $category->id
-            ));
+            \Queue::push(new CategoryQueue($category->id));
         });
 
         Category::deleted(function($category)
