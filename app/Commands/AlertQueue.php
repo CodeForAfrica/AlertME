@@ -1,7 +1,11 @@
 <?php namespace Greenalert\Commands;
 
+use Greenalert\Alert;
 use Greenalert\Commands\Command;
 
+use Greenalert\Project;
+use Greenalert\Subscription;
+use Greenalert\User;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Bus\SelfHandling;
@@ -53,7 +57,7 @@ class AlertQueue extends Command implements SelfHandling, ShouldBeQueued {
             foreach ($subscriptions as $subscription) {
                 $user = User::find($subscription->user_id);
                 $data = compact('user', 'project');
-                Mail::queue('emails.alerts.status', $data, function ($message) use ($user) {
+                \Mail::queue('emails.alerts.status', $data, function ($message) use ($user) {
                     $message->to($user->email, '')->subject('[#GreenAlert] You\'ve got an update');
                 });
             }

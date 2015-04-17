@@ -1,7 +1,9 @@
 <?php namespace Greenalert\Commands;
 
+use Greenalert\Category;
 use Greenalert\Commands\Command;
 
+use Greenalert\Project;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Bus\SelfHandling;
@@ -30,7 +32,7 @@ class CategoryQueue extends Command implements SelfHandling, ShouldBeQueued {
      */
     public function handle()
     {
-        Log::info('[' . $this->getJobId() . ':' . $this->attempts() . '] Category assignment started.');
+        \Log::info('[' . $this->job->getJobId() . ':' . $this->attempts() . '] Category assignment started.');
 
         $category = Category::find($this->cat_id);
         $projects = Project::all();
@@ -38,7 +40,7 @@ class CategoryQueue extends Command implements SelfHandling, ShouldBeQueued {
             $project->assignCategory($category);
         }
 
-        Log::info('[' . $this->getJobId() . ':' . $this->attempts() . '] Category assignment completed.');
+        \Log::info('[' . $this->job->getJobId() . ':' . $this->attempts() . '] Category assignment completed.');
 
     }
 

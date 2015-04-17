@@ -2,6 +2,8 @@
 
 use Greenalert\Commands\Command;
 
+use Greenalert\DataSource;
+use Greenalert\Sync;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Bus\SelfHandling;
@@ -30,12 +32,12 @@ class SyncQueue extends Command implements SelfHandling, ShouldBeQueued {
      */
     public function handle()
     {
-        Log::info('[' . $this->getJobId() . ':' . $this->attempts() . '] Sync started.');
+        \Log::info('[' . $this->job->getJobId() . ':' . $this->attempts() . '] Sync started.');
 
         ini_set('memory_limit', '256M');
 
         if ($this->attempts() > 3) {
-            Log::info('[' . $this->getJobId() . ':' . $this->attempts() . '] Sync failed.');
+            \Log::info('[' . $this->job->getJobId() . ':' . $this->attempts() . '] Sync failed.');
 
         } else {
 
@@ -53,7 +55,7 @@ class SyncQueue extends Command implements SelfHandling, ShouldBeQueued {
             $sync->sync_status = 1;
             $sync->save();
 
-            Log::info('[' . $this->getJobId() . ':' . $this->attempts() . '] Sync completed.');
+            \Log::info('[' . $this->job->getJobId() . ':' . $this->attempts() . '] Sync completed.');
 
         }
 

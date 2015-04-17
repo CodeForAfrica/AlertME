@@ -2,6 +2,7 @@
 
 use Greenalert\Commands\Command;
 
+use Greenalert\DataSource;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Bus\SelfHandling;
@@ -30,7 +31,7 @@ class DataSourceQueue extends Command implements SelfHandling, ShouldBeQueued {
      */
     public function handle()
     {
-        Log::info('[' . $this->getJobId() . ':' . $this->attempts() . '] Fetch datasource columns started.');
+        \Log::info('[' . $this->job->getJobId() . ':' . $this->attempts() . '] Fetch datasource columns started.');
 
         $datasource = DataSource::find($this->datasource_id);
 
@@ -41,11 +42,12 @@ class DataSourceQueue extends Command implements SelfHandling, ShouldBeQueued {
             $datasource->config_status = 0;
             $datasource->save();
 
-            Log::info('[' . $this->getJobId() . ':' . $this->attempts() . '] Fetch datasource columns failed.');
+            \Log::info('[' . $this->job->getJobId() . ':' . $this->attempts() . '] Fetch datasource columns failed.');
 
             return;
         }
 
+        // TODO: Rename fetch function
         $ds_data = $datasource->fetch();
 
         if (!$ds_data) {
@@ -57,7 +59,7 @@ class DataSourceQueue extends Command implements SelfHandling, ShouldBeQueued {
             $datasource->save();
         }
 
-        Log::info('[' . $this->getJobId() . ':' . $this->attempts() . '] Fetch datasource columns successful.');
+        \Log::info('[' . $this->job->getJobId() . ':' . $this->attempts() . '] Fetch datasource columns successful.');
 
     }
 
