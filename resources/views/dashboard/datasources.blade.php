@@ -63,8 +63,8 @@
               <p>
                 <button type="button" class="btn btn-link btn-sm" alt="{{ $datasource->id }}"
                         id="del-data-source-{{ $datasource->id }}" data-toggle="modal" data-target="#deleteModal">
-                  <span class="text-danger"><span class="fui-trash"></span> Delete</button>
-                </span>
+                  <span class="text-danger"><span class="fui-trash"></span> Delete</span>
+                </button>
               </p>
             </div>
             <!-- /.col-md-2 -->
@@ -481,8 +481,8 @@
 
 @section('scripts-data')
 
-  var data_sources = {{ $datasources }};
-  $.extend( pahali.datasources, {{ $datasources }} );
+  var data_sources = {!! $datasources !!};
+  $.extend( pahali.datasources, {!! $datasources !!} );
 
   var edit_id = 0;
   var config_data = new Object();
