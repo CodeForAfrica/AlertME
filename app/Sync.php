@@ -1,7 +1,7 @@
 <?php namespace Greenalert;
 
+use Greenalert\Commands\SyncQueue;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Queue\SyncQueue;
 
 class Sync extends Model {
 
