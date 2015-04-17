@@ -276,7 +276,7 @@ class ApiSubscriptionController extends Controller {
 
     public function email()
     {
-        //
+        // Get fisrt subscription
         $subscription = Subscription::first();
         $user = User::find($subscription->user_id);
 
@@ -299,25 +299,26 @@ class ApiSubscriptionController extends Controller {
                 '/600x250.png?' .
                 'access_token=pk.eyJ1IjoiY29kZWZvcmFmcmljYSIsImEiOiJVLXZVVUtnIn0.JjVvqHKBGQTNpuDMJtZ8Qg';
 
-            if (Input::get('type') == 'alert_status') {
+            if (\Input::get('type') == 'alert_status') {
                 $view_name = 'emails.alerts.status';
             }
+            $project_title = $project->title;
+            $project_id = $project->id;
         } else {
             $view_name = 'emails.subscription.new';
             $map_image_link = 'https://api.tiles.mapbox.com/v4/codeforafrica.ji193j10' .
                 '/geojson(' . urlencode($subscription->geojson) . ')' .
                 '/auto/600x250.png?' .
                 'access_token=pk.eyJ1IjoiY29kZWZvcmFmcmljYSIsImEiOiJVLXZVVUtnIn0.JjVvqHKBGQTNpuDMJtZ8Qg';
+            $project_id = $subscription->project_id;
         }
 
         // New Subscription
-        $confirm_link = link_to('subscriptions/' . $subscription->confirm_token, 'link', null, true);
         $confirm_url = secure_asset('subscriptions/' . $subscription->confirm_token);
 
         $data = compact(
             'subscription', 'user', 'map_image_link',
-            'confirm_link', 'confirm_url',
-            'project'
+            'confirm_url', 'project_title', 'project_id'
         );
         $view = view($view_name, $data);
 

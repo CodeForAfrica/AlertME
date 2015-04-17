@@ -32,8 +32,7 @@ class Subscription extends Model {
             $user = $subscription->user;
             $project_id = $subscription->project_id;
 
-            $confirm_link = link_to('subscriptions/'.$subscription->confirm_token, 'link', null, true);
-            $confirm_url = secure_asset('subscriptions/'.$subscription->confirm_token);
+            $confirm_url = secure_url('subscriptions/'.$subscription->confirm_token);
 
             if ($subscription->project_id == 0) {
                 $map_image_link = 'https://api.tiles.mapbox.com/v4/codeforafrica.ji193j10'.
@@ -49,7 +48,7 @@ class Subscription extends Model {
 
             $data = compact(
                 'subscription', 'user', 'project_id', 'project_title',
-                'map_image_link', 'confirm_link', 'confirm_url'
+                'map_image_link', 'confirm_url'
             );
 
             \Mail::queue('emails.subscription.new', $data, function($message) use ($user)
