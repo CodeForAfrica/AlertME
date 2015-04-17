@@ -1,34 +1,7 @@
 {
-  "name": "Pahali",
-  "version": "1.0.0",
-  "description": "The Pahali Platform",
-  "main": "Gruntfile.js",
-  "dependencies": {
-    "grunt": "^0.4.5",
-    "grunt-bower-concat": "^0.4.0"
-  },
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/CodeForAfrica/GreenAlert.git"
-  },
-  "keywords": [
-    "pahali",
-    "place",
-    "information",
-    "greenalert",
-    "oxpeckers",
-    "code",
-    "for",
-    "africa"
-  ],
-  "author": "Code for Africa",
-  "license": "GPL v3",
-  "bugs": {
-    "url": "https://github.com/CodeForAfrica/GreenAlert/issues"
-  },
-  "homepage": "https://github.com/CodeForAfrica/GreenAlert"
+  "private": true,
+  "devDependencies": {
+    "gulp": "^3.8.8",
+    "laravel-elixir": "*"
+  }
 }

@@ -90,7 +90,8 @@ $( document ).ready(function() {
       title: title_val,
       desc: desc_val,
       keywords: keywords_val,
-      icon_url: icon_url_val
+      icon_url: icon_url_val,
+      '_token': pahali.csrf_token
     };
 
     var ajaxurl = "/api/v1/categories/" + edit_id;
@@ -147,6 +148,7 @@ $( document ).ready(function() {
     $.ajax({
       type: "DELETE",
       url: pahali.base_url+"/api/v1/categories/"+edit_id,
+      data: {'_token': pahali.csrf_token}
     }).done(function( response ) {
       window.location.replace("/dashboard/categories");
     });

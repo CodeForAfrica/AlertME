@@ -44,7 +44,8 @@ $( document ).ready(function() {
       id: edit_id,
       title: title_val,
       desc: desc_val,
-      url: url_val
+      url: url_val,
+      _token: pahali.csrf_token
     };
 
     var ajaxurl = "/api/v1/datasources/" + edit_id;
@@ -124,7 +125,8 @@ $( document ).ready(function() {
     $.ajax({
       type: "DELETE",
       url: pahali.base_url+"/api/v1/datasources/"+edit_id,
-    }).always(function( response ) {
+      data: {'_token': pahali.csrf_token}
+    }).done(function( response ) {
       window.location.replace("/dashboard/datasources");
     });
 
