@@ -90,7 +90,8 @@ $( document ).ready(function() {
       title: title_val,
       desc: desc_val,
       keywords: keywords_val,
-      icon_url: icon_url_val
+      icon_url: icon_url_val,
+      '_token': pahali.csrf_token
     };
 
     var ajaxurl = "/api/v1/categories/" + edit_id;
