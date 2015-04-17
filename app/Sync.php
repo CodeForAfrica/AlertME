@@ -1,6 +1,7 @@
 <?php namespace Greenalert;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Queue\SyncQueue;
 
 class Sync extends Model {
 
@@ -26,7 +27,7 @@ class Sync extends Model {
 
         Sync::created(function($sync)
         {
-            \Queue::push('SyncQueue', array('sync_id' => $sync->id));
+            \Queue::push(new SyncQueue($sync->id));
         });
     }
 

@@ -1,5 +1,6 @@
 <?php namespace Greenalert;
 
+use Greenalert\Commands\AlertQueue;
 use Illuminate\Database\Eloquent\Model;
 
 class Alert extends Model {
@@ -19,7 +20,7 @@ class Alert extends Model {
 
         // Setup event bindings...
         Alert::created(function ($alert) {
-            \Queue::push('AlertQueue', array('id' => $alert->id));
+            \Queue::push( new AlertQueue($alert->id));
         });
 
     }

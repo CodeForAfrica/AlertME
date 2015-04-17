@@ -1,5 +1,6 @@
 <?php namespace Greenalert;
 
+use Greenalert\Commands\DataSourceQueue;
 use Illuminate\Database\Eloquent\Model;
 
 class DataSource extends Model {
@@ -20,7 +21,7 @@ class DataSource extends Model {
 
         // Setup event bindings...
         DataSource::created(function ($datasource) {
-            \Queue::push('DataSourceQueue@fetchColumns', array('id' => $datasource->id));
+            \Queue::push( 'fetchColumns', new DataSourceQueue($datasource->id));
         });
 
         DataSource::deleting(function ($datasource) {
