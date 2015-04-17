@@ -52,7 +52,7 @@
     <script src="{{ secure_asset('assets/js/pahali/pahali.js') }}"></script>
 
     <script>
-      pahali.base_url = "{{ URL::to('/') }}";
+      pahali.base_url = "{{ secure_url('') }}";
       pahali.csrf_token = "{{ csrf_token() }}";
       @section('scripts-data')
         
