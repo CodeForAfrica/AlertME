@@ -21,7 +21,7 @@ class DataSource extends Model {
 
         // Setup event bindings...
         DataSource::created(function ($datasource) {
-            \Queue::push( 'fetchColumns', new DataSourceQueue($datasource->id));
+            \Queue::push(new DataSourceQueue($datasource->id));
         });
 
         DataSource::deleting(function ($datasource) {
