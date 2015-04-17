@@ -192,7 +192,7 @@
 
 @section('scripts-data')
 
-  var categories = {{ $categories }};
+  var categories = {!! $categories !!};
 
   var edit_id = 0;
 
