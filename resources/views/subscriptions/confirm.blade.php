@@ -55,6 +55,7 @@
             style="width:602px; height:202px; border:1px solid #ddd;"/>
           <br/><br/>
           <form class="form-horizontal" role="form" action="" method="post">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <div class="form-group">
               <label for="subscriber-email" class="col-sm-2 control-label">Email</label>
               <div class="col-sm-10">
