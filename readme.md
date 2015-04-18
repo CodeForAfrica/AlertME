@@ -3,7 +3,9 @@
 
 *Get to know more about your environment.*
 
-\#GreenAlert is a geo-aware web platform that is working to make it easier for everyone to get invloved in decisions made about the environment around them. This is achieved by giving easy access to the data and allowing subscription of alerts.
+[#GreenAlert](https://greenalert.oxpeckers.org) is a geo-aware web platform that is working to make it easier for everyone to get invloved in decisions made about the environment around them. This is achieved by giving easy access to the data and allowing subscription of alerts.
+
+See it in action at [https://greenalert.oxpeckers.org](https://greenalert.oxpeckers.org).
 
 Some key featutres of this platform include:
 
@@ -18,12 +20,12 @@ Some key featutres of this platform include:
 
 ### Installation
 
-Want to run your own instance? Check out the [INSTALL.md](./INSTALL.md) file.
+Want to run your own instance? Check out the [`INSTALL.md`](./INSTALL.md) file.
 
 
 ### Contributing
 
-We'd love to hear from you! Submit feature requests + bug reports in [the issues section](https://github.com/CodeForAfrica/GreenAlert/issues).
+Thank you for considering to contribute to #GreenAlert! The contribution guide can be found in the [`CONTRIBUTING.md`](./CONTRIBUTING.md) file.
 
 ---
 
@@ -35,9 +37,9 @@ The GPL ([V2](http://choosealicense.com/licenses/gpl-2.0/) or [V3](http://choose
 
 **Linux**, **Git**, and **WordPress** use the GPL.
 
-Find out more by checking out the `LICENSE` file [here](./LICENSE).
+Find out more by checking out the [`LICENSE`](./LICENSE) file.
 
 
 ### Contact
 
-Have any questions? Feel free to reach us at [kazini@codeforafrica.org](mailto:kazini@codeforafrica.org).
+Have any questions? Feel free to reach us at [support@codeforafrica.org](mailto:support@codeforafrica.org).
