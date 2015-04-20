@@ -33,6 +33,7 @@ class AuthController extends Controller {
 		$this->auth = $auth;
 		$this->registrar = $registrar;
 
+<<<<<<< HEAD
         $this->redirectPath = '/dashboard';
 
 		$this->middleware('guest', ['except' => 'getLogout']);
@@ -65,4 +66,9 @@ class AuthController extends Controller {
             ]);
     }
 
+=======
+		$this->middleware('guest', ['except' => 'getLogout']);
+	}
+
+>>>>>>> a9a59c1a867bbe64fe6efcc26f26212af367c3ef
 }

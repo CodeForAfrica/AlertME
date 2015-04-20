@@ -1,6 +1,7 @@
 <?php namespace Greenalert\Services;
 
 use Greenalert\User;
+
 use Validator;
 use Illuminate\Contracts\Auth\Registrar as RegistrarContract;
 

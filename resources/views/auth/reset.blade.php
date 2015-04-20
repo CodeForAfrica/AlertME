@@ -2,7 +2,7 @@
 
 @section('title')
   Reset Password
-@stop
+@endsection
 
 {{-- Content --}}
 @section('content')
@@ -59,7 +59,7 @@
     </div>
   </div>
 
-@stop
+@endsection
 
 @section('stylesheets')
   <style>
@@ -75,10 +75,10 @@
       box-shadow: none;
     }
   </style>
-@stop
+@endsection
 
 @section('scripts')
   <script>
     $(':checkbox').radiocheck();
   </script>
-@stop
+@endsection

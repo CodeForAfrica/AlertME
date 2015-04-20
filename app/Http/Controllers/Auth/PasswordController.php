@@ -1,6 +1,7 @@
 <?php namespace Greenalert\Http\Controllers\Auth;
 
 use Greenalert\Http\Controllers\Controller;
+
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\PasswordBroker;
 use Illuminate\Foundation\Auth\ResetsPasswords;
@@ -31,7 +32,7 @@ class PasswordController extends Controller {
 	{
 		$this->auth = $auth;
 		$this->passwords = $passwords;
-        $this->redirectPath = '/dashboard';
+    $this->redirectPath = '/dashboard';
 
 		$this->middleware('guest');
 	}
