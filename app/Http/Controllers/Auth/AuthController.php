@@ -62,5 +62,5 @@ class AuthController extends Controller {
                 'email' => $this->getFailedLoginMessage(),
             ]);
     }
-    
+
 }
