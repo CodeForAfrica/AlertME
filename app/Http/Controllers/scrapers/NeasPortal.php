@@ -23,7 +23,7 @@ class NeasPortal extends Controller {
         $scrape->csv_headers = array();
 
         $scrape->file_directory = 'scrapes';
-        $scrape->file_name = 'neas_portal.csv';
+        $scrape->file_name = 'neas_portal';
 
         $neas_url = 'http://neas.environment.gov.za/portal/ApplicationsPerEAP_Report.aspx';
 
@@ -59,13 +59,20 @@ class NeasPortal extends Controller {
             $scrape->csv .= implode(',', $row) . "\n";
         }
 
-        \Storage::disk('local')->put($scrape->file_directory . '/' . $scrape->file_name, $scrape->csv);
+        \Storage::put($scrape->file_directory . '/' . $scrape->file_name . '.csv', $scrape->csv);
 
         $scrape->save();
 
+        \Storage::copy(
+            $scrape->file_directory . '/' . $scrape->file_name . '.csv',
+            $scrape->file_directory . '/' . $scrape->file_name . '-' . $scrape->id . '.csv'
+        );
+
+        
+
         \Log::info('SCRAPER [' . $scraper->slug . ']: Scrape complete.');
 
-        return response()->download(storage_path().'/app/'.$scrape->file_directory . '/' . $scrape->file_name);
+        return response()->download(storage_path() . '/app/' . $scrape->file_directory . '/' . $scrape->file_name . '.csv');
 
     }
 

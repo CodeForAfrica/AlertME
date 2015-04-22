@@ -15,7 +15,7 @@ class ChangeScrapeFileLocationToDirectory extends Migration {
 		Schema::table('scrapes', function(Blueprint $table)
 		{
             $table->dropColumn('file_location');
-            $table->string('file_directory')->default('scrapes');
+            $table->string('file_directory')->default('scrapes')->after('scraper_id');
 		});
 	}
 
@@ -29,7 +29,7 @@ class ChangeScrapeFileLocationToDirectory extends Migration {
 		Schema::table('scrapes', function(Blueprint $table)
 		{
             $table->dropColumn('file_directory');
-            $table->string('file_location')->default(storage_path() . '/scrapes/');
+            $table->string('file_location')->default(storage_path() . '/scrapes/')->after('scraper_id');
 		});
 	}
 
