@@ -22,10 +22,12 @@ class NeasPortal extends Controller {
         $scrape->csv_array = array();
         $scrape->csv_headers = array();
 
-        $scrape->file_location = storage_path() . '/scrapes/';
+        $scrape->file_directory = 'scrapes';
         $scrape->file_name = 'neas_portal.csv';
 
         $neas_url = 'http://neas.environment.gov.za/portal/ApplicationsPerEAP_Report.aspx';
+
+        \Log::info('SCRAPER [' . $scraper->slug . ']: Scrape started.');
 
         $client = new \Goutte\Client();
 
@@ -36,6 +38,8 @@ class NeasPortal extends Controller {
         $client->getClient()->setDefaultOption('config/curl/' . CURLOPT_RETURNTRANSFER, true);
 
         $crawler = $client->request('GET', $neas_url);
+
+        \Log::info('SCRAPER [' . $scraper->slug . ']: Download complete.');
 
         $form = $crawler->selectButton('ctl00$Content$Search')->form();
         $crawler = $client->submit($form, array('ctl00$Content$txtName' => ''));
@@ -55,11 +59,13 @@ class NeasPortal extends Controller {
             $scrape->csv .= implode(',', $row) . "\n";
         }
 
-        \File::put($scrape->file_location . $scrape->file_name, $scrape->csv);
+        \Storage::disk('local')->put($scrape->file_directory . '/' . $scrape->file_name, $scrape->csv);
 
         $scrape->save();
 
-        return \Response::download($scrape->file_location . $scrape->file_name);
+        \Log::info('SCRAPER [' . $scraper->slug . ']: Scrape complete.');
+
+        return response()->download(storage_path().'/app/'.$scrape->file_directory . '/' . $scrape->file_name);
 
     }
 
