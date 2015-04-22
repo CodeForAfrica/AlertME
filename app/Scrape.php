@@ -10,7 +10,7 @@ class Scrape extends Model {
 
     public function scraper()
     {
-        return $this->belongsTo('Scraper');
+        return $this->belongsTo('Greenalert\Scraper');
     }
 
     public function getCsv()

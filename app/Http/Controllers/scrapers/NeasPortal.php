@@ -3,6 +3,8 @@
 use Greenalert\Http\Requests;
 use Greenalert\Http\Controllers\Controller;
 
+use Greenalert\Scrape;
+use Greenalert\Scraper;
 use Illuminate\Http\Request;
 
 class NeasPortal extends Controller {
@@ -53,11 +55,11 @@ class NeasPortal extends Controller {
             $scrape->csv .= implode(',', $row) . "\n";
         }
 
-        File::put($scrape->file_location . $scrape->file_name, $scrape->csv);
+        \File::put($scrape->file_location . $scrape->file_name, $scrape->csv);
 
         $scrape->save();
 
-        return Response::download($scrape->file_location . $scrape->file_name);
+        return \Response::download($scrape->file_location . $scrape->file_name);
 
     }
 
