@@ -124,7 +124,7 @@ class ScrapersController extends Controller {
     {
         $neas_portal = new NeasPortal();
 
-        return $neas_portal->scrape();
+        return $neas_portal->scrape_run();
     }
 
 }

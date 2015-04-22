@@ -5,74 +5,128 @@ use Greenalert\Http\Controllers\Controller;
 
 use Greenalert\Scrape;
 use Greenalert\Scraper;
-use Illuminate\Http\Request;
 
 class NeasPortal extends Controller {
 
-    function scrape()
+    public $scraper;
+    public $scrape;
+
+    public $client;
+
+    public $neas_list_url;
+    public $neas_eia_url;
+
+    function __construct()
+    {
+
+        $this->scraper = Scraper::find(1);
+        $this->scrape = new Scrape;
+
+        $this->scrape->scraper()->associate($this->scraper);
+
+        $this->scrape->csv = '';
+        $this->scrape->csv_array = array();
+        $this->scrape->csv_headers = array();
+
+        $this->scrape->file_directory = 'scrapes';
+        $this->scrape->file_name = 'neas_portal';
+
+        $this->client = new \Goutte\Client();
+
+        $this->client->getClient()->setDefaultOption('config/curl/' . CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);
+        $this->client->getClient()->setDefaultOption('config/curl/' . CURLOPT_TIMEOUT, 0);
+        $this->client->getClient()->setDefaultOption('config/curl/' . CURLOPT_TIMEOUT_MS, 0);
+        $this->client->getClient()->setDefaultOption('config/curl/' . CURLOPT_CONNECTTIMEOUT, 0);
+        $this->client->getClient()->setDefaultOption('config/curl/' . CURLOPT_RETURNTRANSFER, true);
+
+        $this->neas_list_url = 'http://neas.environment.gov.za/portal/ApplicationsPerEAP_Report.aspx';
+        $this->neas_eia_url = 'http://neas.environment.gov.za/portal/dNeasStandard_ApplicationHistory.aspx';
+
+    }
+
+
+    function scrape_run()
     {
         set_time_limit(0);
 
-        $scraper = Scraper::find(1);
+        \Log::info('SCRAPER [' . $this->scraper->slug . ']: Scrape started.');
 
-        $scrape = new Scrape;
-        $scrape->scraper()->associate($scraper);
+        $this->scrape_list();
+        $this->scrape_eias();
 
-        $scrape->csv = '';
-        $scrape->csv_array = array();
-        $scrape->csv_headers = array();
+        \Log::info('SCRAPER [' . $this->scraper->slug . ']: Scrape completed!');
 
-        $scrape->file_directory = 'scrapes';
-        $scrape->file_name = 'neas_portal';
+        return 0;
 
-        $neas_url = 'http://neas.environment.gov.za/portal/ApplicationsPerEAP_Report.aspx';
+    }
 
-        \Log::info('SCRAPER [' . $scraper->slug . ']: Scrape started.');
 
-        $client = new \Goutte\Client();
+    function scrape_list()
+    {
+        \Log::info('SCRAPER [' . $this->scraper->slug . ']: Scrape list started.');
 
-        $client->getClient()->setDefaultOption('config/curl/' . CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);
-        $client->getClient()->setDefaultOption('config/curl/' . CURLOPT_TIMEOUT, 0);
-        $client->getClient()->setDefaultOption('config/curl/' . CURLOPT_TIMEOUT_MS, 0);
-        $client->getClient()->setDefaultOption('config/curl/' . CURLOPT_CONNECTTIMEOUT, 0);
-        $client->getClient()->setDefaultOption('config/curl/' . CURLOPT_RETURNTRANSFER, true);
-
-        $crawler = $client->request('GET', $neas_url);
-
-        \Log::info('SCRAPER [' . $scraper->slug . ']: Download complete.');
+        $crawler = $this->client->request('GET', $this->neas_list_url);
 
         $form = $crawler->selectButton('ctl00$Content$Search')->form();
-        $crawler = $client->submit($form, array('ctl00$Content$txtName' => ''));
+        $crawler = $this->client->submit($form, array('ctl00$Content$txtName' => ''));
 
-        $crawler->filter('table#ctl00_Content_gv tr')->first()->filter('th')->each(function ($node, $i) use ($scrape) {
-            $scrape->csv_headers[0][ $i ] = $node->text();
+        \Log::info('SCRAPER [' . $this->scraper->slug . ']: Download complete.');
+
+        $crawler->filter('table#ctl00_Content_gv tr')->first()->filter('th')->each(function ($node, $i) {
+            $this->scrape->csv_headers[0][ $i ] = $node->text();
         });
-        $crawler->filter('table#ctl00_Content_gv tr')->each(function ($node, $i) use ($scrape) {
-            $node->filter('td')->each(function ($node_1, $i_1) use ($scrape, $i) {
-                $scrape->csv_array[ $i ][ $i_1 ] = $node_1->text();
+        $crawler->filter('table#ctl00_Content_gv tr')->each(function ($node, $i) {
+            $node->filter('td')->each(function ($node_1, $i_1) use ($i) {
+                $this->scrape->csv_array[ $i ][ $i_1 ] = $node_1->text();
             });
         });
 
-        $scrape->csv_array = $scrape->csv_headers + $scrape->csv_array;
+        $this->scrape->csv_array = $this->scrape->csv_headers + $this->scrape->csv_array;
 
-        foreach ($scrape->csv_array as $row) {
-            $scrape->csv .= implode(',', $row) . "\n";
+        foreach ($this->scrape->csv_array as $row) {
+            $this->scrape->csv .= implode(',', $row) . "\n";
         }
 
-        \Storage::put($scrape->file_directory . '/' . $scrape->file_name . '.csv', $scrape->csv);
+        \Storage::put($this->scrape->file_directory . '/' . $this->scrape->file_name . '.csv', $this->scrape->csv);
 
-        $scrape->save();
+        $this->scrape->save();
 
         \Storage::copy(
-            $scrape->file_directory . '/' . $scrape->file_name . '.csv',
-            $scrape->file_directory . '/' . $scrape->file_name . '-' . $scrape->id . '.csv'
+            $this->scrape->file_directory . '/' . $this->scrape->file_name . '.csv',
+            $this->scrape->file_directory . '/' . $this->scrape->file_name . '-' . $this->scrape->id . '.csv'
         );
 
-        
+        \Log::info('SCRAPER [' . $this->scraper->slug . ']: Scrape list completed.');
 
-        \Log::info('SCRAPER [' . $scraper->slug . ']: Scrape complete.');
+        return $this;
 
-        return response()->download(storage_path() . '/app/' . $scrape->file_directory . '/' . $scrape->file_name . '.csv');
+    }
+
+
+    function scrape_eias()
+    {
+        \Log::info('SCRAPER [' . $this->scraper->slug . ']: Scrape EIAs started.');
+
+        for ($i = 1; $i <= 10; $i++) {
+            $eia_id = $this->scrape->csv_array[ $i ][2];
+
+            $crawler = $this->client->request('GET', $this->neas_eia_url);
+
+            $form = $crawler->selectButton('ctl00$Content$SearchID')->form();
+            $crawler = $this->client->submit($form, array('ctl00$Content$txtPermitNumber' => $eia_id));
+
+            $form = $crawler->selectButton('ctl00$Content$btnViewReport')->form();
+            $crawler = $this->client->submit($form, array('ctl00$Content$txtPermitNumber' => $eia_id));
+
+            \Log::info('SCRAPER [' . $this->scraper->slug . ']: Scrape EIAs something started.');
+
+            dd($crawler->filter('#ctl00_Content_lblProjectDescription')->first()->text());
+
+        }
+
+        \Log::info('SCRAPER [' . $this->scraper->slug . ']: Scrape EIAs completed.');
+
+        return 'Awesome';
 
     }
 
