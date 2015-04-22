@@ -20,7 +20,8 @@
     "doctrine/dbal": "~2.5",
 
     "graham-campbell/markdown": "~3.0",
-    "fabpot/goutte": "dev-master"
+    "fabpot/goutte": "dev-master",
+    "nesbot/carbon": "~1.18"
   },
   "require-dev": {
     "phpunit/phpunit": "~4.0",

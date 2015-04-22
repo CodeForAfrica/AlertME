@@ -24,10 +24,6 @@ class NeasPortal extends Controller {
 
         $this->scrape->scraper()->associate($this->scraper);
 
-        $this->scrape->csv = '';
-        $this->scrape->csv_array = array();
-        $this->scrape->csv_headers = array();
-
         $this->scrape->file_directory = 'scrapes';
         $this->scrape->file_name = 'neas_portal';
 
@@ -51,13 +47,32 @@ class NeasPortal extends Controller {
 
         \Log::info('SCRAPER [' . $this->scraper->slug . ']: Scrape started.');
 
-        $this->scrape_list();
+        if (!$this->scraped_recently()) {
+            $this->scrape_list();
+        } else {
+            $this->scrape = $this->scraper->scrapes->last(1);
+            $this->scrape->getCsv();
+        }
+
         $this->scrape_eias();
 
         \Log::info('SCRAPER [' . $this->scraper->slug . ']: Scrape completed!');
 
         return 0;
 
+    }
+
+
+    function scraped_recently()
+    {
+        $scrapes = $this->scraper->scrapes;
+        if (!$scrapes) {
+            return false;
+        }
+        if ($scrapes->last()->recent()->count() == 0) {
+            return false;
+        }
+        return true;
     }
 
 
