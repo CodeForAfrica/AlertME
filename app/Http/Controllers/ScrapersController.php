@@ -25,7 +25,7 @@ class ScrapersController extends Controller {
             $scraper->save();
         }
 
-        $scrapers = Scraper::all();
+        $scrapers = Scraper::with('scrapes')->get();
 
         return $scrapers;
     }
@@ -64,7 +64,7 @@ class ScrapersController extends Controller {
             $scraper = Scraper::where('slug', $id)->firstOrFail();
         }
 
-        $scraper = $scraper->toArray() + array('scrapes' => $scraper->scrapes->toArray());
+        $scraper->load('scrapes');
 
         return $scraper;
     }
@@ -94,7 +94,7 @@ class ScrapersController extends Controller {
             $scraper = Scraper::where('slug', $id)->firstOrFail();
         }
 
-        $scraper = $scraper->toArray() + array('scrapes' => $scraper->scrapes->toArray());
+        $scraper->load('scrapes');
 
         return $scraper;
     }
