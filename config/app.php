@@ -145,7 +145,7 @@ return [
 		'Greenalert\Providers\EventServiceProvider',
 		'Greenalert\Providers\RouteServiceProvider',
 
-        'GrahamCampbell\Markdown\MarkdownServiceProvider',
+    'GrahamCampbell\Markdown\MarkdownServiceProvider',
 
 	],
 
@@ -195,7 +195,7 @@ return [
 		'Validator' => 'Illuminate\Support\Facades\Validator',
 		'View'      => 'Illuminate\Support\Facades\View',
 
-        'Markdown'          => 'GrahamCampbell\Markdown\Facades\Markdown',
+    'Markdown'          => 'GrahamCampbell\Markdown\Facades\Markdown',
 
 	],
 

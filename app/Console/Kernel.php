@@ -12,8 +12,8 @@ class Kernel extends ConsoleKernel {
 	 */
 	protected $commands = [
 		'Greenalert\Console\Commands\Inspire',
-        'Greenalert\Console\Commands\PahaliUpdate',
-        'Greenalert\Console\Commands\PahaliUpgrade',
+    'Greenalert\Console\Commands\PahaliUpdate',
+    'Greenalert\Console\Commands\PahaliUpgrade',
 	];
 
 	/**
