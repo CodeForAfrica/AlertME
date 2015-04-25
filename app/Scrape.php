@@ -5,9 +5,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Scrape extends Model {
 
-    public $csv = '';
-    public $csv_array = array();
-    public $csv_headers = array();
+    public $list_array = array();
+    public $data_array = array();
+    public $tsv = '';
 
     public function scraper()
     {
@@ -20,6 +20,63 @@ class Scrape extends Model {
         return $query->where('updated_at', '<=', Carbon::now())->where('updated_at', '>=', Carbon::now()->subDay());
     }
 
+
+    public function getListArray()
+    {
+        if (!$this->id) {
+            return $this->list_array;
+        }
+        $this->list_array = json_decode(
+            \Storage::get($this->file_directory . '/' . $this->file_name . '-' . $this->id . '-list.json'),
+            true
+        );
+
+        return $this->list_array;
+    }
+
+    public function getDataArray ()
+    {
+        if (!$this->id) {
+            return $this->$data_array;
+        }
+        $this->$data_array = json_decode(
+            \Storage::get($this->file_directory . '/' . $this->file_name . '-' . $this->id . '.json'),
+            true
+        );
+        return $this->$data_array;
+    }
+
+    public function getTsv()
+    {
+        if (!$this->id) {
+            return $this->tsv;
+        }
+        $this->getListArray();
+        $tsv_header = implode("\t", array_keys($this->list_array[0]));
+        $tsv_content = '';
+        foreach ($this->list_array as $row) {
+            $tsv_content .= "\n";
+            $tsv_content .= implode("\t", array_values($row));
+        }
+
+        $this->tsv = $tsv_header . $tsv_content;
+
+        return $this->tsv;
+    }
+
+    public function setTsv($tsv = null)
+    {
+        if ($tsv == null) {
+            $this->getTsv();
+        } else {
+            $this->tsv = $tsv;
+        }
+
+        \Storage::put($this->file_directory . '/' . $this->file_name . '-' . $this->id . '-list.tsv', $this->tsv);
+
+        return $this->tsv;
+
+    }
 
     public function getCsv()
     {
@@ -68,7 +125,7 @@ class Scrape extends Model {
 
     public function file_path()
     {
-        return $this->file_directory . '/' . $this->file_name . '-' . $this->id . '.csv';
+        return $this->file_directory . '/' . $this->file_name . '-' . $this->id . '.json';
     }
 
 

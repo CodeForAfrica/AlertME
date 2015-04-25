@@ -53,7 +53,7 @@ class NeasPortal extends Controller {
             $this->scrape_list();
         } else {
             $this->scrape = $this->scraper->scrapes->last(1);
-            $this->scrape->getCsv();
+            $this->scrape->getListArray();
         }
 
         $this->scrape_eias();
@@ -90,29 +90,38 @@ class NeasPortal extends Controller {
 
         \Log::info('SCRAPER [' . $this->scraper->slug . ']: Download complete.');
 
-        $crawler->filter('table#ctl00_Content_gv tr')->first()->filter('th')->each(function ($node, $i) {
-            $this->scrape->csv_headers[0][ $i ] = $node->text();
+        $crawler->filter('table#ctl00_Content_gv > tr')->each(function ($node, $i) {
+
+            if ($i != 0) {
+                $this->scrape->list_array[ $i - 1 ]['NEAS Number'] = $node->children()->eq(2)->text();
+
+                $this->scrape->list_array[ $i - 1 ]['Name'] = $node->children()->eq(0)->text();
+                $this->scrape->list_array[ $i - 1 ]['Person Type'] = $node->children()->eq(1)->text();
+
+                $this->scrape->list_array[ $i - 1 ]['Provincial Ref No.'] = $node->children()->eq(3)->text();
+                $this->scrape->list_array[ $i - 1 ]['File Reference Number'] = $node->children()->eq(4)->text();
+                $this->scrape->list_array[ $i - 1 ]['Application Type'] = $node->children()->eq(5)->text();
+                $this->scrape->list_array[ $i - 1 ]['Competent Auuthority'] = $node->children()->eq(6)->text();
+                $this->scrape->list_array[ $i - 1 ]['Stage'] = $node->children()->eq(7)->text();
+                $this->scrape->list_array[ $i - 1 ]['Status'] = $node->children()->eq(8)->text();
+                $this->scrape->list_array[ $i - 1 ]['Capturer'] = $node->children()->eq(9)->text();
+                $this->scrape->list_array[ $i - 1 ]['Case Officer'] = $node->children()->eq(10)->text();
+            }
         });
-        $crawler->filter('table#ctl00_Content_gv tr')->each(function ($node, $i) {
-            $node->filter('td')->each(function ($node_1, $i_1) use ($i) {
-                $this->scrape->csv_array[ $i ][ $i_1 ] = $node_1->text();
-            });
-        });
 
-        $this->scrape->csv_array = $this->scrape->csv_headers + $this->scrape->csv_array;
-
-        foreach ($this->scrape->csv_array as $row) {
-            $this->scrape->csv .= implode(',', $row) . "\n";
-        }
-
-        \Storage::put($this->scrape->file_directory . '/' . $this->scrape->file_name . '.csv', $this->scrape->csv);
+        \Storage::put(
+            $this->scrape->file_directory . '/' . $this->scrape->file_name . '-' . $this->scrape->id . '-list.json',
+            json_encode($this->scrape->list_array)
+        );
 
         $this->scrape->save();
 
         \Storage::copy(
-            $this->scrape->file_directory . '/' . $this->scrape->file_name . '.csv',
-            $this->scrape->file_directory . '/' . $this->scrape->file_name . '-' . $this->scrape->id . '.csv'
+            $this->scrape->file_directory . '/' . $this->scrape->file_name . '-' . $this->scrape->id . '-list.json',
+            $this->scrape->file_directory . '/' . $this->scrape->file_name . '-list.json'
         );
+
+        $this->scrape->setTsv();
 
         \Log::info('SCRAPER [' . $this->scraper->slug . ']: Scrape list completed.');
 
@@ -125,8 +134,9 @@ class NeasPortal extends Controller {
     {
         \Log::info('SCRAPER [' . $this->scraper->slug . ']: Scrape EIAs started.');
 
-        for ($i = 1; $i < count($this->scrape->csv_array); $i++) {
-            $eia_id = $this->scrape->csv_array[ $i ][2];
+
+        for ($i = 0; $i < 10; $i++) {
+            $eia_id = $this->scrape->list_array[ $i ]['NEAS Number'];
 
             $crawler = $this->client->request('GET', $this->neas_eia_url);
 
@@ -136,66 +146,63 @@ class NeasPortal extends Controller {
             $form = $crawler->selectButton('ctl00$Content$btnViewReport')->form();
             $crawler = $this->client->submit($form, array('ctl00$Content$txtPermitNumber' => $eia_id));
 
-
-            $this->eias[ $i - 1 ]['NEAS Number'] = $this->scrape->csv_array[ $i ][2];
-
-            $this->eias[ $i - 1 ]['Name'] = $this->scrape->csv_array[ $i ][0];
-            $this->eias[ $i - 1 ]['Person Type'] = $this->scrape->csv_array[ $i ][1];
-
-            $this->eias[ $i - 1 ]['Provincial Ref No.'] = $this->scrape->csv_array[ $i ][3];
-            $this->eias[ $i - 1 ]['File Reference Number'] = $this->scrape->csv_array[ $i ][4];
-            $this->eias[ $i - 1 ]['Application Type'] = $this->scrape->csv_array[ $i ][5];
-            $this->eias[ $i - 1 ]['Competent Auuthority'] = $this->scrape->csv_array[ $i ][6];
-            $this->eias[ $i - 1 ]['Stage'] = $this->scrape->csv_array[ $i ][7];
-            $this->eias[ $i - 1 ]['Status'] = $this->scrape->csv_array[ $i ][8];
-            $this->eias[ $i - 1 ]['Capturer'] = $this->scrape->csv_array[ $i ][9];
-            $this->eias[ $i - 1 ]['Case Officer'] = $this->scrape->csv_array[ $i ][10];
+            $this->eias [ $i ] = $this->scrape->list_array[ $i ];
 
 
-            $this->eias[ $i - 1 ]['Local Municipality'] = $crawler->filter('#ctl00_Content_lblLocal')->first()->text();
-            $this->eias[ $i - 1 ]['Application Process'] = $crawler->filter('#ctl00_Content_lblProcess')->first()->text();
+            $this->eias[ $i ]['Local Municipality'] = $crawler->filter('#ctl00_Content_lblLocal')->first()->text();
+            $this->eias[ $i ]['Application Process'] = $crawler->filter('#ctl00_Content_lblProcess')->first()->text();
 
-            $this->eias[ $i - 1 ]['Project Description'] = $crawler->filter('#ctl00_Content_lblProjectDescription')->first()->text();
-            $this->eias[ $i - 1 ]['Project Title'] = $crawler->filter('#ctl00_Content_lblProjectTitle')->first()->text();
-            $this->eias[ $i - 1 ]['Property Name'] = $crawler->filter('#ctl00_Content_lblPropertyName')->first()->text();
-            $this->eias[ $i - 1 ]['SGID'] = $crawler->filter('#ctl00_Content_lblSGID')->first()->text();
+            $this->eias[ $i ]['Project Description'] = $crawler->filter('#ctl00_Content_lblProjectDescription')->first()->text();
+            $this->eias[ $i ]['Project Title'] = $crawler->filter('#ctl00_Content_lblProjectTitle')->first()->text();
+            $this->eias[ $i ]['Property Name'] = $crawler->filter('#ctl00_Content_lblPropertyName')->first()->text();
+            $this->eias[ $i ]['SGID'] = $crawler->filter('#ctl00_Content_lblSGID')->first()->text();
 
-            $this->eias[ $i - 1 ]['Applicant'] = [];
+            $this->eias[ $i ]['Applicant'] = [];
 
             $crawler->filter('tr#ctl00_Content_trViewReport table#ctl00_Content_dgApplicant > tr')->each(function ($node, $i_1) use ($i) {
 
                 if ($i_1 != 0 && $node->children()->eq(0)->text() !== '') {
-                    $this->eias[ $i - 1 ]['Applicant'][ $i_1 - 1 ] = [];
+                    $this->eias[ $i ]['Applicant'][ $i_1 - 1 ] = [];
 
-                    $this->eias[ $i - 1 ]['Applicant'][ $i_1 - 1 ]['Applicant Type'] = $node->children()->eq(0)->text();
-                    $this->eias[ $i - 1 ]['Applicant'][ $i_1 - 1 ]['Applicant Name'] = $node->children()->eq(1)->text();
-                    $this->eias[ $i - 1 ]['Applicant'][ $i_1 - 1 ]['Registration Number'] = $node->children()->eq(2)->text();
-                    $this->eias[ $i - 1 ]['Applicant'][ $i_1 - 1 ]['Telephone Number'] = $node->children()->eq(3)->text();
+                    $this->eias[ $i ]['Applicant'][ $i_1 - 1 ]['Applicant Type'] = $node->children()->eq(0)->text();
+                    $this->eias[ $i ]['Applicant'][ $i_1 - 1 ]['Applicant Name'] = $node->children()->eq(1)->text();
+                    $this->eias[ $i ]['Applicant'][ $i_1 - 1 ]['Registration Number'] = $node->children()->eq(2)->text();
+                    $this->eias[ $i ]['Applicant'][ $i_1 - 1 ]['Telephone Number'] = $node->children()->eq(3)->text();
                 }
             });
 
-            $this->eias[ $i - 1 ]['History'] = [];
+            $this->eias[ $i ]['History'] = [];
 
             $crawler->filter('tr#ctl00_Content_trViewReport table#ctl00_Content_dgHistory > tr')->each(function ($node, $i_1) use ($i) {
 
                 if ($i_1 != 0) {
-                    $this->eias[ $i - 1 ]['History'][ $i_1 - 1 ] = [];
+                    $this->eias[ $i ]['History'][ $i_1 - 1 ] = [];
 
-                    $this->eias[ $i - 1 ]['History'][ $i_1 - 1 ]['Stage'] = $node->children()->eq(0)->text();
-                    $this->eias[ $i - 1 ]['History'][ $i_1 - 1 ]['Assigned Capturer'] = $node->children()->eq(1)->text();
-                    $this->eias[ $i - 1 ]['History'][ $i_1 - 1 ]['Date System Recorded the Action'] = $node->children()->eq(2)->text();
-                    $this->eias[ $i - 1 ]['History'][ $i_1 - 1 ]['Stage Case Officer'] = $node->children()->eq(3)->text();
+                    $this->eias[ $i ]['History'][ $i_1 - 1 ]['Stage'] = $node->children()->eq(0)->text();
+                    $this->eias[ $i ]['History'][ $i_1 - 1 ]['Assigned Capturer'] = $node->children()->eq(1)->text();
+                    $this->eias[ $i ]['History'][ $i_1 - 1 ]['Date System Recorded the Action'] = $node->children()->eq(2)->text();
+                    $this->eias[ $i ]['History'][ $i_1 - 1 ]['Stage Case Officer'] = $node->children()->eq(3)->text();
                 }
 
             });
 
+            $this->scrape->data_array = $this->eias;
+
+
+            \Storage::put(
+                $this->scrape->file_directory . '/' . $this->scrape->file_name . '-' . $this->scrape->id . '.json',
+                json_encode($this->eias)
+            );
+
         }
 
-        \Storage::put($this->scrape->file_directory . '/' . $this->scrape->file_name . '.json', json_encode($this->eias));
+        if (\Storage::exists($this->scrape->file_directory . '/' . $this->scrape->file_name . '.json')) {
+            \Storage::delete($this->scrape->file_directory . '/' . $this->scrape->file_name . '.json');
+        };
 
         \Storage::copy(
-            $this->scrape->file_directory . '/' . $this->scrape->file_name . '.json',
-            $this->scrape->file_directory . '/' . $this->scrape->file_name . '-' . $this->scrape->id . '.json'
+            $this->scrape->file_directory . '/' . $this->scrape->file_name . '-' . $this->scrape->id . '.json',
+            $this->scrape->file_directory . '/' . $this->scrape->file_name . '.json'
         );
 
         \Log::info('SCRAPER [' . $this->scraper->slug . ']: Scrape EIAs completed.');
