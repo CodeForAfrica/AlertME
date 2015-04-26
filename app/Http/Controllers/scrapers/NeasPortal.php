@@ -124,7 +124,7 @@ class NeasPortal extends Controller {
         \Log::info('SCRAPER [' . $this->scraper->slug . ']: Scrape EIAs started.');
 
 
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < count($this->scrape->content); $i++) {
             $eia_id = $this->scrape->content[ $i ]['NEAS Number'];
 
             $crawler = $this->client->request('GET', $this->neas_eia_url);
