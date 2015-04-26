@@ -5,6 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Scrape extends Model {
 
+    public $content = array();
     public $list_array = array();
     public $data_array = array();
     public $tsv = '';
@@ -21,20 +22,64 @@ class Scrape extends Model {
     }
 
 
+    public function getContent()
+    {
+        if (!$this->id) {
+            return $this->content;
+        }
+        $this->content = json_decode(
+            \Storage::get($this->file_directory . '/' . $this->file_name . '-' . $this->id . '.json'),
+            true
+        );
+
+        return $this->content;
+    }
+
+    public function setContent($content = null)
+    {
+        if ($content == null || !is_array($content)) {
+            $content = $this->content;
+        }
+
+        $this->content = $content;
+
+        \Storage::put(
+            $this->file_directory . '/' . $this->file_name . '-' . $this->id . '.json',
+            json_encode($this->content)
+        );
+
+        if (\Storage::exists($this->file_directory . '/' . $this->file_name . '.json')) {
+            \Storage::delete($this->file_directory . '/' . $this->file_name . '.json');
+        };
+
+        \Storage::copy(
+            $this->file_directory . '/' . $this->file_name . '-' . $this->id . '.json',
+            $this->file_directory . '/' . $this->file_name . '.json'
+        );
+
+        return $this->content;
+    }
+
+    public function saveContent($content = null)
+    {
+        return $this->setContent($content);
+    }
+
+
     public function getListArray()
     {
         if (!$this->id) {
             return $this->list_array;
         }
         $this->list_array = json_decode(
-            \Storage::get($this->file_directory . '/' . $this->file_name . '-' . $this->id . '-list.json'),
+            \Storage::get($this->file_directory . '/' . $this->file_name . '-' . $this->id . '.json'),
             true
         );
 
         return $this->list_array;
     }
 
-    public function getDataArray ()
+    public function getDataArray()
     {
         if (!$this->id) {
             return $this->$data_array;
@@ -43,6 +88,7 @@ class Scrape extends Model {
             \Storage::get($this->file_directory . '/' . $this->file_name . '-' . $this->id . '.json'),
             true
         );
+
         return $this->$data_array;
     }
 
@@ -51,10 +97,16 @@ class Scrape extends Model {
         if (!$this->id) {
             return $this->tsv;
         }
-        $this->getListArray();
-        $tsv_header = implode("\t", array_keys($this->list_array[0]));
+        $this->getContent();
+
+        $tsv_array = [];
+        foreach ($this->content as $key => $row) {
+            $tsv_array = array_add($tsv_array, $key, array_dot($row));
+        }
+
+        $tsv_header = implode("\t", array_keys($tsv_array[0]));
         $tsv_content = '';
-        foreach ($this->list_array as $row) {
+        foreach ($tsv_array as $row) {
             $tsv_content .= "\n";
             $tsv_content .= implode("\t", array_values($row));
         }
@@ -72,10 +124,15 @@ class Scrape extends Model {
             $this->tsv = $tsv;
         }
 
-        \Storage::put($this->file_directory . '/' . $this->file_name . '-' . $this->id . '-list.tsv', $this->tsv);
+        \Storage::put($this->file_directory . '/' . $this->file_name . '-' . $this->id . '.tsv', $this->tsv);
 
         return $this->tsv;
 
+    }
+
+    public function saveTsv($tsv = null)
+    {
+        return $this->setTsv($tsv);
     }
 
     public function getCsv()

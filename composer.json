@@ -18,7 +18,6 @@
     "pda/pheanstalk": "~3.0",
     "illuminate/html": "~5.0",
     "doctrine/dbal": "~2.5",
-
     "graham-campbell/markdown": "~3.0",
     "fabpot/goutte": "dev-master",
     "nesbot/carbon": "~1.18"
