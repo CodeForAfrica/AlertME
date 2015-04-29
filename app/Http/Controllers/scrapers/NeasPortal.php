@@ -44,6 +44,7 @@ class NeasPortal extends Controller {
     function scrape_run()
     {
         set_time_limit(0);
+        ini_set('memory_limit','512M');
 
         \Log::info('SCRAPER [' . $this->scraper->slug . ']: Scrape started.');
 
@@ -109,7 +110,6 @@ class NeasPortal extends Controller {
 
 
         $this->scrape->save();
-        $this->scrape->saveContent();
         $this->scrape->saveTsv();
 
         \Log::info('SCRAPER [' . $this->scraper->slug . ']: Scrape list completed.');

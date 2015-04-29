@@ -24,13 +24,14 @@ class Scrape extends Model {
 
     public function getContent()
     {
-        if (!$this->id) {
-            return $this->content;
+        if (!$this->id || $this->content != null) {
+            // Either there is no ID or the content is set
+        } else {
+            $this->content = json_decode(
+                \Storage::get($this->file_directory . '/' . $this->file_name . '-' . $this->id . '.json'),
+                true
+            );
         }
-        $this->content = json_decode(
-            \Storage::get($this->file_directory . '/' . $this->file_name . '-' . $this->id . '.json'),
-            true
-        );
 
         return $this->content;
     }
@@ -38,7 +39,7 @@ class Scrape extends Model {
     public function setContent($content = null)
     {
         if ($content == null || !is_array($content)) {
-            $content = $this->content;
+            $content = $this->getContent();
         }
 
         $this->content = $content;
@@ -97,7 +98,7 @@ class Scrape extends Model {
         if (!$this->id) {
             return $this->tsv;
         }
-        $this->getContent();
+        $this->saveContent();
 
         $tsv_array = [];
         foreach ($this->content as $key => $row) {
