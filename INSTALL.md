@@ -187,30 +187,11 @@ mysql> GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP
 
 ##### 4. Sensitive Configuration
 
-Edit `.env.local.php` or create `.env.php` in production to contain the following:
+Edit `.env.examlple` file name to `.env` and contain the:
 
-```php
-&lt;?php
-return array(
+You can generate `YOUR_SECRET_KEY` by running `php artisan key:generate` and copying the resulting key into `.env`
 
-  'TEST_STRIPE_KEY' => 'super-secret-sauce',
-
-  'app_key' => 'YOUR_SECRET_KEY',
-
-  'db_host' => 'YOUR_DB_HOST',
-  'db_name' => 'YOUR_DB_NAME',
-  'db_user' => 'YOUR_DB_USER',
-  'db_pass' => 'YOUR_DB_PASSWORD',
-
-  'smtp_user' => 'YOUR_SMTP_USERNAME',
-  'smtp_pass' => 'YOUR_SMTP_PASSWORD',
-
-);
-```
-
-You can generate `YOUR_SECRET_KEY` by running `php artisan key:generate` and copying the resulting key into `.env.local.php` or `.env.php`.
-
-Read more on sensitive configuration [here](http://laravel.com/docs/4.2/configuration#protecting-sensitive-configuration).
+Read more on configuration [here](http://laravel.com/docs/5.0/configuration).
 
 ##### 5. Migration
 
