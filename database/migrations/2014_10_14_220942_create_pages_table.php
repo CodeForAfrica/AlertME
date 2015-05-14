@@ -39,7 +39,6 @@ And you can help keep the developers accountable by joining and participating in
 \#GreenAlert is a project by [Oxpeckers](http://oxpeckers.org)'
             )
         );
-        $page->save();
     }
 
     /**
