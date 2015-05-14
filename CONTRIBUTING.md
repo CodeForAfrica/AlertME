@@ -42,7 +42,9 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 \#GreenAlert follows the PSR-4 and PSR-1 coding standards. In addition to these standards, the following coding standards should be followed:
 
-The class namespace declaration must be on the same line as <?php.
-A class' opening { must be on the same line as the class name.
-Functions and control structures must use Allman style braces.
-Indent with soft tabs, align with spaces.
+- The class namespace declaration must be on the same line as `<?php`.
+- A class' opening `{` must be on the same line as the class name.
+- Functions and control structures must use *Allman style* braces.
+- Indent with soft tabs, align with spaces.
+
+As a rule of thumb, we use [Google's style guide](https://code.google.com/p/google-styleguide/).
