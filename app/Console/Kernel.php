@@ -5,27 +5,28 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel {
 
-	/**
-	 * The Artisan commands provided by your application.
-	 *
-	 * @var array
-	 */
-	protected $commands = [
-		'Greenalert\Console\Commands\Inspire',
-    'Greenalert\Console\Commands\PahaliUpdate',
-    'Greenalert\Console\Commands\PahaliUpgrade',
-	];
+    /**
+     * The Artisan commands provided by your application.
+     *
+     * @var array
+     */
+    protected $commands = [
+        'Greenalert\Console\Commands\Inspire',
+        'Greenalert\Console\Commands\PahaliUpdate',
+        'Greenalert\Console\Commands\PahaliUpgrade',
+        // TODO: Pahali clean scrapes.
+    ];
 
-	/**
-	 * Define the application's command schedule.
-	 *
-	 * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
-	 * @return void
-	 */
-	protected function schedule(Schedule $schedule)
-	{
-		$schedule->command('inspire')
-				 ->hourly();
-	}
+    /**
+     * Define the application's command schedule.
+     *
+     * @param  \Illuminate\Console\Scheduling\Schedule $schedule
+     * @return void
+     */
+    protected function schedule(Schedule $schedule)
+    {
+        $schedule->command('inspire')
+            ->hourly();
+    }
 
 }

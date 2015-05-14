@@ -1,8 +1,10 @@
 <?php namespace Greenalert\Http\Controllers;
 
+use Greenalert\Http\Controllers\scrapers\NeasPortal;
 use Greenalert\Http\Requests;
 use Greenalert\Http\Controllers\Controller;
 
+use Greenalert\Scraper;
 use Illuminate\Http\Request;
 
 class ScrapersController extends Controller {
@@ -23,7 +25,7 @@ class ScrapersController extends Controller {
             $scraper->save();
         }
 
-        $scrapers = Scraper::all();
+        $scrapers = Scraper::with('scrapes')->get();
 
         return $scrapers;
     }
@@ -56,7 +58,15 @@ class ScrapersController extends Controller {
      */
     public function show($id)
     {
-        //
+        if (is_numeric($id)) {
+            $scraper = Scraper::findOrFail($id);
+        } else {
+            $scraper = Scraper::where('slug', $id)->firstOrFail();
+        }
+
+        $scraper->load('scrapes');
+
+        return $scraper;
     }
 
     /**
@@ -84,7 +94,7 @@ class ScrapersController extends Controller {
             $scraper = Scraper::where('slug', $id)->firstOrFail();
         }
 
-        $scraper = $scraper->toArray() + array('scrapes' => $scraper->scrapes->toArray());
+        $scraper->load('scrapes');
 
         return $scraper;
     }
@@ -114,7 +124,7 @@ class ScrapersController extends Controller {
     {
         $neas_portal = new NeasPortal();
 
-        return $neas_portal->scrape();
+        return $neas_portal->scrape_run();
     }
 
 }
