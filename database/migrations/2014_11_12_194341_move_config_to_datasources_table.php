@@ -12,16 +12,16 @@ class MoveConfigToDatasourcesTable extends Migration {
      */
     public function up()
     {
+        Schema::table('datasources', function (Blueprint $table) {
+            //
+            $table->mediumText('columns')->after('url')->nullable();
+            $table->mediumText('config')->after('columns')->nullable();
+            $table->integer('config_status')->after('config')->default(3);
+        });
+
         if (Schema::hasTable('data_source_configs')) {
             //
             $configs = DB::table('data_source_configs')->get();
-
-            Schema::table('datasources', function (Blueprint $table) {
-                //
-                $table->mediumText('columns')->after('url')->nullable();
-                $table->mediumText('config')->after('columns')->nullable();
-                $table->integer('config_status')->after('config')->default(3);
-            });
 
             Schema::drop('data_source_configs');
 
@@ -45,6 +45,10 @@ class MoveConfigToDatasourcesTable extends Migration {
      */
     public function down()
     {
+
+        Schema::table('datasources', function ($table) {
+            $table->dropColumn(['columns', 'config', 'config_status']);
+        });
 
     }
 
