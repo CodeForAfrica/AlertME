@@ -12,10 +12,6 @@ class AllowFullTextSearch extends Migration {
      */
     public function up()
     {
-        Schema::table('projects', function (Blueprint $table) {
-            //
-            $table->engine = 'MyISAM';
-        });
         DB::statement('ALTER TABLE projects ADD FULLTEXT projects_search_fulltext(title, description, geo_address, status)');
     }
 

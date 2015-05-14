@@ -13,6 +13,8 @@ class CreateProjectsTable extends Migration {
     public function up()
     {
         Schema::create('projects', function (Blueprint $table) {
+            $table->engine = 'MyISAM';
+
             $table->increments('id');
             $table->integer('data_source_id')->default(0);
             $table->integer('data_source_config_id')->default(0);
