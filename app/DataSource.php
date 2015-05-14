@@ -144,7 +144,6 @@ class DataSource extends Model {
 
             $project->description = $row[ $cols[ $config->desc->col ] ];
 
-
             if ($config->geo->type == 'address') {
                 $project->geo_type = 'address';
                 $project->geo_address = $row[ $cols[ $config->geo->address->col ] ];

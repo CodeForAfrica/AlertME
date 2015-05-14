@@ -98,6 +98,18 @@ class ApiCategoryController extends Controller {
      */
     public function edit($id)
     {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  int $id
+     *
+     * @return Response
+     */
+    public function update($id)
+    {
         $category = Category::find($id);
         $category->title = \Input::get('title');
         $category->description = \Input::get('desc');
@@ -111,18 +123,6 @@ class ApiCategoryController extends Controller {
             'category' => $category->toArray()),
             200
         );
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  int $id
-     *
-     * @return Response
-     */
-    public function update($id)
-    {
-        //
     }
 
     /**
