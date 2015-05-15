@@ -272,6 +272,8 @@ function configSave() {
 
   pahali.datasource.config_status = 1;
 
+  pahali.datasource._token = pahali.csrf_token;
+
   $.ajax({
     type: "PUT",
     async: false,
