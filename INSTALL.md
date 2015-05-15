@@ -1,6 +1,6 @@
 # Installation
 
-\#GreenAlert is built using [Laravel](#laravel-php-framework), *the PHP framework for web artisans*. For more information on getting started with Laravel, check out there extensive documentation [here](http://laravel.com/docs/4.2/quick).
+\#GreenAlert is built using [Laravel](#laravel-php-framework), *the PHP framework for web artisans*. For more information on getting started with Laravel, check out there extensive documentation [here](http://laravel.com/docs/5.0/quick).
 
 
 #### Requirements
@@ -10,9 +10,13 @@
 - Composer
 - Beanstalkd
 - MySQL
-- Ruby (for Mailing)
+- Mcrypt PHP Extension
+- OpenSSL PHP Extension
+- Mbstring PHP Extension
+- Tokenizer PHP Extension
 - 256MB RAM
 
+As of PHP 5.5, some OS distributions may require you to manually install the PHP JSON extension. When using Ubuntu or Debian, this can be done via `sudo apt-get install php5-json`.
 
 ### Server Configuration
 
@@ -45,7 +49,7 @@ Recommended: [Install composer globally](https://getcomposer.org/doc/00-intro.md
 
 ##### 5. Install PHP v5.5 on Debian 7 "Wheezy"
 
-Currently, Debian Wheezy [ships with PHP v5.4.4-14+deb7u14](https://packages.debian.org/wheezy/php5). To install PHP v5.5, add the following lines to `/etc/apt/sources.list`:
+Currently, Debian Wheezy [ships with PHP v5.4.39-0+deb7u2](https://packages.debian.org/wheezy/php5). To install PHP v5.5, add the following lines to `/etc/apt/sources.list`:
 
 ```debian
 deb http://packages.dotdeb.org wheezy all
@@ -187,9 +191,25 @@ mysql> GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP
 
 ##### 4. Sensitive Configuration
 
-Edit `.env.examlple` file name to `.env` and contain the:
+Duplicate `.env.examlple` file and name the duplicate to `.env`.
 
-You can generate `YOUR_SECRET_KEY` by running `php artisan key:generate` and copying the resulting key into `.env`
+```bash
+cd ~/GreenAlert
+cp .env.example .env
+```
+
+Generate `YOUR_SECRET_KEY` by running `php artisan key:generate` and copying the resulting key into `.env`.
+
+In the `.env` file make sure to edit the following:
+
+```env
+...
+DB_HOST=localhost
+DB_DATABASE=homestead
+DB_USERNAME=homestead
+DB_PASSWORD=secret
+...
+```
 
 Read more on configuration [here](http://laravel.com/docs/5.0/configuration).
 
@@ -207,10 +227,19 @@ Queue configuration to run tasks in the background requires mainly configuration
 [program:beanstalkd]
 command=beanstalkd
 
-[program:greenalert_queue]
+[program:greenalert_queue_worker]
 command=php artisan queue:listen --timeout=0 --memory=256 --tries=5 --queue=greenalert,default
 directory=/path/to/GreenAlert
-stdout_logfile=/path/to/GreenAlert/app/storage/logs/supervisor_queue.log
+stdout_logfile=/path/to/GreenAlert/storage/logs/supervisor_queue.log
+```
+
+To create multiple workers, duplicate the following section in the supervisor configuration:
+
+```supervisor
+[program:greenalert_queue_worker_1]
+command=php artisan queue:listen --timeout=0 --memory=256 --tries=5 --queue=greenalert,default
+directory=/path/to/GreenAlert
+stdout_logfile=/path/to/GreenAlert/storage/logs/supervisor_queue.log
 ```
 
 Once saved, reload supervisor as such:
@@ -222,6 +251,11 @@ supervisor> exit
 ```
 
 Running `sudo supervisorctl` again, should show you the programs running.
+
+If you get the following error `unix:///tmp/supervisor.sock no such file`, you need to start supervisor as such:
+```bash
+sudo supervisord -c /etc/supervisor/supervisor.conf
+```
 
 
 ##### 7. Configure Nginx
@@ -344,28 +378,29 @@ Have any questions? Feel free to reach us at [kazini@codeforafrica.org](mailto:k
 ---
 
 
-
 ## Laravel PHP Framework
 
 [![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/downloads.svg)](https://packagist.org/packages/laravel/framework)
+[![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
 [![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
 [![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
 [![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, and caching.
-
-Laravel aims to make the development process a pleasing one for the developer without sacrificing application functionality. Happy developers make the best code. To this end, we've attempted to combine the very best of what we have seen in other web frameworks, including frameworks implemented in other languages, such as Ruby on Rails, ASP.NET MVC, and Sinatra.
+Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
 
 Laravel is accessible, yet powerful, providing powerful tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
 
 ## Official Documentation
 
-Documentation for the entire framework can be found on the [Laravel website](http://laravel.com/docs).
+Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
 
-### Contributing To Laravel
+## Contributing
 
-**All issues and pull requests should be filed on the [laravel/framework](http://github.com/laravel/framework) repository.**
+Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
+
+## Security Vulnerabilities
+
+If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
 
 ### License
 
