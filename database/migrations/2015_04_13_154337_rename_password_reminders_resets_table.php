@@ -25,4 +25,13 @@ class RenamePasswordRemindersResetsTable extends Migration {
         Schema::rename('password_resets', 'password_reminders');
 	}
 
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::drop('password_resets');
+    }
 }

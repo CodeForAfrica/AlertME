@@ -1,4 +1,6 @@
-<?php namespace Greenalert\Http\Controllers;
+<?php
+
+namespace Greenalert\Http\Controllers;
 
 class WelcomeController extends Controller {
 

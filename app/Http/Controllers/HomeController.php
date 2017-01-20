@@ -1,4 +1,6 @@
-<?php namespace Greenalert\Http\Controllers;
+<?php
+
+namespace Greenalert\Http\Controllers;
 
 use Greenalert\Category;
 use Greenalert\Page;

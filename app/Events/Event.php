@@ -1,7 +1,8 @@
-<?php namespace Greenalert\Events;
+<?php
 
-abstract class Event {
+namespace Greenalert\Events;
 
-	//
-
+abstract class Event
+{
+    //
 }

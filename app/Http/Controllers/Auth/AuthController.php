@@ -1,13 +1,16 @@
-<?php namespace Greenalert\Http\Controllers\Auth;
+<?php
 
+namespace Greenalert\Http\Controllers\Auth;
+
+use Greenalert\User;
+use Validator;
 use Greenalert\Http\Controllers\Controller;
-use Illuminate\Contracts\Auth\Guard;
-use Illuminate\Contracts\Auth\Registrar;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Http\Request;
 
-class AuthController extends Controller {
 
+class AuthController extends Controller
+{
     /*
     |--------------------------------------------------------------------------
     | Registration & Login Controller
@@ -24,43 +27,40 @@ class AuthController extends Controller {
     /**
      * Create a new authentication controller instance.
      *
-     * @param  \Illuminate\Contracts\Auth\Guard     $auth
-     * @param  \Illuminate\Contracts\Auth\Registrar $registrar
      * @return void
      */
-    public function __construct(Guard $auth, Registrar $registrar)
+    public function __construct()
     {
-        $this->auth = $auth;
-        $this->registrar = $registrar;
-        $this->redirectPath = '/dashboard';
-
         $this->middleware('guest', ['except' => 'getLogout']);
     }
 
-
     /**
-     * Handle a login request to the application.
+     * Get a validator for an incoming registration request.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param  array  $data
+     * @return \Illuminate\Contracts\Validation\Validator
      */
-    public function postLogin(Request $request)
+    protected function validator(array $data)
     {
-        $this->validate($request, [
-            'username' => 'required', 'password' => 'required',
+        return Validator::make($data, [
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:255|unique:users',
+            'password' => 'required|confirmed|min:6',
         ]);
-
-        $credentials = $request->only('username', 'password');
-
-        if ($this->auth->attempt($credentials, $request->has('remember'))) {
-            return redirect()->intended($this->redirectPath());
-        }
-
-        return redirect($this->loginPath())
-            ->withInput($request->only('username', 'remember'))
-            ->withErrors([
-                'email' => $this->getFailedLoginMessage(),
-            ]);
     }
 
+    /**
+     * Create a new user instance after a valid registration.
+     *
+     * @param  array  $data
+     * @return User
+     */
+    protected function create(array $data)
+    {
+        return User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => bcrypt($data['password']),
+        ]);
+    }
 }

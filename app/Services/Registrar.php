@@ -1,4 +1,6 @@
-<?php namespace Greenalert\Services;
+<?php
+
+namespace Greenalert\Services;
 
 use Greenalert\User;
 

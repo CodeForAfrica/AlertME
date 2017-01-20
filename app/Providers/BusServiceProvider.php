@@ -1,4 +1,6 @@
-<?php namespace Greenalert\Providers;
+<?php
+
+namespace Greenalert\Providers;
 
 use Illuminate\Bus\Dispatcher;
 use Illuminate\Support\ServiceProvider;
