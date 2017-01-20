@@ -17,43 +17,43 @@
     "fabpot/goutte": "^3.2"
   },
   "require-dev": {
-      "fzaninotto/faker": "~1.4",
-      "mockery/mockery": "0.9.*",
-      "phpunit/phpunit": "~4.0",
-      "phpspec/phpspec": "~2.1"
-  },
-  "autoload": {
-      "classmap": [
-          "database"
-      ],
-      "psr-4": {
-          "Greenalert\\": "app/"
-      }
-  },
-  "autoload-dev": {
-      "classmap": [
-          "tests/TestCase.php"
-      ]
-  },
-  "scripts": {
-      "post-install-cmd": [
-          "php artisan clear-compiled",
-          "php artisan optimize"
-      ],
-      "post-update-cmd": [
-          "php artisan clear-compiled",
-          "php artisan optimize"
-      ],
-      "post-root-package-install": [
-          "php -r \"copy('.env.example', '.env');\""
-      ],
-      "post-create-project-cmd": [
-          "php artisan key:generate"
-      ]
-  },
-  "config": {
-      "preferred-install": "dist"
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true
+        "fzaninotto/faker": "~1.4",
+        "mockery/mockery": "0.9.*",
+        "phpunit/phpunit": "~4.0",
+        "phpspec/phpspec": "~2.1"
+    },
+    "autoload": {
+        "classmap": [
+            "database"
+        ],
+        "psr-4": {
+            "Greenalert\\": "app/"
+        }
+    },
+    "autoload-dev": {
+        "classmap": [
+            "tests/TestCase.php"
+        ]
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "php artisan clear-compiled",
+            "php artisan optimize"
+        ],
+        "pre-update-cmd": [
+            "php artisan clear-compiled"
+        ],
+        "post-update-cmd": [
+            "php artisan optimize"
+        ],
+        "post-root-package-install": [
+            "php -r \"copy('.env.example', '.env');\""
+        ],
+        "post-create-project-cmd": [
+            "php artisan key:generate"
+        ]
+    },
+    "config": {
+        "preferred-install": "dist"
+    }
 }
