@@ -157,9 +157,6 @@ return [
         Greenalert\Providers\EventServiceProvider::class,
         Greenalert\Providers\RouteServiceProvider::class,
 
-        // TODO: Remove on downgrade
-        Greenalert\Providers\BusServiceProvider::class,
-
         GrahamCampbell\Markdown\MarkdownServiceProvider::class,
 
     ],
