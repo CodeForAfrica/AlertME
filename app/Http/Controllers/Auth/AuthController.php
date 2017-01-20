@@ -3,10 +3,11 @@
 namespace Greenalert\Http\Controllers\Auth;
 
 use Greenalert\User;
-use Validator;
 use Greenalert\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Http\Request;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Support\Facades\Auth;
 
 
 class AuthController extends Controller
@@ -31,6 +32,8 @@ class AuthController extends Controller
      */
     public function __construct()
     {
+        $this->redirectPath = '/dashboard';
+
         $this->middleware('guest', ['except' => 'getLogout']);
     }
 
@@ -42,6 +45,7 @@ class AuthController extends Controller
      */
     protected function validator(array $data)
     {
+
         return Validator::make($data, [
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
@@ -60,7 +64,30 @@ class AuthController extends Controller
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
+            'username' => $data['username'],
             'password' => bcrypt($data['password']),
         ]);
+    }
+
+    /**
+     * Handle a login request to the application.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function postLogin(Request $request)
+    {
+        $this->validate($request, [
+            'username' => 'required', 'password' => 'required',
+        ]);
+        $credentials = $request->only(['username', 'password']);
+        if (Auth::attempt($credentials, $request->has('remember'))) {
+            return redirect()->intended($this->redirectPath());
+        }
+        return redirect($this->loginPath())
+            ->withInput($request->only(['username', 'remember']))
+            ->withErrors([
+                'email' => $this->getFailedLoginMessage(),
+            ]);
     }
 }

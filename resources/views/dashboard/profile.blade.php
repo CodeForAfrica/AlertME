@@ -3,7 +3,7 @@
 @section('content')
   <div class="profile">
 
-    <form method="POST" action="{{ secure_url('dashboard/profile') }}">
+    <form method="POST" action="{{ url('dashboard/profile') }}">
       <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
       <h5>

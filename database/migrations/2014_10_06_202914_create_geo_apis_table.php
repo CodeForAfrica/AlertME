@@ -21,12 +21,10 @@ class CreateGeoApisTable extends Migration {
         });
 
         // Add first geoapi
-        DB::table('geo_apis')->insert(
-            array(
-                'name' => 'Google Geocoding API',
-                'url'  => 'https://developers.google.com/maps/documentation/geocoding/'
-            )
-        );
+        $geoapi = new \Greenalert\GeoApi();
+        $geoapi->name = 'Google Geocoding API';
+        $geoapi->url = 'https://developers.google.com/maps/documentation/geocoding/';
+
     }
 
     /**

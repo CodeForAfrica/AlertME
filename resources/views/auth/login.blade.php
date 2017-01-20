@@ -33,12 +33,12 @@
           <form role="form" method="POST" action="{{ url('/auth/login') }}">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-            <div class="form-group {{{ $errors->has('username') ? 'has-error' : '' }}}">
+            <div class="form-group {{ $errors->has('username') ? 'has-error' : '' }}">
               <input type="text" name="username" class="form-control login-field"
-                     value="{{ Input::old('username') }}" placeholder="Username" id="login-name">
+                     value="{{ \Illuminate\Support\Facades\Input::old('username') }}" placeholder="Username" id="login-name">
             </div>
 
-            <div class="form-group {{{ $errors->has('password') ? 'has-error' : '' }}}">
+            <div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
               <input type="password" name="password" class="form-control login-field"
                      value="" placeholder="Password" id="password">
               <label class="login-field-icon fui-lock" for="password"></label>
@@ -54,7 +54,7 @@
 
           </form>
 
-          <a class="login-link" href="{{ secure_url('/password/email') }}">Forgot password?</a>
+          <a class="login-link" href="{{ url('/password/email') }}">Forgot password?</a>
 
         </div>
       </div>

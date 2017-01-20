@@ -18,9 +18,14 @@ class IncludeSubscribersInUsersTable extends Migration {
             $table->index('email');
             $table->integer('role_id')->default(0)->after('email');
             $table->integer('subscriptions')->default(0)->after('role_id');
+
         });
-        DB::statement('ALTER TABLE `users` MODIFY `username` VARCHAR(64) NULL;');
-        DB::statement('ALTER TABLE `users` MODIFY `password` VARCHAR(64) NULL;');
+
+        Schema::table('users', function ($table) {
+            $table->string('username')->nullable()->change();
+            $table->string('password')->nullable()->change();
+        });
+
 
         // Update first user to have super admin role
         DB::table('users')

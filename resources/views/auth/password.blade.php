@@ -36,7 +36,7 @@
             </div>
           @endif
 
-          <form role="form" method="POST" action="{{ secure_url('/password/email') }}">
+          <form role="form" method="POST" action="{{ url('/password/email') }}">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
             <div class="form-group {{{ $errors->has('email') ? 'has-error' : '' }}}">

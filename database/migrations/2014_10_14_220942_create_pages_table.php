@@ -21,11 +21,10 @@ class CreatePagesTable extends Migration {
         });
 
         // Add First Page
-        DB::table('pages')->insert(
-            array(
-                'slug'        => 'about',
-                'title'       => 'About',
-                'description' => 'South African law says planned development projects, including mines, dams, power stations, roads and landfill sites, need to have their environmental impacts assessed before they can go ahead.
+        $page = new \Greenalert\Page();
+        $page->slug = 'about';
+        $page->title = 'About';
+        $page->description = 'South African law says planned development projects, including mines, dams, power stations, roads and landfill sites, need to have their environmental impacts assessed before they can go ahead.
 
 \#GreenAlert helps you to find out what Environmental Impact Assessments (EIAs) are happening in your area.
 
@@ -36,10 +35,10 @@ You can keep up to date with the changing status of EIAs that interest you by re
 And you can help keep the developers accountable by joining and participating in our community network.
 
 
-\#GreenAlert is a project by [Oxpeckers](http://oxpeckers.org)'
-            )
-        );
+\#GreenAlert is a project by [Oxpeckers](http://oxpeckers.org)';
+        $page->save();
     }
+
 
     /**
      * Reverse the migrations.

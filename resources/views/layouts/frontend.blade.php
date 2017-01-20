@@ -98,31 +98,6 @@
     </div>
   </footer>
 
-  {{--<!-- UserVoice JavaScript SDK (only needed once on a page) -->--}}
-  {{--<script>(function () {--}}
-  {{--var uv = document.createElement('script');--}}
-  {{--uv.type = 'text/javascript';--}}
-  {{--uv.async = true;--}}
-  {{--uv.src = '//widget.uservoice.com/n2LtUkxiieON2Mzal595lA.js';--}}
-  {{--var s = document.getElementsByTagName('script')[0];--}}
-  {{--s.parentNode.insertBefore(uv, s)--}}
-  {{--})()</script>--}}
-
-  {{--<!-- A tab to launch the Classic Widget -->--}}
-  {{--<script>--}}
-  {{--UserVoice = window.UserVoice || [];--}}
-  {{--UserVoice.push(['showTab', 'classic_widget', {--}}
-  {{--mode: 'full',--}}
-  {{--primary_color: '#1abc9c',--}}
-  {{--link_color: '#2980b9',--}}
-  {{--default_mode: 'support',--}}
-  {{--forum_id: 284002,--}}
-  {{--tab_label: 'Feedback & Support',--}}
-  {{--tab_color: '#1abc9c',--}}
-  {{--tab_position: 'middle-right',--}}
-  {{--tab_inverted: false--}}
-  {{--}]);--}}
-  {{--</script>--}}
 
   <!-- Start of greenalert Zendesk Widget script -->
   <script>/*<![CDATA[*/

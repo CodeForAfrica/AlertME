@@ -7,21 +7,14 @@
   ],
   "license": "MIT",
   "type": "project",
-  "repositories": [
-    {
-      "url": "https://github.com/sanis/laravel4-goutte.git",
-      "type": "git"
-    }
-  ],
   "require": {
     "php": ">=5.5.9",
     "laravel/framework": "5.1.*",
     "pda/pheanstalk": "~3.0",
-    "illuminate/html": "~5.0",
     "doctrine/dbal": "~2.5",
-    "graham-campbell/markdown": "~3.0",
-    "fabpot/goutte": "dev-master",
-    "nesbot/carbon": "~1.18"
+    "graham-campbell/markdown": "~5.2",
+    "nesbot/carbon": "~1.18",
+    "fabpot/goutte": "^3.2"
   },
   "require-dev": {
       "fzaninotto/faker": "~1.4",
@@ -34,7 +27,7 @@
           "database"
       ],
       "psr-4": {
-          "App\\": "app/"
+          "Greenalert\\": "app/"
       }
   },
   "autoload-dev": {

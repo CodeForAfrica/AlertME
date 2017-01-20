@@ -22,13 +22,11 @@ class CreateUsersTable extends Migration {
         });
 
         // Add first user
-        DB::table('users')->insert(
-            array(
-                'username' => 'admin',
-                'email'    => 'admin@localhost',
-                'password' => Hash::make('password')
-            )
-        );
+        $user = new \Greenalert\User();
+        $user->username = 'admin';
+        $user->email = 'admin@localhost';
+        $user->password = Hash::make('password');
+        $user->save();
     }
 
     /**

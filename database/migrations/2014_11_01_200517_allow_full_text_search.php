@@ -12,7 +12,10 @@ class AllowFullTextSearch extends Migration {
      */
     public function up()
     {
-        DB::statement('ALTER TABLE projects ADD FULLTEXT projects_search_fulltext(title, description, geo_address, status)');
+        Schema::table('projects', function (Blueprint $table) {
+            //
+            $table->index(['title', 'description', 'geo_address', 'status']);
+        });
     }
 
     /**
@@ -24,7 +27,7 @@ class AllowFullTextSearch extends Migration {
     {
         Schema::table('projects', function (Blueprint $table) {
             //
-            $table->dropIndex('projects_search_fulltext');
+            $table->dropIndex(['title', 'description', 'geo_address', 'status']);
         });
     }
 

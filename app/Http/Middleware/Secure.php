@@ -13,7 +13,7 @@ class Secure {
      */
     public function handle($request, Closure $next)
     {
-        if (!$request->secure()) {
+        if (!$request->secure() && !env('APP_DEBUG') ) {
             return redirect()->secure($request->path());
         }
 

@@ -13,15 +13,15 @@
     <meta name="google-site-verification" content="Pcw6RyloANHvjuK_Y9by9fpUw1H7U14PKKtPlPsgHP4" />
 
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    <link rel="shortcut icon" href="{{ secure_asset('assets/img/favicon.ico') }}">
+    <link rel="shortcut icon" href="{{ asset('assets/img/favicon.ico') }}">
 
-    <link rel="stylesheet" href="{{ secure_asset('assets/css/_bower.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/_bower.css') }}">
 
     @yield('stylesheets')
 
     @yield('styles')
 
-    <script src="{{ secure_asset('assets/js/vendor/modernizr-2.6.2.min.js') }}"></script>
+    <script src="{{ asset('assets/js/vendor/modernizr-2.6.2.min.js') }}"></script>
 
   </head>
   <body class="@yield('body-class')">
@@ -42,24 +42,24 @@
     @yield('footer')
 
 
-    <script src="{{ secure_asset('assets/js/_bower.js') }}"></script>
+    <script src="{{ asset('assets/js/_bower.js') }}"></script>
 
-    <script src="{{ secure_asset('assets/js/plugins.js') }}"></script>
-    <script src="{{ secure_asset('assets/js/application.js') }}"></script>
+    <script src="{{ asset('assets/js/plugins.js') }}"></script>
+    <script src="{{ asset('assets/js/application.js') }}"></script>
 
-    <!-- <script src="{{ secure_asset('assets/js/flat-ui.min.js') }}"></script> -->
+    <!-- <script src="{{ asset('assets/js/flat-ui.min.js') }}"></script> -->
 
-    <script src="{{ secure_asset('assets/js/pahali/pahali.js') }}"></script>
+    <script src="{{ asset('assets/js/pahali/pahali.js') }}"></script>
 
     <script>
-      pahali.base_url = "{{ secure_url('') }}";
+      pahali.base_url = "{{ '/' }}";
       pahali.csrf_token = "{{ csrf_token() }}";
       @section('scripts-data')
         
       @show
     </script>
 
-    <script src="{{ secure_asset('assets/js/main.js') }}"></script>
+    <script src="{{ asset('assets/js/main.js') }}"></script>
 
     @yield('scripts')
 

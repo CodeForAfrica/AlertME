@@ -17,7 +17,7 @@ class CreateDataSourceSyncsTable extends Migration {
             $table->integer('sync_id');
             $table->integer('data_source_id');
             $table->integer('sync_status');
-            $table->timestamp('completed_on')->default('0000-00-00 00:00:00')->nullable();
+            $table->timestamp('completed_on')->default('1990-01-01 00:00:00')->nullable();
             $table->timestamps();
         });
     }

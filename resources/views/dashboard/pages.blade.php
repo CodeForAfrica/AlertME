@@ -4,7 +4,7 @@
 
   <div class="pages">
 
-    <form action="{{ secure_url('dashboard/pages') }}" method="POST">
+    <form action="{{ url('dashboard/pages') }}" method="POST">
 
       <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
