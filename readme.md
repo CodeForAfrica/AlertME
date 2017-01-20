@@ -47,3 +47,4 @@ Find out more by checking out the [`LICENSE`](./LICENSE) file.
 ### Contact
 
 Have any questions? Feel free to reach us at [support@codeforafrica.org](mailto:support@codeforafrica.org).
+
