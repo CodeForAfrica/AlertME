@@ -2,13 +2,6 @@
 ============
 
 *Get to know more about your environment.*
-=======
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
->>>>>>> 6df868a123a8445de1aceba1349c550b1247aff0
 
 [#GreenAlert](https://greenalert.oxpeckers.org) is a geo-aware web platform that is working to make it easier for everyone to get invloved in decisions made about the environment around them. This is achieved by giving easy access to the data and allowing subscription of alerts.
 
