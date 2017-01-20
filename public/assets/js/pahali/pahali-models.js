@@ -26,7 +26,7 @@ pahali.datasource.config = {
       },
       lng: {
         title: 'Geo Lng', col: -1
-      },
+      }
     },
     address: {
       title: 'Geo Address', col: -1

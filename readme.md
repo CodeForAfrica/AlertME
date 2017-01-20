@@ -2,6 +2,13 @@
 ============
 
 *Get to know more about your environment.*
+=======
+[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
+[![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
+[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
+[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
+[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+>>>>>>> 6df868a123a8445de1aceba1349c550b1247aff0
 
 [#GreenAlert](https://greenalert.oxpeckers.org) is a geo-aware web platform that is working to make it easier for everyone to get invloved in decisions made about the environment around them. This is achieved by giving easy access to the data and allowing subscription of alerts.
 
@@ -28,6 +35,10 @@ Want to run your own instance? Check out the [`INSTALL.md`](./INSTALL.md) file.
 Thank you for considering to contribute to #GreenAlert! The contribution guide can be found in the [`CONTRIBUTING.md`](./CONTRIBUTING.md) file.
 
 ---
+
+## Security Vulnerabilities
+
+If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
 
 ### License
 
