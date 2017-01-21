@@ -12,10 +12,10 @@ class ApiCategoryController extends Controller {
      *
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $categories = Category::all();
-        if (\Input::get('pivot') == 1) {
+        if ($request->input('pivot') == 1) {
             foreach ($categories as $key => $category) {
                 $pivot = \DB::table('project_category')
                     ->where('category_id', $category->id)
@@ -47,13 +47,13 @@ class ApiCategoryController extends Controller {
      *
      * @return Response
      */
-    public function store()
+    public function store(Request $request)
     {
         $category = new Category;
-        $category->title = \Input::get('title');
-        $category->description = \Input::get('desc');
-        $category->keywords = \Input::get('keywords');
-        $category->icon_url = \Input::get('icon_url');
+        $category->title = $request->input('title');
+        $category->description = $request->input('desc');
+        $category->keywords = $request->input('keywords');
+        $category->icon_url = $request->input('icon_url');
 
         $category->save();
 

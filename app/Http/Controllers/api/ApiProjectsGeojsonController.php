@@ -1,6 +1,5 @@
 <?php namespace Greenalert\Http\Controllers\api;
 
-use Greenalert\Http\Requests;
 use Greenalert\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
@@ -12,13 +11,13 @@ class ApiProjectsGeojsonController extends Controller {
      *
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $page = \Input::get('page', 0);
+        $page = $request->input('page', 0);
         $per_page = 200; //Input::get('per_page', 0);
-        $cat_id = \Input::get('cat_id', -1);
+        $cat_id = $request->input('cat_id', -1);
 
-        $bounds = explode(",", \Input::get('bounds', '-37.683820326693805,-18.437924653474393,-37.683820326693805,56.2939453125'));
+        $bounds = explode(",", $request->input('bounds', '-37.683820326693805,-18.437924653474393,-37.683820326693805,56.2939453125'));
 
         $projects = \DB::table('projects')
             ->join('geocodes', 'projects.geo_address', '=', 'geocodes.address')

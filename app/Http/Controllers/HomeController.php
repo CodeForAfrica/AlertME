@@ -5,6 +5,7 @@ namespace Greenalert\Http\Controllers;
 use Greenalert\Category;
 use Greenalert\Page;
 use Greenalert\Project;
+use Illuminate\Http\Request;
 
 class HomeController extends Controller {
 
@@ -17,7 +18,7 @@ class HomeController extends Controller {
     |
     */
 
-    public function showHome()
+    public function showHome(Request $request)
     {
         $home = Page::find(1);
 
@@ -25,49 +26,50 @@ class HomeController extends Controller {
         $projects_count = \DB::table('projects')->count();
 
         $data = compact(
-            'home', 'projects', 'projects_count'
+            'home', 'projects', 'projects_count', 'request'
         );
 
         return view('home.index', $data);
     }
 
 
-    public function showAbout()
+    public function showAbout(Request $request)
     {
         $about = Page::find(2);
         $data = compact(
-            'about'
+            'about', 'request'
         );
 
         return view('home.about', $data);
     }
 
 
-    public function showMap()
+    public function showMap(Request $request)
     {
         $projects = \DB::table('projects')->take(10)->get();
         $projects_all = Project::select('id', 'geo_lat', 'geo_lng')->hasGeo()->get();
 
         $categories = Category::geocoded();
-        foreach ($categories as $key => $category) {
-            $pivot = \DB::table('project_category')
-                ->where('category_id', $category->id)
-                ->lists('project_id');
-            $categories[ $key ] = array_add($categories[ $key ], 'projects_pivot', $pivot);
+        if ($categories) {
+            foreach ($categories as $key => $category) {
+                $pivot = \DB::table('project_category')
+                    ->where('category_id', $category->id)
+                    ->lists('project_id');
+                $categories[ $key ] = array_add($categories[ $key ], 'projects_pivot', $pivot);
+            }
         }
 
         $data = compact(
-            'projects', 'projects_all',
-            'categories'
+            'projects', 'projects_all', 'categories', 'request'
         );
 
         return view('home.map', $data);
     }
 
 
-    public function getSearch()
+    public function getSearch(Request $request)
     {
-        $q = \Input::get('q');
+        $q = $request->input('q');
 
         $projects_sql = Project::whereRaw(
             "MATCH(title, description, geo_address, status) AGAINST (? IN BOOLEAN MODE)",
@@ -87,7 +89,7 @@ class HomeController extends Controller {
         }
 
         $data = compact(
-            'projects', 'projects_count'
+            'projects', 'projects_count', 'request'
         );
 
         return view('home.search', $data);
@@ -98,7 +100,7 @@ class HomeController extends Controller {
      * @param $id
      * @return mixed
      */
-    public function showProject($id)
+    public function showProject(Request $request, $id)
     {
         $project = Project::find($id);
 
@@ -119,7 +121,7 @@ class HomeController extends Controller {
             'access_token=pk.eyJ1IjoiY29kZWZvcmFmcmljYSIsImEiOiJVLXZVVUtnIn0.JjVvqHKBGQTNpuDMJtZ8Qg';
 
         $data = compact(
-            'project', 'map_image_link', 'geojson'
+            'project', 'map_image_link', 'geojson', 'request'
         );
 
         return view('home.project', $data);

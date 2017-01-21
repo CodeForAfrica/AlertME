@@ -27,17 +27,17 @@
       <div class="collapse navbar-collapse" id="ga-navbar-collapse-1">
 
         <ul class="nav navbar-nav">
-          <li class="{{ Request::path() == '/' ? 'active' : '' }}">
+          <li class="{{ $request->path() == '/' ? 'active' : '' }}">
             <a href="/">Home</a></li>
-          <li class="{{ Request::path() == 'map' ? 'active' : '' }}">
+          <li class="{{ $request->path() == 'map' ? 'active' : '' }}">
             <a href="/map">Map</a></li>
-          <li class="{{ Request::path() == 'about' ? 'active' : '' }}">
+          <li class="{{ $request->path() == 'about' ? 'active' : '' }}">
             <a href="/about">About</a></li>
           @if ( Auth::guest() )
-            <li class="{{ Request::path() == 'auth/login' ? 'active' : '' }}">
+            <li class="{{ $request->path() == 'auth/login' ? 'active' : '' }}">
               <a href="/auth/login">Login</a></li>
           @else
-            <li class="{{ Request::path() == 'dashboard' ? 'active' : '' }}">
+            <li class="{{ $request->path() == 'dashboard' ? 'active' : '' }}">
               <a href="/dashboard">Dashboard</a></li>
           @endif
         </ul>
@@ -47,7 +47,7 @@
           <div class="form-group">
             <div class="input-group">
               <input class="form-control" id="navbarInput-01" type="search" placeholder="Search"
-                     name="q" value="{{Input::get('q')}}">
+                     name="q" value="{{ $request->input('q') }}">
               <span class="input-group-btn">
                 <button type="submit" class="btn"><span class="fui-search"></span></button>
               </span>
@@ -92,7 +92,7 @@
 
           <p>An <a href="http://oxpeckers.org" target="_blank">Oxpeckers'</a> Project</p>
 
-          <p>Built by <a href="http://codeforafrica.org" target="_blank">Code for Africa</a></p>
+          <p>Built by <a href="https://codeforafrica.org" target="_blank">Code for Africa</a></p>
         </div>
       </div>
     </div>

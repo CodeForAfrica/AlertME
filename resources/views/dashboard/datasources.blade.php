@@ -492,7 +492,7 @@
 @stop
 
 @section('scripts')
-  <script src="{{ secure_asset('assets/js/backend/datasources.js') }}"></script>
-  <script src="{{ secure_asset('assets/js/backend/datasources-configure.js') }}"></script>
-  <script src="{{ secure_asset('assets/js/backend/datasources-sync.js') }}"></script>
+  <script src="{{ asset('assets/js/backend/datasources.js') }}"></script>
+  <script src="{{ asset('assets/js/backend/datasources-configure.js') }}"></script>
+  <script src="{{ asset('assets/js/backend/datasources-sync.js') }}"></script>
 @stop

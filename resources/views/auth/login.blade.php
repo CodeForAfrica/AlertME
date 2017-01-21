@@ -35,7 +35,7 @@
 
             <div class="form-group {{ $errors->has('username') ? 'has-error' : '' }}">
               <input type="text" name="username" class="form-control login-field"
-                     value="{{ \Illuminate\Support\Facades\Input::old('username') }}" placeholder="Username" id="login-name">
+                     value="{{ $request->old('username') }}" placeholder="Username" id="login-name">
             </div>
 
             <div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">

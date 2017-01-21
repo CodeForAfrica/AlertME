@@ -50,36 +50,36 @@
       <div class="col-md-2">
         <div class="btn-group-vertical btn-block navigation-side">
           <a href="{{ url('/dashboard') }}" class="btn btn-embossed btn-primary
-          {{ \Greenalert\Http\Requests\Request::path() == 'dashboard' ? 'active' : '' }}">
+          {{ $request->path() == 'dashboard' ? 'active' : '' }}">
             <span class="fui-home"></span> Home</a>
         </div>
         <hr/>
         <div class="btn-group-vertical btn-block navigation-side">
           <a href="{{ url('/dashboard/datasources') }}" class="btn btn-embossed btn-primary
-          {{ \Greenalert\Http\Requests\Request::path() == 'dashboard/datasources' ? 'active' : '' }}">
+          {{ $request->path() == 'dashboard/datasources' ? 'active' : '' }}">
             <span class="fui-upload"></span> Data Sources</a>
           <a href="/dashboard/categories" class="btn btn-embossed btn-primary
-          {{ \Greenalert\Http\Requests\Request::path() == 'dashboard/categories' ? 'active' : '' }}">
+          {{ $request->path() == 'dashboard/categories' ? 'active' : '' }}">
             <span class="fui-tag"></span> Categories</a>
           <a href="/dashboard/pages" class="btn btn-embossed btn-primary
-          {{ \Greenalert\Http\Requests\Request::path() == 'dashboard/pages' ? 'active' : '' }}">
+          {{ $request->path() == 'dashboard/pages' ? 'active' : '' }}">
             <span class="fui-document"></span> Pages</a>
         </div>
         <hr/>
         <div class="btn-group-vertical btn-block navigation-side">
           <a href="/dashboard/subscriptions" class="btn btn-embossed btn-primary
-          {{ \Greenalert\Http\Requests\Request::path() == 'dashboard/subscriptions' ? 'active' : '' }}">
+          {{ $request->path() == 'dashboard/subscriptions' ? 'active' : '' }}">
             <b>#</b> Subscriptions</a>
         </div>
         <hr/>
         <div class="btn-group-vertical btn-block navigation-side">
           <a href="/dashboard/profile" class="btn btn-embossed btn-primary
-          {{ \Greenalert\Http\Requests\Request::path() == 'dashboard/profile' ? 'active' : '' }}">
+          {{ $request->path() == 'dashboard/profile' ? 'active' : '' }}">
             <span class="fui-user"></span> Profile</a>
         </div>
         <div class="btn-group-vertical btn-block navigation-side">
           <a href="/dashboard/settings" class="btn btn-embossed btn-primary
-          {{ \Greenalert\Http\Requests\Request::path() == 'dashboard/settings' ? 'active' : '' }}">
+          {{ $request->path() == 'dashboard/settings' ? 'active' : '' }}">
             <span class="fui-gear"></span> Settings</a>
         </div>
       </div>

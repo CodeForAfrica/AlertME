@@ -284,8 +284,8 @@
 @stop
 
 @section('scripts-data')
-  var categories = {!! $categories != NULL ? $categories : 'false' !!};
-  pahali.categories.set( {!! $categories->toJSON() !!} );
+  var categories = {!! $categories != null ? $categories : 'false' !!};
+  pahali.categories.set( {!! $categories ? $categories->toJSON() : '' !!} );
   pahali.projects.set( {!! $projects_all->toJSON() !!} );
 @stop
 
@@ -296,15 +296,15 @@
   <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.js'></script>
   <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.css' rel='stylesheet' />
 
-  <link href="{{ secure_asset('assets/css/_bower.leaflet.css') }}" rel="stylesheet" />
-  <script src="{{ secure_asset('assets/js/_bower.leaflet.js') }}"></script>
+  <link href="{{ asset('assets/css/_bower.leaflet.css') }}" rel="stylesheet" />
+  <script src="{{ asset('assets/js/_bower.leaflet.js') }}"></script>
   
-  <script src="{{ secure_asset('assets/js/frontend/routes.js') }}"></script>
-  <script src="{{ secure_asset('assets/js/frontend/map.js') }}"></script>
-  <script src="{{ secure_asset('assets/js/frontend/map-categories.js') }}"></script>
-  <script src="{{ secure_asset('assets/js/frontend/map-subscribe.js') }}"></script>
+  <script src="{{ asset('assets/js/frontend/routes.js') }}"></script>
+  <script src="{{ asset('assets/js/frontend/map.js') }}"></script>
+  <script src="{{ asset('assets/js/frontend/map-categories.js') }}"></script>
+  <script src="{{ asset('assets/js/frontend/map-subscribe.js') }}"></script>
 
-  <script src="{{ secure_asset('assets/js/frontend/map-search.js') }}"></script>
+  <script src="{{ asset('assets/js/frontend/map-search.js') }}"></script>
 
   <script type="text/javascript">
     window.onload = function () {

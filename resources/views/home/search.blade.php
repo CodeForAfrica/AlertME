@@ -10,7 +10,7 @@
       <div class="page-header">
         <h3>
           Search Results
-          <small>{{ $projects_count }} results for "{{ \Input::get('q') }}"</small>
+          <small>{{ $projects_count }} results for "{{ $request->input('q') }}"</small>
         </h3>
       </div>
 
@@ -19,7 +19,7 @@
           <form action="/search" role="search">
             <div class="input-group">
               <input class="form-control" id="navbarInput-01" type="search" placeholder="Search"
-                     name="q" value="{{ \Input::get('q') }}">
+                     name="q" value="{{ $request->input('q') }}">
               <span class="input-group-btn">
                 <button type="submit" class="btn"><span class="fui-search"></span></button>
               </span>
@@ -36,7 +36,7 @@
 
           @foreach ($projects as $project)
             <p>
-              <a href="{{ secure_asset('project/'.$project->id) }}" target="_blank">
+              <a href="{{ asset('project/'.$project->id) }}" target="_blank">
                 {{ $project->title }}
               </a><br/>
               <small>
@@ -52,7 +52,7 @@
 
           <div class="text-center">
             {!! with(new \Greenalert\Http\Controllers\FlatUIPresenter($projects->appends(['q' =>
-            \Input::get('q')])))->render() !!}
+            $request->input('q')])))->render() !!}
           </div>
 
         </div>

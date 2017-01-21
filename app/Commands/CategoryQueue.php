@@ -4,12 +4,13 @@ use Greenalert\Category;
 use Greenalert\Commands\Command;
 
 use Greenalert\Project;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Contracts\Queue\ShouldBeQueued;
 
-class CategoryQueue extends Command implements SelfHandling, ShouldBeQueued {
+class CategoryQueue extends Command implements SelfHandling, ShouldQueue {
 
     use InteractsWithQueue, SerializesModels;
 

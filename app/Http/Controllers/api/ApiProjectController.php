@@ -12,25 +12,25 @@ class ApiProjectController extends Controller {
      *
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        if (\Input::get('all') == 1) {
+        if ($request->input('all') == 1) {
             ini_set('memory_limit', '-1');
             ini_set('max_execution_time', 0);
-            if (\Input::get('geo_only') == 1) {
+            if ($request->input('geo_only') == 1) {
                 $projects = Project::select('id', 'geo_lat', 'geo_lng')->hasGeo()->get();
             } else {
                 $projects = Project::all(array('id', 'geo_lat', 'geo_lng'));
             }
         } else {
-            if (\Input::get('min') == 1) {
-                if (\Input::get('geo_only') == 1) {
+            if ($request->input('min') == 1) {
+                if ($request->input('geo_only') == 1) {
                     $projects = Project::select('id', 'geo_lat', 'geo_lng')->hasGeo()->paginate(10);
                 } else {
                     $projects = Project::select('id', 'geo_lat', 'geo_lng')->paginate(10);
                 }
             } else {
-                if (\Input::get('geo_only') == 1) {
+                if ($request->input('geo_only') == 1) {
                     $projects = Project::hasGeo()->paginate(10);
                 } else {
                     $projects = Project::paginate(10);
@@ -72,7 +72,7 @@ class ApiProjectController extends Controller {
      * @param  int $id
      * @return Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
         $project = Project::find($id);
 
@@ -90,7 +90,7 @@ class ApiProjectController extends Controller {
             );
         }
 
-        if (\Input::has('embed')) {
+        if ($request->input('embed')) {
             $geojson = 'pin-l-circle-stroked+1abc9c(' . $project->geo_lng . ',' . $project->geo_lat . ')/' .
                 $project->geo_lng . ',' . $project->geo_lat . '),13';
 

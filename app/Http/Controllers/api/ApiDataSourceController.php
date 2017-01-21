@@ -38,12 +38,12 @@ class ApiDataSourceController extends Controller {
      *
      * @return Response
      */
-    public function store()
+    public function store(Request $request)
     {
         $datasource = new DataSource;
-        $datasource->title = \Input::get('title', $datasource->title);
-        $datasource->description = \Input::get('desc', $datasource->description);
-        $datasource->url = \Input::get('url', $datasource->url);
+        $datasource->title = $request->input('title', $datasource->title);
+        $datasource->description = $request->input('desc', $datasource->description);
+        $datasource->url = $request->input('url', $datasource->url);
 
         $datasource->save();
 
@@ -91,15 +91,15 @@ class ApiDataSourceController extends Controller {
      *
      * @return Response
      */
-    public function update($id)
+    public function update(Request $request, $id)
     {
         $datasource = DataSource::find($id);
-        $datasource->title = \Input::get('title', $datasource->title);
-        $datasource->description = \Input::get('description', $datasource->description);
-        $datasource->url = \Input::get('url', $datasource->url);
+        $datasource->title = $request->input('title', $datasource->title);
+        $datasource->description = $request->input('description', $datasource->description);
+        $datasource->url = $request->input('url', $datasource->url);
 
-        $datasource->config = \Input::get('config', $datasource->config);
-        $datasource->config_status = \Input::get('config_status', $datasource->config_status);
+        $datasource->config = $request->input('config', $datasource->config);
+        $datasource->config_status = $request->input('config_status', $datasource->config_status);
 
         $datasource->save();
 

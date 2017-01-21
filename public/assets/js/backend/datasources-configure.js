@@ -258,7 +258,7 @@ function configSave() {
   }
   if(pahali.datasource.config.geo.type == 'lat_lng') {
     if(pahali.datasource.config.geo.lat_lng.lat.col == -1 ||
-        pahali.datasource.config.lat_lng.lng.col == -1){
+        pahali.datasource.config.geo.lat_lng.lng.col == -1){
       $('#config-edit-error').show();
       return;
     }
