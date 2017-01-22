@@ -41,7 +41,6 @@ class IncludeSubscribersInUsersTable extends Migration {
     {
         Schema::table('users', function (Blueprint $table) {
             //
-            $table->dropUnique('users_email_unique');
             $table->dropIndex('users_email_index');
             $table->dropColumn(array('role_id', 'subscriptions'));
         });
