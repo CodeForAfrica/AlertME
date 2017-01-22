@@ -12,7 +12,7 @@
     "laravel/framework": "5.2.*",
     "pda/pheanstalk": "~3.0",
     "doctrine/dbal": "~2.5",
-    "graham-campbell/markdown": "~5.2",
+    "graham-campbell/markdown": "^7.0",
     "nesbot/carbon": "~1.18",
     "fabpot/goutte": "^3.2"
   },

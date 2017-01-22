@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "4ee0710405db3ff3f0a18532a3f2f4e2",
+    "content-hash": "82be9bbd686ef422465d7bbb25799a31",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -613,34 +613,35 @@
         },
         {
             "name": "graham-campbell/markdown",
-            "version": "v5.3.0",
+            "version": "v7.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/GrahamCampbell/Laravel-Markdown.git",
-                "reference": "8c587081a4beadd49839899ad649c2639697a563"
+                "reference": "507783993b40f4b118f201e8a8bec9e908b3ab1d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/GrahamCampbell/Laravel-Markdown/zipball/8c587081a4beadd49839899ad649c2639697a563",
-                "reference": "8c587081a4beadd49839899ad649c2639697a563",
+                "url": "https://api.github.com/repos/GrahamCampbell/Laravel-Markdown/zipball/507783993b40f4b118f201e8a8bec9e908b3ab1d",
+                "reference": "507783993b40f4b118f201e8a8bec9e908b3ab1d",
                 "shasum": ""
             },
             "require": {
-                "illuminate/contracts": "5.1.*|5.2.*",
-                "illuminate/support": "5.1.*|5.2.*",
-                "illuminate/view": "5.1.*|5.2.*",
-                "league/commonmark": "^0.12",
+                "illuminate/contracts": "5.1.*|5.2.*|5.3.*|5.4.*",
+                "illuminate/support": "5.1.*|5.2.*|5.3.*|5.4.*",
+                "illuminate/view": "5.1.*|5.2.*|5.3.*|5.4.*",
+                "league/commonmark": "^0.15",
                 "php": ">=5.5.9"
             },
             "require-dev": {
                 "graham-campbell/testbench": "^3.1",
+                "league/commonmark-extras": "^0.1.2",
                 "mockery/mockery": "^0.9.4",
                 "phpunit/phpunit": "^4.8|^5.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "5.3-dev"
+                    "dev-master": "7.1-dev"
                 }
             },
             "autoload": {
@@ -670,7 +671,7 @@
                 "laravel",
                 "markdown"
             ],
-            "time": "2015-11-14T11:57:14+00:00"
+            "time": "2017-01-01T13:30:44+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -1120,16 +1121,16 @@
         },
         {
             "name": "league/commonmark",
-            "version": "0.12.0",
+            "version": "0.15.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/commonmark.git",
-                "reference": "3eb64850ee688623db494398a5284a7a4cdf7b47"
+                "reference": "c8b43ee5821362216f8e9ac684f0f59de164edcc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/3eb64850ee688623db494398a5284a7a4cdf7b47",
-                "reference": "3eb64850ee688623db494398a5284a7a4cdf7b47",
+                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/c8b43ee5821362216f8e9ac684f0f59de164edcc",
+                "reference": "c8b43ee5821362216f8e9ac684f0f59de164edcc",
                 "shasum": ""
             },
             "require": {
@@ -1140,14 +1141,17 @@
                 "colinodell/commonmark-php": "*"
             },
             "require-dev": {
+                "cebe/markdown": "~1.0",
                 "erusev/parsedown": "~1.0",
-                "jgm/commonmark": "0.22",
-                "jgm/smartpunct": "0.22",
+                "jgm/commonmark": "0.27",
                 "michelf/php-markdown": "~1.4",
-                "mikehaertl/php-shellcommand": "~1.1.0",
+                "mikehaertl/php-shellcommand": "~1.2.0",
                 "phpunit/phpunit": "~4.3|~5.0",
-                "scrutinizer/ocular": "^1.1",
-                "symfony/finder": "~2.3"
+                "scrutinizer/ocular": "~1.1",
+                "symfony/finder": "~2.3|~3.0"
+            },
+            "suggest": {
+                "league/commonmark-extras": "Library of useful extensions including smart punctuation"
             },
             "bin": [
                 "bin/commonmark"
@@ -1155,7 +1159,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.13-dev"
+                    "dev-master": "0.16-dev"
                 }
             },
             "autoload": {
@@ -1171,7 +1175,7 @@
                 {
                     "name": "Colin O'Dell",
                     "email": "colinodell@gmail.com",
-                    "homepage": "http://www.colinodell.com",
+                    "homepage": "https://www.colinodell.com",
                     "role": "Lead Developer"
                 }
             ],
@@ -1182,7 +1186,7 @@
                 "markdown",
                 "parser"
             ],
-            "time": "2015-11-04T14:24:41+00:00"
+            "time": "2016-12-19T00:11:43+00:00"
         },
         {
             "name": "league/flysystem",
