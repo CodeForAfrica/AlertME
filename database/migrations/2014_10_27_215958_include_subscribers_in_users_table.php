@@ -14,7 +14,6 @@ class IncludeSubscribersInUsersTable extends Migration {
     {
         Schema::table('users', function (Blueprint $table) {
             //
-            $table->unique('email');
             $table->index('email');
             $table->integer('role_id')->default(0)->after('email');
             $table->integer('subscriptions')->default(0)->after('role_id');
