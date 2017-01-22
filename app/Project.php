@@ -141,7 +141,7 @@ class Project extends Model {
 
     public function categories()
     {
-        return $this->belongsToMany('Greenalert\Category', 'project_category');
+        return $this->belongsToMany('Greenalert\Category', 'project_category')->withTimestamps();
     }
 
     public function subscriptions()
@@ -207,8 +207,8 @@ class Project extends Model {
         $keywords = explode(",", $category->keywords);
 
         foreach ($keywords as $keyword) {
-            $in_title = stripos($this->data->$cols[ $config->title->col ], $keyword);
-            $in_desc = stripos($this->data->$cols[ $config->desc->col ], $keyword);
+            $in_title = stripos(((array) $this->data)[$cols[ $config->title->col ]], $keyword);
+            $in_desc = stripos(((array) $this->data)[$cols[ $config->desc->col ]], $keyword);
 
             // If keyword found
             if ($in_title !== false || $in_desc !== false) {
