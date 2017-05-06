@@ -9,8 +9,8 @@ var map;
 // Resize the page
 function resizeMap () {
   var footerHeight = $('footer').height() +
-  parseInt($('footer').css('padding-top').replace('px', '')) +
-  parseInt($('footer').css('padding-bottom').replace('px', ''));
+      parseInt($('footer').css('padding-top').replace('px', '')) +
+      parseInt($('footer').css('padding-bottom').replace('px', ''));
   if($('body').height() > (500 +  footerHeight)) {
     // Map loading
     $('.home-map, .map-loading, .home-map .map-wrapper').height($('body').height() - footerHeight );
@@ -26,23 +26,24 @@ $(window).resize(function(){
 });
 
 
-// Create map
-L.mapbox.accessToken = 'pk.eyJ1IjoiY29kZWZvcmFmcmljYSIsImEiOiJVLXZVVUtnIn0.JjVvqHKBGQTNpuDMJtZ8Qg';
-map = L.mapbox.map('map', 'codeforafrica.ji193j10',{
-  zoomAnimationThreshold: 10,
-  maxZoom: 15,
-  zoomControl: false,
-  attributionControl: false
-}).setView([-28.4792625, 24.6727135], 5);
-map.scrollWheelZoom.disable();
-
-
 // Markers
 var markers;
 var markers_arr = [];
 
 
 $( document ).ready(function() {
+
+  console.log(pahali.map.defaults);
+
+  // Create map
+  L.mapbox.accessToken = 'pk.eyJ1IjoiY29kZWZvcmFmcmljYSIsImEiOiJVLXZVVUtnIn0.JjVvqHKBGQTNpuDMJtZ8Qg';
+  map = L.mapbox.map('map', 'codeforafrica.ji193j10',{
+    zoomAnimationThreshold: 10,
+    maxZoom: 15,
+    zoomControl: false,
+    attributionControl: false
+  }).setView(pahali.map.defaults.center, pahali.map.defaults.center.zoom);
+  map.scrollWheelZoom.disable();
 
   /**
    * Load Markers
@@ -57,8 +58,8 @@ $( document ).ready(function() {
 
   function addMarker (project) {
     var loc = new L.LatLng(
-      project.get('geo_lat'),
-      project.get('geo_lng')
+        project.get('geo_lat'),
+        project.get('geo_lng')
     );
     var marker = new L.Marker(loc);
     var marker_html = '<h6>'+project.get('title')+'</h6>'+
@@ -74,8 +75,8 @@ $( document ).ready(function() {
           callback: function() {
             // Update the marker pop up
             marker_html = '<h6>'+project.get('title')+'</h6>'+
-              '<small><a href="/project/'+project.get('id')+'" target="_blank">'+
-              'Learn more <span class="fui-arrow-right"></span></a></small>';
+                '<small><a href="/project/'+project.get('id')+'" target="_blank">'+
+                'Learn more <span class="fui-arrow-right"></span></a></small>';
             marker.setPopupContent(marker_html);
           }
         });
@@ -91,7 +92,7 @@ $( document ).ready(function() {
     project.set('marker', marker);
 
     pahali.map.get('markers').addLayer(project.get('marker'));
-    
+
   }
 
   pahali.projects.each(function(project) {
@@ -105,7 +106,7 @@ $( document ).ready(function() {
    */
 
   pahali.map.set({'map': map});
-  
+
   // Map controls
   $('#map-ctrl-zoom-in').click(function () {
     pahali.map.get('map').zoomIn();
