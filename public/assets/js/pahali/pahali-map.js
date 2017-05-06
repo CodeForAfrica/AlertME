@@ -16,7 +16,9 @@
       'shareable': true,
       'pahali_changed_hash': false,
       'share_on_hashchange_count': 0,
-      'share_on_hashchange_count_max': 1
+      'share_on_hashchange_count_max': 1,
+      'center': [-28.4792625, 24.6727135],
+      'zoom': 5
     },
 
     initialize: function () {
@@ -30,9 +32,8 @@
           if (!this.get('map').hasLayer(this.get('markers'))) {
             this.get('map').addLayer(this.get('markers'));
           }
-          ;
+
         }
-        ;
 
         this.share_link_process();
         this.share_link_create_enable();
@@ -51,23 +52,22 @@
     share_link_process: function () {
       // Map options
       if (getUrlParameters('center', '', true) == false && getUrlParameters('bounds', '', true) == false) {
-        this.get('map').setView([-28.4792625, 24.6727135], 5, {animate: false});
-        this.center();
+          this.get('map').setView(pahali.map.defaults.center, pahali.map.defaults.zoom, {animate: false});
+          this.center();
       }
-      ;
       if (getUrlParameters('center', '', true) != false) {
         var map_ctr = getUrlParameters('center', '', true).split(',');
         var map_zoom = getUrlParameters('zoom', '', true);
         this.get('map').setView([map_ctr[0], map_ctr[1]], map_zoom);
       }
-      ;
+
       if (getUrlParameters('bounds', '', true) != false) {
         var map_bounds = getUrlParameters('bounds', '', true).split(',');
         this.get('map').fitBounds([
           [map_bounds[0], map_bounds[1]], [map_bounds[2], map_bounds[3]]
         ]);
       }
-      ;
+
 
       // Category option
       if (getUrlParameters('category', '', true) != false) {
@@ -75,7 +75,7 @@
       } else {
         $('*[data-cat-id="all_not_set"]').trigger('click');
       }
-      ;
+
     },
 
     // Shareable: Create link to enable share
@@ -119,7 +119,7 @@
       if (count < this.get('share_on_hashchange_count_max')) {
         return this.set('share_on_hashchange_count', count + 1);
       }
-      ;
+
       this.set('share_on_hashchange_count', 0);
       this.get('map').off('zoomend, moveend', this.share_on_hashchange_end, this);
       this.share_link_create_enable();
@@ -140,7 +140,7 @@
             {animate: false}
         );
       }
-      ;
+
     },
 
 
@@ -152,7 +152,7 @@
         this.set('pahali_changed_hash', true);
         window.location.hash = setUrlParameters('category', cat_id, '', true);
       }
-      ;
+
 
       var map_markers = this.get('markers');
       map_markers.clearLayers();
