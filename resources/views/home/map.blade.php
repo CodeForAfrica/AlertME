@@ -67,7 +67,7 @@
                     <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
                   </button>
                   <strong>Geolocation Failed</strong><br/>
-                  <small>Oops! It seems your are not in <em>South Africa</em>. Try searching for a location instead.</small>
+                  <small>Oops! It seems your are not in <em>{{ env('COUNTRY', 'South Africa') }}</em>. Try searching for a location instead.</small>
                 </div>
 
                 <div class="alert alert-danger alert-dismissible" role="alert"
