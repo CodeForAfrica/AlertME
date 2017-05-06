@@ -14,7 +14,7 @@ $( document ).ready(function() {
   if (typeof google !== 'undefined') {
     var input = document.getElementById('search-geo');
     var options = {
-      componentRestrictions: { country: pahali.country.code }
+      componentRestrictions: { country: pahali.country.code.toLowerCase() }
     };
     searchBox = new google.maps.places.Autocomplete(input, options);
     google.maps.event.addListener(searchBox, 'place_changed', function() {
@@ -67,7 +67,7 @@ $( document ).ready(function() {
                 }
               });
 
-              if(itemCountry == "ZA"){
+              if(itemCountry == pahali.country.code.toUpperCase()){
                 $('#search-geo').val(results[1].formatted_address);
                 window.location.href = "/map/#!/center="+user_lat+","+
                   user_lng+"&zoom=11";
