@@ -69,8 +69,8 @@ $( document ).ready(function() {
 
               if(itemCountry == pahali.country.code.toUpperCase()){
                 $('#search-geo').val(results[1].formatted_address);
-                window.location.href = "/map/#!/center="+user_lat+","+
-                  user_lng+"&zoom=11";
+                window.location.href = "/map/#!/center=" + user_lat + "," +
+                  user_lng + "&zoom=11";
               } else {
                 $('#search-my-geo-alert').fadeIn();
               }

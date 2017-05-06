@@ -110,7 +110,7 @@
               <div class="col-xs-6 palette palette-wet-asphalt">
                 <br/>
                 <p>Last Updated</p>
-                <p><small><b>10th Jan, 2015</b></small></p>
+                <p><small><b>10th May, 2017</b></small></p>
               </div>
               <div class="col-xs-6 palette palette-carrot">
                 <br/>
