@@ -10,7 +10,10 @@ var pahali = {
   _name: 'Pahali.JS',
   _description: 'The Pahali.JS extension',
   base_url: '',
-  csrf_token: ''
+  csrf_token: '',
+  country: {
+    code: 'za'
+  }
 };
 
 

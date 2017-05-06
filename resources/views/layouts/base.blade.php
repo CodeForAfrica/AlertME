@@ -54,6 +54,7 @@
     <script>
       pahali.base_url = "{{ url('/') }}";
       pahali.csrf_token = "{{ csrf_token() }}";
+      pahali.country.code = '{{ env('COUNTRY_CODE', 'za') }}';
       @section('scripts-data')
         
       @show

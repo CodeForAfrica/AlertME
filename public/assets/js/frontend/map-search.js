@@ -14,7 +14,7 @@ $( document ).ready(function() {
   if (typeof google !== 'undefined') {
     var input = document.getElementById('search-geo');
     var options = {
-      componentRestrictions: {country: 'za'}
+      componentRestrictions: { country: pahali.country.code }
     };
     searchBox = new google.maps.places.Autocomplete(input, options);
     google.maps.event.addListener(searchBox, 'place_changed', function() {

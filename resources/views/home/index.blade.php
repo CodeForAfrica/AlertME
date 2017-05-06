@@ -170,6 +170,6 @@
 @stop
 
 @section('scripts')
-  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWrLoGr3YIHkrFyzoSMsISNlvW4CKwifU&libraries=places"></script>
   <script src="/assets/js/frontend/map-search.js"></script>
 @stop
