@@ -1,12 +1,12 @@
 <?php
 namespace Greenalert\Http\Controllers\Auth;
 
-namespace App\Http\Controllers\Auth;
+namespace Greenalert\Http\Controllers\Auth;
 
 use Greenalert\User;
 use Illuminate\Http\Request;
 
-use App\Http\Controllers\Controller;
+use Greenalert\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 

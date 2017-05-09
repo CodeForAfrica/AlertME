@@ -14,10 +14,7 @@
 
 Route::get('home', 'HomeController@index');
 
-Route::controllers([
-    'auth'     => 'Auth\AuthController',
-    'password' => 'Auth\PasswordController',
-]);
+Auth::routes();
 
 //
 
@@ -92,5 +89,3 @@ Route::any('login', function () {
 Route::any('logout', function () {
     return redirect('auth/logout');
 });
-
-
