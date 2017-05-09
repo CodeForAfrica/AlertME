@@ -12,11 +12,10 @@
 */
 
 
-Route::get('home', 'HomeController@index');
-
 Auth::routes();
 
-//
+
+// The rest
 
 Route::get('/', 'HomeController@showHome');
 Route::get('about', 'HomeController@showAbout');
@@ -83,9 +82,10 @@ Route::resource('scrapes', 'ScrapesController');
 
 // Redirects
 
-Route::any('login', function () {
-    return redirect('auth/login');
-});
-Route::any('logout', function () {
-    return redirect('auth/logout');
-});
+//Route::any('login', function () {
+//    return redirect('auth/login');
+//});
+//Route::any('logout', function () {
+//    return redirect('auth/logout');
+//});
+

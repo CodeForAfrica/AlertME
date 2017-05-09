@@ -39,24 +39,29 @@ class LoginController extends Controller
     }
 
     /**
-     * Handle a login request to the application.
+     * Show the application login form.
      *
-     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function postLogin(Request $request)
+    public function showLoginForm(Request $request)
     {
-        $this->validate($request, [
-            'username' => 'required', 'password' => 'required',
-        ]);
-        $credentials = $request->only(['username', 'password']);
-        if (Auth::attempt($credentials, $request->has('remember'))) {
-            return redirect()->intended($this->redirectPath());
+        $view = property_exists($this, 'loginView')
+            ? $this->loginView : 'auth.authenticate';
+
+        if (view()->exists($view)) {
+            return view($view);
         }
-        return redirect($this->loginPath())
-            ->withInput($request->only(['username', 'remember']))
-            ->withErrors([
-                'email' => $this->getFailedLoginMessage(),
-            ]);
+
+        return view('auth.login', compact('request'));
+    }
+
+    /**
+     * Get the login username to be used by the controller.
+     *
+     * @return string
+     */
+    public function username()
+    {
+        return 'username';
     }
 }
