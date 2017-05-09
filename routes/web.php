@@ -82,10 +82,10 @@ Route::resource('scrapes', 'ScrapesController');
 
 // Redirects
 
-//Route::any('login', function () {
-//    return redirect('auth/login');
-//});
-//Route::any('logout', function () {
-//    return redirect('auth/logout');
-//});
+Route::any('auth/login', function () {
+    return redirect('login');
+});
+Route::any('auth/logout', function () {
+    return redirect('logout');
+});
 
