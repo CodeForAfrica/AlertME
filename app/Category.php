@@ -60,11 +60,11 @@ class Category extends Model {
             'geocodes.status as geo_status');
         $projects_lat_lng = \DB::table('projects')
             ->where('geo_type', 'lat_lng')
-            ->select($sel_cols_projects)->get();
+            ->select($sel_cols_projects)->get()->all();
         $projects_address = \DB::table('projects')
             ->join('geocodes', 'projects.geo_address', '=', 'geocodes.address')
             ->where('projects.geo_type', '=', 'address')
-            ->select(array_merge($sel_cols_projects, $sel_cols_geocodes))->get();
+            ->select(array_merge($sel_cols_projects, $sel_cols_geocodes))->get()->all();
         $projects = array_merge($projects_lat_lng, $projects_address);
 
         $projects_id = array();

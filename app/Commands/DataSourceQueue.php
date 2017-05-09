@@ -1,15 +1,11 @@
 <?php namespace Greenalert\Commands;
 
-use Greenalert\Commands\Command;
-
 use Greenalert\DataSource;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Bus\SelfHandling;
-use Illuminate\Contracts\Queue\ShouldBeQueued;
 
-class DataSourceQueue extends Command implements SelfHandling, ShouldQueue {
+class DataSourceQueue extends Command implements ShouldQueue {
 
     use InteractsWithQueue, SerializesModels;
 

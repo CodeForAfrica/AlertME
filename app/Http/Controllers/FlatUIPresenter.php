@@ -1,8 +1,8 @@
 <?php namespace Greenalert\Http\Controllers;
 
-use Illuminate\Pagination\BootstrapThreePresenter;
+use Illuminate\Pagination\BootstrapPresenter;
 
-class FlatUIPresenter extends BootstrapThreePresenter {
+class FlatUIPresenter extends BootstrapPresenter {
 
     public function render()
     {

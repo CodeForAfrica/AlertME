@@ -34,7 +34,7 @@
           <li class="{{ $request->path() == 'about' ? 'active' : '' }}">
             <a href="/about">About</a></li>
           @if ( Auth::guest() )
-            <li class="{{ $request->path() == 'auth/login' ? 'active' : '' }}">
+            <li class="{{ $request->path() == 'login' ? 'active' : '' }}">
               <a href="/auth/login">Login</a></li>
           @else
             <li class="{{ $request->path() == 'dashboard' ? 'active' : '' }}">

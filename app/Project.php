@@ -1,8 +1,11 @@
 <?php namespace Greenalert;
 
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class Project extends Model {
+
+    use Searchable;
 
     protected $fillable = array('data_id');
 

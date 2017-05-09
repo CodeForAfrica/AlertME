@@ -1,36 +1,39 @@
 <?php
 namespace Greenalert\Http\Controllers\Auth;
 
+namespace Greenalert\Http\Controllers\Auth;
+
 use Greenalert\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Validator;
-use Greenalert\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\ThrottlesLogins;
-use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
-class AuthController extends Controller
+use Greenalert\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Auth\RegistersUsers;
+
+class RegisterController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
-    | Registration & Login Controller
+    | Register Controller
     |--------------------------------------------------------------------------
     |
-    | This controller handles the registration of new users, as well as the
-    | authentication of existing users. By default, this controller uses
-    | a simple trait to add these behaviors. Why don't you explore it?
+    | This controller handles the registration of new users as well as their
+    | validation and creation. By default this controller uses a trait to
+    | provide this functionality without requiring any additional code.
     |
     */
-    use AuthenticatesAndRegistersUsers, ThrottlesLogins;
+
+    use RegistersUsers;
+
     /**
-     * Where to redirect users after login / registration.
+     * Where to redirect users after registration.
      *
      * @var string
      */
     protected $redirectTo = '/dashboard';
 
     /**
-     * Create a new authentication controller instance.
+     * Create a new controller instance.
      *
      * @return void
      */
@@ -48,9 +51,9 @@ class AuthController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|confirmed|min:6',
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6|confirmed',
         ]);
     }
 

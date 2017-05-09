@@ -31,8 +31,10 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="ga-navbar-collapse-1">
 
-        <a class="btn btn-default btn-sm navbar-btn navbar-right" type="button"
-           href="/logout">Logout</a>
+        <form class="form-inline navbar-right" method="post" action="/logout">
+          <button class="btn btn-default btn-sm navbar-btn" type="submit">Logout</button>
+          <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        </form>
 
       </div>
       <!-- /.navbar-collapse -->
