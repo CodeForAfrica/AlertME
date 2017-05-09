@@ -71,12 +71,7 @@ class HomeController extends Controller {
     {
         $q = $request->input('q');
 
-        $projects_sql = Project::whereRaw(
-            "MATCH(title, description, geo_address, status) AGAINST (? IN BOOLEAN MODE)",
-            array($q)
-        );
-        $projects_count = $projects_sql->count();
-        $projects = $projects_sql->paginate(10);
+        $projects = Project::search($q)->paginate(10);
 
         // Limit length
         for ($i = 0; $i < count($projects); $i++) {
@@ -89,7 +84,7 @@ class HomeController extends Controller {
         }
 
         $data = compact(
-            'projects', 'projects_count', 'request'
+            'projects', 'request'
         );
 
         return view('home.search', $data);
