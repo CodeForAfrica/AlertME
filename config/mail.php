@@ -55,7 +55,10 @@ return [
     |
     */
 
-    'from' => ['address' => 'greenalert@oxpeckers.org', 'name' => '#GreenAlert'],
+    'from' => [
+        'address' => env('MAIL_FROM_ADDRESS', 'greenalert@codeforafrica.org'),
+        'name' => env('MAIL_FROM_NAME', '#GreenAlert'),
+    ],
 
     /*
     |--------------------------------------------------------------------------
