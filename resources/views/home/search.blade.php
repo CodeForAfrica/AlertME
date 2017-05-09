@@ -48,6 +48,10 @@
             </p>
           @endforeach
 
+          @if ( count($projects) == 0 )
+            <p class="lead">Oops.. Sorry, no results.</p>
+          @endif
+
           <br/>
 
           <div class="text-center">
