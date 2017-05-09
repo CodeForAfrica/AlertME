@@ -67,7 +67,7 @@
                     <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
                   </button>
                   <strong>Geolocation Failed</strong><br/>
-                  <small>Oops! It seems your are not in <em>South Africa</em>. Try searching for a location instead.</small>
+                  <small>Oops! It seems your are not in <em>{{ env('COUNTRY', 'South Africa') }}</em>. Try searching for a location instead.</small>
                 </div>
 
                 <div class="alert alert-danger alert-dismissible" role="alert"
@@ -287,14 +287,17 @@
   var categories = {!! $categories != null ? $categories : 'false' !!};
   pahali.categories.set( {!! $categories ? $categories->toJSON() : '' !!} );
   pahali.projects.set( {!! $projects_all->toJSON() !!} );
+
+  pahali.map.defaults.center = {{ env('MAP_CENTER', '[-28.4792625, 24.6727135]') }};
+  pahali.map.defaults.zoom = {{ env('MAP_ZOOM', 5) }};
 @stop
 
 @section('scripts')
   
-  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWrLoGr3YIHkrFyzoSMsISNlvW4CKwifU&libraries=places"></script>
 
-  <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.js'></script>
-  <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.css' rel='stylesheet' />
+  <script src="https://api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.js"></script>
+  <link href="https://api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.css" rel="stylesheet" />
 
   <link href="{{ asset('assets/css/_bower.leaflet.css') }}" rel="stylesheet" />
   <script src="{{ asset('assets/js/_bower.leaflet.js') }}"></script>

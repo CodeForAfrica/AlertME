@@ -54,6 +54,7 @@
     <script>
       pahali.base_url = "{{ url('/') }}";
       pahali.csrf_token = "{{ csrf_token() }}";
+      pahali.country.code = '{{ env('COUNTRY_CODE', 'za') }}';
       @section('scripts-data')
         
       @show
@@ -71,7 +72,9 @@
       e=o.createElement(i);r=o.getElementsByTagName(i)[0];
       e.src='//www.google-analytics.com/analytics.js';
       r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-      ga('create','UA-44795600-13');ga('require', 'linkid', 'linkid.js');ga('send','pageview');
+      ga('create','{{ env('GOOGLE_ANALYTICS', 'UA-44795600-13') }}');
+      ga('require', 'linkid', 'linkid.js');
+      ga('send','pageview');
     </script>
   </body>
 </html>

@@ -44,7 +44,7 @@
                 <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
               </button>
               <strong>Geolocation Failed</strong><br/>
-              <small>Oops! It seems your are not in <em>South Africa</em>. Try searching for a location instead.</small>
+              <small>Oops! It seems your are not in <em>{{ env('COUNTRY', 'South Africa') }}</em>. Try searching for a location instead.</small>
             </div>
             <div class="alert alert-danger alert-dismissible" role="alert"
                 style="padding: 10px 35px 10px 15px; display:none;" id="search-my-geo-alert-denied">
@@ -110,7 +110,7 @@
               <div class="col-xs-6 palette palette-wet-asphalt">
                 <br/>
                 <p>Last Updated</p>
-                <p><small><b>10th Jan, 2015</b></small></p>
+                <p><small><b>10th May, 2017</b></small></p>
               </div>
               <div class="col-xs-6 palette palette-carrot">
                 <br/>
@@ -170,6 +170,6 @@
 @stop
 
 @section('scripts')
-  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWrLoGr3YIHkrFyzoSMsISNlvW4CKwifU&libraries=places"></script>
   <script src="/assets/js/frontend/map-search.js"></script>
 @stop

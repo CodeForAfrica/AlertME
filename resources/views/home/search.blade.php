@@ -10,7 +10,7 @@
       <div class="page-header">
         <h3>
           Search Results
-          <small>{{ $projects_count }} results for "{{ $request->input('q') }}"</small>
+          <small>{{ $projects->total() }} results for "{{ $request->input('q') }}"</small>
         </h3>
       </div>
 
@@ -48,11 +48,14 @@
             </p>
           @endforeach
 
+          @if ( count($projects) == 0 )
+            <p class="lead">Oops.. Sorry, no results.</p>
+          @endif
+
           <br/>
 
           <div class="text-center">
-            {!! with(new \Greenalert\Http\Controllers\FlatUIPresenter($projects->appends(['q' =>
-            $request->input('q')])))->render() !!}
+            {{ $projects->appends(['q' => $request->input('q')])->links('vendor.pagination.default') }}
           </div>
 
         </div>
