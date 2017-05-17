@@ -33,8 +33,6 @@ var markers_arr = [];
 
 $( document ).ready(function() {
 
-  console.log(pahali.map.defaults);
-
   // Create map
   L.mapbox.accessToken = 'pk.eyJ1IjoiY29kZWZvcmFmcmljYSIsImEiOiJVLXZVVUtnIn0.JjVvqHKBGQTNpuDMJtZ8Qg';
   map = L.mapbox.map('map', 'codeforafrica.ji193j10',{

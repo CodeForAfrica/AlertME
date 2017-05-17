@@ -54,7 +54,7 @@ class HomeController extends Controller {
             foreach ($categories as $key => $category) {
                 $pivot = \DB::table('project_category')
                     ->where('category_id', $category->id)
-                    ->lists('project_id');
+                    ->pluck('project_id');
                 $categories[ $key ] = array_add($categories[ $key ], 'projects_pivot', $pivot);
             }
         }
