@@ -1,7 +1,9 @@
 <?php namespace Greenalert;
 
+use Greenalert\Mail\Subscribed;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Mail;
 
 class Subscription extends Model {
 
@@ -29,33 +31,7 @@ class Subscription extends Model {
         // Setup event bindings...
         Subscription::created(function($subscription)
         {
-            $user = $subscription->user;
-            $project_id = $subscription->project_id;
-
-            $confirm_url = url('subscriptions/'.$subscription->confirm_token);
-
-            if ($subscription->project_id == 0) {
-                $map_image_link = 'https://api.tiles.mapbox.com/v4/codeforafrica.ji193j10'.
-                    '/geojson('.urlencode($subscription->geojson).')'.
-                    '/auto/600x250.png?'.
-                    'access_token=pk.eyJ1IjoiY29kZWZvcmFmcmljYSIsImEiOiJVLXZVVUtnIn0.JjVvqHKBGQTNpuDMJtZ8Qg';
-            } else {
-                $map_image_link = 'http://api.tiles.mapbox.com/v4/codeforafrica.ji193j10/'.
-                    $subscription->geojson.'/600x250.png256?'.
-                    'access_token=pk.eyJ1IjoiY29kZWZvcmFmcmljYSIsImEiOiJVLXZVVUtnIn0.JjVvqHKBGQTNpuDMJtZ8Qg';
-                $project_title = $subscription->project->title;
-            }
-
-            $data = compact(
-                'subscription', 'user', 'project_id', 'project_title',
-                'map_image_link', 'confirm_url'
-            );
-
-            \Mail::queue('emails.subscription.new', $data, function($message) use ($user)
-            {
-                $message->to($user->email)->subject('#GreenAlert | Confirm Subscription!');
-            });
-
+            Mail::to($subscription->user->email)->send(new Subscribed($subscription));
         });
 
     }
