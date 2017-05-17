@@ -5,8 +5,8 @@ use Greenalert\Http\Controllers\Controller;
 use Greenalert\Project;
 use Greenalert\Subscription;
 use Greenalert\User;
-use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ApiSubscriptionController extends Controller {
 
@@ -97,7 +97,8 @@ class ApiSubscriptionController extends Controller {
         // Validate bounds
         if ($request->input('type') == 'map') {
             $bounds = explode(",", $request->input('bounds'));
-            if (count($bounds) != 4 || $request->has('bounds')) {
+
+            if (count($bounds) != 4) {
                 return response()->json(array(
                     'error'     => true,
                     'validator' => 'BOUNDS_ERROR'),
@@ -121,7 +122,7 @@ class ApiSubscriptionController extends Controller {
 
             $subscription->project_id = \Input::get('project_id');
 
-        } elseif (\Input::get('type') == 'map') {
+        } elseif ($request->input('type') == 'map') {
 
             $subscription->sw_lat = $bounds[0];
             $subscription->sw_lng = $bounds[1];
@@ -268,7 +269,7 @@ class ApiSubscriptionController extends Controller {
         $data = compact(
             'msg_confirm', 'msg_details',
             'subscription', 'user', 'user_email',
-            'map_image_link', 'map_link'
+            'map_image_link', 'map_link', 'request'
         );
 
         return view('subscriptions.confirm', $data);
