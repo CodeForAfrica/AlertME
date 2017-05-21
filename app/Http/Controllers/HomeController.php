@@ -5,6 +5,9 @@ namespace Greenalert\Http\Controllers;
 use Greenalert\Category;
 use Greenalert\Page;
 use Greenalert\Project;
+use Greenalert\Subscription;
+use Greenalert\Sync;
+use Greenalert\User;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller {
@@ -25,8 +28,13 @@ class HomeController extends Controller {
         $projects = \DB::table('projects')->take(10)->get();
         $projects_count = \DB::table('projects')->count();
 
+        $last_sync = Sync::orderBy('updated_at', 'desc')->first()->updated_at->toFormattedDateString();
+        $subscriptions_count = Subscription::all()->count();
+        $users_count = User::all()->count();
+
         $data = compact(
-            'home', 'projects', 'projects_count', 'request'
+            'home', 'projects', 'projects_count', 'request',
+            'last_sync', 'subscriptions_count', 'users_count'
         );
 
         return view('home.index', $data);
@@ -104,6 +112,14 @@ class HomeController extends Controller {
             $project = $projects[ mt_rand(0, count($projects) - 1) ];
         }
 
+        $project_photos = [];
+
+        foreach ($project->data as $col => $value) {
+            if (str_contains(strtolower($col), 'photo')) {
+                array_push($project_photos, $value);
+            }
+        }
+
         if (!$project) {
             return redirect('search')->with('error', 'Oops! It seems we can\'t find the page you are looking for. Try search instead.');
         }
@@ -116,7 +132,8 @@ class HomeController extends Controller {
             'access_token=pk.eyJ1IjoiY29kZWZvcmFmcmljYSIsImEiOiJVLXZVVUtnIn0.JjVvqHKBGQTNpuDMJtZ8Qg';
 
         $data = compact(
-            'project', 'map_image_link', 'geojson', 'request'
+            'project', 'map_image_link', 'geojson', 'request',
+            'project_photos'
         );
 
         return view('home.project', $data);

@@ -12,7 +12,7 @@ var pahali = {
   base_url: '',
   csrf_token: '',
   country: {
-    code: 'za'
+    code: 'za' // Default country code
   }
 };
 

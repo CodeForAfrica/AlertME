@@ -37,14 +37,14 @@ return [
         'database' => [
             'driver' => 'database',
             'table' => 'jobs',
-            'queue' => 'default',
+            'queue' => env('QUEUE_NAME', 'default'),
             'retry_after' => 90,
         ],
 
         'beanstalkd' => [
             'driver' => 'beanstalkd',
             'host' => 'localhost',
-            'queue' => 'default',
+            'queue' => env('QUEUE_NAME', 'default'),
             'retry_after' => 90,
         ],
 
@@ -53,14 +53,14 @@ return [
             'key' => 'your-public-key',
             'secret' => 'your-secret-key',
             'prefix' => 'https://sqs.us-east-1.amazonaws.com/your-account-id',
-            'queue' => 'your-queue-name',
+            'queue' => env('QUEUE_NAME', 'default'),
             'region' => 'us-east-1',
         ],
 
         'redis' => [
             'driver' => 'redis',
             'connection' => 'default',
-            'queue' => 'default',
+            'queue' => env('QUEUE_NAME', 'default'),
             'retry_after' => 90,
         ],
 

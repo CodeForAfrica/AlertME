@@ -65,6 +65,17 @@
 
         <div class="col-md-7">
           <p>{{ $project->description }}</p>
+
+          @if(count($project_photos) != 0)
+            <hr/>
+            <h6>Photos</h6>
+
+            @foreach($project_photos as $img)
+              <img src="{{ $img }}" alt="Image">
+              <br/><br/>
+            @endforeach
+          @endif
+
           <hr/>
           <h6>Details</h6>
 

@@ -6,6 +6,8 @@
 
 body { padding-top: 76px; }
 
+img { max-width: 100%; }
+
 /**
  * HOME
  * -----------------------------------------------------------------------------
@@ -53,7 +55,9 @@ footer {
     .home-logos a img:hover {
       opacity: 0.7;
     }
-
+    .home-logos .funders img {
+      height: 55px;
+    }
 
 /**
  * Map

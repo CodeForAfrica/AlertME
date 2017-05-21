@@ -112,7 +112,7 @@ class Project extends Model {
 
     public function getDataAttribute($value)
     {
-        return json_decode($value);
+        return json_decode($value, true);
     }
 
     public function setDataAttribute($value)

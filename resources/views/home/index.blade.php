@@ -110,7 +110,7 @@
               <div class="col-xs-6 palette palette-wet-asphalt">
                 <br/>
                 <p>Last Updated</p>
-                <p><small><b>10th May, 2017</b></small></p>
+                <p><small><b>{{ $last_sync }}</b></small></p>
               </div>
               <div class="col-xs-6 palette palette-carrot">
                 <br/>
@@ -122,12 +122,12 @@
               <div class="col-xs-6 palette palette-concrete">
                 <br/>
                 <p>Subscribers</p>
-                <p><small>Coming soon..</small><b></b></p>
+                <p><small>{{ $users_count }} subscribers</small><b></b></p>
               </div>
               <div class="col-xs-6 palette palette-alizarin">
                 <br/>
                 <p>Subscriptions</p>
-                <p><small>Coming soon..</small><b></b></p>
+                <p><small>{{ $subscriptions_count }} subscriptions</small><b></b></p>
               </div>
             </div> <!-- /.row -->
           </div> <!-- /.col-md-6 -->
@@ -136,40 +136,19 @@
       <br/><br/>
     </div> <!-- /.container-fluid -->
 
-    <div class="container text-left home-logos">
+    <div class="container text-left">
       <br/><br/>
-      <div class="row">
-        <div class="col-md-2 col-md-offset-1">
-          <h4>Partners</h4>
-          <p>#GreenAlert has been made possible through support from the following partners:</p>
-        </div>
-        <div class="col-md-7 col-md-offset-1">
-          <p>
-            <a href="http://oxpeckers.org" target="_blank">
-              <img src="{{ asset('assets/img/logos/oxpeckers-long.png') }}"/>
-            </a>
-          </p>
-          <p>
-            <a href="http://www.codeforafrica.org" target="_blank">
-              <img src="{{ asset('assets/img/logos/cfafrica.png') }}"/>
-            </a>
-            <a href="http://africannewschallenge.org" target="_blank">
-              <img src="{{ asset('assets/img/logos/anic.png') }}" style="height:65px;"/>
-            </a>
-            <a href="http://www.sej.org/" target="_blank">
-              <img src="{{ asset('assets/img/logos/sej.png') }}"/>
-            </a>
-          </p>
-        </div>
-      </div> <!-- /.row -->
+
+      @include('home.snippets.partners')
+
       <br/><br/>
-    </div> <!-- /.home-logos -->
+    </div> <!-- /.container -->
 
   </div> <!-- /.home-index -->
 
 @stop
 
 @section('scripts')
-  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWrLoGr3YIHkrFyzoSMsISNlvW4CKwifU&libraries=places"></script>
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_API_KEY', 'AIzaSyDWrLoGr3YIHkrFyzoSMsISNlvW4CKwifU') }}&libraries=places"></script>
   <script src="/assets/js/frontend/map-search.js"></script>
 @stop

@@ -2,6 +2,9 @@
 
 use Greenalert\Commands\DataSourceQueue;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+use Mockery\Exception;
 
 class DataSource extends Model {
 
@@ -31,6 +34,7 @@ class DataSource extends Model {
             foreach ($projects as $project) {
                 $project->delete();
             }
+            Storage::deleteDirectory("public/photos/$datasource->id");
         });
     }
 
@@ -99,7 +103,7 @@ class DataSource extends Model {
 
         // Check column change
         if (array_keys($csv[0]) != $this->columns) {
-            \Log::info('Columns are differnt from configuration.');
+            \Log::info('Columns are different from configuration.');
 
             $ds_sync->sync_status = 4;
             $ds_sync->save();
@@ -158,6 +162,8 @@ class DataSource extends Model {
 
             $project->data = $row;
 
+            $project = $this->downloadPhotos($project);
+
             foreach ($categories as $category) {
                 $project->assignCategory($category);
             }
@@ -195,6 +201,34 @@ class DataSource extends Model {
 
         // Return array of csv
         return $this->csv_to_array($this->url);
+    }
+
+
+    // TODO: Do this in queue
+    function downloadPhotos($project)
+    {
+        Log::info("[$project->datasource_id:$project->id] Photo download started.");
+
+        $data = $project->data;
+
+        $index = 0;
+        foreach ($data as $col => $value) {
+            if (str_contains(strtolower($col), 'photo')) {
+                try {
+                    $photo_location = "/photos/$project->datasource_id/$project->id-$index";
+                    Storage::put("public".$photo_location, file_get_contents($value));
+                    $data[$col] = "/storage".$photo_location;
+                    Log::info("[$project->datasource_id:$project->id] Photo download successful.");
+                } catch (Exception $e) {
+                    Log::error("[$project->datasource_id:$project->id] Photo download failed (".$value.").");
+                }
+            }
+            $index++;
+        }
+
+        $project->data = $data;
+
+        return $project;
     }
 
 
