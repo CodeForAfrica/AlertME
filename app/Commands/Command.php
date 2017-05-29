@@ -1,4 +1,4 @@
-<?php namespace Greenalert\Commands;
+<?php namespace AlertME\Commands;
 
 abstract class Command {
 

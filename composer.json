@@ -27,7 +27,7 @@
             "database"
         ],
         "psr-4": {
-            "Greenalert\\": "app/"
+            "AlertME\\": "app/"
         }
     },
     "autoload-dev": {

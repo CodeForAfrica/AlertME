@@ -1,9 +1,9 @@
-<?php namespace Greenalert\Commands;
+<?php namespace AlertME\Commands;
 
-use Greenalert\Category;
-use Greenalert\Commands\Command;
+use AlertME\Category;
+use AlertME\Commands\Command;
 
-use Greenalert\Project;
+use AlertME\Project;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;

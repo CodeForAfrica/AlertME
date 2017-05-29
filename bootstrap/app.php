@@ -28,17 +28,17 @@ $app = new Illuminate\Foundation\Application(
 
 $app->singleton(
     Illuminate\Contracts\Http\Kernel::class,
-    Greenalert\Http\Kernel::class
+    AlertME\Http\Kernel::class
 );
 
 $app->singleton(
     Illuminate\Contracts\Console\Kernel::class,
-    Greenalert\Console\Kernel::class
+    AlertME\Console\Kernel::class
 );
 
 $app->singleton(
     Illuminate\Contracts\Debug\ExceptionHandler::class,
-    Greenalert\Exceptions\Handler::class
+    AlertME\Exceptions\Handler::class
 );
 
 /*

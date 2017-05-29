@@ -1,4 +1,4 @@
-<?php namespace Greenalert;
+<?php namespace AlertME;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -30,17 +30,17 @@ class DataSourceSync extends Model {
 
     function sync()
     {
-        return $this->belongsTo('Greenalert\Sync');
+        return $this->belongsTo('AlertME\Sync');
     }
 
     function datasource()
     {
-        return $this->belongsTo('Greenalert\DataSource');
+        return $this->belongsTo('AlertME\DataSource');
     }
 
     function projects()
     {
-        return $this->hasMany('Greenalert\Project');
+        return $this->hasMany('AlertME\Project');
     }
 
 }

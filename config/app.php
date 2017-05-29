@@ -172,11 +172,11 @@ return [
         /*
          * Application Service Providers...
          */
-        Greenalert\Providers\AppServiceProvider::class,
-        Greenalert\Providers\AuthServiceProvider::class,
-        // Greenalert\Providers\BroadcastServiceProvider::class,
-        Greenalert\Providers\EventServiceProvider::class,
-        Greenalert\Providers\RouteServiceProvider::class,
+        AlertME\Providers\AppServiceProvider::class,
+        AlertME\Providers\AuthServiceProvider::class,
+        // AlertME\Providers\BroadcastServiceProvider::class,
+        AlertME\Providers\EventServiceProvider::class,
+        AlertME\Providers\RouteServiceProvider::class,
 
         GrahamCampbell\Markdown\MarkdownServiceProvider::class,
 

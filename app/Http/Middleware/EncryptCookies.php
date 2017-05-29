@@ -1,6 +1,6 @@
 <?php
 
-namespace Greenalert\Http\Middleware;
+namespace AlertME\Http\Middleware;
 
 use Illuminate\Cookie\Middleware\EncryptCookies as BaseEncrypter;
 

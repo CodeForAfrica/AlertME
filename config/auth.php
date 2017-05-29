@@ -67,7 +67,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => Greenalert\User::class,
+            'model' => AlertME\User::class,
         ],
 
         // 'users' => [

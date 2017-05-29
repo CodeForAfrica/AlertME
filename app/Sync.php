@@ -1,6 +1,6 @@
-<?php namespace Greenalert;
+<?php namespace AlertME;
 
-use Greenalert\Commands\SyncQueue;
+use AlertME\Commands\SyncQueue;
 use Illuminate\Database\Eloquent\Model;
 
 class Sync extends Model {
@@ -33,12 +33,12 @@ class Sync extends Model {
 
     function datasourcesyncs()
     {
-        return $this->hasMany('Greenalert\DataSourceSync');
+        return $this->hasMany('AlertME\DataSourceSync');
     }
 
     function user()
     {
-        return $this->belongsTo('Greenalert\User');
+        return $this->belongsTo('AlertME\User');
     }
 
 }

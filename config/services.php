@@ -30,7 +30,7 @@ return [
     ],
 
     'stripe' => [
-        'model' => Greenalert\User::class,
+        'model' => AlertME\User::class,
         'key' => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
     ],

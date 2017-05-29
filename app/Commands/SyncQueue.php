@@ -1,7 +1,7 @@
-<?php namespace Greenalert\Commands;
+<?php namespace AlertME\Commands;
 
-use Greenalert\DataSource;
-use Greenalert\Sync;
+use AlertME\DataSource;
+use AlertME\Sync;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;

@@ -1,4 +1,4 @@
-<?php namespace Greenalert;
+<?php namespace AlertME;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -29,7 +29,7 @@ class Geocode extends Model {
 
     public function geoapi()
     {
-        return $this->belongsTo('Greenalert\GeoApi');
+        return $this->belongsTo('AlertME\GeoApi');
     }
 
     public function fetchGeo()

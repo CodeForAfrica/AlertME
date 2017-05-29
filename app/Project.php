@@ -1,4 +1,4 @@
-<?php namespace Greenalert;
+<?php namespace AlertME;
 
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Searchable;
@@ -134,22 +134,22 @@ class Project extends Model {
 
     public function datasource()
     {
-        return $this->belongsTo('Greenalert\DataSource');
+        return $this->belongsTo('AlertME\DataSource');
     }
 
     public function datasourcesync()
     {
-        return $this->belongsTo('Greenalert\DataSourceSync');
+        return $this->belongsTo('AlertME\DataSourceSync');
     }
 
     public function categories()
     {
-        return $this->belongsToMany('Greenalert\Category', 'project_category')->withTimestamps();
+        return $this->belongsToMany('AlertME\Category', 'project_category')->withTimestamps();
     }
 
     public function subscriptions()
     {
-        return $this->hasMany('Greenalert\Subscription');
+        return $this->hasMany('AlertME\Subscription');
     }
 
     public function geocode()

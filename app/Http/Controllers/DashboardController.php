@@ -1,14 +1,14 @@
-<?php namespace Greenalert\Http\Controllers;
+<?php namespace AlertME\Http\Controllers;
 
-use Greenalert\Category;
-use Greenalert\DataSource;
-use Greenalert\GeoApi;
-use Greenalert\Http\Controllers\Controller;
-use Greenalert\Page;
-use Greenalert\Subscription;
-use Greenalert\Sync;
+use AlertME\Category;
+use AlertME\DataSource;
+use AlertME\GeoApi;
+use AlertME\Http\Controllers\Controller;
+use AlertME\Page;
+use AlertME\Subscription;
+use AlertME\Sync;
 
-use Greenalert\User;
+use AlertME\User;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;

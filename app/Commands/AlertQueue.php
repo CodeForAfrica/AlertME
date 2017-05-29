@@ -1,10 +1,10 @@
-<?php namespace Greenalert\Commands;
+<?php namespace AlertME\Commands;
 
-use Greenalert\Alert;
+use AlertME\Alert;
 
-use Greenalert\Project;
-use Greenalert\Subscription;
-use Greenalert\User;
+use AlertME\Project;
+use AlertME\Subscription;
+use AlertME\User;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;

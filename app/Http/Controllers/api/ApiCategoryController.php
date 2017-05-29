@@ -1,7 +1,7 @@
-<?php namespace Greenalert\Http\Controllers\api;
+<?php namespace AlertME\Http\Controllers\api;
 
-use Greenalert\Category;
-use Greenalert\Http\Controllers\Controller;
+use AlertME\Category;
+use AlertME\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 

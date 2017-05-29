@@ -1,4 +1,4 @@
-<?php namespace Greenalert\Http\Middleware;
+<?php namespace AlertME\Http\Middleware;
 
 use Closure;
 
