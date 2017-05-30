@@ -57,7 +57,7 @@ class AlertQueue extends Command implements SelfHandling, ShouldQueue {
                 $user = User::find($subscription->user_id);
                 $data = compact('user', 'project');
                 \Mail::queue('emails.alerts.status', $data, function ($message) use ($user) {
-                    $message->to($user->email, '')->subject('[#GreenAlert] You\'ve got an update');
+                    $message->to($user->email, '')->subject('['.env('APP_NAME', '#AlertME').'] You\'ve got an update');
                 });
             }
         }

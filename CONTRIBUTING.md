@@ -40,7 +40,7 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 ## Coding Style
 
-\#GreenAlert follows the PSR-4 and PSR-1 coding standards. In addition to these standards, the following coding standards should be followed:
+\#AlertME follows the PSR-4 and PSR-1 coding standards. In addition to these standards, the following coding standards should be followed:
 
 - The class namespace declaration must be on the same line as `<?php`.
 - A class' opening `{` must be on the same line as the class name.

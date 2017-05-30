@@ -41,7 +41,7 @@
           <hr/>
           <a href="{{ secure_asset('project/'.$project->id) }}" target="_blank"
             class="btn btn-block btn-primary btn-embossed">
-            <span class="fui-link"></span> View on #GreenAlert
+            <span class="fui-link"></span> View on {{ env('APP_NAME', '#GreenAlert') }}
           </a>
           <br/>
         </div>
@@ -71,7 +71,7 @@
   <div class="bg-primary">
     <div class="container">
       <a href="{{ secure_asset('') }}" target="_blank">
-        <h4 style="margin-top: 15px;">#GreenAlert</h4>
+        <h4 style="margin-top: 15px;">{{ env('APP_NAME', '#GreenAlert') }}</h4>
       </a>
     </div>
   </div>

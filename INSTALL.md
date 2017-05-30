@@ -1,6 +1,6 @@
 # Installation
 
-\#GreenAlert is built using [Laravel](#laravel-php-framework), *the PHP framework for web artisans*. For more information on getting started with Laravel, check out there extensive documentation [here](http://laravel.com/docs/5.0/quick).
+\#AlertME is built using [Laravel](#laravel-php-framework), *the PHP framework for web artisans*. For more information on getting started with Laravel, check out there extensive documentation [here](http://laravel.com/docs/5.0/quick).
 
 
 #### Requirements
@@ -20,7 +20,7 @@ As of PHP 5.5, some OS distributions may require you to manually install the PHP
 
 ### Server Configuration
 
-We recommend setting up with [Debian Wheezy](https://www.debian.org/releases/wheezy/). #GreenAlert will though be able to run on any system setup that meets the [requirements](#requirements).
+We recommend setting up with [Debian Wheezy](https://www.debian.org/releases/wheezy/). #AlertME will though be able to run on any system setup that meets the [requirements](#requirements).
 
 ##### 1. Install LEMP Stack
 
@@ -84,7 +84,7 @@ sudo apt-get install php5-mcrypt
 
 ##### 7. Install Beanstalkd
 
-For queue services, #GreenAlert uses Beanstalkd. This allows us to defer the processing of a time consuming task, such as sending an e-mail, until a later time, thus drastically speeding up the web requests to the application.
+For queue services, #AlertME uses Beanstalkd. This allows us to defer the processing of a time consuming task, such as sending an e-mail, until a later time, thus drastically speeding up the web requests to the application.
 
 On Debian, this can be installed by running the following command:
 
@@ -158,13 +158,13 @@ Now that we have our server set up, we can set up the application. Here, we clon
 Cloning from github is as simple as running the following command:
 
 ```bash
-git clone https://github.com/CodeForAfricaLabs/GreenAlert.git
+git clone https://github.com/CodeForAfrica/AlertME.git
 ```
 
 (Optional) You can checkout the branch (recommended: `master` (default), `develop`) you want by running the following commands:
 
 ```bash
-cd GreenAlert
+cd AlertME
 git checkout [<branch>]
 ```
 
@@ -176,16 +176,16 @@ Run the `composer install` command in the root of the cloned project's directory
 
 In this step, we'll use the simple MySQL but feel free to explore with any other Database you like. Currently Laravel supports four database systems: MySQL, Postgres, SQLite, and SQL Server; out of the box.
 
-First, we create the `greenalert` user and `cfa_greenalert` database. Connect to the server as MySQL `root` user using the command `mysql -u root -p` and then run the following:
+First, we create the `alertme` user and `alertme` database. Connect to the server as MySQL `root` user using the command `mysql -u root -p` and then run the following:
 
 ```mysql
-mysql> GRANT ALL PRIVILEGES ON *.* TO 'greenalert'@'localhost'
+mysql> GRANT ALL PRIVILEGES ON *.* TO 'alertme'@'localhost'
     -> IDENTIFIED BY 'YOUR_DB_PASSWORD' WITH GRANT OPTION;
-mysql> SHOW GRANTS FOR 'greenalert' @ 'localhost';
-mysql> CREATE DATABASE cfa_greenalert;
+mysql> SHOW GRANTS FOR 'alertme' @ 'localhost';
+mysql> CREATE DATABASE alertme;
 mysql> GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP
-    -> ON cfa_greenalert.*
-    -> TO 'greenalert'@'localhost';
+    -> ON alertme.*
+    -> TO 'alertme'@'localhost';
 ```
 
 
@@ -194,7 +194,7 @@ mysql> GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP
 Duplicate `.env.examlple` file and name the duplicate to `.env`.
 
 ```bash
-cd ~/GreenAlert
+cd ~/AlertME
 cp .env.example .env
 ```
 
@@ -221,25 +221,25 @@ Optional: You can define the environment by adding `--env=[<environment>]` argum
 
 ##### 6. Queue Configuration
 
-Queue configuration to run tasks in the background requires mainly configuration of supervisor to initiate the listener. Create and edit the `/etc/supervisor/conf.d/greenalert.conf` file. In the file, add the following:
+Queue configuration to run tasks in the background requires mainly configuration of supervisor to initiate the listener. Create and edit the `/etc/supervisor/conf.d/alertme.conf` file. In the file, add the following:
 
 ```supervisor
 [program:beanstalkd]
 command=beanstalkd
 
-[program:greenalert_queue_worker]
-command=php artisan queue:listen --timeout=0 --memory=256 --tries=5 --queue=greenalert,default
-directory=/path/to/GreenAlert
-stdout_logfile=/path/to/GreenAlert/storage/logs/supervisor_queue.log
+[program:alertme_queue_worker]
+command=php artisan queue:listen --timeout=0 --memory=256 --tries=5 --queue=alertme,default
+directory=/path/to/AlertME
+stdout_logfile=/path/to/AlertME/storage/logs/supervisor_queue.log
 ```
 
 To create multiple workers, duplicate the following section in the supervisor configuration:
 
 ```supervisor
-[program:greenalert_queue_worker_1]
-command=php artisan queue:listen --timeout=0 --memory=256 --tries=5 --queue=greenalert,default
-directory=/path/to/GreenAlert
-stdout_logfile=/path/to/GreenAlert/storage/logs/supervisor_queue.log
+[program:alertme_queue_worker_1]
+command=php artisan queue:listen --timeout=0 --memory=256 --tries=5 --queue=alertme,default
+directory=/path/to/AlertME
+stdout_logfile=/path/to/AlertME/storage/logs/supervisor_queue.log
 ```
 
 Once saved, reload supervisor as such:
@@ -282,16 +282,16 @@ sudo update-ca-certificates -f
 
 You can read more on SSL with nginx [here](https://www.digitalocean.com/community/tutorials/how-to-create-a-ssl-certificate-on-nginx-for-ubuntu-12-04).
 
-Finally, to see the page on *example.com* you would need to add the file `/etc/nginx/sites-available/greenalert` with the following:
+Finally, to see the page on *example.com* you would need to add the file `/etc/nginx/sites-available/alertme` with the following:
 
 ```nginx
 server {
   listen   443;
 
-  root /path/to/GreenAlert/public;
+  root /path/to/AlertME/public;
   index index.php index.html index.htm;
 
-  server_name example.com greenalert;
+  server_name example.com alertme;
 
   ssl on;
   ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
@@ -318,7 +318,7 @@ server {
 server {
   listen   80;
 
-  server_name example.com greenalert;
+  server_name example.com alertme;
 
   return 301 https://$server_name$request_uri;
 
@@ -328,11 +328,11 @@ server {
 Enable the site by creating a symlink:
 
 ```bash
-sudo ln -s /etc/nginx/sites-available/greenalert /etc/nginx/sites-enabled/greenalert
+sudo ln -s /etc/nginx/sites-available/alertme /etc/nginx/sites-enabled/alertme
 sudo service nginx restart
 ```
 
-Now if you visit *example.com*, you will be able to see the basic #GreenAlert website loaded.
+Now if you visit *example.com*, you will be able to see the basic #AlertME website loaded.
 
 
 ### Upgrading the Platform

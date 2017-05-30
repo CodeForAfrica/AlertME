@@ -31,7 +31,7 @@ class MakeCustomPagesContent extends Migration {
                 'description' => 'And register for alerts in your area...'
             ),
             'how'    => array(
-                'title'  => 'How #GreenAlert Works',
+                'title'  => 'How '.env('APP_NAME','#AlertME').' Works',
                 'blurbs' => array(
                     array(
                         'description' => 'Find Environmental Impact Assessments happening near you.'

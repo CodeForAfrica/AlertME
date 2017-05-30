@@ -56,8 +56,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'greenalert@codeforafrica.org'),
-        'name' => env('MAIL_FROM_NAME', '#GreenAlert'),
+        'address' => env('MAIL_FROM_ADDRESS', 'alertme@codeforafrica.org'),
+        'name' => env('MAIL_FROM_NAME', '#AlerME'),
     ],
 
     /*

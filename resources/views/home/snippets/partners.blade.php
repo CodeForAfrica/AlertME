@@ -1,7 +1,7 @@
 <div class="row home-logos">
     <div class="col-md-3">
         <h4>Partners</h4>
-        <p>#GreenAlert has been made possible through support from the following partners:</p>
+        <p>{{ env('APP_NAME', '#GreenAlert') }} has been made possible through support from the following partners:</p>
     </div>
     <div class="col-md-9">
         <p>

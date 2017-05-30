@@ -32,10 +32,7 @@ Find your location to see the details of an EIA: its official ID, the project de
 
 You can keep up to date with the changing status of EIAs that interest you by registering for personalised alerts. We will send you real-time notifications by email or SMS.
 
-And you can help keep the developers accountable by joining and participating in our community network.
-
-
-\#GreenAlert is a project by [Oxpeckers](http://oxpeckers.org)';
+And you can help keep the developers accountable by joining and participating in our community network.';
         $page->save();
     }
 
