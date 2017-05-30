@@ -21,7 +21,7 @@ class CreatePagesTable extends Migration {
         });
 
         // Add First Page
-        $page = new \Greenalert\Page();
+        $page = new \AlertME\Page();
         $page->slug = 'about';
         $page->title = 'About';
         $page->description = 'South African law says planned development projects, including mines, dams, power stations, roads and landfill sites, need to have their environmental impacts assessed before they can go ahead.

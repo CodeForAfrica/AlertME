@@ -1,6 +1,6 @@
 <?php
 
-use Greenalert\Page;
+use AlertME\Page;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 

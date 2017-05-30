@@ -156,7 +156,7 @@ class Project extends Model {
     {
         if (trim($this->geo_address) == '') return array('lat' => 0, 'lng' => 0);
 
-        return $this->hasOne('GreenAlert\Geocode', 'address', 'geo_address');
+        return $this->hasOne('AlertME\Geocode', 'address', 'geo_address');
     }
 
 
