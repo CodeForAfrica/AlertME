@@ -20,7 +20,11 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="/">#GreenAlert</a>
+        <a class="navbar-brand" href="/">
+          {{ env('APP_NAME', '#GreenAlert') }} <br/>
+          <small>Powered by #AlertME</small>
+        </a>
+
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
@@ -72,38 +76,39 @@
             <a href="/">Home</a> .
             <a href="/about">About</a> .
             <a href="/dashboard">Dashoard</a> .
-            <a href="https://github.com/CodeForAfrica/GreenAlert" target="_blank" rel="noopener">Github</a> .
+            <a href="https://github.com/CodeForAfrica/AlertME" target="_blank" rel="noopener">Github</a> .
             <a href="{{ env('OWNER_URL', 'http://oxpeckers.org/') }}" target="_blank" rel="noopener">{{ env('OWNER_NAME', 'Oxpeckers') }}</a>
           </p>
           <hr/>
           <p class="text-muted"><em>
-              All code on this website is <a href="https://github.com/CodeForAfrica/GreenAlert" target="_blank">Open Source</a>.</br>
-              Content on this site, made by Oxpeckers, is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+              All code on this website is <a href="https://github.com/CodeForAfrica/AlertME" target="_blank">Open Source</a>.</br>
+              Content on this site, made by {{ env('OWNER_NAME', 'Oxpeckers') }}, is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
               </br>
               Refer to our <a href="{{ secure_asset('about') }}" target="_blank">attributions</a> page for attributions
               of other work on the site.
             </em></p>
         </div>
         <div class="col-md-6 text-right">
-          <h3 class="text-muted">#GreenAlert</h3>
+          <h3 class="text-muted" style="margin-bottom: 0;">{{ env('APP_NAME', '#GreenAlert') }}</h3>
+          <p><small>Powered by #AlertME</small></p>
 
-          <p>
+          <p class="text-muted" style="font-style: italic;">
             @if( env('OWNER_NAME', 'Oxpeckers') == 'Oxpeckers')
               An
             @else
               A
             @endif
             <a href="{{ env('OWNER_URL', 'https://oxpeckers.org/') }}" target="_blank" rel="noopener">{{ env('OWNER_NAME', 'Oxpeckers') }}</a> Project
+            <br/>
+            Built by <a href="https://codeforafrica.org" target="_blank" rel="noopener">Code for Africa</a>
           </p>
-
-          <p>Built by <a href="https://codeforafrica.org" target="_blank">Code for Africa</a></p>
         </div>
       </div>
     </div>
   </footer>
 
 
-  <!-- Start of greenalert Zendesk Widget script -->
+  <!-- Start of alertme Zendesk Widget script -->
   <script>/*<![CDATA[*/
     window.zEmbed || function (e, t) {
       var n, o, d, i, s, a = [], r = document.createElement("iframe");
@@ -119,8 +124,8 @@
         var o = this.createElement("script");
         n && (this.domain = n), o.id = "js-iframe-async", o.src = e, this.t = +new Date, this.zendeskHost = t, this.zEQueue = a, this.body.appendChild(o)
       }, o.write('<body onload="document._l();">'), o.close()
-    }("//assets.zendesk.com/embeddable_framework/main.js", "greenalert.zendesk.com");
+    }("//assets.zendesk.com/embeddable_framework/main.js", "alertme.zendesk.com");
     /*]]>*/</script>
-  <!-- End of greenalert Zendesk Widget script -->
+  <!-- End of alertme Zendesk Widget script -->
 
 @stop

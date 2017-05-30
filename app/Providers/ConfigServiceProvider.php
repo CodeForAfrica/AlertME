@@ -1,6 +1,6 @@
 <?php
 
-namespace Greenalert\Providers;
+namespace AlertME\Providers;
 
 use Illuminate\Support\ServiceProvider;
 

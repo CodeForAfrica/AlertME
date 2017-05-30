@@ -1,6 +1,6 @@
 <?php
 
-namespace Greenalert;
+namespace AlertME;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -38,12 +38,12 @@ class User extends Authenticatable
 
     public function sync()
     {
-        return $this->hasMany('Greenalert\Sync');
+        return $this->hasMany('AlertME\Sync');
     }
 
     public function subscriptions()
     {
-        return $this->hasMany('Greenalert\Subscription');
+        return $this->hasMany('AlertME\Subscription');
     }
 
 }

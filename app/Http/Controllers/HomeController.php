@@ -1,13 +1,13 @@
 <?php
 
-namespace Greenalert\Http\Controllers;
+namespace AlertME\Http\Controllers;
 
-use Greenalert\Category;
-use Greenalert\Page;
-use Greenalert\Project;
-use Greenalert\Subscription;
-use Greenalert\Sync;
-use Greenalert\User;
+use AlertME\Category;
+use AlertME\Page;
+use AlertME\Project;
+use AlertME\Subscription;
+use AlertME\Sync;
+use AlertME\User;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller {

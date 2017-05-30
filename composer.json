@@ -14,7 +14,8 @@
         "laravel/scout": "^3.0",
         "laravel/tinker": "~1.0",
         "nesbot/carbon": "~1.18",
-        "pda/pheanstalk": "~3.0"
+        "pda/pheanstalk": "~3.0",
+        "tamayo/laravel-scout-elastic": "^3.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -26,7 +27,7 @@
             "database"
         ],
         "psr-4": {
-            "Greenalert\\": "app/"
+            "AlertME\\": "app/"
         }
     },
     "autoload-dev": {

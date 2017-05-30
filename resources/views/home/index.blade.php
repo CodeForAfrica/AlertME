@@ -4,10 +4,10 @@
 
   <div class="home-index">
 
-    <div class="container-fluid bg-primary text-center" style="background:linear-gradient(rgba(52, 73, 94, 0.45), rgba(52, 73, 94, 0.45)), url('/assets/img/bg/chemical-plant.jpg') center; background-size: cover;">
+    <div class="container-fluid bg-primary text-center" style="background:linear-gradient(rgba(52, 73, 94, 0.45), rgba(52, 73, 94, 0.45)), url('/assets/img/bg/garbage.png') center; background-size: cover;">
       <br/><br/>
       <h3>{!! $home->data->banner->title !!}</h3>
-      <h5>{!! $home->data->banner->description !!}</h5>
+      <h5 style="font-weight: normal;"><em>{!! $home->data->banner->description !!}</em></h5>
       <br/>
 
       <div class="row search-geo" style="margin-bottom:5px;">
@@ -67,25 +67,25 @@
       <br/><br/><br/>
     </div>
 
-    <div class="container text-center">
+    <div class="container text-center" style="max-width: 800px;">
       <br/><br/>
       <h3>{!! $home->data->how->title !!}</h3><br/>
       <div class="row">
-        <div class="col-md-4">
+        <div class="col-sm-4">
           <span class="fa-stack fa-3x">
             <i class="fa fa-circle fa-stack-2x"></i>
             <i class="fa fa-map-marker fa-stack-1x fa-inverse"></i>
           </span>
           {!! Markdown::convertToHtml($home->data->how->blurbs[0]->description) !!}
         </div>
-        <div class="col-md-4">
+        <div class="col-sm-4">
           <span class="fa-stack fa-3x">
             <i class="fa fa-circle fa-stack-2x"></i>
             <i class="fa fa-bolt fa-stack-1x fa-inverse"></i>
           </span>
           {!! Markdown::convertToHtml($home->data->how->blurbs[1]->description) !!}
         </div>
-        <div class="col-md-4">
+        <div class="col-sm-4">
           <span class="fa-stack fa-3x">
             <i class="fa fa-circle fa-stack-2x"></i>
             <i class="fa fa-pencil-square-o fa-stack-1x fa-inverse"></i>
@@ -100,9 +100,15 @@
       <div class="container">
         <div class="row">
           <div class="col-sm-6 palette palette-turquoise text-center">
-            <br/><br/>
-            <p class="lead">No. of EIAs tracked</p>
+            <br/>
             <h1 style="font-size: 100px;">{{ number_format($projects_count) }}</h1>
+            <p class="lead">
+              @if( env('COUNTRY_CODE') == 'ng')
+                Dumps in Benin
+              @else
+                EIAs tracked
+              @endif
+            </p>
             <div style="height:14px;"></div>
           </div> <!-- /.col-md-6 .bg-info -->
           <div class="col-sm-6">

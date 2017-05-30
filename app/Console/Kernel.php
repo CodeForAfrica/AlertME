@@ -1,6 +1,6 @@
 <?php
 
-namespace Greenalert\Console;
+namespace AlertME\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -13,8 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        \Greenalert\Console\Commands\PahaliUpdate::class,
-        \Greenalert\Console\Commands\PahaliUpgrade::class,
+        \AlertME\Console\Commands\PahaliUpdate::class,
+        \AlertME\Console\Commands\PahaliUpgrade::class,
         // TODO: Add Pahali clean scrapes
     ];
 

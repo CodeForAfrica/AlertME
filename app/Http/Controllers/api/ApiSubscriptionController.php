@@ -1,10 +1,10 @@
-<?php namespace Greenalert\Http\Controllers\api;
+<?php namespace AlertME\Http\Controllers\api;
 
-use Greenalert\Http\Controllers\Controller;
+use AlertME\Http\Controllers\Controller;
 
-use Greenalert\Project;
-use Greenalert\Subscription;
-use Greenalert\User;
+use AlertME\Project;
+use AlertME\Subscription;
+use AlertME\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 

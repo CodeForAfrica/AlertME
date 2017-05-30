@@ -1,8 +1,8 @@
 <?php
 
-namespace Greenalert\Mail;
+namespace AlertME\Mail;
 
-use Greenalert\Subscription;
+use AlertME\Subscription;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;

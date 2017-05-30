@@ -1,6 +1,6 @@
 <?php
 
-namespace Greenalert\Http\Controllers;
+namespace AlertME\Http\Controllers;
 
 class WelcomeController extends Controller {
 

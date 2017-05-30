@@ -1,6 +1,6 @@
 <?php
 
-namespace Greenalert\Http\Middleware;
+namespace AlertME\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;

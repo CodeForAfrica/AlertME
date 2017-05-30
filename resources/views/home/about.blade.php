@@ -16,7 +16,7 @@
         <p>South African law says planned development projects, including mines,
           dams, power stations, roads and landfill sites, need to have their
           environmental impacts assessed bofore they can go ahead.</p>
-        <p>#GreenAlert helps you to find out what Environmental Impact Assessments
+        <p>#AlertME helps you to find out what Environmental Impact Assessments
           (EIAs) are happening in your area.</p>
         <p>Find your location to see the details of an EIA: its official ID, the
           project description, status of the development, and the government body

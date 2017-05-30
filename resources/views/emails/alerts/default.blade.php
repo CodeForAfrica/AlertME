@@ -23,7 +23,7 @@
 
   <thead>
     <tr><td>
-      <h3>#GreenAlert</h3>
+      <h3>{{ env('APP_NAME', '#GreenAlert') }}</h3>
       <p class="text-muted">PROJECT UPDATED IN YOUR SUBSCRIPTION AREA</p>
     </td></tr>
   </thead>
@@ -48,7 +48,7 @@
       <small>
         This alert is coming to you courtesy of
         <a href="{{ $confirm_url }}" target="_blank"><u>your subscription</u></a>
-        on #GreenAlert.
+        on {{ env('APP_NAME', '#GreenAlert') }}.
       </small>
 
       <br/><hr/>

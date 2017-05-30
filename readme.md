@@ -1,9 +1,9 @@
-\#GreenAlert
-============
+\#AlertME
+=========
 
 *Get to know more about your environment.*
 
-[#GreenAlert](https://greenalert.oxpeckers.org) is a geo-aware web platform that is working to make it easier for everyone to get invloved in decisions made about the environment around them. This is achieved by giving easy access to the data and allowing subscription of alerts.
+\#AlertME is a geo-aware web platform that is working to make it easier for everyone to get invloved in decisions made about the environment around them. This is achieved by giving easy access to the data and allowing subscription of alerts.
 
 See it in action at [https://greenalert.oxpeckers.org](https://greenalert.oxpeckers.org).
 
@@ -25,13 +25,13 @@ Want to run your own instance? Check out the [`INSTALL.md`](./INSTALL.md) file.
 
 ### Contributing
 
-Thank you for considering to contribute to #GreenAlert! The contribution guide can be found in the [`CONTRIBUTING.md`](./CONTRIBUTING.md) file.
+Thank you for considering to contribute to #AlertME! The contribution guide can be found in the [`CONTRIBUTING.md`](./CONTRIBUTING.md) file.
 
 ---
 
 ## Security Vulnerabilities
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+If you discover a security vulnerability within #AlertME, please send an e-mail to David Lemayian at david@codeforafrica.org. All security vulnerabilities will be promptly addressed.
 
 ## License
 

@@ -1,6 +1,6 @@
-<?php namespace Greenalert;
+<?php namespace AlertME;
 
-use Greenalert\Commands\DataSourceQueue;
+use AlertME\Commands\DataSourceQueue;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -66,12 +66,12 @@ class DataSource extends Model {
 
     public function datasourcesync()
     {
-        return $this->hasMany('Greenalert\DataSourceSync', 'datasource_id');
+        return $this->hasMany('AlertME\DataSourceSync', 'datasource_id');
     }
 
     public function projects()
     {
-        return $this->hasMany('Greenalert\Project', 'datasource_id');
+        return $this->hasMany('AlertME\Project', 'datasource_id');
     }
 
 

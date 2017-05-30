@@ -1,6 +1,6 @@
 <?php
 
-namespace Greenalert\Exceptions;
+namespace AlertME\Exceptions;
 
 use Exception;
 use Illuminate\Auth\AuthenticationException;

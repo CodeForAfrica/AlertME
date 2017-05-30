@@ -59,4 +59,20 @@ return [
         'secret' => env('ALGOLIA_SECRET', ''),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Elasticsearch Configuration
+    |--------------------------------------------------------------------------
+    |
+    | TODO: Add documentation on elasticsearch
+    |
+    */
+
+    'elasticsearch' => [
+        'index' => env('ELASTICSEARCH_INDEX', 'laravel'),
+        'hosts' => [
+            env('ELASTICSEARCH_HOST', 'http://localhost'),
+        ],
+    ],
+
 ];
