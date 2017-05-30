@@ -24,7 +24,7 @@
 
   <thead>
     <tr><td>
-      <h3>#GreenAlert</h3>
+      <h3>{{ env('APP_NAME', '#GreenAlert') }}</h3>
       <p class="text-muted">PASSWORD RESET</p>
     </td></tr>
   </thead>

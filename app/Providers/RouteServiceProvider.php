@@ -1,6 +1,6 @@
 <?php
 
-namespace Greenalert\Providers;
+namespace AlertME\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -14,7 +14,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    protected $namespace = 'Greenalert\Http\Controllers';
+    protected $namespace = 'AlertME\Http\Controllers';
 
     /**
      * Define your route model bindings, pattern filters, etc.

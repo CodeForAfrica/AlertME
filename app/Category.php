@@ -1,6 +1,6 @@
-<?php namespace Greenalert;
+<?php namespace AlertME;
 
-use Greenalert\Commands\CategoryQueue;
+use AlertME\Commands\CategoryQueue;
 use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model {
@@ -44,7 +44,7 @@ class Category extends Model {
 
     public function projects()
     {
-        return $this->belongsToMany('Greenalert\Project')->withTimestamps();
+        return $this->belongsToMany('AlertME\Project')->withTimestamps();
     }
 
 

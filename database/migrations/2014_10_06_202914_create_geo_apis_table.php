@@ -21,7 +21,7 @@ class CreateGeoApisTable extends Migration {
         });
 
         // Add first geoapi
-        $geoapi = new \Greenalert\GeoApi();
+        $geoapi = new \AlertME\GeoApi();
         $geoapi->name = 'Google Geocoding API';
         $geoapi->url = 'https://developers.google.com/maps/documentation/geocoding/';
         $geoapi->save();

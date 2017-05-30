@@ -1,6 +1,6 @@
 <?php
 
-namespace Greenalert\Providers;
+namespace AlertME\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
         //
         $this->app->bind(
             'Illuminate\Contracts\Auth\Registrar',
-            'Greenalert\Services\Registrar'
+            'AlertME\Services\Registrar'
         );
     }
 }

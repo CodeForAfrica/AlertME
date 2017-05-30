@@ -4,7 +4,7 @@
  */
 
 
-pahali.datasources.update = function (id) {
+pahali.datasources.update = function (id, callback) {
   $.ajax({
     type: "PUT",
     async: false,
@@ -12,18 +12,22 @@ pahali.datasources.update = function (id) {
     data: pahali.datasources[id]
   }).done(function( response ) {
     pahali.datasources[id] = response.datasource;
+    if(typeof callback === "function")  {
+      callback(id);
+    }
   });
-  return pahali.datasources[id];
 };
 
 
-pahali.datasources.pull = function () {
+pahali.datasources.pull = function (callback) {
   $.ajax({
     type: "GET",
     async: false,
     url: pahali.base_url + "/api/v1/datasources"
   }).done(function( response ) {
     $.extend(pahali.datasources, response.datasources);
+    if(typeof callback === "function") {
+      callback();
+    }
   });
-  return pahali.datasources;
-}
+};

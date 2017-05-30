@@ -25,7 +25,7 @@
     <thead>
     <tr>
       <td>
-        <h3>#GreenAlert</h3>
+        <h3>{{ env('APP_NAME', '#AlertME') }}</h3>
 
         <p class="text-muted">CONFIRM SUBSCRIPTION</p>
       </td>

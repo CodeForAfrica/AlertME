@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration {
         });
 
         // Add first user
-        $user = new \Greenalert\User();
+        $user = new \AlertME\User();
         $user->username = 'admin';
         $user->email = 'admin@localhost';
         $user->password = Hash::make('password');

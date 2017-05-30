@@ -1,4 +1,4 @@
-<?php namespace Greenalert;
+<?php namespace AlertME;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -19,7 +19,7 @@ class GeoApi extends Model {
 
     public function geocodes()
     {
-        return $this->hasMany('Greenalert\Geocode');
+        return $this->hasMany('AlertME\Geocode');
     }
 
 }

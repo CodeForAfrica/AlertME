@@ -8,16 +8,16 @@ However, if you file a bug report, your issue should contain a title and a clear
 
 Remember, bug reports are created in the hope that others with the same problem will be able to collaborate with you on solving it. Do not expect that the bug report will automatically see any activity or that others will jump to fix it. Creating a bug report serves to help yourself and others start on the path of fixing the problem.
 
-The #GreenAlert source code is managed on Github, and there are repositories for each of the components:
+The #AlertME source code is managed on Github, and there are repositories for each of the components:
 
-- [#GreenAlert Web Platform](https://github.com/CodeForAfrica/GreenAlert)
+- [#AlertME Web Platform](https://github.com/CodeForAfrica/AlertME)
 - [Flat-UI CSS ](https://github.com/DavidLemayian/Flat-UI)
 
 ## Core Development Discussion
 
-Discussion regarding bugs, new features, and implementation of existing features takes place in the #greenalert-dev IRC channel (Freenode). David Lemayian, the maintainer of #GreenAlert, is typically present in the channel on weekdays from 8am-5pm (EAT+03:00 or Africa/Naiorbi), and sporadically present in the channel at other times.
+Discussion regarding bugs, new features, and implementation of existing features takes place in the #alertme-dev IRC channel (Freenode). David Lemayian, the maintainer of #AlertME, is typically present in the channel on weekdays from 8am-5pm (EAT+03:00 or Africa/Naiorbi), and sporadically present in the channel at other times.
 
-The #greenalert-dev IRC channel is open to all. All are welcome to join the channel either to participate or simply observe the discussions!
+The #alertme-dev IRC channel is open to all. All are welcome to join the channel either to participate or simply observe the discussions!
 
 
 ## Which Branch?
@@ -30,7 +30,7 @@ Minor features that are fully backwards compatible with the current Laravel rele
 
 Major new features should always be sent to the master branch, which contains the upcoming Laravel release.
 
-If you are unsure if your feature qualifies as a major or minor, please ask David Lemayian in the #greenalert-dev IRC channel (Freenode).
+If you are unsure if your feature qualifies as a major or minor, please ask David Lemayian in the #alertme-dev IRC channel (Freenode).
 
 
 ## Security Vulnerabilities
@@ -40,7 +40,7 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 ## Coding Style
 
-\#GreenAlert follows the PSR-4 and PSR-1 coding standards. In addition to these standards, the following coding standards should be followed:
+\#AlertME follows the PSR-4 and PSR-1 coding standards. In addition to these standards, the following coding standards should be followed:
 
 - The class namespace declaration must be on the same line as `<?php`.
 - A class' opening `{` must be on the same line as the class name.

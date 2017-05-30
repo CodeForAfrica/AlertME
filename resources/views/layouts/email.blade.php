@@ -6,7 +6,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>#GreenAlert | @yield('title', 'Keeping an eye out on the environment.')</title>
+    <title>{{ env('APP_NAME', '#GreenAlert') }} | @yield('title', 'Keeping an eye out on the environment.')</title>
     <meta name="description" content="@yield('meta_description', 'Keeping an eye out on the environment.')">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 

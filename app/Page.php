@@ -1,4 +1,4 @@
-<?php namespace Greenalert;
+<?php namespace AlertME;
 
 use Illuminate\Database\Eloquent\Model;
 

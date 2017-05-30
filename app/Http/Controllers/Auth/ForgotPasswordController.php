@@ -1,8 +1,8 @@
 <?php
 
-namespace Greenalert\Http\Controllers\Auth;
+namespace AlertME\Http\Controllers\Auth;
 
-use Greenalert\Http\Controllers\Controller;
+use AlertME\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
 class ForgotPasswordController extends Controller
