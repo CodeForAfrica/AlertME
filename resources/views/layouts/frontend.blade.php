@@ -89,18 +89,19 @@
             </em></p>
         </div>
         <div class="col-md-6 text-right">
-          <h3 class="text-muted">{{ env('APP_NAME', '#GreenAlert') }}</h3>
+          <h3 class="text-muted" style="margin-bottom: 0;">{{ env('APP_NAME', '#GreenAlert') }}</h3>
+          <p><small>Powered by #AlertME</small></p>
 
-          <p>
+          <p class="text-muted" style="font-style: italic;">
             @if( env('OWNER_NAME', 'Oxpeckers') == 'Oxpeckers')
               An
             @else
               A
             @endif
             <a href="{{ env('OWNER_URL', 'https://oxpeckers.org/') }}" target="_blank" rel="noopener">{{ env('OWNER_NAME', 'Oxpeckers') }}</a> Project
+            <br/>
+            Built by <a href="https://codeforafrica.org" target="_blank" rel="noopener">Code for Africa</a>
           </p>
-
-          <p>Built by <a href="https://codeforafrica.org" target="_blank">Code for Africa</a></p>
         </div>
       </div>
     </div>
