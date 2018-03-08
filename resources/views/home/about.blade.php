@@ -34,7 +34,7 @@
 
         @endif
       </div>
-      
+
       <hr style="margin:50px 0;"/>
 
       @include('home.snippets.partners')
