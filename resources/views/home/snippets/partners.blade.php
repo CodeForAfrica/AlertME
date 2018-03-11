@@ -6,7 +6,7 @@
     <div class="col-md-9">
         <p>
             <a href="http://oxpeckers.org" target="_blank">
-                <img src="{{ asset('assets/img/logos/oxpeckers-long.png') }}"/>
+                <img src="/assets/img/logos/oxpeckers-long.png"/>
             </a>
             @if(env('OWNER_NAME', 'Oxpeckers') != 'Oxpeckers')
                 <a href="{{ env('OWNER_URL', 'https://codefornigeria.org') }}" target="_blank"  rel="noopener">
@@ -16,13 +16,13 @@
         </p>
         <p class="funders">
             <a href="http://www.codeforafrica.org" target="_blank">
-                <img src="{{ asset('assets/img/logos/cfafrica.png') }}" style="height: 60px;"/>
+                <img src="/assets/img/logos/cfafrica.png" style="height: 60px;"/>
             </a>
             <a href="http://africannewschallenge.org" target="_blank">
-                <img src="{{ asset('assets/img/logos/bmgf.png') }}"/>
+                <img src="/assets/img/logos/bmgf.png"/>
             </a>
             <a href="http://www.sej.org/" target="_blank">
-                <img src="{{ asset('assets/img/logos/osiwa.jpg') }}"/>
+                <img src="/assets/img/logos/osiwa.jpg"/>
             </a>
         </p>
     </div>
