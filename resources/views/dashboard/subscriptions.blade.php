@@ -22,7 +22,7 @@
 
             @foreach ($subscriptions as $key => $subscription)
               <p>
-                <a href="{{ secure_asset('subscriptions/'.$subscription->confirm_token) }}" target="_blank">
+                <a href="{{ url('subscriptions/'.$subscription->confirm_token) }}" target="_blank">
                   {{ $subscription->confirm_token }}
                 </a>
                 <span style="width:10px; display:inline-block;"></span>
@@ -43,7 +43,7 @@
             @endforeach
 
             <div class="text-center">
-              {!! with(new \Greenalert\Http\Controllers\FlatUIPresenter($subscriptions))->render() !!}
+                {{ $subscriptions->links('vendor.pagination.default') }}
             </div>
           </div>
           <div class="col-md-4">

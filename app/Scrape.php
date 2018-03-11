@@ -1,4 +1,4 @@
-<?php namespace Greenalert;
+<?php namespace AlertME;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -12,7 +12,7 @@ class Scrape extends Model {
 
     public function scraper()
     {
-        return $this->belongsTo('Greenalert\Scraper');
+        return $this->belongsTo('AlertME\Scraper');
     }
 
 

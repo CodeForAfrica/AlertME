@@ -65,6 +65,17 @@
 
         <div class="col-md-7">
           <p>{{ $project->description }}</p>
+
+          @if(count($project_photos) != 0)
+            <hr/>
+            <h6>Photos</h6>
+
+            @foreach($project_photos as $img)
+              <img src="{{ $img }}" alt="Image">
+              <br/><br/>
+            @endforeach
+          @endif
+
           <hr/>
           <h6>Details</h6>
 
@@ -91,7 +102,7 @@
       <div id="disqus_thread"></div>
       <script type="text/javascript">
         /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-        var disqus_shortname = 'greenalert'; // required: replace example with your forum shortname
+        var disqus_shortname = '{{ env('DISQUS_SHORTNAME', 'greenalert') }}'; // required: replace example with your forum shortname
 
         /* * * DON'T EDIT BELOW THIS LINE * * */
         (function () {

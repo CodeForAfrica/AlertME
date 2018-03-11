@@ -1,4 +1,4 @@
-<?php namespace Greenalert\Http\Middleware;
+<?php namespace AlertME\Http\Middleware;
 
 use Closure;
 
@@ -13,6 +13,7 @@ class Secure {
      */
     public function handle($request, Closure $next)
     {
+        // Make sure assets are secure if in production
         if (!$request->secure() && !env('APP_DEBUG') ) {
             return redirect()->secure($request->path());
         }

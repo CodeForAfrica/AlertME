@@ -6,22 +6,22 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>#GreenAlert | @yield('title', 'Keeping an eye out on the environment.')</title>
+    <title>{{ env('APP_NAME', '#GreenAlert') }} | @yield('title', 'Keeping an eye out on the environment.')</title>
     <meta name="description" content="@yield('meta_description', 'Keeping an eye out on the environment.')">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <meta name="google-site-verification" content="Pcw6RyloANHvjuK_Y9by9fpUw1H7U14PKKtPlPsgHP4" />
 
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    <link rel="shortcut icon" href="{{ asset('assets/img/favicon.ico') }}">
+    <link rel="shortcut icon" href="/assets/img/favicon.ico">
 
-    <link rel="stylesheet" href="{{ asset('assets/css/_bower.css') }}">
+    <link rel="stylesheet" href="/assets/css/_bower.css">
 
     @yield('stylesheets')
 
     @yield('styles')
 
-    <script src="{{ asset('assets/js/vendor/modernizr-2.6.2.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
 
   </head>
   <body class="@yield('body-class')">
@@ -42,14 +42,14 @@
     @yield('footer')
 
 
-    <script src="{{ asset('assets/js/_bower.js') }}"></script>
+    <script src="/assets/js/_bower.js"></script>
 
-    <script src="{{ asset('assets/js/plugins.js') }}"></script>
-    <script src="{{ asset('assets/js/application.js') }}"></script>
+    <script src="/assets/js/plugins.js"></script>
+    <script src="/assets/js/application.js"></script>
 
     <!-- <script src="{{ asset('assets/js/flat-ui.min.js') }}"></script> -->
 
-    <script src="{{ asset('assets/js/pahali/pahali.js') }}"></script>
+    <script src="/assets/js/pahali/pahali.js"></script>
 
     <script>
       pahali.base_url = "{{ url('/') }}";
@@ -60,7 +60,7 @@
       @show
     </script>
 
-    <script src="{{ asset('assets/js/main.js') }}"></script>
+    <script src="/assets/js/main.js"></script>
 
     @yield('scripts')
 

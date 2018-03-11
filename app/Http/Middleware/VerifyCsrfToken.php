@@ -1,6 +1,6 @@
 <?php
 
-namespace Greenalert\Http\Middleware;
+namespace AlertME\Http\Middleware;
 
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as BaseVerifier;
 

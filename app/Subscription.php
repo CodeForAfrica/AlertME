@@ -1,6 +1,6 @@
-<?php namespace Greenalert;
+<?php namespace AlertME;
 
-use Greenalert\Mail\Subscribed;
+use AlertME\Mail\Subscribed;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Mail;
@@ -38,17 +38,17 @@ class Subscription extends Model {
 
     public function alerts()
     {
-        return $this->belongsToMany('Greenalert\Alert', 'subscription_alert');
+        return $this->belongsToMany('AlertME\Alert', 'subscription_alert');
     }
 
     public function user()
     {
-        return $this->belongsTo('Greenalert\User');
+        return $this->belongsTo('AlertME\User');
     }
 
     public function project()
     {
-        return $this->belongsTo('Greenalert\Project');
+        return $this->belongsTo('AlertME\Project');
     }
 
 

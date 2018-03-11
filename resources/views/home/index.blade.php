@@ -7,7 +7,7 @@
     <div class="container-fluid bg-primary text-center" style="background:linear-gradient(rgba(52, 73, 94, 0.45), rgba(52, 73, 94, 0.45)), url('/assets/img/bg/chemical-plant.jpg') center; background-size: cover;">
       <br/><br/>
       <h3>{!! $home->data->banner->title !!}</h3>
-      <h5>{!! $home->data->banner->description !!}</h5>
+      <h5 style="font-weight: normal;"><em>{!! $home->data->banner->description !!}</em></h5>
       <br/>
 
       <div class="row search-geo" style="margin-bottom:5px;">
@@ -67,30 +67,30 @@
       <br/><br/><br/>
     </div>
 
-    <div class="container text-center">
+    <div class="container text-center" style="max-width: 800px;">
       <br/><br/>
       <h3>{!! $home->data->how->title !!}</h3><br/>
       <div class="row">
-        <div class="col-md-4">
+        <div class="col-sm-4">
           <span class="fa-stack fa-3x">
             <i class="fa fa-circle fa-stack-2x"></i>
             <i class="fa fa-map-marker fa-stack-1x fa-inverse"></i>
           </span>
-          {!! Markdown::convertToHtml($home->data->how->blurbs[0]->description) !!}
+          {!! \Markdown::convertToHtml($home->data->how->blurbs[0]->description) !!}
         </div>
-        <div class="col-md-4">
+        <div class="col-sm-4">
           <span class="fa-stack fa-3x">
             <i class="fa fa-circle fa-stack-2x"></i>
             <i class="fa fa-bolt fa-stack-1x fa-inverse"></i>
           </span>
-          {!! Markdown::convertToHtml($home->data->how->blurbs[1]->description) !!}
+          {!! \Markdown::convertToHtml($home->data->how->blurbs[1]->description) !!}
         </div>
-        <div class="col-md-4">
+        <div class="col-sm-4">
           <span class="fa-stack fa-3x">
             <i class="fa fa-circle fa-stack-2x"></i>
             <i class="fa fa-pencil-square-o fa-stack-1x fa-inverse"></i>
           </span>
-          {!! Markdown::convertToHtml($home->data->how->blurbs[2]->description) !!}
+          {!! \Markdown::convertToHtml($home->data->how->blurbs[2]->description) !!}
         </div>
       </div> <!-- /.row -->
       <br/><br/>
@@ -100,9 +100,15 @@
       <div class="container">
         <div class="row">
           <div class="col-sm-6 palette palette-turquoise text-center">
-            <br/><br/>
-            <p class="lead">No. of EIAs tracked</p>
+            <br/>
             <h1 style="font-size: 100px;">{{ number_format($projects_count) }}</h1>
+            <p class="lead">
+              @if( env('COUNTRY_CODE') == 'ng')
+                Dumps in Benin
+              @else
+                EIAs tracked
+              @endif
+            </p>
             <div style="height:14px;"></div>
           </div> <!-- /.col-md-6 .bg-info -->
           <div class="col-sm-6">
@@ -110,7 +116,7 @@
               <div class="col-xs-6 palette palette-wet-asphalt">
                 <br/>
                 <p>Last Updated</p>
-                <p><small><b>10th May, 2017</b></small></p>
+                <p><small><b>{{ $last_sync }}</b></small></p>
               </div>
               <div class="col-xs-6 palette palette-carrot">
                 <br/>
@@ -122,12 +128,12 @@
               <div class="col-xs-6 palette palette-concrete">
                 <br/>
                 <p>Subscribers</p>
-                <p><small>Coming soon..</small><b></b></p>
+                <p><small>{{ $users_count }} subscribers</small><b></b></p>
               </div>
               <div class="col-xs-6 palette palette-alizarin">
                 <br/>
                 <p>Subscriptions</p>
-                <p><small>Coming soon..</small><b></b></p>
+                <p><small>{{ $subscriptions_count }} subscriptions</small><b></b></p>
               </div>
             </div> <!-- /.row -->
           </div> <!-- /.col-md-6 -->
@@ -136,40 +142,19 @@
       <br/><br/>
     </div> <!-- /.container-fluid -->
 
-    <div class="container text-left home-logos">
+    <div class="container text-left">
       <br/><br/>
-      <div class="row">
-        <div class="col-md-2 col-md-offset-1">
-          <h4>Partners</h4>
-          <p>#GreenAlert has been made possible through support from the following partners:</p>
-        </div>
-        <div class="col-md-7 col-md-offset-1">
-          <p>
-            <a href="http://oxpeckers.org" target="_blank">
-              <img src="{{ asset('assets/img/logos/oxpeckers-long.png') }}"/>
-            </a>
-          </p>
-          <p>
-            <a href="http://www.codeforafrica.org" target="_blank">
-              <img src="{{ asset('assets/img/logos/cfafrica.png') }}"/>
-            </a>
-            <a href="http://africannewschallenge.org" target="_blank">
-              <img src="{{ asset('assets/img/logos/anic.png') }}" style="height:65px;"/>
-            </a>
-            <a href="http://www.sej.org/" target="_blank">
-              <img src="{{ asset('assets/img/logos/sej.png') }}"/>
-            </a>
-          </p>
-        </div>
-      </div> <!-- /.row -->
+
+      @include('home.snippets.partners')
+
       <br/><br/>
-    </div> <!-- /.home-logos -->
+    </div> <!-- /.container -->
 
   </div> <!-- /.home-index -->
 
 @stop
 
 @section('scripts')
-  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWrLoGr3YIHkrFyzoSMsISNlvW4CKwifU&libraries=places"></script>
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_API_KEY', 'AIzaSyDWrLoGr3YIHkrFyzoSMsISNlvW4CKwifU') }}&libraries=places"></script>
   <script src="/assets/js/frontend/map-search.js"></script>
 @stop

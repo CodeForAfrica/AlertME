@@ -6,11 +6,30 @@
 
 body { padding-top: 76px; }
 
+img { max-width: 100%; }
+
+a.navbar-brand small {
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 12px;
+  padding-left: 5px;
+  vertical-align: top;
+}
+.navbar-lg .navbar-brand {
+  height: 76px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+footer {
+  padding: 40px 0 30px;
+}
+
+
 /**
  * HOME
  * -----------------------------------------------------------------------------
  */
-
 
 .home-search {
   height: 500px;
@@ -20,10 +39,6 @@ body { padding-top: 76px; }
   width: 100%;
   color: #ECF0F1;
   padding-top: 100px;
-}
-
-footer {
-  padding: 40px 0 30px;
 }
 
 #alertModal .alert {
@@ -53,7 +68,9 @@ footer {
     .home-logos a img:hover {
       opacity: 0.7;
     }
-
+    .home-logos .funders img {
+      height: 55px;
+    }
 
 /**
  * Map

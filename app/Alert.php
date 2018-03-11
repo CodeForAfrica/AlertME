@@ -1,6 +1,6 @@
-<?php namespace Greenalert;
+<?php namespace AlertME;
 
-use Greenalert\Commands\AlertQueue;
+use AlertME\Commands\AlertQueue;
 use Illuminate\Database\Eloquent\Model;
 
 class Alert extends Model {
@@ -27,12 +27,12 @@ class Alert extends Model {
 
     function project()
     {
-        return $this->belongsTo('Greenalert\Project');
+        return $this->belongsTo('AlertME\Project');
     }
 
     public function subcriptions()
     {
-        return $this->belongsToMany('Greenalert\Subscription', 'subscription_alert');
+        return $this->belongsToMany('AlertME\Subscription', 'subscription_alert');
     }
 
 }

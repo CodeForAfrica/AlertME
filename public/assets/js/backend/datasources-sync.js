@@ -3,12 +3,10 @@
  * -----------------------------------------------------------------------------
  */
 
+
 $( document ).ready(function() {
 
-  $( "#btn-sync-modal" ).click(function() {
-
-    pahali.datasources.pull();
-
+  var PahaliModat = function () {
     if (pahali.datasources[0] == undefined) {
       $("#btn-sync").hide();
       $(".sync-screen .alert-danger").fadeIn();
@@ -32,7 +30,10 @@ $( document ).ready(function() {
       $('.sync-list').html(sync_list_html);
       $('.sync-list').fadeIn();
     }
+  };
 
+  $( "#btn-sync-modal" ).click(function() {
+    pahali.datasources.pull( PahaliModat() );
   });
 
   $( "#btn-sync" ).click(function() {

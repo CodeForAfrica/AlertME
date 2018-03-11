@@ -39,16 +39,16 @@
           <!-- Go to www.addthis.com/dashboard to customize your tools -->
           <script type="text/javascript" src="https://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5481e9a015b90c80" async="async"></script>
           <hr/>
-          <a href="{{ secure_asset('project/'.$project->id) }}" target="_blank"
+          <a href="/project/{{ $project->id }}" target="_blank"
             class="btn btn-block btn-primary btn-embossed">
-            <span class="fui-link"></span> View on #GreenAlert
+            <span class="fui-link"></span> View on {{ env('APP_NAME', '#GreenAlert') }}
           </a>
           <br/>
         </div>
 
 
         <div class="col-md-7">
-          <p>{{$project->description}}</p>
+          <p>{{ $project->description }}</p>
           <hr/>
           <h6>Details</h6>
           <div class="project-details">
@@ -70,8 +70,8 @@
 
   <div class="bg-primary">
     <div class="container">
-      <a href="{{ secure_asset('') }}" target="_blank">
-        <h4 style="margin-top: 15px;">#GreenAlert</h4>
+      <a href="/" target="_blank">
+        <h4 style="margin-top: 15px;">{{ env('APP_NAME', '#GreenAlert') }}</h4>
       </a>
     </div>
   </div>

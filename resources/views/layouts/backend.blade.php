@@ -51,13 +51,13 @@
     <div class="row">
       <div class="col-md-2">
         <div class="btn-group-vertical btn-block navigation-side">
-          <a href="{{ url('/dashboard') }}" class="btn btn-embossed btn-primary
+          <a href="/dashboard" class="btn btn-embossed btn-primary
           {{ $request->path() == 'dashboard' ? 'active' : '' }}">
             <span class="fui-home"></span> Home</a>
         </div>
         <hr/>
         <div class="btn-group-vertical btn-block navigation-side">
-          <a href="{{ url('/dashboard/datasources') }}" class="btn btn-embossed btn-primary
+          <a href="/dashboard/datasources" class="btn btn-embossed btn-primary
           {{ $request->path() == 'dashboard/datasources' ? 'active' : '' }}">
             <span class="fui-upload"></span> Data Sources</a>
           <a href="/dashboard/categories" class="btn btn-embossed btn-primary

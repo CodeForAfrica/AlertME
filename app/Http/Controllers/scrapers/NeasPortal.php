@@ -1,10 +1,10 @@
-<?php namespace Greenalert\Http\Controllers\scrapers;
+<?php namespace AlertME\Http\Controllers\scrapers;
 
-use Greenalert\Http\Requests;
-use Greenalert\Http\Controllers\Controller;
+use AlertME\Http\Requests;
+use AlertME\Http\Controllers\Controller;
 
-use Greenalert\Scrape;
-use Greenalert\Scraper;
+use AlertME\Scrape;
+use AlertME\Scraper;
 
 class NeasPortal extends Controller {
 
