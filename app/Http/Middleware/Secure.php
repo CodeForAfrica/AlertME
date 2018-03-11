@@ -14,6 +14,7 @@ class Secure {
     public function handle($request, Closure $next)
     {
         if (!$request->secure() && !env('APP_DEBUG') ) {
+            \Asset::$secure = true;
             return redirect()->secure($request->path());
         }
 
