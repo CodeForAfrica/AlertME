@@ -294,20 +294,20 @@
 
 @section('scripts')
   
-  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWrLoGr3YIHkrFyzoSMsISNlvW4CKwifU&libraries=places"></script>
+  <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key=AIzaSyDWrLoGr3YIHkrFyzoSMsISNlvW4CKwifU&libraries=places"></script>
 
-  <script src="https://api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.js"></script>
-  <link href="https://api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.css" rel="stylesheet" />
+  <script src="//api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.js"></script>
+  <link href="//api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.css" rel="stylesheet" />
 
-  <link href="{{ asset('assets/css/_bower.leaflet.css') }}" rel="stylesheet" />
-  <script src="{{ asset('assets/js/_bower.leaflet.js') }}"></script>
+  <link href="/assets/css/_bower.leaflet.css" rel="stylesheet" />
+  <script src="/assets/js/_bower.leaflet.js"></script>
   
-  <script src="{{ asset('assets/js/frontend/routes.js') }}"></script>
-  <script src="{{ asset('assets/js/frontend/map.js') }}"></script>
-  <script src="{{ asset('assets/js/frontend/map-categories.js') }}"></script>
-  <script src="{{ asset('assets/js/frontend/map-subscribe.js') }}"></script>
+  <script src="/assets/js/frontend/routes.js"></script>
+  <script src="/assets/js/frontend/map.js"></script>
+  <script src="/assets/js/frontend/map-categories.js"></script>
+  <script src="/assets/js/frontend/map-subscribe.js"></script>
 
-  <script src="{{ asset('assets/js/frontend/map-search.js') }}"></script>
+  <script src="/assets/js/frontend/map-search.js"></script>
 
   <script type="text/javascript">
     window.onload = function () {
