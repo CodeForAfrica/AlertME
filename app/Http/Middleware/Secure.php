@@ -13,8 +13,12 @@ class Secure {
      */
     public function handle($request, Closure $next)
     {
+        // Make sure assets are secure if not local
+        if (env('APP_ENV') !== 'local') {
+           \Asset::$secure = true;
+        }
+
         if (!$request->secure() && !env('APP_DEBUG') ) {
-            \Asset::$secure = true;
             return redirect()->secure($request->path());
         }
 
