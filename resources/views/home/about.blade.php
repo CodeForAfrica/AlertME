@@ -29,7 +29,7 @@
 
       @else
 
-        {!! Markdown::convertToHtml($about->data->description) !!}
+        {!! \Markdown::convertToHtml($about->data->description) !!}
 
       @endif
 
