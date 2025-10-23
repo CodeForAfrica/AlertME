@@ -126,7 +126,7 @@ Remove NO_AUTO_CREATE_USER from the SQL modes and disable strict mode if necessa
 | Issue                  | Root Cause                            | Fix Implemented                            |
 |-------------------------|---------------------------------------|--------------------------------------------|
 | **Restart failure**     | Missing `Procfile`                    | Added or auto-generated `Procfile`         |
-| **Rebuild failure**     | `EPOCHREALTIME` undefined in buildpack| Added compatible Bash/buildpack  |
+| **Rebuild failure**     | `EPOCHREALTIME` undefined in buildpack| Added compatible Bash/buildpack specifically v190 |
 | **Deployment failure**  | Same as rebuild issue                 | Same fix applied                           |
 | **SQL mode incompatibility** | Deprecated `NO_AUTO_CREATE_USER` | Updated `database.php` configuration       |
 
