@@ -23,6 +23,9 @@ Some key featutres of this platform include:
 Want to run your own instance? Check out the [`INSTALL.md`](./INSTALL.md) file.
 
 
+### Aplication & Database Issues Report
+If you encounter any issue with the application check on this report for possible solutions [`Issues Report`](./docs/db-upgrade-report.md)
+
 ### Contributing
 
 Thank you for considering to contribute to #AlertME! The contribution guide can be found in the [`CONTRIBUTING.md`](./CONTRIBUTING.md) file.
