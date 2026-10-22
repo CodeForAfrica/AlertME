@@ -57,7 +57,24 @@ return [
     'algolia' => [
         'id' => env('ALGOLIA_APP_ID', ''),
         'secret' => env('ALGOLIA_SECRET', ''),
+        // Scout 10 reads 'key'; retain the existing deployment secret.
         'key' => env('ALGOLIA_SECRET', ''),
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Elasticsearch Configuration
+    |--------------------------------------------------------------------------
+    |
+    | TODO: Add documentation on elasticsearch
+    |
+    */
+
+    'elasticsearch' => [
+        'index' => env('ELASTICSEARCH_INDEX', 'laravel'),
+        'hosts' => [
+            env('ELASTICSEARCH_HOST', 'http://localhost'),
+        ],
     ],
 
 ];

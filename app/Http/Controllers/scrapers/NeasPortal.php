@@ -1,15 +1,13 @@
-<?php
+<?php namespace AlertME\Http\Controllers\scrapers;
 
-namespace AlertME\Http\Controllers\scrapers;
-
+use AlertME\Http\Requests;
 use AlertME\Http\Controllers\Controller;
+
 use AlertME\Scrape;
 use AlertME\Scraper;
-use Symfony\Component\BrowserKit\HttpBrowser;
-use Symfony\Component\HttpClient\HttpClient;
 
-class NeasPortal extends Controller
-{
+class NeasPortal extends Controller {
+
     public $scraper;
     public $scrape;
 
@@ -18,21 +16,24 @@ class NeasPortal extends Controller
     public $neas_list_url;
     public $neas_eia_url;
 
-    public function __construct()
+    function __construct()
     {
 
         $this->scraper = Scraper::find(1);
-        $this->scrape = new Scrape();
+        $this->scrape = new Scrape;
 
         $this->scrape->scraper()->associate($this->scraper);
 
         $this->scrape->file_directory = 'scrapes';
         $this->scrape->file_name = 'neas_portal';
 
-        $this->client = new HttpBrowser(HttpClient::create([
-            'http_version' => '1.0',
-            'timeout' => 60,
-        ]));
+        // The PHP 8-compatible scraper stack replaces Goutte/Guzzle's removed options API.
+        $this->client = new \Symfony\Component\BrowserKit\HttpBrowser(
+            \Symfony\Component\HttpClient\HttpClient::create([
+                'http_version' => '1.0',
+                'timeout' => 0,
+            ])
+        );
 
         $this->neas_list_url = 'http://neas.environment.gov.za/portal/ApplicationsPerEAP_Report.aspx';
         $this->neas_eia_url = 'http://neas.environment.gov.za/portal/dNeasStandard_ApplicationHistory.aspx';
@@ -40,10 +41,10 @@ class NeasPortal extends Controller
     }
 
 
-    public function scrape_run()
+    function scrape_run()
     {
         set_time_limit(0);
-        ini_set('memory_limit', '512M');
+        ini_set('memory_limit','512M');
 
         \Log::info('SCRAPER [' . $this->scraper->slug . ']: Scrape started.');
 
@@ -63,7 +64,7 @@ class NeasPortal extends Controller
     }
 
 
-    public function scraped_recently()
+    function scraped_recently()
     {
         $scrapes = $this->scraper->scrapes;
         if (!$scrapes) {
@@ -77,7 +78,7 @@ class NeasPortal extends Controller
     }
 
 
-    public function scrape_list()
+    function scrape_list()
     {
         \Log::info('SCRAPER [' . $this->scraper->slug . ']: Scrape list started.');
 
@@ -118,7 +119,7 @@ class NeasPortal extends Controller
     }
 
 
-    public function scrape_eias()
+    function scrape_eias()
     {
         \Log::info('SCRAPER [' . $this->scraper->slug . ']: Scrape EIAs started.');
 
