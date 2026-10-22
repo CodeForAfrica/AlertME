@@ -1,5 +1,7 @@
 <?php
-// The PHP 8.3-compatible Laravel release accepts Throwable in report/render; keep the existing handler behavior with matching signatures. composer.json requires PHP ~8.3.36 and resolves against 8.3.36; composer.lock records that platform and the compatible dependency set. .buildpacks selects the PHP buildpack release that provides this runtime.
+// Pin Laravel 8.83.29 and PHPUnit 9.6.38 for PHP 8.3 compatibility; avoid Laravel 12-only database adapters and preserve the existing application architecture.
+
+// The pinned PHP 8-compatible Laravel release accepts Throwable in report/render; keep the existing handler behavior with matching signatures. composer.json requires PHP ~8.3.36 and resolves against 8.3.36; composer.lock records that platform and the compatible dependency set. .buildpacks selects the PHP buildpack release that provides this runtime.
 
 
 namespace AlertME\Exceptions;
@@ -32,7 +34,7 @@ class Handler extends ExceptionHandler
      * @param  \Exception  $exception
      * @return void
      */
-    // Laravel 12 requires Throwable-compatible exception handler signatures.
+    // The pinned PHP 8-compatible Laravel requires Throwable-compatible exception handler signatures.
     public function report(Throwable $exception)
     {
         parent::report($exception);

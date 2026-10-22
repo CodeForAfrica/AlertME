@@ -1,5 +1,5 @@
 <?php
-// The compatible scraper dependencies replace Goutte's old HTTP options API; retain HTTP/1.0 and the existing unlimited timeout.
+// Pin Goutte 4.0.3 to retain its client class on PHP 8.3; configure its new transport with the existing HTTP/1.0 and unlimited timeout.
  namespace AlertME\Http\Controllers\scrapers;
 
 use AlertME\Http\Requests;
@@ -29,8 +29,8 @@ class NeasPortal extends Controller {
         $this->scrape->file_directory = 'scrapes';
         $this->scrape->file_name = 'neas_portal';
 
-        // The PHP 8-compatible scraper stack replaces Goutte/Guzzle's removed options API.
-        $this->client = new \Symfony\Component\BrowserKit\HttpBrowser(
+        // The PHP 8-compatible Goutte pin replaces its removed Guzzle options API.
+        $this->client = new \Goutte\Client(
             \Symfony\Component\HttpClient\HttpClient::create([
                 'http_version' => '1.0',
                 'timeout' => 0,

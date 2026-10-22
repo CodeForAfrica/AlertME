@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- The PHP-compatible PHPUnit version uses the current configuration schema; isolated test credentials and stores prevent production access while checking the upgraded application. -->
-<phpunit bootstrap="bootstrap/autoload.php" colors="true" cacheDirectory=".phpunit.cache">
+<phpunit bootstrap="bootstrap/autoload.php" colors="true">
     <testsuites>
         <testsuite name="Application">
             <directory suffix="Test.php">tests</directory>
         </testsuite>
     </testsuites>
-    <source>
-        <include><directory suffix=".php">app</directory></include>
-    </source>
+    <filter>
+        <whitelist><directory suffix=".php">app</directory></whitelist>
+    </filter>
     <php>
         <env name="APP_ENV" value="testing"/>
         <env name="APP_KEY" value="base64:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="/>
