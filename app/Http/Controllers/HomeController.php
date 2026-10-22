@@ -1,4 +1,6 @@
 <?php
+// PHP 8 count(null) throws in the existing map template; normalize missing categories to an empty collection without changing search or count-query behavior.
+
 
 namespace AlertME\Http\Controllers;
 

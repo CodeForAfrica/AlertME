@@ -1,4 +1,6 @@
 <?php
+// Provide isolated home-page fixtures to verify existing content and Markdown rendering on PHP 8.3 without modifying the original example test.
+
 
 namespace Tests\Feature;
 

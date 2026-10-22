@@ -1,4 +1,6 @@
 <?php
+// Scout's compatible release reads Algolia credentials from key; reuse ALGOLIA_SECRET and retain the existing deployment configuration.
+
 
 return [
 

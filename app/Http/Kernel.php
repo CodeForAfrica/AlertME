@@ -1,4 +1,6 @@
 <?php
+// The old maintenance middleware class was removed; use its Laravel replacement to preserve maintenance-mode request handling.
+
 
 namespace AlertME\Http;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;

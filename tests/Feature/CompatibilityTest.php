@@ -1,4 +1,6 @@
 <?php
+// Characterize existing model fallbacks, structured page data, Markdown rendering and protected routes after the PHP/Laravel dependency upgrade.
+
 
 namespace Tests\Feature;
 

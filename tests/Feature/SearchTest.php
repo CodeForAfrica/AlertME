@@ -1,4 +1,6 @@
 <?php
+// Verify the dependency upgrade preserves search pagination and title/description truncation without external Algolia requests.
+
 
 namespace Tests\Feature;
 

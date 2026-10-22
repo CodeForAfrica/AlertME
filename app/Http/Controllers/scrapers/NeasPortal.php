@@ -1,4 +1,6 @@
-<?php namespace AlertME\Http\Controllers\scrapers;
+<?php
+// The compatible scraper dependencies replace Goutte's old HTTP options API; retain HTTP/1.0 and the existing unlimited timeout.
+ namespace AlertME\Http\Controllers\scrapers;
 
 use AlertME\Http\Requests;
 use AlertME\Http\Controllers\Controller;

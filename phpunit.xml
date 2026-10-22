@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- The PHP-compatible PHPUnit version uses the current configuration schema; isolated test credentials and stores prevent production access while checking the upgraded application. -->
 <phpunit bootstrap="bootstrap/autoload.php" colors="true" cacheDirectory=".phpunit.cache">
     <testsuites>
         <testsuite name="Application">

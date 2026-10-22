@@ -1,4 +1,6 @@
 <?php
+// Exercise an empty-category map so the PHP 8 count(null) failure cannot return after the runtime upgrade.
+
 
 namespace Tests\Feature;
 

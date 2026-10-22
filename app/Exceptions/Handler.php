@@ -1,4 +1,6 @@
 <?php
+// The PHP 8.3-compatible Laravel release accepts Throwable in report/render; keep the existing handler behavior with matching signatures. composer.json requires PHP ~8.3.36 and resolves against 8.3.36; composer.lock records that platform and the compatible dependency set. .buildpacks selects the PHP buildpack release that provides this runtime.
+
 
 namespace AlertME\Exceptions;
 
