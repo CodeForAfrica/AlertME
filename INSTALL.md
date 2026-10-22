@@ -5,82 +5,27 @@
 
 #### Requirements
 
-- PHP v5.4.7+
-- Git
-- Composer
-- Beanstalkd
-- MySQL
-- Mcrypt PHP Extension
-- OpenSSL PHP Extension
-- Mbstring PHP Extension
-- Tokenizer PHP Extension
-- 256MB RAM
+- PHP 8.3.36 or a newer 8.3 security release
+- Composer 2 and Git
+- MySQL or PostgreSQL, with the matching PDO extension
+- Beanstalkd for background jobs
+- PHP extensions: ctype, curl, DOM, fileinfo, filter, hash, mbstring, OpenSSL, PCRE, PDO, session, tokenizer and XML
+- Algolia credentials in the existing `ALGOLIA_APP_ID` and `ALGOLIA_SECRET` settings
 
-As of PHP 5.5, some OS distributions may require you to manually install the PHP JSON extension. When using Ubuntu or Debian, this can be done via `sudo apt-get install php5-json`.
+The application uses Laravel 12. The old Elasticsearch Scout adapter is no longer
+supported; these deployments use Algolia. Confirm `SCOUT_DRIVER=algolia` before
+upgrading an existing installation.
 
 ### Server Configuration
 
-We recommend setting up with [Debian Wheezy](https://www.debian.org/releases/wheezy/). #AlertME will though be able to run on any system setup that meets the [requirements](#requirements).
+Use a maintained Linux distribution with PHP 8.3.36 or later in the 8.3 branch.
+Configure nginx or Apache to serve only the `public` directory. Keep the existing
+application key and database, mail, queue and search settings when upgrading.
 
-##### 1. Install LEMP Stack
-
-After spinning up your instance, you should install Linux, Nginx, MySQL, PHP (LEMP). [Here is a great step by step guide for Debian 7](https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-on-debian-7).
-
-##### 2. Install PHP Command Line Interface
-
-```bash
-sudo apt-get install php5-cli
-```
-
-##### 3. Install Git
-
-Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency.
-
-- On Debian you can install it by running `sudo apt-get install git`.
-- For other systems, you can find installation instructions [here](http://git-scm.com/downloads).
-
-##### 4. Install Composer
-
-[Composer](https://getcomposer.org/) is *the* dependency manager for PHP.
-
-- Install on *nix - https://getcomposer.org/doc/00-intro.md#installation-nix
-
-Recommended: [Install composer globally](https://getcomposer.org/doc/00-intro.md#globally).
-
-##### 5. Install PHP v5.5 on Debian 7 "Wheezy"
-
-Currently, Debian Wheezy [ships with PHP v5.4.39-0+deb7u2](https://packages.debian.org/wheezy/php5). To install PHP v5.5, add the following lines to `/etc/apt/sources.list`:
-
-```debian
-deb http://packages.dotdeb.org wheezy all
-deb-src http://packages.dotdeb.org wheezy all
-deb http://packages.dotdeb.org wheezy-php55 all
-deb-src http://packages.dotdeb.org wheezy-php55 all
-```
-
-Fetch and install the GnuPG key
-
-```bash
-wget http://www.dotdeb.org/dotdeb.gpg
-sudo apt-key add dotdeb.gpg
-```
-
-To read more on the above, check out http://www.dotdeb.org/instructions/.
-
-Update and upgrade PHP by running the following commands:
-
-```bash
-sudo apt-get update
-sudo apt-get dist-upgrade php*
-```
-
-##### 6. Install MCrypt PHP Extension
-
-The Laravel Framework [requires MCrypt PHP extension](http://laravel.com/docs/4.2/installation#server-requirements). To install it on debian, run the following command:
-
-```bash
-sudo apt-get install php5-mcrypt
-```
+Install the locked dependencies with `composer install --no-dev --optimize-autoloader`.
+Run `vendor/bin/phpunit` with development dependencies installed to check the
+application against an isolated in-memory test database. Do not use production
+credentials for tests.
 
 ##### 7. Install Beanstalkd
 

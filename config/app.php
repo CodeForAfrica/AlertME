@@ -180,7 +180,6 @@ return [
 
         GrahamCampbell\Markdown\MarkdownServiceProvider::class,
 
-        ScoutEngines\Elasticsearch\ElasticsearchProvider::class,
 
     ],
 

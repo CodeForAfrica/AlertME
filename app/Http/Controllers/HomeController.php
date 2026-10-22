@@ -10,8 +10,8 @@ use AlertME\Sync;
 use AlertME\User;
 use Illuminate\Http\Request;
 
-class HomeController extends Controller {
-
+class HomeController extends Controller
+{
     /*
     |--------------------------------------------------------------------------
     | Home Controller
@@ -29,12 +29,17 @@ class HomeController extends Controller {
         $projects_count = \DB::table('projects')->count();
 
         $last_sync = Sync::orderBy('updated_at', 'desc')->first()->updated_at->toFormattedDateString();
-        $subscriptions_count = Subscription::all()->count();
-        $users_count = User::all()->count();
+        $subscriptions_count = Subscription::count();
+        $users_count = User::count();
 
         $data = compact(
-            'home', 'projects', 'projects_count', 'request',
-            'last_sync', 'subscriptions_count', 'users_count'
+            'home',
+            'projects',
+            'projects_count',
+            'request',
+            'last_sync',
+            'subscriptions_count',
+            'users_count'
         );
 
         return view('home.index', $data);
@@ -45,7 +50,8 @@ class HomeController extends Controller {
     {
         $about = Page::find(2);
         $data = compact(
-            'about', 'request'
+            'about',
+            'request'
         );
 
         return view('home.about', $data);
@@ -57,7 +63,7 @@ class HomeController extends Controller {
         $projects = \DB::table('projects')->take(10)->get();
         $projects_all = Project::select('id', 'geo_lat', 'geo_lng')->hasGeo()->get();
 
-        $categories = Category::geocoded();
+        $categories = Category::geocoded() ?? collect();
         if ($categories) {
             foreach ($categories as $key => $category) {
                 $pivot = \DB::table('project_category')
@@ -68,7 +74,10 @@ class HomeController extends Controller {
         }
 
         $data = compact(
-            'projects', 'projects_all', 'categories', 'request'
+            'projects',
+            'projects_all',
+            'categories',
+            'request'
         );
 
         return view('home.map', $data);
@@ -82,17 +91,18 @@ class HomeController extends Controller {
         $projects = Project::search($q)->paginate(10);
 
         // Limit length
-        for ($i = 0; $i < count($projects); $i++) {
-            if (strlen($projects[ $i ]->title) > 80) {
-                $projects[ $i ]->title = substr($projects[ $i ]->title, 0, 80) . '...';
+        foreach ($projects->items() as $project) {
+            if (strlen($project->title) > 80) {
+                $project->title = substr($project->title, 0, 80) . '...';
             }
-            if (strlen($projects[ $i ]->description) > 200) {
-                $projects[ $i ]->description = substr($projects[ $i ]->description, 0, 200) . '...';
+            if (strlen($project->description) > 200) {
+                $project->description = substr($project->description, 0, 200) . '...';
             }
         }
 
         $data = compact(
-            'projects', 'request'
+            'projects',
+            'request'
         );
 
         return view('home.search', $data);
@@ -132,7 +142,10 @@ class HomeController extends Controller {
             'access_token=pk.eyJ1IjoiY29kZWZvcmFmcmljYSIsImEiOiJVLXZVVUtnIn0.JjVvqHKBGQTNpuDMJtZ8Qg';
 
         $data = compact(
-            'project', 'map_image_link', 'geojson', 'request',
+            'project',
+            'map_image_link',
+            'geojson',
+            'request',
             'project_photos'
         );
 

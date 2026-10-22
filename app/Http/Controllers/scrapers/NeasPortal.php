@@ -1,13 +1,15 @@
-<?php namespace AlertME\Http\Controllers\scrapers;
+<?php
 
-use AlertME\Http\Requests;
+namespace AlertME\Http\Controllers\scrapers;
+
 use AlertME\Http\Controllers\Controller;
-
 use AlertME\Scrape;
 use AlertME\Scraper;
+use Symfony\Component\BrowserKit\HttpBrowser;
+use Symfony\Component\HttpClient\HttpClient;
 
-class NeasPortal extends Controller {
-
+class NeasPortal extends Controller
+{
     public $scraper;
     public $scrape;
 
@@ -16,24 +18,21 @@ class NeasPortal extends Controller {
     public $neas_list_url;
     public $neas_eia_url;
 
-    function __construct()
+    public function __construct()
     {
 
         $this->scraper = Scraper::find(1);
-        $this->scrape = new Scrape;
+        $this->scrape = new Scrape();
 
         $this->scrape->scraper()->associate($this->scraper);
 
         $this->scrape->file_directory = 'scrapes';
         $this->scrape->file_name = 'neas_portal';
 
-        $this->client = new \Goutte\Client();
-
-        $this->client->getClient()->setDefaultOption('config/curl/' . CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);
-        $this->client->getClient()->setDefaultOption('config/curl/' . CURLOPT_TIMEOUT, 0);
-        $this->client->getClient()->setDefaultOption('config/curl/' . CURLOPT_TIMEOUT_MS, 0);
-        $this->client->getClient()->setDefaultOption('config/curl/' . CURLOPT_CONNECTTIMEOUT, 0);
-        $this->client->getClient()->setDefaultOption('config/curl/' . CURLOPT_RETURNTRANSFER, true);
+        $this->client = new HttpBrowser(HttpClient::create([
+            'http_version' => '1.0',
+            'timeout' => 60,
+        ]));
 
         $this->neas_list_url = 'http://neas.environment.gov.za/portal/ApplicationsPerEAP_Report.aspx';
         $this->neas_eia_url = 'http://neas.environment.gov.za/portal/dNeasStandard_ApplicationHistory.aspx';
@@ -41,10 +40,10 @@ class NeasPortal extends Controller {
     }
 
 
-    function scrape_run()
+    public function scrape_run()
     {
         set_time_limit(0);
-        ini_set('memory_limit','512M');
+        ini_set('memory_limit', '512M');
 
         \Log::info('SCRAPER [' . $this->scraper->slug . ']: Scrape started.');
 
@@ -64,7 +63,7 @@ class NeasPortal extends Controller {
     }
 
 
-    function scraped_recently()
+    public function scraped_recently()
     {
         $scrapes = $this->scraper->scrapes;
         if (!$scrapes) {
@@ -78,7 +77,7 @@ class NeasPortal extends Controller {
     }
 
 
-    function scrape_list()
+    public function scrape_list()
     {
         \Log::info('SCRAPER [' . $this->scraper->slug . ']: Scrape list started.');
 
@@ -119,7 +118,7 @@ class NeasPortal extends Controller {
     }
 
 
-    function scrape_eias()
+    public function scrape_eias()
     {
         \Log::info('SCRAPER [' . $this->scraper->slug . ']: Scrape EIAs started.');
 

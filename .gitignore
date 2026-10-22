@@ -14,3 +14,5 @@ phpspec.yml
 
 .idea
 *.DS_Store
+
+/.phpunit.cache
