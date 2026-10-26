@@ -1,3 +1,4 @@
+{{-- The compatible Markdown package renamed convertToHtml() to convert(); retain rendering of the existing stored Markdown content. --}}
 @extends('layouts.frontend')
 
 @section('content')
@@ -76,21 +77,21 @@
             <i class="fa fa-circle fa-stack-2x"></i>
             <i class="fa fa-map-marker fa-stack-1x fa-inverse"></i>
           </span>
-          {!! \Markdown::convertToHtml($home->data->how->blurbs[0]->description) !!}
+          {!! \Markdown::convert($home->data->how->blurbs[0]->description) !!}
         </div>
         <div class="col-sm-4">
           <span class="fa-stack fa-3x">
             <i class="fa fa-circle fa-stack-2x"></i>
             <i class="fa fa-bolt fa-stack-1x fa-inverse"></i>
           </span>
-          {!! \Markdown::convertToHtml($home->data->how->blurbs[1]->description) !!}
+          {!! \Markdown::convert($home->data->how->blurbs[1]->description) !!}
         </div>
         <div class="col-sm-4">
           <span class="fa-stack fa-3x">
             <i class="fa fa-circle fa-stack-2x"></i>
             <i class="fa fa-pencil-square-o fa-stack-1x fa-inverse"></i>
           </span>
-          {!! \Markdown::convertToHtml($home->data->how->blurbs[2]->description) !!}
+          {!! \Markdown::convert($home->data->how->blurbs[2]->description) !!}
         </div>
       </div> <!-- /.row -->
       <br/><br/>

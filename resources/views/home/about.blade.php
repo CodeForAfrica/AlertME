@@ -1,3 +1,4 @@
+{{-- The compatible Markdown package renamed convertToHtml() to convert(); retain rendering of the existing stored Markdown content. --}}
 @extends('layouts.frontend')
 
 @section('title') About @stop
@@ -29,7 +30,7 @@
 
       @else
 
-        {!! \Markdown::convertToHtml($about->data->description) !!}
+        {!! \Markdown::convert($about->data->description) !!}
 
       @endif
 

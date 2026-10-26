@@ -1,4 +1,6 @@
 <?php
+// Scout's compatible release reads Algolia credentials from key; reuse ALGOLIA_SECRET and retain the existing deployment configuration.
+
 
 return [
 
@@ -57,6 +59,8 @@ return [
     'algolia' => [
         'id' => env('ALGOLIA_APP_ID', ''),
         'secret' => env('ALGOLIA_SECRET', ''),
+        // Scout 10 reads 'key'; retain the existing deployment secret.
+        'key' => env('ALGOLIA_SECRET', ''),
     ],
 
     /*

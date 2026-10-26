@@ -1,4 +1,6 @@
 <?php
+// PHP 8 count(null) throws in the existing map template; normalize missing categories to an empty collection without changing search or count-query behavior.
+
 
 namespace AlertME\Http\Controllers;
 
@@ -57,7 +59,8 @@ class HomeController extends Controller {
         $projects = \DB::table('projects')->take(10)->get();
         $projects_all = Project::select('id', 'geo_lat', 'geo_lng')->hasGeo()->get();
 
-        $categories = Category::geocoded();
+        // PHP 8 count(null) throws TypeError in the map view; retain an empty category list.
+        $categories = Category::geocoded() ?? collect();
         if ($categories) {
             foreach ($categories as $key => $category) {
                 $pivot = \DB::table('project_category')

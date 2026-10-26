@@ -1,4 +1,6 @@
 <?php
+// Load the provider class supplied by the upgraded dependency; retaining the removed provider would prevent application boot.
+
 
 return [
 
@@ -180,7 +182,6 @@ return [
 
         GrahamCampbell\Markdown\MarkdownServiceProvider::class,
 
-        ScoutEngines\Elasticsearch\ElasticsearchProvider::class,
 
     ],
 

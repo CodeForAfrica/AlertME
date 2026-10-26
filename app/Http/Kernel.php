@@ -1,4 +1,6 @@
 <?php
+// The old maintenance middleware class was removed; use its Laravel replacement to preserve maintenance-mode request handling.
+
 
 namespace AlertME\Http;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
@@ -13,7 +15,7 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $middleware = [
-        \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
+        \Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance::class,
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \AlertME\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,

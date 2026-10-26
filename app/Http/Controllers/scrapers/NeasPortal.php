@@ -1,4 +1,6 @@
-<?php namespace AlertME\Http\Controllers\scrapers;
+<?php
+// Pin Goutte 4.0.3 to retain its client class on PHP 8.3; configure its new transport with the existing HTTP/1.0 and unlimited timeout.
+ namespace AlertME\Http\Controllers\scrapers;
 
 use AlertME\Http\Requests;
 use AlertME\Http\Controllers\Controller;
@@ -27,13 +29,13 @@ class NeasPortal extends Controller {
         $this->scrape->file_directory = 'scrapes';
         $this->scrape->file_name = 'neas_portal';
 
-        $this->client = new \Goutte\Client();
-
-        $this->client->getClient()->setDefaultOption('config/curl/' . CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);
-        $this->client->getClient()->setDefaultOption('config/curl/' . CURLOPT_TIMEOUT, 0);
-        $this->client->getClient()->setDefaultOption('config/curl/' . CURLOPT_TIMEOUT_MS, 0);
-        $this->client->getClient()->setDefaultOption('config/curl/' . CURLOPT_CONNECTTIMEOUT, 0);
-        $this->client->getClient()->setDefaultOption('config/curl/' . CURLOPT_RETURNTRANSFER, true);
+        // The PHP 8-compatible Goutte pin replaces its removed Guzzle options API.
+        $this->client = new \Goutte\Client(
+            \Symfony\Component\HttpClient\HttpClient::create([
+                'http_version' => '1.0',
+                'timeout' => 0,
+            ])
+        );
 
         $this->neas_list_url = 'http://neas.environment.gov.za/portal/ApplicationsPerEAP_Report.aspx';
         $this->neas_eia_url = 'http://neas.environment.gov.za/portal/dNeasStandard_ApplicationHistory.aspx';
